@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="optvDailySpecialsApp">
+<head lang="en">
+  <meta charset="UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+  <script src="/www/common/bower_components/angular/angular.min.js"></script>
+  <script src="/www/common/bower_components/lodash/dist/lodash.min.js"></script>
+
+
+  <!-- App Main and AngularJS Routes -->
+  <script src="app/optvDailySpecialsApp.module.js"></script>
+  <script src="/www/common/js/optvAPILime.js"></script>
+
+  <!-- Controllers -->
+  <script src="app/components/scroller/ScrollerController.js"></script>
+
+  <!-- App Specific and Overridden CSS -->
+  <!--<link href="assets/css/style.css" rel="stylesheet">-->
+  <!--<link href="assets/css/styles.css" rel="stylesheet">-->
+  <link href="assets/css/leftscroller.css" rel="stylesheet">
+
+
+  <title>OPTV Specials</title>
+</head>
+
+<body ng-controller="scrollerController">
+
+<left-scroller-sp logo="logo" message-array="messageArray"></left-scroller-sp>
+
+
+</div>
+
+</body>
+</html>

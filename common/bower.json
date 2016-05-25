@@ -1,0 +1,23 @@
+{
+  "name": "Overplay Amstel Bright with Lime",
+  "version": "0.0.1",
+  "homepage": "",
+  "authors": [
+    "Mitch Kahn <mitch@overplay.tv>"
+  ],
+  "description": "Components for OPTV Apps",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "*",
+    "lodash": "*",
+    "codebird-js": "codebird#~2.6.0"
+  }
+}

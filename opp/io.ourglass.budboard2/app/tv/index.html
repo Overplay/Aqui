@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="optvBudBoardApp">
+<head lang="en">
+  <meta charset="UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+  <script src="/common/bower_components/angular/angular.min.js"></script>
+  <script src="/common/bower_components/lodash/dist/lodash.min.js"></script>
+  <script src="app/shared/ngTweetScrape/Base64.js"></script>
+  <script src="/common/bower_components/codebird-js/codebird.js"></script>
+  <script src="app/shared/ngTweetScrape/ngTweetScrape.js"></script>
+
+  <!-- App Main and AngularJS Routes -->
+  <script src="app/optvBudBoardApp.module.js"></script>
+  <script src="/common/js/optvAPILime.js"></script>
+
+  <!-- Controllers -->
+  <script src="app/components/scroller/ScrollerController.js"></script>
+
+
+  <!-- App Specific and Overridden CSS -->
+  <!--<link href="assets/css/style.css" rel="stylesheet">-->
+  <link href="assets/css/leftscroller.bud.fancy.css" rel="stylesheet">
+
+
+  <title>Budweiser Sponsored Crawler</title>
+</head>
+
+<body ng-controller="scrollerController">
+
+<!--<css-scroller message-array="messageArray"></css-scroller>-->
+<left-scroller message-array="messageArray"></left-scroller>
+
+
+</body>
+</html>
