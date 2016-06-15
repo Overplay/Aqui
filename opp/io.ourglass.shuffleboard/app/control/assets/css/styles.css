@@ -14,14 +14,14 @@ html {
 
 }
 
-body {
+.dbody {
     margin: 0;
     aabackground-color: #8ef058;
     font-family: 'Dosis', sans-serif;
 
 }
 
-h1 {
+.dh1 {
     width: 100%;
     background-color: #001c20;
     color: white;
@@ -32,7 +32,7 @@ h1 {
 }
 
 .img-button {
-    display: inline-block;
+    display: block;
     width: 70px;
     height: 70px;
     border-radius: 70px;
@@ -40,10 +40,12 @@ h1 {
     text-align: center;
     line-height: 50px;
     font-size: 80px;
+    margin: 10px auto 10px auto;
+
 }
 
 .sq-button {
-    display: inline-block;
+    display: block;
     width: 33%;
     height: 50px;
     border-radius: 5px;
@@ -51,14 +53,16 @@ h1 {
     text-align: center;
     line-height: 50px;
     font-size: 15px;
+    margin: 10px auto 10px auto;
+
 }
 
 .score-button {
-    display: inline-block;
+    display: block;
     width: 70px;
     height: 70px;
     border-radius: 30px;
-    margin: 1%;
+    margin: 10px auto 10px auto;
     text-align: center;
     line-height: 65px;
     font-size: 50px;
@@ -119,4 +123,8 @@ h1 {
     left: 0;
     bottom: 50px;
     width: 95%;
+}
+
+.test-border {
+    border: 1px solid deeppink;
 }

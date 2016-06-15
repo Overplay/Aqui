@@ -1,5 +1,5 @@
 {
-  "appType": "crawler",
+  "appType": "widget",
   "name": "Shuffleboard",
   "reverseDomainName": "io.ourglass.shuffleboard",
   "buildNumber": 1,
@@ -8,6 +8,7 @@
   "iconImage": "shuffle.png",
   "publisher": "Ourglass TV, Inc.",
   "show": true,
-  "primaryColor": "#2019F5",
-  "secondaryColor": "#110C9D"
+  "primaryColor": "#F0F0F0",
+  "secondaryColor": "#FF1010",
+  "textColor": "#FFFFFF"
 }

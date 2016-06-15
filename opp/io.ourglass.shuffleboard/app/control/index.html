@@ -1,63 +1,86 @@
 <!DOCTYPE html>
 <html ng-app="optvShuffConApp">
-<meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
 
-<script src="/common/bower_components/angular/angular.min.js"></script>
-<script src="/common/bower_components/lodash/lodash.min.js"></script>
-
-
-<!-- App Main and AngularJS Routes -->
+    <script src="../../../../common/ionic/ionic.bundle.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
 
 
-<script src="app/optvShuffConApp.module.js"></script>
-<script src="/common/js/optvAPILime.js"></script>
-
-<!-- Controllers -->
-
-<script src="app/components/shuffcon/ShuffconController.js"></script>
+    <!-- App Main and AngularJS Routes -->
 
 
-<!-- App Specific and Overridden CSS -->
-<link href="assets/css/styles.css" rel="stylesheet">
-<link href="assets/css/font-awesome.min.css" rel="stylesheet">
-<!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+    <script src="app/optvShuffConApp.module.js"></script>
+    <script src="../../../../common/js/optvAPILime.js"></script>
+
+    <!-- Controllers -->
+
+    <script src="app/components/shuffcon/ShuffconController.js"></script>
+
+    <link href="../../../../common/ionic/ionic.min.css" rel="stylesheet"/>
+
+    <!-- App Specific and Overridden CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+    <!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
 
 
-<title>OPTV Shuffleboard Control</title>
+    <title>OGTV Shuffleboard Control</title>
 </head>
 
 <body ng-controller="shuffconController">
 
 <!--Shuffleboard Remote Control -->
 
-
-<h1>Shuffleboard</h1>
-
-<div class="ctrl-holder rounded-border">
-  <div class="score-button blue-sk lt" style="font-size: 30px;">{{blueScore()}}</div>
-  <div class="score-button red-sk rt" style="font-size: 30px;">{{redScore()}}</div>
-</div>
-<div class="ctrl-holder rounded-border">
-  <div class="img-button red-sk lt" ng-click="changeRed(-1)">-</div>
-  <div class="img-button red-sk rt" ng-click="changeRed(1)">+</div>
-</div>
-<div class="ctrl-holder rounded-border">
-  <div class="img-button blue-sk lt" ng-click="changeBlue(-1)">-</div>
-  <div class="img-button blue-sk rt" ng-click="changeBlue(1)">+</div>
-</div>
-
-
-<div class="ctrl-holder bottom">
-  <div class="sq-button rd2" ng-click="resetScores()"><i class="fa fa-bomb">&nbsp;RESET</i></div>
-  <div class="sq-button bl2" ng-click="move()"><i class="fa fa-arrows"></i>&nbsp;MOVE</div>
-  <div class="sq-button y" ng-click="home()"><i class="fa fa-home"></i>&nbsp;HOME</div>
+<div class="row">
+    <div class="bar bar-header bar-royal">
+        <h1 class="title">Shuffleboard</h1>
+    </div>
 
 </div>
+
+<ionic-content class="has-header">
+    <div class="row">
+        <div class="col">
+            Howdy
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="score-button blue-sk" style="font-size: 30px;">{{blueScore()}}</div>
+        </div>
+        <div class="col">
+            <div class="score-button red-sk" style="font-size: 30px;">{{redScore()}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="score-button blue-sk" ng-click="changeBlue(1)">+</div>
+        </div>
+        <div class="col">
+            <div class="score-button red-sk" ng-click="changeRed(1)">+</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="score-button blue-sk" ng-click="changeBlue(-1)">-</div>
+        </div>
+        <div class="col">
+            <div class="score-button red-sk" ng-click="changeRed(-1)">-</div>
+        </div>
+    </div>
+    <button class="button button-assertive button-block" ng-click="resetScores()">RESET</button>
+    <button class="button button-calm button-block" ng-click="move()">MOVE</button>
+</ionic-content>
+
+
+
 
 
 </body>

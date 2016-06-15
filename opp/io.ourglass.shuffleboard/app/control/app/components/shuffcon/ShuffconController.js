@@ -13,13 +13,6 @@ app.controller( "shuffconController",
             $scope.ui.show = true;
         }
 
-        function dataChanged( data ) {
-
-        }
-
-        function inboundMessage( data ) {
-            $log.info( "ShuffleCon: got inbound message." );
-        }
 
         $scope.redScore = function () { return optvModel.model.red; }
         $scope.blueScore = function () { return optvModel.model.blue; }
@@ -27,11 +20,9 @@ app.controller( "shuffconController",
         function initialize() {
 
             optvModel.init( {
-                appName:         "io.overplay.shuffleboard",
-                endpoint:        "control",
+                appName:         "io.ourglass.shuffleboard",
                 initialValue:    { red: 0, blue: 0 },
-                dataCallback:    dataChanged,
-                messageCallback: inboundMessage
+                dataCallback:    function(data){}
             } );
 
         }
@@ -47,7 +38,13 @@ app.controller( "shuffconController",
         $scope.changeRed = function ( by ) {
             optvModel.model.red = optvModel.model.red + by;
             if ( optvModel.model.red < 0 ) optvModel.model.red = 0;
-            optvModel.save();
+            optvModel.save()
+                .then( function(d){
+                    console.log(d);
+                })
+                .catch( function(err){
+                    console.log(err);
+                });
 
         }
 
@@ -59,27 +56,11 @@ app.controller( "shuffconController",
 
         }
 
-        $scope.home = function () {
-
-            optvModel.postMessage( { dest: "io.overplay.mainframe", data: { dash: 'toggle' } } );
-
-        }
 
         $scope.move = function () {
 
-            optvModel.moveApp()
-                .then( function ( newSlot ) {
-                    $log.info( "ShuffleControl. Moved to slot: " + numSlot );
+            optvModel.moveApp();
 
-                }, function ( err ) {
-                    $log.info( "ShuffleControl. FAIL moving app: " + err );
-
-                } );
-
-            //optvModel.postMessage({
-            //    to: "io.overplay.mainframe",
-            //    data: {move: {spot: "next", app: "io.overplay.shuffleboard"}}
-            //});
 
         }
 

@@ -17,6 +17,7 @@ angular.module( 'ngOpTVApi', [] )
         var POLL_INTERVAL_MS = 2000;  //SLOW for testing
         var apiPath = '/api/';
         var DATA_UPDATE_METHOD = "objectEquality";
+        var DEBUG = true;
 
         var service = { model: {} };
 
@@ -24,18 +25,19 @@ angular.module( 'ngOpTVApi', [] )
 
         //Callback for AppData updates
         var _dataCb;
-
-        //Callback for new Message updates
-        var _msgCb;
-
         var _appName;
         var _initialValue;
 
         //HTTP Mode stuff
         var appWatcher;
-        var msgWatcher;
-        
-        var logLead= "optvAPI (" + _appName + "): ";
+
+        function logLead() { return "optvAPILime (" + _appName + "): " };
+
+        function dbout(msg){
+            if (DEBUG){
+                $log.debug( logLead() + msg);
+            }
+        }
             
         function setInitialAppDataValueHTTP() {
 
@@ -43,13 +45,13 @@ angular.module( 'ngOpTVApi', [] )
 
             $http.post( apiPath + 'appdata/' + _appName, _initialValue )
                 .then( function ( data ) {
-                    $log.debug( logLead + " initial value POSTed via HTTP." )
+                    $log.debug( logLead() + " initial value POSTed via HTTP." )
                     startDataPolling();
-                },
-                function ( err ) {
-                    //TODO add a callback for when shit is FUBAR
-                    $log.error( logLead + " initial value POSTed via HTTP FAILED!!!! [FATAL]" )
-                } );
+                })
+                .catch( function ( err ){
+                    $log.error( logLead() + " initial value POSTed via HTTP FAILED!!!! [FATAL]" );
+                });
+
         }
         
         function AppDataWatcher() {
@@ -71,6 +73,7 @@ angular.module( 'ngOpTVApi', [] )
                     break;
 
                     case "objectEquality":
+                        dbout("checking for data model change");
                         if ( !_.isEqual( service.model, data ) ) {
                             service.model = data;
                             _dataCb( service.model );
@@ -80,142 +83,81 @@ angular.module( 'ngOpTVApi', [] )
                 }
             }
 
+            // TODO should probably replace with $interval
             this.poll = function () {
 
                 $timeout( function () {
 
-                    $http.get( apiPath + 'appdata/' + _appName )
+                    dbout("wasteful model poll starting");
+                    $http.get( apiPath + 'appdata/' + _appName+"?dt="+new Date().getTime(), { cache: false } )
                         .then( function ( data ) {
                             updateIfChanged( data.data );
                             if ( _this.running ) _this.poll();
-                        },
-                        function ( err ) {
-                            $log.error( logLead + " couldn't poll model!" );
+                        })
+                        .catch( function (err){
+                            $log.error( logLead() + " couldn't poll model!" );
                             if ( _this.running ) _this.poll();
-                        }
-                    );
+                        });
+
 
                 }, POLL_INTERVAL_MS );
+
             }
         }
 
-        // function MessageWatcher() {
-        //
-        //     //start NOW, not in the past like Data
-        //     this.running = true;
-        //     var _this = this;
-        //
-        //     this.poll = function () {
-        //
-        //         $timeout( function () {
-        //
-        //             /*
-        //             $http.get( apiPath + '/api/v1/appmessage/index.php?appid=' + _msgAppId )
-        //                 .then( function ( data ) {
-        //                     var msgs = data.data;
-        //                     //$log.info(logLead + "received inbound messages: " + data.data);
-        //                     msgs.forEach( function ( msg ) {
-        //                         //This dup should go away once we clean everything up
-        //                         msg.message = msg.messageData;
-        //                         _msgCb( msg );
-        //                     } );
-        //                     if ( _this.running ) _this.poll();
-        //                 },
-        //                 function ( err ) {
-        //                     $log.error( logLead + " couldn't poll messages!" );
-        //                     if ( _this.running ) _this.poll();
-        //                 }
-        //             );
-        //             */
-        //
-        //         }, POLL_INTERVAL_MS );
-        //
-        //     }
-        // }
-        //
-
-
-
 
         function startDataPolling() {
-            $log.info( logLead + " starting data polling." );
+            $log.info( logLead() + " starting data polling." );
             appWatcher = new AppDataWatcher();
             appWatcher.poll();
         }
 
-        function initPhase2() {
+        service.init = function ( params ) {
 
+            _appName = params.appName;
+            _dataCb = params.dataCallback;
+            _initialValue = params.initialValue || {};
+
+            $log.debug( "optvAPILime init for app: " + _appName );
 
             if ( _dataCb ) {
 
                 $http.get( apiPath + 'appdata/' + _appName )
                     .then( function ( data ) {
-                        $log.info( logLead + " model data (appData) already existed via http." );
+
+
                         if ( data.data.length == 0 ) {
+                            dbout("got a length zero response on initial read of model");
                             setInitialAppDataValueHTTP();
                         } else if ( _.isEmpty( data.data ) && !_.isEmpty( _initialValue )){
+                            dbout( "got an empty object response on initial read of model" );
                             setInitialAppDataValueHTTP();
                         }
                         else {
+                            dbout( "model data (appData) already existed via http." + data.data );
                             service.model = data.data;
                             _dataCb(service.model);
                             startDataPolling();
                         }
-                    },
-                    //Chumby browser doesn't seem to like "catch" in some places.
-                    function ( err ) {
-                        $log.info( logLead + " model data not in DB, creating via http" );
+                    })
+                    .catch( function(err){
+                        dbout("model data not in DB, creating via http" );
                         setInitialAppDataValueHTTP();
-                    } );
+                    });
 
-
-                $log.debug( "optvAPI init app: " + _appName + " subscribing to data" );
-
+                $log.debug( "optvAPILime init app: " + _appName + " subscribing to data" );
 
             }
 
-            // if ( _msgCb ) {
-            //
-            //     msgWatcher = new MessageWatcher();
-            //     msgWatcher.poll();
-            // }
-            //
-            // service.postMessage({ data: { launchComplete: true }});
-
         }
 
-
-        service.init = function ( params ) {
-
-            _appName = params.appName;
-            _msgAppId = _appName + '.' + ( params.endpoint || 'tv' );
-            _dataCb = params.dataCallback;
-            //_msgCb = params.messageCallback;
-            _initialValue = params.initialValue || {};
-
-            $log.debug( "optvAPIPHP init for app: " + _appName );
-            initPhase2();
-
-        }
-
+        
         service.save = function () {
 
-            return $http.put( apiPath + 'appdata/' + _appName, service.model );
+            // This is a POST because NanoHTTPD seems to hide PUT verb data
+            return $http.post( apiPath + 'appdata/' + _appName, service.model );
 
         };
-
-
-        // service.postMessage = function ( msg ) {
-        //
-        //     var dest = msg.dest || "io.overplay.mainframe.tv";
-        //
-        //     return $http.post( apiPath + '/api/v1/appmessage/index.php', {
-        //         dest:        dest,
-        //         src:        _msgAppId,
-        //         messageData: msg.data
-        //     } );
-        //
-        // };
 
         /**
          * Request app be moved between slots
@@ -228,21 +170,7 @@ angular.module( 'ngOpTVApi', [] )
             return $http.post( apiPath + 'app/' + appid +"/move");
 
         };
-
-        // /**
-        //  * Request crawler app be moved to slots
-        //  * @returns {promise that returns slot Id}
-        //  */
-        // service.moveAppToSlot = function ( slot, appid ) {
-        //
-        //     //Passing nothing moves the app this API service is attached to
-        //     appid = appid || _appName;
-        //     slot = slot || 0;
-        //     //moveToSlot&slot=0&appid=io.overplay.budboard
-        //     return $http.post( apiPath + '/api/v1/overplayos/index.php?command=moveToSlot&appid=' + appid+"&slot="+slot );
-        //
-        // };
-
+        
         /**
          * Request app be launched
          * @returns {promise}

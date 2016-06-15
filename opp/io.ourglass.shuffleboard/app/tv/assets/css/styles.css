@@ -32,63 +32,107 @@ body {
 }
 
 .red-sk {
-    background-image: url(../img/redbubble.png);
+    background-image: url(../img/redball.png);
     background-size: contain;
     color: white;
 }
 
 .blue-sk {
-    background-image: url(../img/bluebubble.png);
+    background-image: url(../img/blueball.png);
     background-size: contain;
     color: white;
 }
 
-.applet {
-    width: 200px;
+@media screen and (max-width: 1280px) {
+
+    .applet {
+        width: 120px;
+    }
+
+    .logo-holder {
+        width: 100%;
+    }
+
+    .logo-holder > img {
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+
+
+    .score-box {
+        padding: 10px;
+        line-height: 45px;
+        text-align: center;
+        font-size: 30px;
+        border-radius: 5px;
+        width: 45px;
+        margin-top: 7px;
+        margin-left: auto;
+        margin-right: auto;
+        -webkit-transition: all 0.25s ease-in-out;
+        -moz-transition: all 0.25s ease-in-out;
+        -o-transition: all 0.25s ease-in-out;
+        transition: all 0.25s ease-in-out;
+    }
+
+    .grow {
+        transform: scale(1.2, 1.2);
+        -webkit-transform: scale(1.2, 1.2);
+        opacity: 0.8;
+    }
 }
 
-.logo-holder {
-    width: 100%;
+@media screen and (min-width: 1285px) {
+
+    .applet {
+        width: 200px;
+    }
+
+    .logo-holder {
+        width: 100%;
+    }
+
+    .logo-holder > img {
+        width: 160px;
+        display: block;
+        margin: auto;
+    }
+
+    .applet-banner {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        height: 30px;
+        line-height: 30px;
+        color: white;
+        font-family: Dosis-Bold, sans-serif;
+        text-align: center;
+        font-size: 20px;
+        text-shadow: 2px 2px 2px rgb(101, 101, 101);
+        margin-bottom: 10px;
+    }
+
+    .score-box {
+        padding: 10px;
+        line-height: 75px;
+        text-align: center;
+        font-size: 60px;
+        border-radius: 5px;
+        width: 75px;
+        margin-top: 7px;
+        margin-left: auto;
+        margin-right: auto;
+        -webkit-transition: all 0.25s ease-in-out;
+        -moz-transition: all 0.25s ease-in-out;
+        -o-transition: all 0.25s ease-in-out;
+        transition: all 0.25s ease-in-out;
+    }
+
+    .grow {
+        transform: scale(1.2, 1.2);
+        -webkit-transform: scale(1.2, 1.2);
+        opacity: 0.8;
+    }
 }
 
-.logo-holder > img {
-    width: 160px;
-    display: block;
-    margin: auto;
-}
-
-.applet-banner {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    height: 30px;
-    line-height: 30px;
-    color: white;
-    font-family: Dosis-Bold, sans-serif;
-    text-align: center;
-    font-size: 20px;
-    text-shadow: 2px 2px 2px rgb(101, 101, 101);
-    margin-bottom: 10px;
-}
-
-.score-box {
-    padding: 10px;
-    line-height: 75px;
-    text-align: center;
-    font-size: 60px;
-    border-radius: 5px;
-    width: 75px;
-    margin-top: 7px;
-    margin-left: auto;
-    margin-right: auto;
-    -webkit-transition: all 0.25s ease-in-out;
-    -moz-transition: all 0.25s ease-in-out;
-    -o-transition: all 0.25s ease-in-out;
-    transition: all 0.25s ease-in-out;
-}
-
-.grow {
-    transform: scale(1.2, 1.2);
-    -webkit-transform: scale(1.2, 1.2);
-    opacity: 0.8;
-}
