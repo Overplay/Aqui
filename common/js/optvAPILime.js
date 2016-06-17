@@ -21,6 +21,11 @@ angular.module( 'ngOpTVApi', [] )
 
         var service = { model: {} };
 
+        //EA - if running in FourLoko, then modify the apiPath
+        if(window && window.process && window.process.execPath && window.process.execPath.includes("FourLoko")){
+            apiPath = 'http://localhost:1337' + apiPath;
+        }
+
         service.apiPath = apiPath;
 
         //Callback for AppData updates
