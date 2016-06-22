@@ -147,4 +147,7 @@ body {
 
 /*}*/
 
-
+.scroller {
+    transition-property: left;
+    transition-timing-function: linear;
+}

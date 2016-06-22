@@ -10,7 +10,8 @@
 
 
 var app = angular.module('optvDailySpecialsApp', [
-    'ngOpTVApi'
+    'ngOpTVApi',
+    'angular-velocity'
 ]);
 
 
@@ -20,7 +21,7 @@ function fCheckAlive()
 	return true;
 }
 
-function fButtonPress(button){
+function fButtonPress(button){a
     console.log("BUtton pushed: "+button);
     angular.element(document.getElementById('docbody')).scope().buttonPushed(button);
 }

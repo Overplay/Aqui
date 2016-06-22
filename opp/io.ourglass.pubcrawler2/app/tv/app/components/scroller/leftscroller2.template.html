@@ -8,8 +8,9 @@
         <div class="crawler-text" id="c1"></div>
         <div class="crawler-text" id="c2"></div>
         -->
-    <ul id="scroller-ul" ng-style="leftPos">
-        <li ng-repeat="msg in messageArray">{{ msg }}&nbsp;&nbsp;&nbsp;&nbsp;&#9752;</li>
+    <ul id="scroller-ul" ng-class="{scrolling: ui.shouldScroll, scroller: ui.isCSSScroller}" ng-style="leftPos">
+    <!--<ul id="scroller-ul" ng-style="leftPos">-->
+         <li ng-repeat="msg in messageArray">{{ msg }}&nbsp;&nbsp;&nbsp;&nbsp;&#9752;</li>
     </ul>
     <div class="next-up-holder">
         <!--<h1>{{ screen.width }} x {{ screen.height }}</h1>-->
