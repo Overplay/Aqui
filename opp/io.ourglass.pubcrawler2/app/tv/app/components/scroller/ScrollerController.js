@@ -404,3 +404,56 @@ app.directive('leftScroller2', [
 		}
 	}]
 );
+
+app.directive('timeBased', function($timeout){
+	return {
+		restrict: 'E',
+		scope: {
+			messageArray: '=',
+			logo: '='
+		},
+		templateUrl: 'app/components/scroller/leftscroller2.template.html',
+		link: function (scope, elem, attrs) {
+
+			scope.leftPos = {};
+
+			function loadWidth() {
+				return $timeout(function () {
+					return 	document.getElementById('scroller-ul').offsetWidth;
+				})
+			}
+
+			var i, dx, delay = 7, left, lastUpdated = (new Date).getTime();
+
+			function loop() {
+				if (i >= dx) {
+					console.log('Done!');
+					beginScroll();
+					return;
+				}
+				i++;
+				//Move based on time since last update
+				var dTime = (new Date).getTime() - lastUpdated;
+				lastUpdated = (new Date).getTime();
+				scope.leftPos.left = left - (dTime / delay) + 'px';
+				left = left - (dTime / delay);
+				$timeout(loop);
+			}
+
+			function beginScroll() {
+				console.log('Beginning scroll...');
+				i = 1;
+				loadWidth().then(function (width) {
+					dx = width + window.innerWidth;
+					left = window.innerWidth;
+					scope.leftPos.left = left + 'px';
+					console.log('Scroll starting. Got width:', width, 'and window width:', window.innerWidth, 'and dx:', dx);
+					loop();
+				});
+			}
+
+			beginScroll();
+
+		}
+	}
+});
