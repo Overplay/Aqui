@@ -1,7 +1,7 @@
 {
   "name": "Overplay Amstel Bright with Lime",
   "version": "0.0.1",
-  "homepage": "",
+  "homepage": "https://github.com/Overplay/AmstelBrightLimeWWW",
   "authors": [
     "Mitch Kahn <mitch@overplay.tv>"
   ],
@@ -17,7 +17,8 @@
   ],
   "dependencies": {
     "angular": "*",
-    "lodash": "*",
+    "lodash": "^4.13.1",
     "codebird-js": "codebird#~2.6.0"
-  }
+  },
+  "main": ""
 }
