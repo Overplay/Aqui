@@ -1,0 +1,11 @@
+.add-popup input {
+    padding: 10px;
+}
+
+.open-options {
+	word-wrap: normal;
+}
+
+.open-options .popup {
+	width: 350px;
+}

@@ -1,0 +1,14 @@
+{
+  "appType": "widget",
+  "name": "Waiting List",
+  "reverseDomainName": "io.ourglass.waitinglist",
+  "buildNumber": 1,
+  "signature": "",
+  "iconLabel": "Waiting List",
+  "iconImage": "waitlist.png",
+  "publisher": "Ourglass TV, Inc.",
+  "show": true,
+  "primaryColor": "#F0F0F0",
+  "secondaryColor": "#FF1010",
+  "textColor": "#FFFFFF"
+}
