@@ -7,27 +7,21 @@ app.controller("waitlistController", ["$scope", "$timeout", "$http", "$log", "$i
 
         $log.info("Loading waitlistController");
 
-        $scope.parties = function() { return optvModel.model.parties; }
+        $scope.parties = function () {
+            return optvModel.model.parties;
+        }
+
+        function retrieveData(data) {
+            console.log('Data Callback! - control', data);
+            optvModel.model.parties = data.parties;
+        }
 
         function initialize() {
 
             optvModel.init({
                 appName: "io.ourglass.waitinglist",
-                initialValue: {parties: [
-                    {
-                        name:'Noah',
-                        members:5,
-                        dateCreated: new Date()
-                    },
-                    {
-                        name:'Logan',
-                        members:4,
-                        dateCreated: new Date()
-                    }
-                ]},
-                dataCallback: function (data) {
-                    console.log('Data Callback!', data);
-                }
+                initialValue: {parties: []},
+                dataCallback: retrieveData
             });
 
             $scope.newParty = {name: '', members: undefined, dateCreated: undefined};
@@ -35,12 +29,11 @@ app.controller("waitlistController", ["$scope", "$timeout", "$http", "$log", "$i
         }
 
         function partiesContainName(name) {
-            var flag = false;
-            angular.forEach(optvModel.model.parties, function(party) {
-                flag = party.name == name;
-                if(flag) return;
-            });
-            return flag;
+            for(var i in optvModel.model.parties) {
+                var arrParty = optvModel.model.parties[i];
+                if(arrParty.name == name) return true;
+            }
+            return false;
         }
 
         $scope.openAdd = function () {
@@ -68,10 +61,10 @@ app.controller("waitlistController", ["$scope", "$timeout", "$http", "$log", "$i
                                 $ionicPopup.alert({
                                     title: 'Please fill in all fields.'
                                 });
-                            // Pressed add button with valid information
+                                // Pressed add button with valid information
                             } else {
                                 $scope.newParty.name.trim();
-                                if(partiesContainName($scope.newParty.name)) {
+                                if (partiesContainName($scope.newParty.name)) {
                                     // Prevent closing and give user error message
                                     e.preventDefault();
                                     $ionicPopup.alert({
@@ -93,18 +86,36 @@ app.controller("waitlistController", ["$scope", "$timeout", "$http", "$log", "$i
             });
         };
 
-        function removeParty(party) {
-            optvModel.model.parties.splice(optvModel.model.parties.indexOf(party), 1);
-            optvModel.save();
+        // Calculates index by comparing all 3 fields (name, members, dateCreated)
+        function indexOfParty(party) {
+            for(var i = 0; i < optvModel.model.parties.length; i++) {
+                var arrParty = optvModel.model.parties[i];
+                if(party.name == arrParty.name &&
+                    party.members == arrParty.members &&
+                    party.dateCreated == arrParty.dateCreated) {
+                    return i;
+                }
+            }
+            return -1;
         }
 
-        $scope.openOptions = function($event, party) {
+        function removeParty(party) {
+            var index = indexOfParty(party);
+            if(index == -1) {
+                console.log("I could not find", party, "in", optvModel.model.parties);
+            } else {
+                optvModel.model.parties.splice(index, 1);
+                optvModel.save();
+            }
+        }
+
+        $scope.openOptions = function ($event, party) {
             $ionicPopup.show({
                 title: $event.target.innerText,
                 cssClass: 'open-options',
                 scope: $scope,
                 buttons: [
-                    { text: 'Cancel', type: 'button-light' },
+                    {text: 'Cancel', type: 'button-light'},
                     {
                         text: 'Seated',
                         type: 'button-dark',
@@ -122,15 +133,15 @@ app.controller("waitlistController", ["$scope", "$timeout", "$http", "$log", "$i
                     {
                         text: '<b>Delete</b>',
                         type: 'button-assertive',
-                        onTap: function(e) {
+                        onTap: function (e) {
                             $ionicPopup.show({
                                 title: 'Are you sure you want to delete this party?',
                                 buttons: [
-                                    { text: 'No', type: 'button-light' },
+                                    {text: 'No', type: 'button-light'},
                                     {
                                         text: 'Yes, Delete',
                                         type: 'button-assertive',
-                                        onTap: function(e) {
+                                        onTap: function (e) {
                                             removeParty(party);
                                         }
                                     }

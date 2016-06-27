@@ -1,42 +1,42 @@
 <!DOCTYPE html>
-<html ng-app="optvShuffleApp">
+<html ng-app="optvWaitListApp">
 <head lang="en">
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
-  <script src="../../../../common/bower_components/angular/angular.min.js"></script>
-  <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+    <script src="assets/bower_components/angular-timeago/dist/angular-timeago.min.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="app/optvWaitListApp.module.js"></script>
+    <script src="../../../../common/js/optvAPILime.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/components/waitlist/WaitlistController.js"></script>
+
+    <!-- App Specific and Overridden CSS -->
+    <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    <link href="assets/css/styles.css" rel="stylesheet">
 
 
-  <!-- App Main and AngularJS Routes -->
-  <script src="app/optvShuffleApp.module.js"></script>
-  <script src="../../../../common/js/optvAPILime.js"></script>
-
-  <!-- Controllers -->
-  <script src="app/components/shuffleboard/ShuffleController.js"></script>
-
-  <!-- App Specific and Overridden CSS -->
-  <!--<link href="assets/css/style.css" rel="stylesheet">-->
-  <link href="assets/css/styles.css" rel="stylesheet">
-
-
-  <title>OPTV Shuffleboard</title>
+    <title>OPTV Waiting List</title>
 </head>
 
 <body>
 
 <!-- semis skeuomorph look -->
-<div class="applet" ng-controller="shuffleController">
-  <div class="logo-holder"><img src="assets/img/rein.png"/></div>
-  <div class="score-box red-sk" ng-class="{ 'grow' : score.redHighlight }">
-    <div>{{score.red}}</div>
-  </div>
-  <div class="score-box blue-sk" ng-class="{ 'grow' : score.blueHighlight }">
-    <div>{{score.blue}}</div>
-  </div>
+<div class="applet" ng-controller="waitlistController">
+
+    <div class="party" ng-repeat="party in parties() | limitTo:5">
+        <h4>{{party.name}} | {{party.members}}</h4>
+        <p>{{party.dateCreated | timeAgo}}</p>
+    </div>
+
 </div>
 
 </body>
