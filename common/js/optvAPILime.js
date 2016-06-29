@@ -79,7 +79,9 @@ angular.module( 'ngOpTVApi', [] )
 
                     case "objectEquality":
                         dbout("checking for data model change");
-                        if ( !_.isEqual( service.model, data ) ) {
+                        //if( !_.isEqual(service.model, data) ) { // Returns false when angular.equals returns true... suspicious
+                        if( !angular.equals(service.model, data) ) {
+                            console.log(service.model, data);
                             service.model = data;
                             _dataCb( service.model );
                         }

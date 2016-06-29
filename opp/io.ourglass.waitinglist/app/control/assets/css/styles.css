@@ -10,14 +10,12 @@
 .party-animate.ng-leave {
     transition: all 750ms ease;
     opacity: 1;
-    /*height: 50px;*/
     margin-bottom: 0;
     transform: scale(1);
 }
 .party-animate.ng-leave.ng-leave-active {
     opactiy: 0;
-    /*height: 0;*/
-    margin-bottom: -50px;
+    margin-bottom: -60px;
     transform: scale(0);
 }
 
@@ -89,13 +87,6 @@
 
 .party-date-created {
     float: right;
-}
-
-/* ANIMATE DELETING HERE */
-
-.party-deleting {
-    transition: transform 750ms ease-in;
-    transform: scale(0);
 }
 
 .add-new {
