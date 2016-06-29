@@ -1,27 +1,14 @@
 /*********************************
 
- File:       optvShuffleApp.module
- Function:   ShuffleBoard App
- Copyright:  OverplayTV
- Date:       10.2.2015
+ File:       optvDailySpecialsApp.module
+ Function:   Daily Specials / Pubcrawler App
+ Copyright:  Ourglass
+ Date:       June 2016
  Author:     mkahn
 
  **********************************/
 
 
-var app = angular.module('optvDailySpecialsApp', [
-    'ngOpTVApi',
-    'angular-velocity'
-]);
+var app = angular.module('optvDailySpecialsApp', ['ngOpTVApi']);
 
 
-function fCheckAlive()
-{
-	console.log("fCheckAlive called, homey!");
-	return true;
-}
-
-function fButtonPress(button){a
-    console.log("BUtton pushed: "+button);
-    angular.element(document.getElementById('docbody')).scope().buttonPushed(button);
-}
