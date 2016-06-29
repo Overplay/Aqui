@@ -1,0 +1,22 @@
+{
+  "name": "assets",
+  "homepage": "https://github.com/Overplay/AmstelBrightLimeWWW",
+  "authors": [
+    "JewsOfHazard <logan.saso2016@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-timeago": "timeago#^1.5.3",
+    "angular-timeago": "^0.4.3"
+  }
+}

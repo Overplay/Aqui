@@ -1,0 +1,124 @@
+.party {
+    height: 50px;
+    border: solid 1px lightgray !important;
+    transition: all 500ms ease;
+    z-index: 1;
+}
+
+.party-elongated {
+    border-bottom: none !important;
+}
+
+.party-options {
+    position: relative;
+    top: -60px;
+    background-color: #f8f8f8;
+    height: 50px;
+    width: 100%;
+    border: solid 1px lightgray !important;
+    border-top: none !important;
+    transition: top 500ms ease;
+    z-index: -1;
+}
+
+.party-options-show {
+    top: -10px;
+}
+
+.party-options-show-z {
+    z-index: 2 !important;
+}
+
+.party-options button {
+    width: 100%;
+    height: 30px;
+    display: block;
+    position: relative;
+    top: -9px;
+}
+
+.party-options-table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.party-options-table li {
+    display: table-cell;
+}
+
+.party-party-size {
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+	border-radius: 50%;
+    line-height: 25px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border: solid 1px black;
+}
+
+.party-name {
+    position: absolute;
+    left: 55px;
+}
+
+.party-date-created {
+    float: right;
+}
+
+/* ANIMATE DELETING HERE */
+
+.party-deleting {
+    transition: transform 750ms ease-in;
+    transform: scale(0);
+}
+
+.add-new {
+    position: relative;
+    left: 20%;
+    width: 60%;
+}
+
+.add-new input {
+    width: 100%;
+    height: 40px;
+    padding-left: 10px;
+    background-color: rgb(250, 250, 250);
+    border-radius: 3px;
+    border: solid 1px lightgray;
+    transition: border 500ms ease;
+}
+
+.add-button {
+    width: 49%;
+    border-radius: 3px;
+}
+
+.add-button-cancel {
+    float: left;
+    border: solid 1px lightgray !important;
+}
+
+.add-button-add {
+    float: right;
+}
+
+.add-error {
+    vertical-align: middle;
+    font-family: 'Arial Black', Gadget, sans-serif;
+    text-transform: uppercase;
+    color: #555;
+    font-size: 11px;
+    opacity: 0;
+    transition: all 500ms ease;
+}
+
+.add-error-text-opacity {
+    opacity: 1;
+}
+
+.add-error-underline {
+    border-bottom: solid 4px darkred !important;
+}

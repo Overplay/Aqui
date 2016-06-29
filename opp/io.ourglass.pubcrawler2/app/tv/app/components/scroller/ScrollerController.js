@@ -259,7 +259,7 @@ app.directive('leftnsScroller2', function ($timeout) {
 
 			function loadWidth() {
 				return $timeout(function () {
-					return 	document.getElementById('scroller-ul').offsetWidth;
+					return document.getElementById('scroller-ul').offsetWidth;
 				})
 			}
 
@@ -294,7 +294,35 @@ app.directive('leftnsScroller2', function ($timeout) {
 	}
 });
 
-app.directive("leftnsScroller2Min",function(n){return{restrict:"E",scope:{messageArray:"=",logo:"="},templateUrl:"app/components/scroller/leftscroller2.template.html",link:function(t,e,o){function l(){var t=document.getElementById("scroller-ul");return n(function(){return t.offsetWidth})}function r(){return c>=s?(console.log("Done!"),void i()):(c++,t.leftPos.left=--f+"px",void n(r,u))}function i(){console.log("Beginning scroll..."),c=1,l().then(function(n){d=n,s=d+window.innerWidth,f=window.innerWidth,t.leftPos.left=f+"px",console.log("Scroll starting. Got width:",n,"and window width:",window.innerWidth,"and dx:",s),r()})}t.leftPos={};var c,d,s,f,u=5;i()}}});
+app.directive("leftnsScroller2Min", function (n) {
+	return {
+		restrict: "E",
+		scope: {messageArray: "=", logo: "="},
+		templateUrl: "app/components/scroller/leftscroller2.template.html",
+		link: function (t, e, o) {
+			function l() {
+				var t = document.getElementById("scroller-ul");
+				return n(function () {
+					return t.offsetWidth
+				})
+			}
+
+			function r() {
+				return c >= s ? (console.log("Done!"), void i()) : (c++, t.leftPos.left = --f + "px", void n(r, u))
+			}
+
+			function i() {
+				console.log("Beginning scroll..."), c = 1, l().then(function (n) {
+					d = n, s = d + window.innerWidth, f = window.innerWidth, t.leftPos.left = f + "px", console.log("Scroll starting. Got width:", n, "and window width:", window.innerWidth, "and dx:", s), r()
+				})
+			}
+
+			t.leftPos = {};
+			var c, d, s, f, u = 5;
+			i()
+		}
+	}
+});
 
 app.directive('leftScroller2', [
 	'$log', '$timeout', '$window',
@@ -405,7 +433,7 @@ app.directive('leftScroller2', [
 	}]
 );
 
-app.directive('timeBased', function($timeout){
+app.directive('timeBased', function ($timeout) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -415,15 +443,20 @@ app.directive('timeBased', function($timeout){
 		templateUrl: 'app/components/scroller/leftscroller2.template.html',
 		link: function (scope, elem, attrs) {
 
-			scope.leftPos = {};
+			var MS_PER_PIXEL = 5;
+
+			scope.leftPos = {left: window.innerWidth};
 
 			function loadWidth() {
 				return $timeout(function () {
-					return 	document.getElementById('scroller-ul').offsetWidth;
+					return document.getElementById('scroller-ul').offsetWidth;
 				})
 			}
 
-			var i, dx, delay = 7, left, lastUpdated = (new Date).getTime();
+			var i,
+			    dx,
+			    left,
+			    lastUpdated = (new Date).getTime();
 
 			function loop() {
 				if (i >= dx) {
@@ -431,13 +464,14 @@ app.directive('timeBased', function($timeout){
 					beginScroll();
 					return;
 				}
-				i++;
+
 				//Move based on time since last update
 				var dTime = (new Date).getTime() - lastUpdated;
 				lastUpdated = (new Date).getTime();
-				scope.leftPos.left = left - (dTime / delay) + 'px';
-				left = left - (dTime / delay);
-				$timeout(loop);
+				i += (dTime / MS_PER_PIXEL);
+				scope.leftPos.left = left - (dTime / MS_PER_PIXEL) + 'px';
+				left = left - (dTime / MS_PER_PIXEL);
+				$timeout(loop, 1000/30);
 			}
 
 			function beginScroll() {

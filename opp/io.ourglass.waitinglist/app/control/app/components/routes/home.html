@@ -1,0 +1,28 @@
+<button class="button button-balanced button-full" ng-click="openAdd()">Add</button>
+<div ng-repeat="party in parties()" ng-class="{'party-deleting': party.deleted}" ns-transition-end party="party">
+    <button class="button button-stable button-full party" ng-click="toggleOptions(party, false)"
+            ns-transition-end party="party" ng-class="{'party-elongated': ui.partyElongated}">
+        <div ng-style="partySize" class="party-party-size"><b>{{party.partySize}}</b></div>
+        <span ng-style="partyName" class="party-name"><b>{{party.name}}</b></span>
+        <span ng-style="partyDateCreated" class="party-date-created"><b>{{party.dateCreated | timeAgo}}</b></span>
+    </button>
+    <div class="party-options" ng-show="party.showOptions" ng-class="{'party-options-show': party.showOptions, 'party-options-show-z': ui.partyOptionsShowZ}">
+        <ul class="party-options-table">
+            <li>
+                <button class="button button-dark button-full"
+                        ng-click="doPartyBnAction(party, $event)">Left
+                </button>
+            </li>
+            <li>
+                <button class="button button-assertive button-full"
+                        ng-click="doPartyBnAction(party, $event)">Delete
+                </button>
+            </li>
+            <li>
+                <button class="button button-dark button-full"
+                        ng-click="doPartyBnAction(party, $event)">Seated
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
