@@ -30,11 +30,22 @@
 <body>
 
 <!-- semis skeuomorph look -->
-<div class="applet" ng-controller="waitlistController">
+<div class="mainContainer" ng-controller="waitlistController">
 
-    <div class="party" ng-repeat="party in parties() | limitTo:3">
-        <h4>{{party.name}} | {{party.partySize}}</h4>
-        <p>{{party.dateCreated | timeAgo}}</p>
+    <!--<div class="party" ng-repeat="party in parties() track by $index" ng-class="{'party-bottom': $index==parties().length-1}">-->
+        <!--<span class="index">#{{$index+1}}</span>-->
+        <!--<div class="info">-->
+            <!--<b class="name">{{party.name}} for {{party.partySize}}</b>-->
+            <!--<i class="time">{{party.dateCreated | timeAgo}}</i>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="party" ng-repeat="party in parties() track by $index" ng-class="{'party-bottom': $index==parties().length-1}">
+        <span class="index">#{{$index+1}}</span>
+        <div class="info">
+            <span class="name">table for <b>{{party.name}}</b></span>
+            <span class="party-size">party of <b>{{party.partySize}}</b></span>
+        </div>
     </div>
 
 </div>

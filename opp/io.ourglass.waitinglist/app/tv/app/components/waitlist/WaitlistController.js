@@ -22,7 +22,28 @@ app.controller("waitlistController",
                 appName: "io.ourglass.waitinglist",
                 endpoint: "tv",
                 dataCallback: modelUpdate,
-                initialValue: {parties: []}
+                initialValue: {parties: [
+                    {
+                        name: 'Noah',
+                        partySize: 5,
+                        dateCreated: new Date((new Date()).valueOf() - (60000 * 20))
+                    },
+                    {
+                        name: 'Logan',
+                        partySize: 3,
+                        dateCreated: new Date((new Date()).valueOf() - (60000 * 40))
+                    },
+                    {
+                        name: 'Chris',
+                        partySize: 9,
+                        dateCreated: new Date((new Date()).valueOf() - (60000 * 5))
+                    },
+                    {
+                        name: 'Mitch',
+                        partySize: 11,
+                        dateCreated: new Date((new Date()).valueOf() - (60000 * 75))
+                    }
+                ]}
             });
 
         }
