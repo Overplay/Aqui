@@ -5,6 +5,24 @@
     z-index: 1;
 }
 
+/* DELETING ANIMATION */
+
+.party-animate.ng-leave {
+    transition: all 750ms ease;
+    opacity: 1;
+    /*height: 50px;*/
+    margin-bottom: 0;
+    transform: scale(1);
+}
+.party-animate.ng-leave.ng-leave-active {
+    opactiy: 0;
+    /*height: 0;*/
+    margin-bottom: -50px;
+    transform: scale(0);
+}
+
+/* DELETING ANIMATION */
+
 .party-elongated {
     border-bottom: none !important;
 }
@@ -56,7 +74,12 @@
     text-align: center;
     width: 30px;
     height: 30px;
-    border: solid 1px black;
+    border: solid 1px #000;
+    background-color: #000;
+}
+
+.party-party-size b {
+    color: lightgray;
 }
 
 .party-name {

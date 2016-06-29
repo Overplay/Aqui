@@ -13,8 +13,6 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
             }
         };
 
-        $scope.ui = { partyOptionsShowZ: false, partyElongated: false };
-
         $scope.$watch(function () {
             return $scope.newParty.name;
         }, function (newVal) {
@@ -68,28 +66,73 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                             name: 'Noah',
                             partySize: 5,
                             dateCreated: new Date((new Date()).valueOf() - (60000 * 20)),
-                            phone: '4084990902',
-                            showOptions: false,
-                            isDeleting: false,
-                            deleted: false
+                            phone: '4084990902'
                         },
                         {
                             name: 'Logan',
                             partySize: 8,
                             dateCreated: new Date((new Date()).valueOf() - (60000 * 5)),
-                            phone: '4088333405',
-                            showOptions: false,
-                            isDeleting: false,
-                            deleted: false
+                            phone: '4088333405'
                         },
                         {
                             name: 'Saso',
-                            partySize: 8,
+                            partySize: 11,
                             dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
-                            phone: '4082672769',
-                            showOptions: false,
-                            isDeleting: false,
-                            deleted: false
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso2',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso3',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso4',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso5',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso6',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso7',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso8',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso9',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
+                        },
+                        {
+                            name: 'Saso10',
+                            partySize: 11,
+                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
+                            phone: '4082672769'
                         }
                     ]
                 },
@@ -109,8 +152,9 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                 dateCreated: undefined,
                 phone: undefined,
                 showOptions: false,
-                isDeleting: false,
-                deleted: false
+                showOptionsZ: false,
+                partyElongated: false,
+                isDeleting: false
             };
         }
 
@@ -169,7 +213,7 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
             return -1;
         }
 
-        $scope.removeParty = function(party) {
+        $scope.removeParty = function (party) {
             var index = indexOfParty(party);
             if (index == -1) {
                 // ns-transition-end called for a few different things, so this will always happen
@@ -179,28 +223,28 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                 optvModel.model.parties.splice(index, 1);
                 optvModel.save();
             }
-        }
+        };
 
-        $scope.doPartyBnAction = function(party, $event) {
+        $scope.doPartyBnAction = function (party, $event) {
             var label = $event.target.innerHTML;
-            switch(label.trim().toLowerCase()) {
+            switch (label.trim().toLowerCase()) {
                 case 'left':
                 case 'delete':
                 case 'seated':
                     $scope.toggleOptions(party, true);
                     break;
             }
-        }
+        };
 
         $scope.toggleOptions = function (party, shouldDelete) {
             party.showOptions = !party.showOptions;
             // If opening, add class that removes the border
-            if(party.showOptions) {
-                $scope.ui.partyElongated = true;
-            // If closing, remove class that sets z index higher for clicking
-            }else {
-                $scope.ui.partyOptionsShowZ = false;
-                $scope.ui.partyElongated = false;
+            if (party.showOptions) {
+                party.partyElongated = true;
+                // If closing, remove class that sets z index higher for clicking
+            } else {
+                party.showOptionsZ = false;
+                party.partyElongated = false;
                 party.isDeleting = shouldDelete;
             }
         };
@@ -306,24 +350,18 @@ app.directive('nsTransitionEnd', function ($timeout) {
         },
         link: function (scope, element, attrs) {
             element.bind('transitionend', function (e) {
-                // Called for border-bottom-width and border-bottom-color, we only need once per animation
-                if(e.propertyName == 'border-bottom-width') {
-                    var controller = scope.$parent.$parent.$parent.$parent;
-                    scope.$apply(function() {
-                        // If is deleting, scale in
-                        if(scope.party.isDeleting) {
-                            scope.party.deleted = true;
-                            // Animate removing after a second (gives time to animate)
-                            $timeout(function() {
-                                scope.$apply(function() {
-                                    console.log('Removing', scope.party, '...');
-                                    controller.removeParty(scope.party);
-                                });
-                            }, 700);
-                        }else {
+                var controller = scope.$parent.$parent.$parent.$parent;
+                // Verify it's the element we want
+                if (e.target.className.includes('button') && e.target.className.includes('party') && e.propertyName == 'border-bottom-width') {
+                    scope.$apply(function () {
+                        // If is deleting, remove after animations finish
+                        if (scope.party.isDeleting) {
+                            console.log('Removing', scope.party, '...');
+                            controller.removeParty(scope.party);
+                        } else {
                             // If opening, set z-index of buttons high so user can click on them
-                            if(scope.party.showOptions) {
-                                controller.ui.partyOptionsShowZ = true;
+                            if (scope.party.showOptions) {
+                                scope.party.showOptionsZ = true;
                             }
                         }
                     });
