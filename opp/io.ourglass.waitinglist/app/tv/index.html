@@ -32,8 +32,8 @@
 <!-- semis skeuomorph look -->
 <div class="applet" ng-controller="waitlistController">
 
-    <div class="party" ng-repeat="party in parties() | limitTo:5">
-        <h4>{{party.name}} | {{party.members}}</h4>
+    <div class="party" ng-repeat="party in parties() | limitTo:3">
+        <h4>{{party.name}} | {{party.partySize}}</h4>
         <p>{{party.dateCreated | timeAgo}}</p>
     </div>
 

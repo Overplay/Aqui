@@ -1,3 +1,11 @@
+<h3>Create New Party</h3>
 <input type="text" ng-model="newParty.name" placeholder="Name..." />
 <br>
-<input type="number" ng-model="newParty.members" placeholder="Members..." />
+<input type="number" ng-model="newParty.partySize" placeholder="Party Size..." />
+<br>
+<input type="text" ng-model="newParty.phone" phone-input placeholder="Phone Number (optional)..." />
+<br>
+<ul>
+    <li><button class="button button-light" ng-click="cancel()">Cancel</button></li>
+    <li><button class="button button-positive" ng-click="add()">Add</button></li>
+</ul>
