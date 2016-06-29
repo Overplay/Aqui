@@ -79,7 +79,8 @@ angular.module( 'ngOpTVApi', [] )
 
                     case "objectEquality":
                         dbout("checking for data model change");
-                        if ( !_.isEqual( service.model, data ) ) {
+                        if( !_.isEqual(service.model, data) ) { // Returns false when angular.equals returns true... suspicious -- $$hashKey is added by angular -- to fix, add 'track by $index' in your ngRepeat
+                        // if( !angular.equals(service.model, data) ) {
                             service.model = data;
                             _dataCb( service.model );
                         }
