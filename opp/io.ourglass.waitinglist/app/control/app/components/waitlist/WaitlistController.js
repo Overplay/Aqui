@@ -47,10 +47,8 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
         }
 
         function retrieveData(data) {
-            // if(optvModel.model.parties.length != data.parties.length) {
-                console.log('Data Callback - control found something new or missing!', data);
-                optvModel.model.parties = data.parties;
-            // }
+            console.log('Data Callback! - control', data);
+            optvModel.model.parties = data.parties;
         }
 
         function sendTextToParty(party) {

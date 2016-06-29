@@ -1,5 +1,5 @@
 <button class="button button-balanced button-full" ng-click="openAdd()">Add</button>
-<div ng-class="{'party-animate': getPartyUIElement(party, 'isDeleting')}" ng-repeat="party in parties()">
+<div ng-class="{'party-animate': getPartyUIElement(party, 'isDeleting')}" ng-repeat="party in parties() track by $index">
     <button class="button button-stable button-full party" ng-click="toggleOptions(party, false)"
             ns-transition-end party="party" ng-class="{'party-elongated': getPartyUIElement(party, 'partyElongated')}">
         <div class="party-party-size"><b>{{party.partySize}}</b></div>
