@@ -15,46 +15,28 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', function
 	//Make dynamic in the future?
 	$scope.partyLimit = 5;
 
-	//$scope.parties = function() { return optvModel.model.parties };
+	$scope.parties = function() { return optvModel.model.parties; };
 
-	$scope.parties = [{
-		'name' : 'Logan Saso',
-		'partySize' : 5,
-		'dateCreated': new Date()
-	},{
-		'name': 'Another One',
-		'partySize' : 12,
-		'dateCreated' : new Date()
-	},{
-		'name': 'And Another One',
-		'partySize' : 9,
-		'dateCreated' : new Date()
-	},{
-		'name': 'And Another REALLYREALLYREALLYREALLYREALLYFUKINLONGONE Jimbo sherbert One',
-		'partySize' : 9,
-		'dateCreated' : new Date()
-	}];
+	function handleDataCallback(data) {
+		optvModel.model.parties = data.parties;
+	}
 
-	function handleDataCallback(newParties) {
+	function addParty(){
+		$log.info("Add party called.")
+	}
 
-		/*var oldParties = $scope.parties;
-
-		var pDifference = _.differenceWith(newParties, oldParties, _.isEqual);
-		//remove or add animation for new party
-
-		//console.log(pDifference, newParties, oldParties);
-
-		$scope.parties = newParties;*/
+	function delParty(){
+		$log.info("Del party called.")
 
 	}
 
 	function updateFromRemote() {
 
 		optvModel.init({
-			appName: "io.ourglass.shuffleboard",
+			appName: "io.ourglass.waitinglist",
 			endpoint: "tv",
-			dataCallback: handleDataCallback(),
-			initialValue: {parties: $scope.parties}
+			dataCallback: handleDataCallback,
+			initialValue: {parties: []}
 		});
 	}
 
@@ -75,7 +57,6 @@ app.filter('nameMaximum', function(){
 		var computedLength = 0;
 		var numWords = 0;
 		var returnMe = "";
-
 
 		for(var word = 0; word < splitName.length; word++){
 

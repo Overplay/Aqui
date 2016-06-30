@@ -35,7 +35,7 @@ app.controller( "dsConController",
         }
 
         $scope.add = function () {
-            $scope.messageArray.push( "Enter new message" );
+            $scope.messageArray.push("");
         }
 
         $scope.update = function () {
