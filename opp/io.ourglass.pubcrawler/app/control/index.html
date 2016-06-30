@@ -9,15 +9,20 @@
 
     <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
 
-    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <!--<script src="../../../../common/bower_components/angular/angular.min.js"></script>-->
+
+    <script src="assets/bower_components/ionic/release/js/ionic.bundle.js"></script>
+
     <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
 
+    <script src="assets/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
     <!-- App Main and AngularJS Routes -->
 
-
     <script src="app/optvDSConApp.module.js"></script>
     <script src="../../../../common/js/optvAPILime.js"></script>
+
+    <script src="app/components/tabs/pubcrawler.routes.js"></script>
 
     <!-- Controllers -->
 
@@ -25,9 +30,10 @@
 
 
     <!-- App Specific and Overridden CSS -->
-    <link href="assets/css/styles.css" rel="stylesheet">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-
+    <link href="assets/css/styles.css" rel="stylesheet"/>
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/bower_components/ionic/release/css/ionic.min.css"/>
 
     <title>Guinness PubCrawler Control</title>
 </head>
@@ -36,26 +42,17 @@
 
 <!-- Remote Control -->
 
-<div class="top">
-    <div class="banner">
-        <img src="assets/img/guinness.png"/>
-        <span>Guinness Pub Crawler</span>
-    </div>
+<div class="bar bar-header bar-dark">
+    <h1 class="title">Pub Crawler | {{getSelectedTabTitle()}}</h1>
 </div>
 
-<br>
-
-<div>
-    <div class="btn" style="float: left;" ng-click="add()">ADD MESSAGE</div>
-    <div class="btn" style="float: right;" ng-click="update()">UPDATE TV</div>
-</div>
-
-<div class="form-group">
-    <div class="msg" ng-repeat="msg in messageArray track by $index">
-        <input type="text" placeholder="New Message" class="form-control" ng-model="messageArray[$index]">
-        <div class="delbtn" ng-click="del($index)">DELETE</div>
-    </div>
-</div>
+<ion-view class="has-header">
+    <ion-tabs class="tabs-dark">
+        <ion-tab ng-repeat="tab in tabs" title="{{tab}}" href="#/{{getTabURI(tab)}}">
+            <ui-view></ui-view>
+        </ion-tab>
+    </ion-tabs>
+</ion-view>
 
 </body>
 </html>

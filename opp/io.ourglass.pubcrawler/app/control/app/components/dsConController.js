@@ -2,52 +2,59 @@
  * Created by mkahn on 4/28/15.
  */
 
-app.controller( "dsConController",
-    function ( $scope, $timeout, $http, $log, optvModel ) {
+app.controller("dsConController",
+    function ($scope, $timeout, $http, optvModel, $ionicTabsDelegate) {
 
-        $log.info( "Loading dsConController" );
+        $scope.getMessages = function () {
+            return optvModel.model.messages;
+        };
+        $scope.getUpNextMessages = function () {
+            return optvModel.model.upNextMessages;
+        };
 
-        var logLead = "DS Control App: ";
-        $scope.inboundMessageArray = [];
-        $scope.messageArray = [];
+        $scope.tabs = ['Messages', 'Up Next', 'Twitter'];
 
-        function modelUpdate( data ) {
-
-            $log.info( logLead + " got a model update: " + angular.toJson( data ) );
-            $scope.messageArray = data.messages;
-
-
+        $scope.getSelectedTabTitle = function () {
+            return $scope.tabs[$ionicTabsDelegate.selectedIndex()];
+        }
+        $scope.getTabURI = function (tab) {
+            return tab.toLowerCase().replace(' ', '');
         }
 
-        function inboundMessage( msg ) {
-            $log.debug( logLead + "Inbound message..." );
+        function modelUpdate(data) {
+            optvModel.model.messages = data.messages;
+            optvModel.model.upNextMessages = data.upNextMessages;
         }
 
         function initialize() {
 
-            optvModel.init( {
-                appName:         "io.overplay.pubcrawler",
-                endpoint:        "control",
-                dataCallback:    modelUpdate,
-                messageCallback: inboundMessage
-            } );
+            optvModel.init({
+                appName: "io.overplay.pubcrawler",
+                endpoint: "control",
+                dataCallback: modelUpdate,
+                initialValue: {messages: [], upNextMessages: []}
+            });
 
         }
 
-        $scope.add = function () {
-            $scope.messageArray.push("");
-        }
+        $scope.newMessage = function () {
+            optvModel.model.messages.push("");
+        };
+        $scope.newUpNextMessage = function () {
+            optvModel.model.upNextMessages.push("");
+        };
+
+        $scope.delMessage = function (index) {
+            optvModel.model.messages.splice(index, 1);
+        };
+        $scope.delUpNextMessage = function (index) {
+            optvModel.model.upNextMessages.splice(index, 1);
+        };
 
         $scope.update = function () {
-            optvModel.messages = $scope.messageArray;
             optvModel.save();
-        }
-
-        $scope.del = function(index){
-            $scope.messageArray.splice(index, 1);
-        }
-
+        };
 
         initialize();
 
-    } );
+    });

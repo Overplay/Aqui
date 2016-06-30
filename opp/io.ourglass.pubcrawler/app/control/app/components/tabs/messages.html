@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col col-25 col-offset-10">
+        <div class="btn" ng-click="newMessage()">NEW</div>
+    </div>
+    <div class="col col-25 col-offset-33">
+        <div class="btn" style="float: right;" ng-click="update()">UPDATE TV</div>
+    </div>
+</div>
+<br>
+<div class="row" ng-repeat="msg in getMessages() track by $index">
+    <div class="col col-67 col-offset-10">
+        <input type="text" placeholder="New Message" ng-model="getMessages()[$index]">
+    </div>
+    <div class="col col-20">
+        <div class="btn delbtn" ng-click="delMessage($index)">DEL</div>
+    </div>
+</div>

@@ -10,7 +10,8 @@
 
 
 var app = angular.module('optvDSConApp', [
-    'ngOpTVApi'
+    'ngOpTVApi',
+    'ionic'
 ]);
 
 
