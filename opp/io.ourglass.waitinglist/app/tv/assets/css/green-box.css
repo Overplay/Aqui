@@ -1,0 +1,83 @@
+html, body{
+    margin: 0;
+    width: 200px;
+    height: 300px;
+    outline: 1px solid hotpink;
+    font-size: 12px;
+    font-family: "Titilium Web", sans-serif;
+}
+
+/*.party-card{*/
+
+    /*background: #fbfbfb;*/
+    /*margin-left: 2.5%;*/
+    /*margin-bottom: 3px;*/
+
+    /*border-radius: 1px;*/
+
+    /*align-content: center;*/
+
+    /*width: 95%;*/
+
+    /*-webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.08);*/
+    /*-moz-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.08);*/
+    /*box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.08);*/
+
+/*}*/
+
+/*.party-card-name{*/
+
+    /*position: relative;*/
+    /*left: 8px;*/
+    /*margin-bottom: 3px;*/
+
+/*}*/
+
+/*.party-card-size{*/
+
+    /*position: relative;*/
+    /*left: 8px;*/
+
+/*}*/
+
+/*.party-card-date{*/
+
+    /*flex: 1;*/
+    /*position: relative;*/
+    /*text-align: right;*/
+    /*right: 8px;*/
+
+/*}*/
+
+.party-card{
+
+    aoutline: 1px solid;
+    background: #3bb849;
+    margin-bottom: 3px;
+
+}
+
+.party-details-container{
+    display: flex;
+    flex-flow: row;
+}
+
+.party-card-size {
+
+    padding-top: 5px;
+    text-align: center;
+    flex: 1;
+    background: #3CAF48;
+    width: 35px;
+    text-align: center;
+    border-radius: 2px 0px 0px 2px;
+
+}
+
+.party-card-name{
+    position: relative;
+    left: 3px;
+    margin: 4px;
+    /*font-size: 16px;*/
+    width: 165px;
+}

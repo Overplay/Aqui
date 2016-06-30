@@ -1,11 +1,11 @@
 {
-  "name": "Overplay Amstel Bright with Lime",
-  "version": "0.0.1",
+  "name": "assets",
   "homepage": "https://github.com/Overplay/AmstelBrightLimeWWW",
   "authors": [
-    "Mitch Kahn <mitch@overplay.tv>"
+    "JewsOfHazard <logan.saso2016@gmail.com>"
   ],
-  "description": "Components for OPTV Apps",
+  "description": "",
+  "main": "",
   "license": "MIT",
   "private": true,
   "ignore": [
@@ -16,8 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "*",
-    "lodash": "*",
-    "codebird-js": "codebird#~2.6.0"
+    "jquery-timeago": "timeago#^1.5.3",
+    "angular-timeago": "^0.4.3"
   }
 }
