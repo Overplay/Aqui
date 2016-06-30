@@ -1,51 +1,35 @@
 <!DOCTYPE html>
-<html ng-app="optvWaitListApp">
-<head lang="en">
+<html lang="en" ng-app="optvWaitingList">
+<head>
     <meta charset="UTF-8">
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+    <title>Waiting List</title>
     <script src="../../../../common/bower_components/angular/angular.min.js"></script>
-    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
-
-    <script src="assets/bower_components/angular-timeago/dist/angular-timeago.min.js"></script>
-
-    <!-- App Main and AngularJS Routes -->
-    <script src="app/optvWaitListApp.module.js"></script>
+    <script src="app/optvWaitingList.module.js"></script>
+    <script src="app/components/WaitingListController.js"></script>
     <script src="../../../../common/js/optvAPILime.js"></script>
+    <script src="../../../../common/bower_components/lodash/lodash.js"></script>
+    <script src="../../assets/bower_components/angular-timeago/dist/angular-timeago.min.js"></script>
 
-    <!-- Controllers -->
-    <script src="app/components/waitlist/WaitlistController.js"></script>
+    <!--<link rel="stylesheet" href="assets/css/green-box.css" type="text/css">-->
 
-    <!-- App Specific and Overridden CSS -->
-    <!--<link href="assets/css/style.css" rel="stylesheet">-->
-    <link href="assets/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/design-two.css" type="text/css">
+
+    <!--<link rel="stylesheet" href="http://cdn.wfp.org/libraries/webfonts/aleo/aleo.css">-->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 
 
-    <title>OPTV Waiting List</title>
 </head>
+<body class="container" ng-controller="waitingListController">
 
-<body>
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/05/20100726_Kalamitsi_Beach_Ionian_Sea_Lefkada_island_Greece.jpg"
+     style="width: 100%; height: 100%; position: absolute; top:0;left:0;z-index: -1"/>
 
-<!-- semis skeuomorph look -->
-<div class="mainContainer" ng-controller="waitlistController">
 
-    <!--<div class="party" ng-repeat="party in parties() track by $index" ng-class="{'party-bottom': $index==parties().length-1}">-->
-        <!--<span class="index">#{{$index+1}}</span>-->
-        <!--<div class="info">-->
-            <!--<b class="name">{{party.name}} for {{party.partySize}}</b>-->
-            <!--<i class="time">{{party.dateCreated | timeAgo}}</i>-->
-        <!--</div>-->
-    <!--</div>-->
+<div ng-repeat="party in parties | limitTo:'partyLimit'" class="party-card">
 
-    <div class="party" ng-repeat="party in parties() track by $index" ng-class="{'party-bottom': $index==parties().length-1}">
-        <span class="index">#{{$index+1}}</span>
-        <div class="info">
-            <span class="name">table for <b>{{party.name}}</b></span>
-            <span class="party-size">party of <b>{{party.partySize}}</b></span>
-        </div>
+    <div class="party-details-container">
+        <div class="party-card-name">{{party.name | nameMaximum}}</div>
+        <div class="party-card-size"><span class="party-circle">{{party.partySize}}</span></div>
     </div>
 
 </div>

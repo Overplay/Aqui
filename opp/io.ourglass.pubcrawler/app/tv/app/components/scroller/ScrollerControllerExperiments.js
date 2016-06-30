@@ -2,6 +2,20 @@
  * Created by mkahn on 4/28/15.
  */
 
+/*********************************
+
+ File:       ScrollerControllerExperiments.js
+ Function:   This is kept around to document experiements
+ Copyright:  Overplay TV
+ Date:       6/29/16 12:23 PM
+ Author:     mkahn
+
+We experimented with a number of solutions to make a smooth scroller. This file is kept around for
+historical interest. The other ScrollerController is the clean one.
+
+ **********************************/
+
+
 app.controller("scrollerController",
     function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
 

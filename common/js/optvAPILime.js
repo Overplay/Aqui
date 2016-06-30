@@ -79,7 +79,8 @@ angular.module( 'ngOpTVApi', [] )
 
                     case "objectEquality":
                         dbout("checking for data model change");
-                        if( !_.isEqual(service.model, data) ) { // Returns false when angular.equals returns true... suspicious -- $$hashKey is added by angular -- to fix, add 'track by $index' in your ngRepeat
+                        if( !_.isEqual(service.model, data) ) { // Returns false when angular.equals returns true... suspicious -- $$hashKey is added by angular -- to fix, add
+  // 'track by $index' in your ngRepeat
                         // if( !angular.equals(service.model, data) ) {
                             service.model = data;
                             _dataCb( service.model );
@@ -126,16 +127,13 @@ angular.module( 'ngOpTVApi', [] )
 
             $log.debug( "optvAPILime init for app: " + _appName );
 
-            if ( _dataCb ) {
+            if ( _dataCb || _initialValue ) {
 
                 $http.get( apiPath + 'appdata/' + _appName )
                     .then( function ( data ) {
 
 
-                        if ( data.data.length == 0 ) {
-                            dbout("got a length zero response on initial read of model");
-                            setInitialAppDataValueHTTP();
-                        } else if ( _.isEmpty( data.data ) && !_.isEmpty( _initialValue )){
+                        if ( _.isEmpty( data.data ) && !_.isEmpty( _initialValue )){
                             dbout( "got an empty object response on initial read of model" );
                             setInitialAppDataValueHTTP();
                         }
@@ -200,6 +198,24 @@ angular.module( 'ngOpTVApi', [] )
             return $http.post( apiPath + 'app/' + appid + '/kill' );
 
         };
+
+
+        service.setTwitterQuery = function(twitterQuery){
+
+            return $http.post( apiPath + 'scrape/'+ appId, { query: twitterQuery });
+
+        }
+
+        function stripData( response  ) {
+            return response.data;
+        }
+
+        service.getTweets = function ( ) {
+
+            return $http.get( apiPath + 'scrape/' + _appName )
+                .then(stripData);
+
+        }
 
         return service;
 

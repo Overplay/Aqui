@@ -1,0 +1,14 @@
+{
+  "appType": "crawler",
+  "name": "PubCrawler",
+  "reverseDomainName": "io.ourglass.pubcrawler",
+  "buildNumber": 1,
+  "signature": "",
+  "iconLabel": "PubCrawler2",
+  "iconImage": "pub.png",
+  "publisher": "Ourglass, Inc.",
+  "show": true,
+  "primaryColor": "#1EA217",
+  "secondaryColor": "#17A271",
+  "textColor": "#FFFFFF"
+}
