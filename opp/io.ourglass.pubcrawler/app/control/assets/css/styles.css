@@ -21,22 +21,29 @@ body {
 
 }
 
+.top {
+    width: 100%;
+    height: 50px;
+    background-color: #000;
+}
 
-.top-banner {
-
-    width: 95%;
+.banner {
+    font-size: 1.5rem;
+    position: relative;
     height: 50px;
     background-color: #000;
     color: white;
-    font-size: 1.5rem;
     margin-top: 0;
     padding: 5px;
     border: 5px solid #c3a24f;
-    position: relative;
-
 }
 
-.top-banner > span {
+.banner img {
+    height: 30px;
+    margin-top: 10px;
+}
+
+.banner > span {
     position: absolute;
     top: 12px;
     left: 80px;
@@ -44,21 +51,30 @@ body {
 
 .msg {
     width: 100%;
-    padding: 20px;
     position: relative;
 }
 
 .msg input {
-    width: 90%;
+    width: 85%;
     padding: 5px;
     font-size: 1.2rem;
     border-radius: 8px;
+    float: left;
+    position: relative;
+    left: 15px;
+    height: 20px;
+    margin-bottom: 10px;
 }
 
 .delbtn {
     float: right;
     color: #ae8a32;
-    margin-right: 10%;
+    border: 2px solid #ae8a32;
+    padding: 5px;
+    border-radius: 11px;
+    position: relative;
+    right: 15px;
+    height: 20px;
 }
 
 .btn {
@@ -67,48 +83,5 @@ body {
     padding: 10px;
     border: 2px solid lightgrey;
     border-radius: 15px;
-    margin: 10px;
-}
-
-.ctrl-holder {
-
-    display: flex;
-    justify-content: space-between;
-    padding: 2%;
-
-}
-
-.rounded-border {
-    border: 2px solid #eee;
-    border-radius: 15px;
-    margin-top: 5px;
-}
-
-.bottom {
-    position: absolute;
-    left: 0;
-    bottom: 50px;
-    width: 95%;
-}
-
-.msgnum {
-    background-color: #404040;
-    color: #ffffff;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    float: left;
-    width: 30px;
-    height: 25px;
-    text-align: center;
-    line-height: 25px;
-}
-
-.fl {
-    float: left;
-}
-
-.fr {
-    float: right;
-    margin-right: 40px;
+    margin: 14px;
 }
