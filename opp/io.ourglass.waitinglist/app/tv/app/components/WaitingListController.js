@@ -17,41 +17,39 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', function
 
 	//$scope.parties = function() { return optvModel.model.parties };
 
-	$scope.parties = [{
-		'name' : 'Logan Saso',
-		'partySize' : 5,
-		'dateCreated': new Date()
-	},{
-		'name': 'Another One',
-		'partySize' : 12,
-		'dateCreated' : new Date()
-	},{
-		'name': 'And Another One',
-		'partySize' : 9,
-		'dateCreated' : new Date()
-	},{
-		'name': 'And Another REALLYREALLYREALLYREALLYREALLYFUKINLONGONE Jimbo sherbert One',
-		'partySize' : 9,
-		'dateCreated' : new Date()
-	}];
+	$scope.parties = [];
 
-	function handleDataCallback(newParties) {
+	function handleDataCallback(data) {
 
-		/*var oldParties = $scope.parties;
+		var newParties = data.parties;
+		var oldParties = $scope.parties;
+
+		var isAddition = false;
+
+		if(newParties.size > oldParties.size)
+			isAddition = true;
 
 		var pDifference = _.differenceWith(newParties, oldParties, _.isEqual);
-		//remove or add animation for new party
 
-		//console.log(pDifference, newParties, oldParties);
+		isAddition ? addParty(pDifference) : delParty(pDifference);
 
-		$scope.parties = newParties;*/
+		$scope.parties = newParties;
+
+	}
+
+	function addParty(){
+		$log.info("Add party called.")
+	}
+
+	function delParty(){
+		$log.info("Del party called.")
 
 	}
 
 	function updateFromRemote() {
 
 		optvModel.init({
-			appName: "io.ourglass.shuffleboard",
+			appName: "io.ourglass.waitinglist",
 			endpoint: "tv",
 			dataCallback: handleDataCallback(),
 			initialValue: {parties: $scope.parties}
