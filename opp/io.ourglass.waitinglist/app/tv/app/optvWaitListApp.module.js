@@ -10,8 +10,7 @@
 
 
 var app = angular.module('optvWaitListApp', [
-    'ngOpTVApi',
-    'yaru22.angular-timeago'
+    'ngOpTVApi'
 ]);
 
 

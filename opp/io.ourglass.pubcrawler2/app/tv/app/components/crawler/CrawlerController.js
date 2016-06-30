@@ -66,13 +66,13 @@ app.controller( "crawlerController",
         updateFromRemote();
 
         // Set up Twitter scraping. Static as an example, the query should be kept in the optvModel.
-        optvModel.setTwitterQuery('brexit')
-            .then( function(data){
-                $log.debug("Twitter query set");
-            })
-            .catch( function(err){
-                $log.error("Twitter query could not be set");
-            })
+        // optvModel.setTwitterQuery('brexit')
+        //     .then( function(data){
+        //         $log.debug("Twitter query set");
+        //     })
+        //     .catch( function(err){
+        //         $log.error("Twitter query could not be set");
+        //     })
             
         
 
@@ -110,8 +110,8 @@ app.directive( 'pubCrawler', [
 
                 var scrollerWidth;
                 var currentLeft = SCREEN_WIDTH;
-                var FPS = 240;
-                var PPF = 0.5;
+                var FPS = 60;
+                var PPF = 2;
 
 
                 function scroll() {
