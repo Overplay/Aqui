@@ -8,22 +8,26 @@ app.controller("dsConController",
         $scope.getMessages = function () {
             return optvModel.model.messages;
         };
-        $scope.getUpNextMessages = function () {
-            return optvModel.model.upNextMessages;
+        $scope.getComingUpMessages = function () {
+            return optvModel.model.comingUpMessages;
+        };
+        $scope.getTwitterQueries = function () {
+            return optvModel.model.twitterQueries;
         };
 
-        $scope.tabs = ['Messages', 'Up Next', 'Twitter'];
+        $scope.tabs = ['Messages', 'Coming Up', 'Twitter'];
 
         $scope.getSelectedTabTitle = function () {
             return $scope.tabs[$ionicTabsDelegate.selectedIndex()];
-        }
+        };
         $scope.getTabURI = function (tab) {
             return tab.toLowerCase().replace(' ', '');
-        }
+        };
 
         function modelUpdate(data) {
             optvModel.model.messages = data.messages;
-            optvModel.model.upNextMessages = data.upNextMessages;
+            optvModel.model.comingUpMessages = data.comingUpMessages;
+            optvModel.model.twitterQueries = data.twitterQueries;
         }
 
         function initialize() {
@@ -32,7 +36,7 @@ app.controller("dsConController",
                 appName: "io.overplay.pubcrawler",
                 endpoint: "control",
                 dataCallback: modelUpdate,
-                initialValue: {messages: [], upNextMessages: []}
+                initialValue: {messages: [], comingUpMessages: [], twitterQueries: []}
             });
 
         }
@@ -40,15 +44,21 @@ app.controller("dsConController",
         $scope.newMessage = function () {
             optvModel.model.messages.push("");
         };
-        $scope.newUpNextMessage = function () {
-            optvModel.model.upNextMessages.push("");
+        $scope.newComingUpMessage = function () {
+            optvModel.model.comingUpMessages.push("");
+        };
+        $scope.newTwitterQuery = function () {
+            optvModel.model.twitterQueries.push("");
         };
 
         $scope.delMessage = function (index) {
             optvModel.model.messages.splice(index, 1);
         };
-        $scope.delUpNextMessage = function (index) {
-            optvModel.model.upNextMessages.splice(index, 1);
+        $scope.delComingUpMessage = function (index) {
+            optvModel.model.comingUpMessages.splice(index, 1);
+        };
+        $scope.delTwitterQuery = function (index) {
+            optvModel.model.twitterQueries.splice(index, 1);
         };
 
         $scope.update = function () {

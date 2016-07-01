@@ -9,9 +9,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: "/messages",
             templateUrl: 'app/components/tabs/messages.html'
         })
-        .state('upnext', {
-            url: "/upnext",
-            templateUrl: 'app/components/tabs/upnext.html'
+        .state('comingup', {
+            url: "/comingup",
+            templateUrl: 'app/components/tabs/comingup.html'
         })
         .state('twitter', {
             url: "/twitter",
