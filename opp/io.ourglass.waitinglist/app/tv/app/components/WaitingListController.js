@@ -10,40 +10,15 @@
 // 		'dateCreated': new Date()
 // }
 
-app.controller('waitingListController', ['$scope', 'optvModel', '$log', function ($scope, optvModel, $log) {
+app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
 
-	//Make dynamic in the future?
-	$scope.partyLimit = 5;
+	$scope.parties = function() { return optvModel.model.parties; };
 
-	//$scope.parties = function() { return optvModel.model.parties };
-
-	$scope.parties = [];
 
 	function handleDataCallback(data) {
-
-		var newParties = data.parties;
-		var oldParties = $scope.parties;
-
-		var isAddition = false;
-
-		if(newParties.size > oldParties.size)
-			isAddition = true;
-
-		var pDifference = _.differenceWith(newParties, oldParties, _.isEqual);
-
-		isAddition ? addParty(pDifference) : delParty(pDifference);
-
-		$scope.parties = newParties;
-
-	}
-
-	function addParty(){
-		$log.info("Add party called.")
-	}
-
-	function delParty(){
-		$log.info("Del party called.")
-
+		if (data.length != optvModel.model.parties.length) {
+			optvModel.model.parties = data.parties;
+		}
 	}
 
 	function updateFromRemote() {
@@ -51,8 +26,8 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', function
 		optvModel.init({
 			appName: "io.ourglass.waitinglist",
 			endpoint: "tv",
-			dataCallback: handleDataCallback(),
-			initialValue: {parties: $scope.parties}
+			dataCallback: handleDataCallback,
+			initialValue: {parties: []}
 		});
 	}
 
@@ -60,40 +35,92 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', function
 		return "waitingListController:";
 	}
 
+
 	updateFromRemote();
+
 
 }]);
 
-app.filter('nameMaximum', function(){
 
-	return function(data){
+app.directive('topScroller', function ($timeout) {
+	return {
+		restrict: 'E',
+		scope: {
+			parties: '='
+		},
+		templateUrl: 'app/components/directives/topscroller.template.html',
+		link: function (scope, elem, attrs) {
+			scope.topPos = {};
 
-		var splitName = data.split(" ");
-		var CHARLIMIT = 12;
-		var computedLength = 0;
-		var numWords = 0;
-		var returnMe = "";
+			function loadHeight() {
+				return $timeout(function () {
+					return document.getElementById('party-container').offsetHeight;
+				})
+			}
+
+			var i, dx, delay = 20, top;
+
+			function loop() {
+				if (i >= dx) {
+					console.log('Done!');
+					beginScroll();
+					return;
+				}
+				i++;
+				scope.topPos.top = --top + 'px';
+				$timeout(loop, delay);
+			}
+
+			function beginScroll() {
+				console.log('Beginning scroll...');
+				i = 1;
+				loadHeight().then(function (height) {
+					dx = height + window.innerHeight;
+					top = window.innerHeight;
+					scope.topPos.top = top + 'px';
+					console.log('Scroll starting. Got height:', height, 'and window height:', window.innerHeight, 'and dx:', dx);
+					loop();
+				});
+			}
+
+			beginScroll();
+
+		}
+	}
+});
+
+app.filter('nameMaximum', function () {
+
+	return function (data) {
+
+		var words = data.split(" ");
+		var countedLetters = 0;
+		var CHARLIMIT = 6;
+		var returnMe = data;
 
 
-		for(var word = 0; word < splitName.length; word++){
+		for (var word = 0; word < words.length; word++) {
 
-			if(computedLength > CHARLIMIT){
-				numWords = word;
+			for (var letter = 0; letter < words[word].length; letter++) {
+
+				countedLetters++
+
+			}
+
+			if (countedLetters > CHARLIMIT) {
+
+				if (word == 0)
+					word++;
+
+				returnMe = words.splice(0, word).join(" ");
+
+				if (word == 1)
+					return returnMe;
+
 				break;
 			}
-			computedLength+=splitName[word].length;
 
 		}
-		if(numWords == 0){
-			return data;
-		}
-
-		for(var i = 0; i < numWords-2; i++){
-
-			returnMe += splitName[i] + " ";
-
-		}
-		returnMe += splitName[numWords-2];
 
 		return returnMe;
 
@@ -101,3 +128,26 @@ app.filter('nameMaximum', function(){
 	}
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

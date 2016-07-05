@@ -1,18 +1,23 @@
 html, body{
     margin: 0;
-    width: 200px;
+    width: 300px;
     height: 300px;
     /*border: 1px solid hotpink;*/
-    font-size: 12px;
+    font-size: 30px;
     font-family: "Titilium Web", sans-serif;
+    background-color: #fdf4ff;
+    overflow: hidden;
 
+}
 
+::-webkit-scrollbar {
+    display: none;
 }
 
 .party-card{
 
     margin-bottom: 3px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.40);
     display: flex;
     color: white;
 
@@ -20,9 +25,10 @@ html, body{
     -moz-border-radius:3px;
     border-radius:3px;
 
-    width: 170px;
+    width: 290px;
 
-    height: 20px;
+
+    height: 45px;
     /*line-height: 15px;*/
 
     -webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.08);
@@ -32,6 +38,28 @@ html, body{
 
 
 }
+
+.party-card.ng-enter{
+
+    transition: all 500ms ease-out;
+    opacity: 0;
+
+}
+
+.party-card.ng-enter-active{
+    opacity: 1;
+}
+
+.party-card.ng-leave{
+    transition: all 500ms ease-in;
+    opacity: 1;
+}
+
+.party-card.ng-leave-active{
+    opacity: 0;
+}
+
+
 
 .party-details-container{
     display: flex;
@@ -44,25 +72,46 @@ html, body{
     width: 30px;
     /*border: 3px solid red;*/
     background: #2d72ff;
-    order: 1;
+    order: 2;
     /*position: relative;*/
     text-align: center;
 
     border-radius: 0 3px 3px 0;
 
-    font-size: 10px;
-    line-height: 15px;
+    font-size: 22px;
+    line-height: 36px;
+
+}
+
+.party-order{
+
+    padding: 3px;
+    width: 30px;
+    /*border: 3px solid red;*/
+    background: #2d72ff;
+    order: 0;
+    /*position: relative;*/
+    text-align: center;
+
+    border-radius: 3px 0 0 3px;
+
+    font-size: 22px;
+    line-height: 36px;
 
 }
 
 
 .party-card-name{
 
-    order: 0;
+    order: 1;
 
+    margin-right: 10px;
     padding: 3px 0 0 5px;
-    width: 159px;
+    left: 30px;
+    width: 213px;
     overflow: hidden;
     white-space: nowrap;
+
+    text-shadow: 2px 2px 5px black;
 
 }

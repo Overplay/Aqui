@@ -1,0 +1,11 @@
+<div id="party-container" style="position: relative;" ng-style="topPos">
+
+    <div ng-repeat="party in parties" class="party-card" id="{{'scroll'+$index}}">
+
+        <div class="party-details-container">
+            <div class="party-order">{{$index + 1}}</div>
+            <div class="party-card-name">{{party.name | nameMaximum}}</div>
+            <div class="party-card-size"><span class="party-circle">{{party.partySize}}</span></div>
+        </div>
+    </div>
+</div>
