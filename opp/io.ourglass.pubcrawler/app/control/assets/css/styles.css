@@ -31,30 +31,45 @@ ui-view {
 .btn {
     color: lightgrey;
     /*padding: 8px;*/
-    box-shadow: 0 0 0 2px lightgrey;
+    box-shadow: 0 0 0 1px lightgrey;
     /*margin: 14px;*/
     height: 34px;
     text-align: center;
     width: 100%;
 }
 
-.inputbtn {
-    width: 82%;
+.btn-toolbar > .btn-group {
+    width: 65%;
 }
 
 .delbtn {
-    color: #ae8a32;
-    box-shadow: 0 0 0 2px #ae8a32;
+    color: limegreen;
+    box-shadow: 0 0 0 1px limegreen;
 }
 
 input {
     width: 100%;
     font-size: 1.6rem;
     border-radius: 6px;
-    height: 35px;
+    height: 34px;
     margin-bottom: 10px;
     padding: 6px !important;
     box-shadow: 0 0 0 1px white;
+    float: left;
 }
 
+.twitter-input input {
+    padding-left: 11% !important;
+}
 
+.twitter-input label {
+    position: absolute;
+    background-color: rgba(100, 100, 100, 0.8);
+    height: 34px;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+    width: 5%;
+    text-align: center;
+    color: whitesmoke;
+    line-height: 33px;
+}

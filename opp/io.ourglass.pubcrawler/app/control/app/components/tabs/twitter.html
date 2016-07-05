@@ -1,18 +1,27 @@
 <div class="row">
-    <div class="col col-25 col-offset-10">
-        <div class="btn" ng-click="newTwitterQuery()">NEW</div>
-    </div>
-    <div class="col col-25 col-offset-33">
-        <div class="btn" style="float: right;" ng-click="update()">UPDATE TV</div>
+    <div class="col col-90 col-offset-10">
+        <div class="btn-toolbar">
+            <div class="btn-group btn-group-justified">
+                <div class="btn" ng-click="newTwitterQuery('')">TEXT</div>
+                <div class="btn" ng-click="newTwitterQuery('#')">#</div>
+                <div class="btn" ng-click="newTwitterQuery('@')">@</div>
+            </div>
+            <div class="btn-group btn-group-justified" style="width: 30%; float: right;">
+                <div class="btn" ng-click="update()">UPDATE</div>
+            </div>
+        </div>
     </div>
 </div>
 <br>
-<div class="row" ng-repeat="comingUp in getTwitterQueries() track by $index">
-    <div class="col col-67 col-offset-10">
-        <input type="text" placeholder="New Twitter Query"
-               ng-model="getTwitterQueries()[$index]">
+<div class="row" ng-repeat="twitterQuery in twitterQueries track by $index">
+    <div class="col" style="margin-left: 10%;">
+        <div class="twitter-input">
+            <label>{{twitterQuery.method}}</label>
+            <input type="text" placeholder="New Query..."
+                   ng-model="twitterQueries[$index].query"/>
+        </div>
     </div>
     <div class="col col-20">
-        <div class="btn inputbtn delbtn" ng-click="delTwitterQuery($index)">DEL</div>
+        <div class="btn delbtn" ng-click="delTwitterQuery($index)">DEL</div>
     </div>
 </div>

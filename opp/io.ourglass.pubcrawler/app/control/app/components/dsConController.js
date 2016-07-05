@@ -3,17 +3,11 @@
  */
 
 app.controller("dsConController",
-    function ($scope, $timeout, $http, optvModel, $ionicTabsDelegate) {
+    function ($scope, $timeout, $interval, $http, optvModel, $ionicTabsDelegate) {
 
-        $scope.getMessages = function () {
-            return optvModel.model.messages;
-        };
-        $scope.getComingUpMessages = function () {
-            return optvModel.model.comingUpMessages;
-        };
-        $scope.getTwitterQueries = function () {
-            return optvModel.model.twitterQueries;
-        };
+        $scope.messages = [];
+        $scope.comingUpMessages = [];
+        $scope.twitterQueries = [];
 
         $scope.tabs = ['Messages', 'Coming Up', 'Twitter'];
 
@@ -25,15 +19,21 @@ app.controller("dsConController",
         };
 
         function modelUpdate(data) {
-            optvModel.model.messages = data.messages;
-            optvModel.model.comingUpMessages = data.comingUpMessages;
-            optvModel.model.twitterQueries = data.twitterQueries;
+            if(data.messages.length != $scope.messages.length) {
+                $scope.messages = data.messages || [];
+            }
+            if(data.comingUpMessages.length != $scope.comingUpMessages.length) {
+                $scope.comingUpMessages = data.comingUpMessages || [];
+            }
+            if(data.twitterQueries.length != $scope.twitterQueries.length) {
+                $scope.twitterQueries = data.twitterQueries || [];
+            }
         }
 
         function initialize() {
 
             optvModel.init({
-                appName: "io.overplay.pubcrawler",
+                appName: "io.ourglass.pubcrawler",
                 endpoint: "control",
                 dataCallback: modelUpdate,
                 initialValue: {messages: [], comingUpMessages: [], twitterQueries: []}
@@ -42,27 +42,45 @@ app.controller("dsConController",
         }
 
         $scope.newMessage = function () {
-            optvModel.model.messages.push("");
+            $scope.messages.push("");
+            $scope.update();
         };
         $scope.newComingUpMessage = function () {
-            optvModel.model.comingUpMessages.push("");
+            $scope.comingUpMessages.push("");
+            $scope.update();
         };
-        $scope.newTwitterQuery = function () {
-            optvModel.model.twitterQueries.push("");
+        $scope.newTwitterQuery = function (method) {
+            $scope.twitterQueries.push({method: method, query: ""});
+            $scope.update();
         };
 
         $scope.delMessage = function (index) {
-            optvModel.model.messages.splice(index, 1);
+            $scope.messages.splice(index, 1);
+            $scope.update();
         };
         $scope.delComingUpMessage = function (index) {
-            optvModel.model.comingUpMessages.splice(index, 1);
+            $scope.comingUpMessages.splice(index, 1);
+            $scope.update();
         };
         $scope.delTwitterQuery = function (index) {
-            optvModel.model.twitterQueries.splice(index, 1);
+            $scope.twitterQueries.splice(index, 1);
+            $scope.update();
         };
 
+        function buildTwitterString () {
+            var query = "";
+            angular.forEach(optvModel.model.twitterQueries, function(value) {
+                query += value.method+value.query+' ';
+            });
+            return query.trim();
+        }
+
         $scope.update = function () {
+            optvModel.model.messages = $scope.messages;
+            optvModel.model.comingUpMessages = $scope.comingUpMessages;
+            optvModel.model.twitterQueries = $scope.twitterQueries;
             optvModel.save();
+            optvModel.setTwitterQuery(buildTwitterString());
         };
 
         initialize();

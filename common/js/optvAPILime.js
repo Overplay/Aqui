@@ -202,7 +202,7 @@ angular.module( 'ngOpTVApi', [] )
 
         service.setTwitterQuery = function(twitterQuery){
 
-            return $http.post( apiPath + 'scrape/'+ appId, { query: twitterQuery });
+            return $http.post( apiPath + 'scrape/'+ _appName, { query: twitterQuery });
 
         }
 
