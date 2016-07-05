@@ -12,8 +12,57 @@
 
 app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
 
-	$scope.parties = function() { return optvModel.model.parties; };
+	//$scope.parties = function() { return optvModel.model.parties; };
 
+	var parties = [
+		{
+			name: "Logan Saso",
+			partySize: 12
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1
+		},{
+			name: "Logan Saso",
+			partySize: 12
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1
+		},{
+			name: "Logan Saso",
+			partySize: 12
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1
+		},{
+			name: "Logan Saso",
+			partySize: 12
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1
+		},{
+			name: "Logan Saso",
+			partySize: 12
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1
+		},{
+			name: "Logan Saso",
+			partySize: 12
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1
+		}
+	];
+
+	$scope.parties = function(){
+		return parties;
+	};
 
 	function handleDataCallback(data) {
 		if (data.length != optvModel.model.parties.length) {
@@ -75,8 +124,8 @@ app.directive('topScroller', function ($timeout) {
 				console.log('Beginning scroll...');
 				i = 1;
 				loadHeight().then(function (height) {
-					dx = height + window.innerHeight;
-					top = window.innerHeight;
+					top = 300;
+					dx = height + top;
 					scope.topPos.top = top + 'px';
 					console.log('Scroll starting. Got height:', height, 'and window height:', window.innerHeight, 'and dx:', dx);
 					loop();
