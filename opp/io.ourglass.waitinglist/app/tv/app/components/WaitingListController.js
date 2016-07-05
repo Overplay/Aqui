@@ -27,10 +27,10 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 			partySize: 12
 		},
 		{
-			name: "Noah Saso",
+			name: "Christopher Saso",
 			partySize: 1
 		},{
-			name: "Logan Saso",
+			name: "Arabella Appleseed Saso",
 			partySize: 12
 		},
 		{
@@ -144,7 +144,7 @@ app.filter('nameMaximum', function () {
 
 		var words = data.split(" ");
 		var countedLetters = 0;
-		var CHARLIMIT = 12;
+		var CHARLIMIT = 18;
 		var returnMe = data;
 
 
