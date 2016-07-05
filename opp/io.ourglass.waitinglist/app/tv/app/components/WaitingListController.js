@@ -58,7 +58,7 @@ app.directive('topScroller', function ($timeout) {
 				})
 			}
 
-			var i, dx, delay = 20, top;
+			var i, dx, delay = 50, top;
 
 			function loop() {
 				if (i >= dx) {
