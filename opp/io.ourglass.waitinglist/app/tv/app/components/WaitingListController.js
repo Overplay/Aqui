@@ -144,7 +144,7 @@ app.filter('nameMaximum', function () {
 
 		var words = data.split(" ");
 		var countedLetters = 0;
-		var CHARLIMIT = 6;
+		var CHARLIMIT = 12;
 		var returnMe = data;
 
 
