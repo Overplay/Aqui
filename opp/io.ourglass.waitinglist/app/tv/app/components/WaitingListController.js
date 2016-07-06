@@ -12,69 +12,69 @@
 
 app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
 
-	$scope.parties = function() { return optvModel.model.parties; };
-	//
-	// var parties = [
-	// 	{
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: true
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Christopher Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Arabella Appleseed Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: true
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}
-	// ];
-	//
-	// $scope.parties = function () {
-	// 	return parties;
-	// };
+	// $scope.parties = function() { return optvModel.model.parties; };
+
+	var parties = [
+		{
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Christopher Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Arabella Appleseed Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}
+	];
+
+	$scope.parties = function () {
+		return parties;
+	};
 
 	function handleDataCallback(data) {
 		if (data.length != optvModel.model.parties.length) {
@@ -221,7 +221,7 @@ app.filter('nameMaximum', function () {
 
 		var words = data.split(" ");
 		var countedLetters = 0;
-		var CHARLIMIT = 18;
+		var CHARLIMIT = 12;
 		var returnMe = data;
 
 
