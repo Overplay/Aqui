@@ -16,10 +16,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.7",
-    "lodash": "^4.13.1",
+    "angular": "*",
+    "lodash": "*",
     "codebird-js": "codebird#~2.6.0",
-    "ngSmoothScroll": "^2.0.0"
-  },
+  }
   "main": ""
 }
