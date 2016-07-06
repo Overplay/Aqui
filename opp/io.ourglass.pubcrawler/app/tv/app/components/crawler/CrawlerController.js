@@ -97,7 +97,7 @@ app.directive('pubCrawler', [
 
                         scope.ui.nextUp = scope.comingUpMessages[scope.ui.nidx];
                         scope.ui.nidx++;
-                        if (scope.ui.nidx == scope.comingUpMessages.length)
+                        if (scope.ui.nidx >= scope.comingUpMessages.length)
                             scope.ui.nidx = 0;
                         scope.ui.scrollin = true;
 
