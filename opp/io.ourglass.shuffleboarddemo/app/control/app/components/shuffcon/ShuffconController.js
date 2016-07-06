@@ -27,7 +27,7 @@ app.controller( "shuffconController",
         function initialize() {
 
             optvModel.init( {
-                appName:         "io.overplay.shuffleboard",
+                appName:         "io.ourglass.shuffleboard",
                 endpoint:        "control",
                 initialValue:    { red: 0, blue: 0 },
                 dataCallback:    dataChanged,
