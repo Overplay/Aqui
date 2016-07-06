@@ -5,17 +5,21 @@
     z-index: 1;
 }
 
+.party-table-ready {
+    font-style: italic;
+}
+
 /* DELETING ANIMATION */
 
 .party-animate.ng-leave {
-    transition: all 750ms ease;
+    transition: all 600ms ease;
     opacity: 1;
     margin-bottom: 0;
     transform: scale(1);
 }
 .party-animate.ng-leave.ng-leave-active {
     opactiy: 0;
-    margin-bottom: -60px;
+    /*margin-bottom: -60px;*/
     transform: scale(0);
 }
 

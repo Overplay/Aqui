@@ -84,19 +84,22 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                             name: 'Noah',
                             partySize: 5,
                             dateCreated: new Date((new Date()).valueOf() - (60000 * 20)),
-                            phone: '4084990902'
+                            phone: '4084990902',
+                            tableReady: false
                         },
                         {
                             name: 'Logan',
                             partySize: 8,
                             dateCreated: new Date((new Date()).valueOf() - (60000 * 5)),
-                            phone: '4088333405'
+                            phone: '4088333405',
+                            tableReady: false
                         },
                         {
                             name: 'Saso',
                             partySize: 11,
                             dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
-                            phone: '4082672769'
+                            phone: '4082672769',
+                            tableReady: false
                         }
                     ]
                 },
@@ -114,7 +117,8 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                 name: '',
                 partySize: undefined,
                 dateCreated: undefined,
-                phone: undefined
+                phone: undefined,
+                tableReady: false
             };
         }
 
@@ -188,7 +192,10 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
         $scope.doPartyBnAction = function (party, $event) {
             var label = $event.target.innerHTML;
             switch (label.trim().toLowerCase()) {
-                case 'left':
+                case 'table ready':
+                case 'table not ready':
+                    party.tableReady = !party.tableReady;
+                    break;
                 case 'delete':
                 case 'seated':
                     $scope.toggleOptions(party, true);
