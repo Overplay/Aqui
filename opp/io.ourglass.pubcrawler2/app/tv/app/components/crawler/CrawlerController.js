@@ -1,47 +1,59 @@
-/**
- * Created by mkahn on 4/28/15.
- */
+/*********************************
 
-app.controller( "scrollerController",
+ File:       crawlerController.js
+ Function:   Core of the Pubcrawler App
+ Copyright:  Overplay TV
+ Date:       6/29/16 12:28 PM
+ Author:     mkahn
+
+
+ **********************************/
+
+
+app.controller( "crawlerController",
     function ( $scope, $timeout, $http, $interval, optvModel, $log, $window ) {
 
-        console.log( "Loading scrollerController" );
+        console.log( "Loading crawlerController" );
 
+        var VERBOSE = true;
 
+        // TODO: This data should be coming from the AB server thru the model API
         $scope.messageArray = [ "Golden State pushes series to decisive Game 7",
             "Try our new Ranch Chicken Salad, $7.99",
             "Don't forget our 4th of July Party!",
             "Try Rheingold IPA, Hop to It",
             "Bangers and Mash on Special for Happy Hour" ];
 
-        function logLead() { return "scrollerController: "; }
+        // TODO: This data should be coming from the AB server thru the model API
+        $scope.comingUpArray = [ "1:00 Giants vs. DBacks", "4:30 GSW Pregame", "5:00 Warriors v Cavs" ];
 
+        function dblog( msg ) {
+            if ( VERBOSE )
+                $log.debug( "scrollerController: " + msg );
+        }
+
+        // TODO this be broke
         function modelUpdate( data ) {
 
-            $log.debug( logLead() + " got a model update: " + angular.toJson( data ) );
             if ( data.messages ) {
                 $scope.messageArray = data.messages;
+                $scope.comingUpArray = data.comingUp;
             }
 
 
         }
 
-        function inboundMessage( msg ) {
-            $log.debug( logLead() + "Inbound message..." );
-        }
-
         function updateFromRemote() {
 
             optvModel.init( {
-                appName:         "io.overplay.pubcrawler",
-                endpoint:        "tv",
+                appName:         "io.ourglass.pubcrawler2",
                 dataCallback:    modelUpdate,
-                messageCallback: inboundMessage,
-                initialValue:    { messages: $scope.messageArray }
+                initialValue:    { messages: $scope.messageArray, comingUp: $scope.comingUpArray }
             } );
 
         }
 
+        // NFC why this is here...oh wait..maybe because of the weird size issue in the emulators
         $scope.$watch( function () {
             return $window.innerWidth;
         }, function ( value ) {
@@ -53,102 +65,69 @@ app.controller( "scrollerController",
 
         updateFromRemote();
 
+        // Set up Twitter scraping. Static as an example, the query should be kept in the optvModel.
+        optvModel.setTwitterQuery('brexit')
+            .then( function(data){
+                $log.debug("Twitter query set");
+            })
+            .catch( function(err){
+                $log.error("Twitter query could not be set");
+            })
+            
+        
+
+
 
     } );
 
 
-app.directive( 'leftScroller2t', [
+app.directive( 'pubCrawler', [
     '$log', '$timeout', '$window',
     function ( $log, $timeout, $window ) {
         return {
             restrict:    'E',
             scope:       {
-                messageArray: '=',
-                logo:         '='
+                messageArray:  '=',
+                logo:          '=',
+                comingUpArray: '=',
+                bannerAd:      '='
             },
-            templateUrl: 'app/components/scroller/leftscroller2.template.html',
+            templateUrl: 'app/components/crawler/pubcrawler.template.html',
             link:        function ( scope, elem, attrs ) {
 
-                scope.leftPos = { left: '200px' };
+                var SCREEN_WIDTH = window.innerWidth;
+                var _nextUpIndex = 0;
 
-                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
-
-                var scrollerUl = document.getElementById( 'scroller-ul' );
-
-                scrollerUl.addEventListener( "transitionend", function () {
-
-                    doScroll();
-
-                }, false );
-
-                function doScroll() {
-
-                    $timeout( function () {
-                        var width = scrollerUl.offsetWidth;
-                        $log.debug( "Scroller width: " + width );
-                        scope.leftPos = {
-                            '-webkit-transform': 'translate(' + (width - 400) + 'px,0)',
-                            transition:          '-webkit-transform 0s'
-                        };
-                        var destXform = -width + 'px';
-                        $timeout( function () {
-                            scope.leftPos = {
-                                '-webkit-transform': 'translate(' + destXform + ',0)',
-                                transition:          '-webkit-transform 30s linear'
-                            };
-
-                        }, 100 );
-                    }, 100 );
-
-                }
-
-                doScroll();
-
-            }
-        }
-    } ]
-);
-
-app.directive( 'leftScroller2', [
-    '$log', '$timeout', '$window',
-    function ( $log, $timeout, $window ) {
-        return {
-            restrict:    'E',
-            scope:       {
-                messageArray: '=',
-                logo:         '='
-            },
-            templateUrl: 'app/components/scroller/leftscroller2.template.html',
-            link:        function ( scope, elem, attrs ) {
-
-                scope.leftPos = { left: '1280px' };
+                scope.leftPos = { left: SCREEN_WIDTH + 'px' };
 
                 scope.ui = {
                     scrollin:  false,
-                    scrollout: false,
-                    nextUpArr: [ "1:00 Giants vs. DBacks", "4:30 GSW Pregame", "5:00 Warriors v Cavs" ],
-                    nextUp:    '',
-                    nidx:      0
+                    nextUp:    ''
                 };
 
-                $timeout( function () { }, 5000 );
+                $timeout( function () {
+                }, 5000 );
 
                 var scrollerWidth;
-                var currentLeft = 1280;
-                var FPS = 480;
+                var currentLeft = SCREEN_WIDTH;
+                var FPS = 240;
                 var PPF = 0.5;
+
 
                 function scroll() {
 
+                    if (scope.comingUpArray.length==0)
+                        return;
+                        
                     scope.ui.nextUp = '';
                     scope.ui.scrollin = false;
 
                     $timeout( function () {
 
-                        scope.ui.nextUp = scope.ui.nextUpArr[ scope.ui.nidx ];
-                        scope.ui.nidx++;
-                        if ( scope.ui.nidx == scope.ui.nextUpArr.length )
-                            scope.ui.nidx = 0;
+                        scope.ui.nextUp = scope.comingUpArray[ _nextUpIndex ];
+                        _nextUpIndex++;
+                        if ( _nextUpIndex == scope.comingUpArray.length )
+                            _nextUpIndex = 0;
                         scope.ui.scrollin = true;
 
                         $timeout( function () {
@@ -172,12 +151,11 @@ app.directive( 'leftScroller2', [
 
                 }, false );
 
+                // This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
                 function loadWidth() {
-
                     return $timeout( function () {
                         return scrollerUl.offsetWidth;
                     } )
-
                 }
 
                 function assignLeft() {
@@ -202,7 +180,7 @@ app.directive( 'leftScroller2', [
                         .then( function ( width ) {
                             $log.debug( "Scroller width: " + width );
                             scrollerWidth = width;
-                            currentLeft = 1280;
+                            currentLeft = SCREEN_WIDTH;
                             renderNext();
                         } );
 
@@ -214,3 +192,8 @@ app.directive( 'leftScroller2', [
         }
     } ]
 );
+
+
+
+
+

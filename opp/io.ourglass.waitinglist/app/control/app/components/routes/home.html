@@ -1,0 +1,28 @@
+<button class="button button-balanced button-full" ng-click="openAdd()">Add</button>
+<div ng-class="{'party-animate': getPartyUIElement(party, 'isDeleting')}" ng-repeat="party in parties() track by party.name">
+    <button class="button button-stable button-full party" ng-click="toggleOptions(party, false)"
+            ns-transition-end party="party" ng-class="{'party-elongated': getPartyUIElement(party, 'partyElongated')}">
+        <div class="party-party-size"><b>{{party.partySize}}</b></div>
+        <span class="party-name" ng-class="{'party-table-ready': party.tableReady}"><b>{{party.name}}</b></span>
+        <span class="party-date-created"><b>{{party.dateCreated | timeAgo}}</b></span>
+    </button>
+    <div class="party-options" ng-show="getPartyUIElement(party, 'showOptions')" ng-class="{'party-options-show': getPartyUIElement(party, 'showOptions'), 'party-options-show-z': getPartyUIElement(party, 'showOptionsZ')}">
+        <ul class="party-options-table">
+            <li>
+                <button class="button button-energized button-full"
+                        ng-click="doPartyBnAction(party, $event)">{{!party.tableReady && 'Table Ready' || 'Table Not Ready'}}
+                </button>
+            </li>
+            <li>
+                <button class="button button-assertive button-full"
+                        ng-click="doPartyBnAction(party, $event)">Delete
+                </button>
+            </li>
+            <li>
+                <button class="button button-positive button-full"
+                        ng-click="doPartyBnAction(party, $event)">Seated
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
