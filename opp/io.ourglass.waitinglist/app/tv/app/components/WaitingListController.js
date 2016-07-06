@@ -10,24 +10,76 @@
 // 		'dateCreated': new Date()
 // }
 
-app.controller('waitingListController', ['$scope', 'optvModel', '$log', function ($scope, optvModel, $log) {
+app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
 
-	//Make dynamic in the future?
-	$scope.partyLimit = 5;
+	//$scope.parties = function() { return optvModel.model.parties; };
+	
+	var parties = [
+		{
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Christopher Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Arabella Appleseed Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}
+	];
 
-	$scope.parties = function() { return optvModel.model.parties; };
+	$scope.parties = function () {
+		return parties;
+	};
 
 	function handleDataCallback(data) {
-		optvModel.model.parties = data.parties;
-	}
-
-	function addParty(){
-		$log.info("Add party called.")
-	}
-
-	function delParty(){
-		$log.info("Del party called.")
-
+		if (data.length != optvModel.model.parties.length) {
+			optvModel.model.parties = data.parties;
+		}
 	}
 
 	function updateFromRemote() {
@@ -44,39 +96,157 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', function
 		return "waitingListController:";
 	}
 
+
 	updateFromRemote();
+
 
 }]);
 
-app.filter('nameMaximum', function(){
 
-	return function(data){
+app.directive('topScroller', function ($timeout) {
+	return {
+		restrict: 'E',
+		scope: {
+			parties: '='
+		},
+		templateUrl: 'app/components/directives/topscroller.template.html',
+		link: function (scope, elem, attrs) {
+			scope.topPos = {};
 
-		var splitName = data.split(" ");
-		var CHARLIMIT = 12;
-		var computedLength = 0;
-		var numWords = 0;
-		var returnMe = "";
+			function loadHeight() {
+				return $timeout(function () {
+					return document.getElementById('party-container').offsetHeight;
+				})
+			}
 
-		for(var word = 0; word < splitName.length; word++){
+			var i, dx, delay = 35, top;
 
-			if(computedLength > CHARLIMIT){
-				numWords = word;
+			function loop() {
+				if (i >= dx) {
+					console.log('Done!');
+					beginScroll();
+					return;
+				}
+				i++;
+				scope.topPos.top = --top + 'px';
+				$timeout(loop, delay);
+			}
+
+			function beginScroll() {
+				console.log('Beginning scroll...');
+				i = 1;
+				loadHeight().then(function (height) {
+					top = 300;
+					dx = height + top;
+					scope.topPos.top = top + 'px';
+					console.log('Scroll starting. Got height:', height, 'and window height:', window.innerHeight, 'and dx:', dx);
+					loop();
+				});
+			}
+
+			beginScroll();
+
+		}
+	}
+});
+
+
+app.directive('topScrollerSteps', function ($timeout, $interval) {
+	return {
+		restrict: 'E',
+		scope: {
+			parties: '='
+		},
+		templateUrl: 'app/components/directives/topscroller.template.html',
+		link: function (scope, elem, attrs) {
+			scope.topPos = {};
+
+			function loadHeight() {
+				return $timeout(function () {
+					return document.getElementById('party-container').offsetHeight;
+				})
+			}
+
+			var i, dx, delay = 500, topOfContent, heightOfOne = 50;
+
+
+			function outerLoop() {
+
+				if (i >= dx) {
+					console.log('Done!');
+					beginScroll();
+					return;
+				}
+				i += heightOfOne;
+				loop();
+			}
+
+
+			function loop() {
+
+				var j = 0;
+				var interval = $interval(function () {
+					j++;
+					scope.topPos.top = --topOfContent + 'px';
+					if (j >= heightOfOne) {
+						$interval.cancel(interval);
+						$timeout(outerLoop, delay);
+					}
+				}, 20);
+
+			}
+
+			function beginScroll() {
+				console.log('Beginning scroll...');
+				i = 1;
+				loadHeight().then(function (heightOfPartyContainer) {
+					topOfContent = 300;
+					dx = heightOfPartyContainer + topOfContent;
+					scope.topPos.top = topOfContent + 'px';
+					console.log('Scroll starting. Got height:', heightOfPartyContainer, 'and window height:', window.innerHeight, 'and dx:', dx);
+					outerLoop();
+				});
+			}
+
+			beginScroll();
+
+		}
+	}
+});
+
+
+app.filter('nameMaximum', function () {
+
+	return function (data) {
+
+		var words = data.split(" ");
+		var countedLetters = 0;
+		var CHARLIMIT = 18;
+		var returnMe = data;
+
+
+		for (var word = 0; word < words.length; word++) {
+
+			for (var letter = 0; letter < words[word].length; letter++) {
+
+				countedLetters++
+
+			}
+
+			if (countedLetters > CHARLIMIT) {
+
+				if (word == 0)
+					word++;
+
+				returnMe = words.splice(0, word).join(" ");
+
+				if (word == 1)
+					return returnMe;
+
 				break;
 			}
-			computedLength+=splitName[word].length;
 
 		}
-		if(numWords == 0){
-			return data;
-		}
-
-		for(var i = 0; i < numWords-2; i++){
-
-			returnMe += splitName[i] + " ";
-
-		}
-		returnMe += splitName[numWords-2];
 
 		return returnMe;
 
@@ -84,3 +254,26 @@ app.filter('nameMaximum', function(){
 	}
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
