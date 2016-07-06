@@ -15,23 +15,18 @@ app.controller("crawlerController",
 
         console.log("Loading crawlerController");
 
-        var VERBOSE = true;
+        $scope.messages = ["Golden State pushes series to decisive Game 7",
+            "Try our new Ranch Chicken Salad, $7.99",
+            "Don't forget our 4th of July Party!",
+            "Try Rheingorold IPA, Hop to It",
+            "Bangers and Mash on Special for Happy Hour"];
+        $scope.comingUpMessages = ["1:00 Giants vs. DBacks",
+            "4:30 GSW Pregame",
+            "5:00 Warriors v Cavs"];
 
-        // TODO: This data should be coming from the AB server thru the model API
-        $scope.messages = function () { return optvModel.model.messages; };
-        $scope.comingUpMessages = function () { return optvModel.model.comingUpMessages; };
-
-        // TODO: This data should be coming from the AB server thru the model API
-
-        function dblog(msg) {
-            if (VERBOSE)
-                $log.debug("scrollerController: " + msg);
-        }
-
-        // TODO this be broke
         function modelUpdate(data) {
-            optvModel.model.messages = data.messages;
-            optvModel.model.comingUpMessages = data.comingUpMessages;
+            $scope.messages = data.messages;
+            $scope.comingUpMessages = data.comingUpMessages;
         }
 
         function updateFromRemote() {
@@ -40,14 +35,8 @@ app.controller("crawlerController",
                 appName: "io.ourglass.pubcrawler",
                 dataCallback: modelUpdate,
                 initialValue: {
-                    messages: ["Golden State pushes series to decisive Game 7",
-                                "Try our new Ranch Chicken Salad, $7.99",
-                                "Don't forget our 4th of July Party!",
-                                "Try Rheingold IPA, Hop to It",
-                                "Bangers and Mash on Special for Happy Hour"],
-                    comingUpMessages: ["1:00 Giants vs. DBacks",
-                                       "4:30 GSW Pregame",
-                                       "5:00 Warriors v Cavs"]
+                    messages: $scope.messages,
+                    comingUpMessages: $scope.comingUpMessages
                 }
             });
 
@@ -62,16 +51,6 @@ app.controller("crawlerController",
         });
 
         updateFromRemote();
-
-        // Set up Twitter scraping. Static as an example, the query should be kept in the optvModel.
-        optvModel.setTwitterQuery('brexit')
-            .then(function (data) {
-                $log.debug("Twitter query set", data);
-            })
-            .catch(function (err) {
-                $log.error("Twitter query could not be set", err);
-            });
-
 
     });
 
@@ -91,41 +70,27 @@ app.directive('pubCrawler', [
             templateUrl: 'app/components/crawler/pubcrawler.template.html',
             link: function (scope, elem, attrs) {
 
-                console.log('pub-crawler LINK working');
+                var DELAY = 10;
 
-                var SCREEN_WIDTH = window.innerWidth;
-                var _nextUpIndex = 0;
-
-                scope.leftPos = {left: SCREEN_WIDTH + 'px'};
+                scope.leftPos = {};
 
                 scope.ui = {
                     scrollin: false,
-                    nextUp: ''
+                    nextUp: '',
+                    nidx: 0
                 };
 
-                $timeout(function () {
-                }, 5000);
-
-                var scrollerWidth;
-                var currentLeft = SCREEN_WIDTH;
-                var FPS = 240;
-                var PPF = 0.5;
-
-
                 function scroll() {
-
-                    if (scope.comingUpMessages.length == 0)
-                        return;
 
                     scope.ui.nextUp = '';
                     scope.ui.scrollin = false;
 
                     $timeout(function () {
 
-                        scope.ui.nextUp = scope.comingUpMessages[_nextUpIndex];
-                        _nextUpIndex++;
-                        if (_nextUpIndex == scope.comingUpMessages.length)
-                            _nextUpIndex = 0;
+                        scope.ui.nextUp = scope.comingUpMessages[scope.ui.nidx];
+                        scope.ui.nidx++;
+                        if (scope.ui.nidx == scope.comingUpMessages.length)
+                            scope.ui.nidx = 0;
                         scope.ui.scrollin = true;
 
                         $timeout(function () {
@@ -133,58 +98,38 @@ app.directive('pubCrawler', [
                             $timeout(scroll, 250);
                         }, 5000)
 
-
                     }, 250)
                 }
 
                 scroll();
 
-                scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
+                var i, dx, left;
 
-                var scrollerUl = document.getElementById('scroller-ul');
-
-                scrollerUl.addEventListener("transitionend", function () {
-
-                    doScroll();
-
-                }, false);
-
-                // This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
-                function loadWidth() {
-                    return $timeout(function () {
-                        return scrollerUl.offsetWidth;
-                    })
+                function loop() {
+                    if (i++ >= dx) {
+                        console.log('Done!');
+                        beginScroll();
+                        return;
+                    }
+                    scope.leftPos.left = --left + 'px';
+                    $timeout(loop, DELAY);
                 }
 
-                function assignLeft() {
-                    scope.leftPos.left = currentLeft + "px";
+                function beginScroll() {
+                    console.log('Beginning scroll...');
+                    i = 1;
+                    $timeout(function () {
+                        return document.getElementById('scroller-ul').offsetWidth;
+                    }).then(function (width) {
+                        left = window.innerWidth;
+                        scope.leftPos.left = left + 'px';
+                        dx = width + left;
+                        console.log('Scroll starting. Got width:', width, 'and window width:', window.innerWidth, 'and dx:', dx);
+                        loop();
+                    });
                 }
 
-                function renderNext() {
-
-                    assignLeft();
-                    currentLeft = currentLeft - PPF;
-                    if (currentLeft < -scrollerWidth)
-                        doScroll();
-                    else
-                        $timeout(renderNext, 1000 / FPS);
-
-
-                }
-
-                function doScroll() {
-
-                    loadWidth()
-                        .then(function (width) {
-                            $log.debug("Scroller width: " + width);
-                            scrollerWidth = width;
-                            currentLeft = SCREEN_WIDTH;
-                            renderNext();
-                        });
-
-                }
-
-                doScroll();
+                beginScroll();
 
             }
         }
