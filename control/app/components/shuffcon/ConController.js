@@ -9,7 +9,7 @@ app.controller( "conController",
 
         $scope.apps = [];
 
-       $http.get("http://localhost:9090/api/system/apps")
+       $http.get("/api/system/apps")
            .then( function(data){
                    $scope.apps = data.data;
                }
