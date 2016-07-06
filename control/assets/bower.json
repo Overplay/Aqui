@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "homepage": "",
   "authors": [
-    "Noah Saso <noah@overplay.tv>"
+    "Mitch Kahn <mitch@overplay.tv>"
   ],
   "description": "Components for OPTV Apps",
   "license": "MIT",
@@ -16,7 +16,5 @@
     "tests"
   ],
   "dependencies": {
-    "angular-timeago": "^0.4.3"
-
   }
 }

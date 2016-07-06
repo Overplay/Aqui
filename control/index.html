@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="ogConApp">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+
+    <script src="../common/ionic/ionic.bundle.min.js"></script>
+    <script src="../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+
+    <!-- App Main and AngularJS Routes -->
+
+
+    <script src="app/ogConApp.module.js"></script>
+
+    <!-- Controllers -->
+
+    <script src="app/components/shuffcon/ConController.js"></script>
+
+    <link href="../common/ionic/ionic.min.css" rel="stylesheet"/>
+
+    <!-- App Specific and Overridden CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+    <!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+
+
+    <title>OGTV Control</title>
+</head>
+
+<body ng-controller="conController">
+
+<!--Shuffleboard Remote Control -->
+
+<div class="row">
+    <div class="bar bar-header bar-royal">
+        <h1 class="title">OG Control</h1>
+    </div>
+
+</div>
+
+<ionic-content class="has-header">
+        <p ng-repeat="app in apps">{{ app.screenName }}</p>
+        <!-- make pretty and add buttons -->
+</ionic-content>
+
+
+
+
+
+</body>
+</html>

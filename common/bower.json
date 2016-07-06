@@ -1,24 +1,25 @@
 {
-    "name": "Overplay Amstel Bright with Lime",
-    "version": "0.0.1",
-    "homepage": "https://github.com/Overplay/AmstelBrightLimeWWW",
-    "authors": [
-	"Mitch Kahn <mitch@overplay.tv>"
-    ],
-    "description": "Components for OPTV Apps",
-    "license": "MIT",
-    "private": true,
-    "ignore": [
-	"**/.*",
-	"node_modules",
-	"bower_components",
-	"test",
-	"tests"
-    ],
-    "dependencies": {
-	"angular": "*",
-	"lodash": "*",
-	"codebird-js": "codebird#~2.6.0"
-    },
-    "main": ""
+  "name": "Overplay Amstel Bright with Lime",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Overplay/AmstelBrightLimeWWW",
+  "authors": [
+    "Mitch Kahn <mitch@overplay.tv>"
+  ],
+  "description": "Components for OPTV Apps",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "*",
+    "lodash": "*",
+    "angular-animate": "*",
+    "angular-ui-router": "^0.3.1"
+  },
+  "main": ""
 }
