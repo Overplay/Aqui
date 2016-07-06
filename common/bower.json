@@ -18,7 +18,8 @@
   "dependencies": {
     "angular": "*",
     "lodash": "*",
-    "codebird-js": "codebird#~2.6.0",
-  }
+    "angular-animate": "*",
+    "angular-ui-router": "^0.3.1"
+  },
   "main": ""
 }
