@@ -5,6 +5,26 @@
     z-index: 1;
 }
 
+.party-table-ready {
+    font-style: italic;
+}
+
+/* DELETING ANIMATION */
+
+.party-animate.ng-leave {
+    transition: all 600ms ease;
+    opacity: 1;
+    margin-bottom: 0;
+    transform: scale(1);
+}
+.party-animate.ng-leave.ng-leave-active {
+    opactiy: 0;
+    /*margin-bottom: -60px;*/
+    transform: scale(0);
+}
+
+/* DELETING ANIMATION */
+
 .party-elongated {
     border-bottom: none !important;
 }
@@ -56,7 +76,12 @@
     text-align: center;
     width: 30px;
     height: 30px;
-    border: solid 1px black;
+    border: solid 1px #000;
+    background-color: #000;
+}
+
+.party-party-size b {
+    color: whitesmoke;
 }
 
 .party-name {
@@ -66,13 +91,6 @@
 
 .party-date-created {
     float: right;
-}
-
-/* ANIMATE DELETING HERE */
-
-.party-deleting {
-    transition: transform 750ms ease-in;
-    transform: scale(0);
 }
 
 .add-new {
