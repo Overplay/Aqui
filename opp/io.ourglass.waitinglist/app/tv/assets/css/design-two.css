@@ -1,4 +1,4 @@
-html, body{
+html, body {
     margin: 0;
     width: 400px;
     height: 300px;
@@ -14,94 +14,96 @@ html, body{
     display: none;
 }
 
-.party-card{
+.party-card {
 
     margin-bottom: 3px;
     background: rgba(255, 255, 255, 0.40);
     display: flex;
     color: white;
 
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
-    border-radius:3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 
     width: 390px;
 
-
-    height: 45px;
+    height: 47px;
     /*line-height: 15px;*/
 
-    -webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.08);
-    -moz-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.08);
-    box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.08);
-
-
+    -webkit-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
 
 }
 
-.party-card.ng-enter{
+
+.party-card.ng-enter {
 
     transition: all 500ms ease-out;
     opacity: 0;
 
 }
 
-.party-card.ng-enter-active{
+.party-card.ng-enter-active {
     opacity: 1;
 }
 
-.party-card.ng-leave{
+.party-card.ng-leave {
     transition: all 500ms ease-in;
     opacity: 1;
 }
 
-.party-card.ng-leave-active{
+.party-card.ng-leave-active {
     opacity: 0;
 }
 
-
-
-.party-details-container{
+.party-details-container {
     display: flex;
     flex-flow: row;
 }
 
-.party-card-size {
-
+.party-order,.party-size,.ready-size,.ready-order{
     padding: 3px;
     width: 30px;
-    /*border: 3px solid red;*/
-    background: #2d72ff;
-    order: 2;
-    /*position: relative;*/
     text-align: center;
+    font-size: 22px;
+    line-height: 36px;
+}
 
+.party-order,.party-size {
+
+    background: #2d72ff;
+
+}
+
+.ready-order,.ready-size{
+
+    background: #e79000;
+
+}
+
+.party-size{
     border-radius: 0 3px 3px 0;
-
-    font-size: 22px;
-    line-height: 36px;
-
+    order: 2;
 }
 
-.party-order{
-
-    padding: 3px;
-    width: 30px;
-    /*border: 3px solid red;*/
-    background: #2d72ff;
+.party-order {
     order: 0;
-    /*position: relative;*/
-    text-align: center;
-
     border-radius: 3px 0 0 3px;
+}
 
-    font-size: 22px;
-    line-height: 36px;
+.ready-size{
+    border-radius: 0 3px 3px 0;
+    order: 2;
+}
 
+.ready-order {
+    order: 0;
+    border-radius: 3px 0 0 3px;
 }
 
 
-.party-card-name{
+.party-card-name {
 
     order: 1;
 
