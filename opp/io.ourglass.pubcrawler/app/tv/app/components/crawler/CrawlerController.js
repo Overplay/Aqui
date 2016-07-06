@@ -23,10 +23,18 @@ app.controller("crawlerController",
         $scope.comingUpMessages = ["1:00 Giants vs. DBacks",
             "4:30 GSW Pregame",
             "5:00 Warriors v Cavs"];
+        $scope.twitterQueries = [];
 
         function modelUpdate(data) {
             $scope.messages = data.messages;
             $scope.comingUpMessages = data.comingUpMessages;
+
+            // Combine Twitter queries into one string and set
+            var query = "";
+            angular.forEach(data.twitterQueries, function (value) {
+                query += value.method + value.query + ' ';
+            });
+            optvModel.setTwitterQuery(query.trim());
         }
 
         function updateFromRemote() {

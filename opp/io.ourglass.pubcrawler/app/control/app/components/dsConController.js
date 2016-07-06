@@ -67,20 +67,11 @@ app.controller("dsConController",
             $scope.update();
         };
 
-        function buildTwitterString () {
-            var query = "";
-            angular.forEach(optvModel.model.twitterQueries, function(value) {
-                query += value.method+value.query+' ';
-            });
-            return query.trim();
-        }
-
         $scope.update = function () {
             optvModel.model.messages = $scope.messages;
             optvModel.model.comingUpMessages = $scope.comingUpMessages;
             optvModel.model.twitterQueries = $scope.twitterQueries;
             optvModel.save();
-            optvModel.setTwitterQuery(buildTwitterString());
         };
 
         initialize();
