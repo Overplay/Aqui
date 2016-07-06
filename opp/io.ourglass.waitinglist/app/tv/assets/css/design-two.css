@@ -1,11 +1,11 @@
 html, body {
     margin: 0;
-    width: 400px;
+    width: 300px;
     height: 300px;
     /*border: 1px solid hotpink;*/
     font-size: 30px;
     font-family: "Titilium Web", sans-serif;
-    background-color: #fdf4ff;
+    /*background-color: #fdf4ff;*/
     overflow: hidden;
 
 }
@@ -25,7 +25,7 @@ html, body {
     -moz-border-radius: 3px;
     border-radius: 3px;
 
-    width: 390px;
+    width: 290px;
 
     height: 47px;
     /*line-height: 15px;*/
@@ -112,7 +112,7 @@ html, body {
     margin-right: 10px;
     padding: 3px 0 0 5px;
     left: 30px;
-    width: 313px;
+    width: 213px;
     overflow: hidden;
     white-space: nowrap;
 
