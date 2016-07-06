@@ -12,11 +12,10 @@ app.controller( "dsConController",
         $scope.messageArray = [];
 
         function modelUpdate( data ) {
-
             $log.info( logLead + " got a model update: " + angular.toJson( data ) );
-            $scope.messageArray = data.messages;
 
-
+            //changed this to shallow copy so that the update does not occur when local copy is changed
+            $scope.messageArray = data.messages.slice();
         }
 
         function inboundMessage( msg ) {
@@ -26,7 +25,7 @@ app.controller( "dsConController",
         function initialize() {
 
             optvModel.init( {
-                appName:         "io.overplay.pubcrawler",
+                appName:         "io.ourglass.pubcrawler2",
                 endpoint:        "control",
                 dataCallback:    modelUpdate,
                 messageCallback: inboundMessage
@@ -39,7 +38,8 @@ app.controller( "dsConController",
         }
 
         $scope.update = function () {
-            optvModel.messages = $scope.messageArray;
+            //also changed to shallow copy
+            optvModel.model.messages = $scope.messageArray.slice();
             optvModel.save();
         }
 
