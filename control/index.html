@@ -19,7 +19,7 @@
 
     <!-- Controllers -->
 
-    <script src="app/components/shuffcon/ConController.js"></script>
+    <script src="app/components/controller/ConController.js"></script>
 
     <link href="../common/ionic/ionic.min.css" rel="stylesheet"/>
 
@@ -28,7 +28,6 @@
 
     <!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
 
-
     <title>OGTV Control</title>
 </head>
 
@@ -36,21 +35,41 @@
 
 <!--Shuffleboard Remote Control -->
 
-<div class="row">
-    <div class="bar bar-header bar-royal">
-        <h1 class="title">OG Control</h1>
+<ion-header-bar class="bar bar-header bar-royal">
+    <h1 class="title">OG Control</h1>
+</ion-header-bar>
+<ion-content>
+    <div class="row header">
+        <div class="col"><h4>Running Apps</h4></div>
     </div>
-
-</div>
-
-<ionic-content class="has-header">
-        <p ng-repeat="app in apps">{{ app.screenName }}</p>
-        <!-- make pretty and add buttons -->
-</ionic-content>
-
-
-
-
+    <div class="row row-center" ng-repeat="app in runningApps track by $index">
+        <div class="col-33 app-name">
+            {{app.screenName}}
+        </div>
+        <div class="col">
+            <button class="button button-small button-dark button-outline" ng-click="openController(app.appId)">Control</button>
+        </div>
+        <div class="col">
+            <button class="button button-small button-positive" ng-click="callApiEndpoint(app.appId, '/move')">Move</button>
+        </div>
+        <div class="col">
+            <button class="button button-small button-assertive" ng-click="callApiEndpoint(app.appId, '/kill')">Kill</button>
+        </div>
+    </div>
+    <div class="row"><br></div>
+    <div class="row header">
+        <div class="col"><h4>Sleeping Apps</h4></div>
+    </div>
+    <div class="row row-center" ng-repeat="app in sleepingApps track by $index">
+        <div class="col-33 app-name">
+            {{app.screenName}}
+        </div>
+        <div class="col">
+            <button class="button button-small button-balanced" ng-click="callApiEndpoint(app.appId, '/launch')">Launch</button>
+        </div>
+    </div>
+    <!-- make pretty and add buttons -->
+</ion-content>
 
 </body>
 </html>
