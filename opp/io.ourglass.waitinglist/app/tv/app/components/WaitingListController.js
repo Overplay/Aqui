@@ -13,7 +13,7 @@
 app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
 
 	$scope.parties = function() { return optvModel.model.parties; };
-	//
+
 	// var parties = [
 	// 	{
 	// 		name: "Logan Saso",
@@ -71,7 +71,7 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 	// 		tableReady: false
 	// 	}
 	// ];
-	//
+    //
 	// $scope.parties = function () {
 	// 	return parties;
 	// };
