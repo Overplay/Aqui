@@ -39,25 +39,25 @@ html, body {
 }
 
 
-.party-card.ng-enter {
+/*.party-card.ng-enter {*/
 
-    transition: all 500ms ease-out;
-    opacity: 0;
+    /*transition: all 500ms ease-out;*/
+    /*opacity: 0;*/
 
-}
+/*}*/
 
-.party-card.ng-enter-active {
-    opacity: 1;
-}
+/*.party-card.ng-enter-active {*/
+    /*opacity: 1;*/
+/*}*/
 
-.party-card.ng-leave {
-    transition: all 500ms ease-in;
-    opacity: 1;
-}
+/*.party-card.ng-leave {*/
+    /*transition: all 500ms ease-in;*/
+    /*opacity: 1;*/
+/*}*/
 
-.party-card.ng-leave-active {
-    opacity: 0;
-}
+/*.party-card.ng-leave-active {*/
+    /*opacity: 0;*/
+/*}*/
 
 .party-details-container {
     display: flex;
