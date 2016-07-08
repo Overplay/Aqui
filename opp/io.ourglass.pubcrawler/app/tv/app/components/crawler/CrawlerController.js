@@ -63,7 +63,7 @@ app.controller("crawlerController",
     });
 
 
-app.directive('pubCrawler', [
+app.directive('pubCrawlerNs', [
     '$log', '$timeout', '$window',
     function ($log, $timeout, $window) {
 
@@ -145,6 +145,115 @@ app.directive('pubCrawler', [
 );
 
 
+app.directive( 'pubCrawler', [
+    '$log', '$timeout', '$window',
+    function ( $log, $timeout, $window ) {
+        return {
+            restrict:    'E',
+            scope:       {
+                messageArray:  '=',
+                logo:          '=',
+                comingUpArray: '=',
+                bannerAd:      '='
+            },
+            templateUrl: 'app/components/crawler/pubcrawler.template.html',
+            link:        function ( scope, elem, attrs ) {
+
+                var SCREEN_WIDTH = window.innerWidth;
+                var _nextUpIndex = 0;
+
+                scope.leftPos = { left: SCREEN_WIDTH + 'px' };
+
+                scope.ui = {
+                    scrollin: false,
+                    nextUp:   ''
+                };
+
+                $timeout( function () {
+                }, 5000 );
+
+                var scrollerWidth;
+                var currentLeft = SCREEN_WIDTH;
+                var FPS = 240;
+                var PPF = 0.5;
 
 
+                function scroll() {
+
+                    if ( scope.comingUpArray.length == 0 )
+                        return;
+
+                    scope.ui.nextUp = '';
+                    scope.ui.scrollin = false;
+
+                    $timeout( function () {
+
+                        scope.ui.nextUp = scope.comingUpArray[ _nextUpIndex ];
+                        _nextUpIndex++;
+                        if ( _nextUpIndex == scope.comingUpArray.length )
+                            _nextUpIndex = 0;
+                        scope.ui.scrollin = true;
+
+                        $timeout( function () {
+                            scope.ui.scrollin = false;
+                            $timeout( scroll, 250 );
+                        }, 5000 )
+
+
+                    }, 250 )
+                }
+
+                scroll();
+
+                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
+
+                var scrollerUl = document.getElementById( 'scroller-ul' );
+
+                scrollerUl.addEventListener( "transitionend", function () {
+
+                    doScroll();
+
+                }, false );
+
+                // This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
+                function loadWidth() {
+                    return $timeout( function () {
+                        return scrollerUl.offsetWidth;
+                    } )
+                }
+
+                function assignLeft() {
+                    scope.leftPos.left = currentLeft + "px";
+                }
+
+                function renderNext() {
+
+                    assignLeft();
+                    currentLeft = currentLeft - PPF;
+                    if ( currentLeft < -scrollerWidth )
+                        doScroll();
+                    else
+                        $timeout( renderNext, 1000 / FPS );
+
+
+                }
+
+                function doScroll() {
+
+                    loadWidth()
+                        .then( function ( width ) {
+                            $log.debug( "Scroller width: " + width );
+                            scrollerWidth = width;
+                            currentLeft = SCREEN_WIDTH;
+                            renderNext();
+                        } );
+
+                }
+
+                doScroll();
+
+            }
+        }
+    } ]
+);
 
