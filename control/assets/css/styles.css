@@ -1,130 +1,22 @@
-@font-face {
-    font-family: "Dosis";
-    src: url('../fonts/Dosis-Regular.ttf');
-}
-
-@font-face {
-    font-family: "Dosis-Bold";
-    src: url('../fonts/Dosis-ExtraBold.ttf');
-}
-
-html {
-    margin: 0;
-    aabackground-color: #F000F0;
-
-}
-
-.dbody {
-    margin: 0;
-    aabackground-color: #8ef058;
-    font-family: 'Dosis', sans-serif;
-
-}
-
-.dh1 {
+* {
+    font-size: 14px;
     width: 100%;
-    background-color: #001c20;
-    color: white;
-    text-align: center;
-    font-size: 1.5rem;
-    margin-top: 0;
-    padding: 5px;
 }
 
-.img-button {
-    display: block;
-    width: 70px;
-    height: 70px;
-    border-radius: 70px;
-    margin: 1%;
-    text-align: center;
-    line-height: 50px;
-    font-size: 80px;
-    margin: 10px auto 10px auto;
-
-}
-
-.sq-button {
-    display: block;
-    width: 33%;
-    height: 50px;
-    border-radius: 5px;
-    margin: 4px;;
-    text-align: center;
-    line-height: 50px;
-    font-size: 15px;
-    margin: 10px auto 10px auto;
-
-}
-
-.score-button {
-    display: block;
-    width: 70px;
-    height: 70px;
-    border-radius: 30px;
-    margin: 10px auto 10px auto;
-    text-align: center;
-    line-height: 65px;
-    font-size: 50px;
-}
-
-
-.rt {
-    margin-right: 15%;
-}
-
-.lt {
-    margin-left: 15%;
-}
-
-.red-sk {
-    border: 3px solid red;
-    color: white;
-    background-color: red;
-}
-
-.blue-sk {
-    border: 3px solid blue;
-    color: white;
-    background-color: blue;
-}
-
-.rd2 {
-    color: white;
-    background-color: #ea526f;
-}
-
-.bl2 {
-    color: white;
-    background-color: #1b9aaa;
-}
-
-.y {
-    color: white;
-    background-color: #ff9512;
-}
-
-.ctrl-holder {
-
-    display: flex;
-    justify-content: space-between;
-    padding: 2%;
-
-}
-
-.rounded-border {
-    border: 2px solid #eee;
-    border-radius: 15px;
-    margin-top: 5px;
-}
-
-.bottom {
+ion-content {
     position: absolute;
-    left: 0;
-    bottom: 50px;
-    width: 95%;
+    top: 54px;
 }
 
-.test-border {
-    border: 1px solid deeppink;
+.header .col {
+    /*background-color:lightgrey;*/
+}
+
+.col {
+    /*border: solid 1px grey;*/
+}
+
+.app-name {
+    position: relative;
+    left: 6px;
 }

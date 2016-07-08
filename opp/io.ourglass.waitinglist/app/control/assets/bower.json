@@ -17,6 +17,5 @@
   ],
   "dependencies": {
     "angular-timeago": "^0.4.3"
-
   }
 }
