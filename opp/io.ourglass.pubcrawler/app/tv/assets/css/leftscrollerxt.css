@@ -21,6 +21,13 @@ body {
     src: url('../../../../../../common/fonts/coolvetica.ttf');
 }
 
+/* per anti-jank article on google */
+
+.hwlayer {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
 /* 1080
 @media screen and (min-width: 1281px) {
 
@@ -68,17 +75,6 @@ body {
     max-height: 50px;
 }
 
-.crawler-text {
-    position: relative;
-    color: white;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
-    font-size: 30px;
-    float: left;
-    margin-right: 20px;
-    height: 60px;
-    line-height: 60px;
-}
-
 .next-up-holder {
     position: absolute;
     padding: 5px;
@@ -113,15 +109,6 @@ ul {
     position: relative;
     z-index: 10;
     top: -8px;
-
-    -webkit-transform: translate(0px, 0);
-    -webkit-transition: -webkit-transform 0.8s ease;
-    -moz-transform: translate(0px, 0);
-    -moz-transition: -moz-transform 0.8s ease;
-    transform: translate(0px, 0);
-
-    transition: transform 30s ease;
-
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
 }
 
@@ -138,23 +125,21 @@ li {
 
 .next-up {
     position: relative;
-    top: 30px;
+    -webkit-transform: translate(0px, 30px);
+    -moz-transform: translate(0px, 30px);
+    -ms-transform: translate(0px, 30px);
+    -o-transform: translate(0px, 30px);
+    transform: translate(0px, 30px);
     transition: all 500ms;
-}
-
-.scroll-in {
-    top: 0;
-    opacity: 1;
-}
-
-.scroll-out {
-    top: -100px;
     opacity: 0;
 }
 
-/*}*/
-
-.scroller {
-    transition-property: left;
-    transition-timing-function: linear;
+.scroll-in {
+    -webkit-transform: translate(0px, 0px);
+    -moz-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    -o-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+    opacity: 1;
 }
+
