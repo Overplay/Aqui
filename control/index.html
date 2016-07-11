@@ -43,7 +43,10 @@
         <div class="col"><h4>Running Apps</h4></div>
     </div>
     <div class="row row-center" ng-repeat="app in runningApps track by $index">
-        <div class="col-33 app-name">
+        <div class="col-10">
+            <div class="app-icon"><img ng-src="/{{app.iconPath}}" alt=""/></div>
+        </div>
+        <div class="col-25 app-name">
             {{app.screenName}}
         </div>
         <div class="col">
@@ -61,7 +64,10 @@
         <div class="col"><h4>Sleeping Apps</h4></div>
     </div>
     <div class="row row-center" ng-repeat="app in sleepingApps track by $index">
-        <div class="col-33 app-name">
+        <div class="col-10">
+            <div class="app-icon"><img ng-src="/{{app.iconPath}}" alt=""/></div>
+        </div>
+        <div class="col-25 app-name">
             {{app.screenName}}
         </div>
         <div class="col">
