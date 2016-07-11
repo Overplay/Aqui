@@ -14,7 +14,7 @@
 angular.module( 'ngOpTVApi', [] )
     .factory( 'optvModel', function ( $http, $log, $timeout ) {
 
-        var POLL_INTERVAL_MS = 2000;  //SLOW for testing
+        var POLL_INTERVAL_MS = 2000;  //medium
         var apiPath = '/api/';
         var DATA_UPDATE_METHOD = "objectEquality";
         var DEBUG = true;
@@ -32,6 +32,7 @@ angular.module( 'ngOpTVApi', [] )
         var _dataCb;
         var _appName;
         var _initialValue;
+        var _pollInterval;
 
         //HTTP Mode stuff
         var appWatcher;
@@ -107,7 +108,7 @@ angular.module( 'ngOpTVApi', [] )
                         });
 
 
-                }, POLL_INTERVAL_MS );
+                }, _pollInterval );
 
             }
         }
@@ -124,6 +125,11 @@ angular.module( 'ngOpTVApi', [] )
             _appName = params.appName;
             _dataCb = params.dataCallback;
             _initialValue = params.initialValue || {};
+            _pollInterval = params.pollInterval || POLL_INTERVAL_MS;
+
+            if (params.pollInterval){
+                $log.debug("Non-default poll interval set: "+_pollInterval);
+            }
 
             $log.debug( "optvAPILime init for app: " + _appName );
 

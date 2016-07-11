@@ -20,7 +20,8 @@
     "lodash": "*",
     "angular-animate": "*",
     "angular-ui-router": "*",
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "angular-timeago": "*"
   },
   "main": ""
 }

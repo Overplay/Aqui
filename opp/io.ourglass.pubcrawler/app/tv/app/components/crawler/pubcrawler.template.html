@@ -2,10 +2,10 @@
     <div class="floor">&nbsp;</div>
 
     <img class="overlay" src="assets/img/gbcrawler1280.png"/>
-    <!--<img class="right-logo" src="assets/img/olucky.png"/>-->
+    <img class="right-logo" src="assets/img/olucky.png"/>
 
-    <ul id="scroller-ul" ng-style="leftPos">
-        <li ng-repeat="msg in messages">{{msg}}&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <ul id="scroller-ul"  ng-style="leftPos" class="hwlayer">
+        <li ng-repeat="msg in messageArray">{{ msg }}&nbsp;&nbsp;&nbsp;&nbsp;</li>
     </ul>
     <div class="next-up-holder">
         <!--<h1>{{ screen.width }} x {{ screen.height }}</h1>-->
