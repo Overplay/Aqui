@@ -23,7 +23,9 @@ app.controller("crawlerController",
         $scope.comingUpMessages = ["1:00 Giants vs. DBacks",
             "4:30 GSW Pregame",
             "5:00 Warriors v Cavs"];
-        $scope.twitterQueries = [];
+        $scope.twitterQueryMessages = [];
+
+        var twitterScraper;
 
         function modelUpdate(data) {
             $scope.messages = data.messages;
@@ -34,7 +36,21 @@ app.controller("crawlerController",
             angular.forEach(data.twitterQueries, function (value) {
                 query += value.method + value.query + ' ';
             });
-            optvModel.setTwitterQuery(query.trim());
+            query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
+            optvModel.setTwitterQuery(query);
+            console.log('Twitter query:', query);
+
+            if(twitterScraper) { $interval.cancel(twitterScraper); }
+            twitterScraper = $interval(function (){
+                optvModel.getTweets().then(function (data) {
+                    console.log('Tweets:', data);
+                    $scope.twitterQueryMessages = [];
+                    angular.forEach(data.statuses, function (value) {
+                        $scope.twitterQueryMessages.push(value.text);
+                    });
+                    console.log($scope.twitterQueryMessages);
+                });
+            }, 30000);
         }
 
         function updateFromRemote() {
@@ -73,7 +89,8 @@ app.directive('pubCrawler', [
             restrict: 'E',
             scope: {
                 messages: '=',
-                comingUpMessages: '='
+                comingUpMessages: '=',
+                twitterQueryMessages: '='
             },
             templateUrl: 'app/components/crawler/pubcrawler.template.html',
             link: function (scope, elem, attrs) {

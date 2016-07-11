@@ -9,7 +9,7 @@ app.controller("dsConController",
         $scope.comingUpMessages = [];
         $scope.twitterQueries = [];
 
-        $scope.tabs = ['Messages', 'Coming Up'/*, 'Twitter'*/];
+        $scope.tabs = ['Messages', 'Coming Up', 'Twitter'];
 
         $scope.getSelectedTabTitle = function () {
             return $scope.tabs[$ionicTabsDelegate.selectedIndex()];
