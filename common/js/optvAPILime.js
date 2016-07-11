@@ -23,7 +23,7 @@ angular.module( 'ngOpTVApi', [] )
 
         //EA - if running in FourLoko, then modify the apiPath
         if(window && window.process && window.process.execPath && window.process.execPath.includes("FourLoko")){
-            apiPath = 'http://localhost:1337' + apiPath;
+            apiPath = 'http://localhost:4000' + apiPath;
         }
 
         service.apiPath = apiPath;
