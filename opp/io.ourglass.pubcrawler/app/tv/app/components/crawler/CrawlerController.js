@@ -39,7 +39,6 @@ app.controller("crawlerController",
             optvModel.getTweets().then(function (data) {
                 if (twitterScraper) {
                     $interval.cancel(twitterScraper);
-                    twitterScraper = null;
                 }
                 twitterScraper = $interval(function () {
                     console.log('Tweets:', data);
