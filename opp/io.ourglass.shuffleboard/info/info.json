@@ -1,14 +1,15 @@
 {
+  "appId": "io.ourglass.shuffleboard",
   "appType": "widget",
-  "name": "Shuffleboard",
+  "screenName": "Shuffleboard",
+  "onLauncher": true,
+  "primaryColor": -5658199,
+  "primaryColorHex": "#A9A9A9",
   "reverseDomainName": "io.ourglass.shuffleboard",
-  "buildNumber": 1,
-  "signature": "",
-  "iconLabel": "Shuffleboard",
-  "iconImage": "shuffle.png",
-  "publisher": "Ourglass TV, Inc.",
-  "show": true,
-  "primaryColor": "#F0F0F0",
-  "secondaryColor": "#FF1010",
-  "textColor": "#FFFFFF"
+  "secondaryColor": 0,
+  "secondaryColorHex": "#000000",
+  "icon": "shuffle.png",
+  "iconPath": "www/opp/io.ourglass.shuffleboard/assets/icon/shuffle.png",
+  "iconImage": "www/opp/io.ourglass.shuffleboard/assets/icon/shuffle.png",
+  "iconLabel": "ShuffleBoard"
 }
