@@ -47,8 +47,8 @@ app.controller("crawlerController",
                     angular.forEach(data.statuses, function (value) {
                         $scope.twitterQueryMessages.push(value.text);
                     });
-                });
-            }, 30000);
+                }, 30000);
+            });
         }
 
         function updateFromRemote() {
