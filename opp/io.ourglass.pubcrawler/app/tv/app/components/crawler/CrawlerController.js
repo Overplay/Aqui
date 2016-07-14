@@ -21,9 +21,9 @@ app.controller("crawlerController",
             "5:00 Warriors v Cavs"];
         $scope.twitterQueries = [];
         $scope.twitterQueryMessages = [];
+        $scope.oldTwitterQuery = "";
 
         function modelUpdate(data) {
-            var twitterScraper;
 
             $scope.messages = data.messages;
             $scope.comingUpMessages = data.comingUpMessages;
@@ -34,20 +34,21 @@ app.controller("crawlerController",
                 query += value.method + value.query + ' ';
             });
             query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
-            optvModel.setTwitterQuery(query);
-            console.log('Twitter query:', query);
+            if($scope.oldTwitterQuery != query) {
+                optvModel.setTwitterQuery(query);
+                console.log('New twitter query:', query);
+            }
+        }
 
+        function reloadTweets() {
             optvModel.getTweets().then(function (data) {
-                if (twitterScraper) {
-                    $interval.cancel(twitterScraper);
-                }
-                twitterScraper = $interval(function () {
-                    console.log('Tweets:', data);
+                console.log('Tweets:', data);
+                if(data != undefined && Object.keys(data) > 0) {
                     $scope.twitterQueryMessages = [];
                     angular.forEach(data.statuses, function (value) {
-                        $scope.twitterQueryMessages.push(value.text);
+                        $scope.twitterQueryMessages.push(value.text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
                     });
-                }, 30000);
+                }
             });
         }
 
@@ -62,6 +63,9 @@ app.controller("crawlerController",
                 },
                 pollInterval: 10000
             });
+
+            $interval(reloadTweets, 30000);
+            reloadTweets();
 
         }
 
@@ -92,14 +96,14 @@ app.directive('pubCrawlerXs', [
     '$log', '$timeout', '$window',
     function ($log, $timeout, $window) {
         return {
-            restrict:    'E',
-            scope:       {
-                messageArray:  '=',
-                logo:          '=',
+            restrict: 'E',
+            scope: {
+                messageArray: '=',
+                logo: '=',
                 comingUpArray: '=',
                 twitterQueryMessages: '=',
-                bannerAd:      '=',
-                speed:         '=?'
+                bannerAd: '=',
+                speed: '=?'
             },
             templateUrl: 'app/components/crawler/pubcrawler.template.html',
             link: function (scope, elem, attrs) {
@@ -217,4 +221,3 @@ app.directive('pubCrawlerXs', [
         }
     }]
 );
-
