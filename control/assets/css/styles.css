@@ -35,3 +35,19 @@ ion-content {
     position: relative;
     left: 6px;
 }
+
+.button-row-left {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.button-row-middle {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+.button-row-right {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
