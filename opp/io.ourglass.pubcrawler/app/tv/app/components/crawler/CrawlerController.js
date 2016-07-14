@@ -43,8 +43,8 @@ app.controller("crawlerController",
                 }
                 twitterScraper = $interval(function () {
                     console.log('Tweets:', data);
+                    $scope.twitterQueryMessages = [];
                     angular.forEach(data.statuses, function (value) {
-                        $scope.twitterQueryMessages = [];
                         $scope.twitterQueryMessages.push(value.text);
                     });
                 });
