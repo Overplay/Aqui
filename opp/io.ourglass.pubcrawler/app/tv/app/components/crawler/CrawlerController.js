@@ -20,6 +20,7 @@ app.controller("crawlerController",
             "4:30 GSW Pregame",
             "5:00 Warriors v Cavs"];
         $scope.twitterQueries = [];
+        $scope.twitterQueryMessages = [];
 
         function modelUpdate(data) {
             var twitterScraper;
@@ -42,8 +43,8 @@ app.controller("crawlerController",
                 }
                 twitterScraper = $interval(function () {
                     console.log('Tweets:', data);
+                    $scope.twitterQueryMessages = [];
                     angular.forEach(data.statuses, function (value) {
-                        $scope.twitterQueryMessages = [];
                         $scope.twitterQueryMessages.push(value.text);
                     });
                 });
@@ -96,6 +97,7 @@ app.directive('pubCrawlerXs', [
                 messageArray:  '=',
                 logo:          '=',
                 comingUpArray: '=',
+                twitterQueryMessages: '=',
                 bannerAd:      '=',
                 speed:         '=?'
             },
