@@ -43,7 +43,7 @@ app.controller("crawlerController",
         function reloadTweets() {
             optvModel.getTweets().then(function (data) {
                 console.log('Tweets:', data);
-                if(data != undefined && Object.keys(data) > 0) {
+                if(data != undefined && data.statuses != undefined) {
                     $scope.twitterQueryMessages = [];
                     angular.forEach(data.statuses, function (value) {
                         $scope.twitterQueryMessages.push(value.text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
