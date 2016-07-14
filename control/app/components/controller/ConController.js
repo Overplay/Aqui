@@ -20,7 +20,7 @@ app.controller("conController",
         };
 
         $scope.openController = function (appId) {
-            window.location.href = "/www/opp/"+appId+'/app/control/index.html';
+            window.location.href = "/www/opp/" + appId + '/app/control/index.html';
         };
 
         function reloadAppList() {

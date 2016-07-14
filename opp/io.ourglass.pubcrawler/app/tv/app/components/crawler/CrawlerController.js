@@ -10,54 +10,71 @@
  **********************************/
 
 
-app.controller( "crawlerController",
-    function ( $scope, $timeout, $http, $interval, optvModel, $log, $window ) {
+app.controller("crawlerController",
+    function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
 
-        console.log( "Loading crawlerController" );
+        console.log("Loading crawlerController");
 
-        $scope.messages = [ "Mitch Kahn Version", "Everybody Wang Chung Tonight!" ];
-        $scope.comingUpMessages = [ "1:00 Giants vs. DBacks",
+        $scope.messages = ["Mitch Kahn Version", "Everybody Wang Chung Tonight!"];
+        $scope.comingUpMessages = ["1:00 Giants vs. DBacks",
             "4:30 GSW Pregame",
-            "5:00 Warriors v Cavs" ];
+            "5:00 Warriors v Cavs"];
         $scope.twitterQueries = [];
 
-        function modelUpdate( data ) {
+        function modelUpdate(data) {
+            var twitterScraper;
+
             $scope.messages = data.messages;
             $scope.comingUpMessages = data.comingUpMessages;
 
             // Combine Twitter queries into one string and set
             var query = "";
-            angular.forEach( data.twitterQueries, function ( value ) {
+            angular.forEach(data.twitterQueries, function (value) {
                 query += value.method + value.query + ' ';
-            } );
-            optvModel.setTwitterQuery( query.trim() );
+            });
+            query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
+            optvModel.setTwitterQuery(query);
+            console.log('Twitter query:', query);
+
+            optvModel.getTweets().then(function (data) {
+                if (twitterScraper) {
+                    $interval.cancel(twitterScraper);
+                }
+                twitterScraper = $interval(function () {
+                    console.log('Tweets:', data);
+                    angular.forEach(data.statuses, function (value) {
+                        $scope.twitterQueryMessages = [];
+                        $scope.twitterQueryMessages.push(value.text);
+                    });
+                });
+            }, 30000);
         }
 
         function updateFromRemote() {
 
-            optvModel.init( {
-                appName:      "io.ourglass.pubcrawler",
+            optvModel.init({
+                appName: "io.ourglass.pubcrawler",
                 dataCallback: modelUpdate,
                 initialValue: {
-                    messages:         $scope.messages,
+                    messages: $scope.messages,
                     comingUpMessages: $scope.comingUpMessages
                 },
                 pollInterval: 10000
-            } );
+            });
 
         }
 
         // NFC why this is here...oh wait..maybe because of the weird size issue in the emulators
-        $scope.$watch( function () {
+        $scope.$watch(function () {
             return $window.innerWidth;
-        }, function ( value ) {
-            console.log( value );
-            $scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
-        } );
+        }, function (value) {
+            console.log(value);
+            $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
+        });
 
         updateFromRemote();
 
-    } );
+    });
 
 
 /**
@@ -70,9 +87,9 @@ app.controller( "crawlerController",
  * Performance using this technique is excellent and looks nearly as good as a CNN/ESPN scroller.
  *
  */
-app.directive( 'pubCrawlerXs', [
+app.directive('pubCrawlerXs', [
     '$log', '$timeout', '$window',
-    function ( $log, $timeout, $window ) {
+    function ($log, $timeout, $window) {
         return {
             restrict:    'E',
             scope:       {
@@ -83,31 +100,31 @@ app.directive( 'pubCrawlerXs', [
                 speed:         '=?'
             },
             templateUrl: 'app/components/crawler/pubcrawler.template.html',
-            link:        function ( scope, elem, attrs ) {
+            link: function (scope, elem, attrs) {
 
 
                 /*
-                   Speed needs to be implemented
-                   scope.speed should be passed as { crawlerVelocity: 50, nextUpVelocity: 20 } as an example
+                 Speed needs to be implemented
+                 scope.speed should be passed as { crawlerVelocity: 50, nextUpVelocity: 20 } as an example
 
-                   scope.logo should be the path to the logo to show on the left side
-                   scope.bannerAd should be the path to a full banner add to be shown periodically
+                 scope.logo should be the path to the logo to show on the left side
+                 scope.bannerAd should be the path to a full banner add to be shown periodically
 
-                   none of these are implemented yet
+                 none of these are implemented yet
 
 
-                   */
+                 */
 
                 var crawlerVelocity = 50;
                 var scrollerWidth;
                 var nextUpIndex = 0;
-                var scrollerUl = document.getElementById( 'scroller-ul' );
+                var scrollerUl = document.getElementById('scroller-ul');
 
                 // This is on a scope var for debugging on Android
-                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
+                scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
 
                 // Dump crawler off screen
-                function resetCrawlerTransition(){
+                function resetCrawlerTransition() {
 
                     scope.leftPos = {
                         '-webkit-transform': "translate(" + $window.innerWidth + 'px, 0px)',
@@ -122,7 +139,7 @@ app.directive( 'pubCrawlerXs', [
                     var tranTime = scrollerWidth / crawlerVelocity;
                     //$log.debug( "Tranny time: " + tranTime );
                     // Let the DOM render real quick then start transition
-                    $timeout( function () {
+                    $timeout(function () {
 
                         scope.leftPos = {
                             '-webkit-transform': "translate(-" + scrollerWidth + "px, 0px)",
@@ -130,43 +147,43 @@ app.directive( 'pubCrawlerXs', [
                             'transition': "all " + tranTime + "s linear"
                         }
 
-                    }, 100 );
+                    }, 100);
 
                     // And when tran is done, start again.
-                    $timeout( doScroll, tranTime * 1000 );
+                    $timeout(doScroll, tranTime * 1000);
 
                 }
 
 
                 scope.ui = {
                     scrollin: false,
-                    nextUp:   ''
+                    nextUp: ''
                 };
 
 
                 function scrollNextUp() {
 
-                    if ( scope.comingUpArray.length == 0 )
+                    if (scope.comingUpArray.length == 0)
                         return;
 
                     scope.ui.nextUp = '';
                     scope.ui.scrollin = false;
 
-                    $timeout( function () {
+                    $timeout(function () {
 
-                        scope.ui.nextUp = scope.comingUpArray[ nextUpIndex ];
+                        scope.ui.nextUp = scope.comingUpArray[nextUpIndex];
                         nextUpIndex++;
-                        if ( nextUpIndex == scope.comingUpArray.length )
+                        if (nextUpIndex == scope.comingUpArray.length)
                             nextUpIndex = 0;
                         scope.ui.scrollin = true;
 
-                        $timeout( function () {
+                        $timeout(function () {
                             scope.ui.scrollin = false;
-                            $timeout( scrollNextUp, 250 );
-                        }, 5000 )
+                            $timeout(scrollNextUp, 250);
+                        }, 5000)
 
 
-                    }, 250 )
+                    }, 250)
                 }
 
                 scrollNextUp();
@@ -174,21 +191,21 @@ app.directive( 'pubCrawlerXs', [
 
                 // This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
                 function loadWidth() {
-                    return $timeout( function () {
+                    return $timeout(function () {
                         return scrollerUl.offsetWidth;
-                    } )
+                    })
                 }
 
 
                 function doScroll() {
 
                     loadWidth()
-                        .then( function ( width ) {
-                            $log.debug( "Scroller width: " + width );
+                        .then(function (width) {
+                            $log.debug("Scroller width: " + width);
                             scrollerWidth = width;
                             resetCrawlerTransition();
                             startCrawlerTransition();
-                        } );
+                        });
 
                 }
 
@@ -196,6 +213,6 @@ app.directive( 'pubCrawlerXs', [
 
             }
         }
-    } ]
+    }]
 );
 

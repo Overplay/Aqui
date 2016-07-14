@@ -42,29 +42,41 @@
     <div class="row header">
         <div class="col"><h4>Running Apps</h4></div>
     </div>
-    <div class="row row-center" ng-repeat="app in runningApps track by $index">
-        <div class="col-33 app-name">
+    <div class="row row-center" ng-show="runningApps.length < 1">
+        <p class="no-apps">There are no running apps.</p>
+    </div>
+    <div class="row" ng-repeat="app in runningApps track by $index">
+        <div class="col-10">
+            <div class="app-icon"><img ng-src="/{{app.iconPath}}" alt=""/></div>
+        </div>
+        <div class="col app-name">
             {{app.screenName}}
         </div>
-        <div class="col">
-            <button class="button button-small button-dark button-outline" ng-click="openController(app.appId)">Control</button>
+        <div class="col-20">
+            <button class="button button-small button-dark button-outline button-row-left" ng-click="openController(app.appId)">Control</button>
         </div>
-        <div class="col">
-            <button class="button button-small button-positive" ng-click="callApiEndpoint(app.appId, '/move')">Move</button>
+        <div class="col-20">
+            <button class="button button-small button-positive button-row-middle" ng-click="callApiEndpoint(app.appId, '/move')">Move</button>
         </div>
-        <div class="col">
-            <button class="button button-small button-assertive" ng-click="callApiEndpoint(app.appId, '/kill')">Kill</button>
+        <div class="col-20">
+            <button class="button button-small button-assertive button-row-right" ng-click="callApiEndpoint(app.appId, '/kill')">Stop</button>
         </div>
     </div>
     <div class="row"><br></div>
     <div class="row header">
         <div class="col"><h4>Sleeping Apps</h4></div>
     </div>
+    <div class="row" ng-show="sleepingApps.length < 1">
+        <p class="no-apps">There are no sleeping apps.</p>
+    </div>
     <div class="row row-center" ng-repeat="app in sleepingApps track by $index">
-        <div class="col-33 app-name">
+        <div class="col-10">
+            <div class="app-icon"><img ng-src="/{{app.iconPath}}" alt=""/></div>
+        </div>
+        <div class="col app-name">
             {{app.screenName}}
         </div>
-        <div class="col">
+        <div class="col-60">
             <button class="button button-small button-balanced" ng-click="callApiEndpoint(app.appId, '/launch')">Launch</button>
         </div>
     </div>
