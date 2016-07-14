@@ -7,8 +7,8 @@ app.controller("conController",
 
         $log.info("Loading conController");
 
-        $scope.runningApps = [{screenName: 'Waiting List', appId: 'io.ourglass.waitinglist'}];
-        $scope.sleepingApps = [{screenName: 'Shuffleboard', appId: 'io.ourglass.shuffleboard'}];
+        $scope.runningApps = [];
+        $scope.sleepingApps = [];
 
         $scope.callApiEndpoint = function (appId, apiEndpoint) {
             $http.post("/api/app/" + appId + apiEndpoint)
@@ -24,8 +24,8 @@ app.controller("conController",
         };
 
         function reloadAppList() {
-            $scope.runningApps = [{screenName: 'Waiting List', appId: 'io.ourglass.waitinglist'}];
-            $scope.sleepingApps = [{screenName: 'Shuffleboard', appId: 'io.ourglass.shuffleboard'}];
+            $scope.runningApps = [];
+            $scope.sleepingApps = [];
             $http.get("/api/system/apps")
                 .then(function (data) {
                         angular.forEach(data.data, function (app) {
