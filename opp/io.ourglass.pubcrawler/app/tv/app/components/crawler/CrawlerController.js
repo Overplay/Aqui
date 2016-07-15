@@ -13,7 +13,7 @@
 app.controller("crawlerController",
     function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
 
-        var TWEET_COUNT = 10; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
+        var TWEET_COUNT = 7; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
 
         console.log("Loading crawlerController");
 
@@ -46,6 +46,16 @@ app.controller("crawlerController",
             }
         }
 
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
         function reloadTweets() {
             optvModel.getTweets().then(function (data) {
                 console.log('Tweets:', data);
@@ -60,6 +70,7 @@ app.controller("crawlerController",
                 } else {
                     $scope.newMessageArray = $scope.messages;
                 }
+                $scope.newMessageArray = shuffleArray($scope.newMessageArray);
             });
         }
 
