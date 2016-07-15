@@ -15,7 +15,7 @@ app.controller("crawlerController",
 
         console.log("Loading crawlerController");
 
-        $scope.messages = ["Mitch Kahn Version", "Everybody Wang Chung Tonight!"];
+        $scope.messages = ["Try Budweiser Crown, $1.99 with Ourglass discount", "Get Ready for Rio", "3 for 1 appetizers till 7"];
         $scope.comingUpMessages = ["1:00 Giants vs. DBacks",
             "4:30 GSW Pregame",
             "5:00 Warriors v Cavs"];
@@ -23,32 +23,33 @@ app.controller("crawlerController",
         $scope.twitterQueryMessages = [];
 
         function modelUpdate(data) {
-            var twitterScraper;
+            //var twitterScraper;
 
             $scope.messages = data.messages;
             $scope.comingUpMessages = data.comingUpMessages;
 
-            // Combine Twitter queries into one string and set
-            var query = "";
-            angular.forEach(data.twitterQueries, function (value) {
-                query += value.method + value.query + ' ';
-            });
-            query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
-            optvModel.setTwitterQuery(query);
-            console.log('Twitter query:', query);
-
-            optvModel.getTweets().then(function (data) {
-                if (twitterScraper) {
-                    $interval.cancel(twitterScraper);
-                }
-                twitterScraper = $interval(function () {
-                    console.log('Tweets:', data);
-                    $scope.twitterQueryMessages = [];
-                    angular.forEach(data.statuses, function (value) {
-                        $scope.twitterQueryMessages.push(value.text);
-                    });
-                });
-            }, 30000);
+            // // Combine Twitter queries into one string and set
+            // var query = "";
+            // angular.forEach(data.twitterQueries, function (value) {
+            //     query += value.method + value.query + ' ';
+            // });
+            // query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
+            // optvModel.setTwitterQuery(query);
+            // console.log('Twitter query:', query);
+            //
+            // optvModel.getTweets().then(function (data) {
+            //     if (twitterScraper) {
+            //         $interval.cancel(twitterScraper);
+            //     }
+            //     twitterScraper = $interval(function () {
+            //         console.log('Tweets:', data);
+            //         $scope.twitterQueryMessages = [];
+            //         angular.forEach(data.statuses, function (value) {
+            //             $scope.twitterQueryMessages.push(value.text);
+            //         });
+            //     });
+            // }, 30000);
+            
         }
 
         function updateFromRemote() {
@@ -66,12 +67,12 @@ app.controller("crawlerController",
         }
 
         // NFC why this is here...oh wait..maybe because of the weird size issue in the emulators
-        $scope.$watch(function () {
-            return $window.innerWidth;
-        }, function (value) {
-            console.log(value);
-            $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
-        });
+        // $scope.$watch(function () {
+        //     return $window.innerWidth;
+        // }, function (value) {
+        //     console.log(value);
+        //     $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
+        // });
 
         updateFromRemote();
 
@@ -96,10 +97,10 @@ app.directive('pubCrawlerXs', [
             scope:       {
                 messageArray:  '=',
                 logo:          '=',
-                comingUpArray: '=',
-                twitterQueryMessages: '=',
-                bannerAd:      '=',
-                speed:         '=?'
+                comingUpArray: '='
+                //twitterQueryMessages: '=',
+                //bannerAd:      '=',
+                //speed:         '=?'
             },
             templateUrl: 'app/components/crawler/pubcrawler.template.html',
             link: function (scope, elem, attrs) {
@@ -117,13 +118,13 @@ app.directive('pubCrawlerXs', [
 
                  */
 
-                var crawlerVelocity = 50;
+                var crawlerVelocity = 30;
                 var scrollerWidth;
                 var nextUpIndex = 0;
                 var scrollerUl = document.getElementById('scroller-ul');
 
                 // This is on a scope var for debugging on Android
-                scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
+                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
 
                 // Dump crawler off screen
                 function resetCrawlerTransition() {
@@ -139,7 +140,7 @@ app.directive('pubCrawlerXs', [
                 function startCrawlerTransition() {
 
                     var tranTime = scrollerWidth / crawlerVelocity;
-                    //$log.debug( "Tranny time: " + tranTime );
+                    $log.debug( "Tranny time: " + tranTime );
                     // Let the DOM render real quick then start transition
                     $timeout(function () {
 

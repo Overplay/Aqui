@@ -3,12 +3,31 @@
  */
 
 app.controller("conController",
-    function ($scope, $timeout, $http, $log) {
+    function ($scope, $timeout, $http, $log, $ionicModal) {
 
         $log.info("Loading conController");
 
         $scope.runningApps = [];
         $scope.sleepingApps = [];
+
+        $scope.sysInfo = {};
+
+        function getSysInfo(){
+
+            $http.get("/api/system/device")
+                .then( function(data){
+
+                    $scope.sysInfo.name = data.data.name;
+                    $scope.sysInfo.locationWithinVenue = data.data.locationWithinVenue;
+
+                })
+        }
+
+        function updateSysInfo(){
+
+            return $http.post("/api/system/device", $scope.sysInfo);
+
+        }
 
         $scope.callApiEndpoint = function (appId, apiEndpoint) {
             $http.post("/api/app/" + appId + apiEndpoint)
@@ -40,5 +59,18 @@ app.controller("conController",
         }
 
         reloadAppList();
+
+        $ionicModal.fromTemplateUrl( 'templates/modal.html', {
+            scope: $scope
+        } ).then( function ( modal ) {
+            $scope.modal = modal;
+        } );
+
+        $scope.updateSystem = function () {
+            $log.debug("Updating and Hiding modal");
+            $scope.modal.hide();
+            updateSysInfo();
+        };
+
 
     });
