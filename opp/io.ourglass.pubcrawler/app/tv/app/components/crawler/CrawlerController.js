@@ -13,6 +13,8 @@
 app.controller("crawlerController",
     function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
 
+        var TWEET_COUNT = 10; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
+
         console.log("Loading crawlerController");
 
         $scope.messages = ["Mitch Kahn Version", "Everybody Wang Chung Tonight!"];
@@ -20,12 +22,15 @@ app.controller("crawlerController",
             "4:30 GSW Pregame",
             "5:00 Warriors v Cavs"];
         $scope.twitterQueries = [];
-        $scope.twitterQueryMessages = [];
+
         $scope.oldTwitterQuery = "";
+
+        $scope.newMessageArray = [];
 
         function modelUpdate(data) {
 
             $scope.messages = data.messages;
+            if(!$scope.newMessageArray) $scope.newMessageArray = $scope.messages;
             $scope.comingUpMessages = data.comingUpMessages;
 
             // Combine Twitter queries into one string and set
@@ -34,7 +39,8 @@ app.controller("crawlerController",
                 query += value.method + value.query + ' ';
             });
             query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
-            if($scope.oldTwitterQuery != query) {
+            if ($scope.oldTwitterQuery != query) {
+                $scope.oldTwitterQuery = query;
                 optvModel.setTwitterQuery(query);
                 console.log('New twitter query:', query);
             }
@@ -43,11 +49,16 @@ app.controller("crawlerController",
         function reloadTweets() {
             optvModel.getTweets().then(function (data) {
                 console.log('Tweets:', data);
-                if(data != undefined && data.statuses != undefined) {
-                    $scope.twitterQueryMessages = [];
-                    angular.forEach(data.statuses, function (value) {
-                        $scope.twitterQueryMessages.push(value.text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
-                    });
+                if (data != undefined && data.statuses != undefined) {
+                    // Put tweets into array
+                    var tweets = [];
+                    for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                        tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                    }
+                    // Randomly combine tweets and messages
+                    $scope.newMessageArray = $scope.messages.concat(tweets);
+                } else {
+                    $scope.newMessageArray = $scope.messages;
                 }
             });
         }
@@ -93,15 +104,14 @@ app.controller("crawlerController",
  *
  */
 app.directive('pubCrawlerXs', [
-    '$log', '$timeout', '$window',
-    function ($log, $timeout, $window) {
+    '$log', '$timeout', '$window', '$interval',
+    function ($log, $timeout, $window, $interval) {
         return {
             restrict: 'E',
             scope: {
-                messageArray: '=',
                 logo: '=',
                 comingUpArray: '=',
-                twitterQueryMessages: '=',
+                newMessageArray: '=',
                 bannerAd: '=',
                 speed: '=?'
             },
@@ -121,7 +131,11 @@ app.directive('pubCrawlerXs', [
 
                  */
 
-                var crawlerVelocity = 50;
+                scope.displayMessages = _.clone(scope.newMessageArray);
+
+                var shouldRefreshMessages = false;
+
+                var crawlerVelocity = 100;
                 var scrollerWidth;
                 var nextUpIndex = 0;
                 var scrollerUl = document.getElementById('scroller-ul');
@@ -202,8 +216,18 @@ app.directive('pubCrawlerXs', [
                     })
                 }
 
+                // Watch for a change in messages, and then flag to refresh messages if changed
+                scope.$watch('newMessageArray', function () {
+                    shouldRefreshMessages = true;
+                    console.log('Refresh Messages!', scope.newMessageArray);
+                });
 
                 function doScroll() {
+
+                    if (shouldRefreshMessages) {
+                        scope.displayMessages = _.clone(scope.newMessageArray);
+                        shouldRefreshMessages = false;
+                    }
 
                     loadWidth()
                         .then(function (width) {
@@ -215,7 +239,12 @@ app.directive('pubCrawlerXs', [
 
                 }
 
-                doScroll();
+                var waitToStart = $interval(function () {
+                    if(scope.newMessageArray) {
+                        doScroll();
+                        $interval.cancel(waitToStart);
+                    }
+                });
 
             }
         }
