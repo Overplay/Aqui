@@ -146,7 +146,7 @@ app.directive('pubCrawlerXs', [
 
                 var shouldRefreshMessages = false;
 
-                var crawlerVelocity = 100;
+                var crawlerVelocity = 50;
                 var scrollerWidth;
                 var nextUpIndex = 0;
                 var scrollerUl = document.getElementById('scroller-ul');
