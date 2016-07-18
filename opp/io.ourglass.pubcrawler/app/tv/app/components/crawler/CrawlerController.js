@@ -57,6 +57,7 @@ app.controller("crawlerController",
         }
 
         function reloadTweets() {
+            $scope.newMessageArray = $scope.messages;
             optvModel.getTweets().then(function (data) {
                 console.log('Tweets:', data);
                 if (data != undefined && data.statuses != undefined) {
@@ -66,11 +67,22 @@ app.controller("crawlerController",
                         tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
                     }
                     // Randomly combine tweets and messages
-                    $scope.newMessageArray = $scope.messages.concat(tweets);
-                } else {
-                    $scope.newMessageArray = $scope.messages;
+                    $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
                 }
-                $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+                $http.get( optvModel.apiPath + 'scrape/io.ourglass.core.channeltweets' ).then(function (response) {
+                    var data = response.data;
+                    console.log('Channel Tweets:', data);
+                    if (data != undefined && data.statuses != undefined) {
+                        // Put tweets into array
+                        var tweets = [];
+                        for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                            tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                        }
+                        // Randomly combine tweets and messages
+                        $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
+                    }
+                    $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+                });
             });
         }
 
