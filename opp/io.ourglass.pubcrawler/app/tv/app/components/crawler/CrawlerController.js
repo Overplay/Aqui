@@ -69,8 +69,7 @@ app.controller("crawlerController",
                     // Randomly combine tweets and messages
                     $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
                 }
-                $http.get( optvModel.apiPath + 'scrape/io.ourglass.core.channeltweets' ).then(function (response) {
-                    var data = response.data;
+                optvModel.getChannelTweets().then(function (data) {
                     console.log('Channel Tweets:', data);
                     if (data != undefined && data.statuses != undefined) {
                         // Put tweets into array
