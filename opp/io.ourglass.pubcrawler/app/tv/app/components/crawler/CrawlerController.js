@@ -146,7 +146,7 @@ app.directive('pubCrawlerXs', [
 
                 var shouldRefreshMessages = false;
 
-                var crawlerVelocity = 50;
+                var crawlerVelocity = 100;
                 var scrollerWidth;
                 var nextUpIndex = 0;
                 var scrollerUl = document.getElementById('scroller-ul');
@@ -167,7 +167,9 @@ app.directive('pubCrawlerXs', [
 
                 function startCrawlerTransition() {
 
-                    var tranTime = scrollerWidth / crawlerVelocity;
+                    var distanceToTravel = $window.innerWidth + scrollerWidth;
+                    var tranTime = distanceToTravel / crawlerVelocity;
+                    console.log(tranTime);
                     //$log.debug( "Tranny time: " + tranTime );
                     // Let the DOM render real quick then start transition
                     $timeout(function () {
