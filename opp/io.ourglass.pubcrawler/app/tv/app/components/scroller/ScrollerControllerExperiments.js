@@ -85,7 +85,7 @@ app.directive('leftScroller2t', [
             templateUrl: 'app/components/scroller/leftscroller2.template.html',
             link: function (scope, elem, attrs) {
 
-                scope.leftPos = {left: '200px'};
+                scope.topPos = {left: '200px'};
 
                 scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
 
@@ -102,13 +102,13 @@ app.directive('leftScroller2t', [
                     $timeout(function () {
                         var width = scrollerUl.offsetWidth;
                         $log.debug("Scroller width: " + width);
-                        scope.leftPos = {
+                        scope.topPos = {
                             '-webkit-transform': 'translate(' + (width - 400) + 'px,0)',
                             transition: '-webkit-transform 0s'
                         };
                         var destXform = -width + 'px';
                         $timeout(function () {
-                            scope.leftPos = {
+                            scope.topPos = {
                                 '-webkit-transform': 'translate(' + destXform + ',0)',
                                 transition: '-webkit-transform 30s linear'
                             };
@@ -137,7 +137,7 @@ app.directive('leftScroller2', [
             templateUrl: 'app/components/scroller/leftscroller2.template.html',
             link: function (scope, elem, attrs) {
 
-                scope.leftPos = {left: '1280px'};
+                scope.topPos = {left: '1280px'};
 
                 scope.ui = {
                     scrollin: false,
@@ -198,7 +198,7 @@ app.directive('leftScroller2', [
                 }
 
                 function assignLeft() {
-                    scope.leftPos.left = currentLeft + "px";
+                    scope.topPos.left = currentLeft + "px";
                 }
 
                 function renderNext() {
@@ -244,7 +244,7 @@ app.directive('leftcssScroller2', [
             templateUrl: 'app/components/scroller/leftscroller2.template.html',
             link: function (scope, elem, attrs) {
 
-                scope.leftPos = { left: window.innerWidth+'px' };
+                scope.topPos = { left: window.innerWidth+'px' };
                 scope.ui = { shouldScroll: false, isCSSScroller: true };
 
                 var scrollerUl = document.getElementById('scroller-ul');
@@ -265,8 +265,8 @@ app.directive('leftcssScroller2', [
                         var width = element.offsetWidth;
                         var distance = width + window.innerWidth;
                         var time = (distance / SPEED);
-                        scope.leftPos.transitionDuration = time + 's';
-                        scope.leftPos.left = window.innerWidth + 'px';
+                        scope.topPos.transitionDuration = time + 's';
+                        scope.topPos.left = window.innerWidth + 'px';
                         scope.ui.shouldScroll = true;
                         elem.append(angular.element(
                             '<style>' +
@@ -283,9 +283,9 @@ app.directive('leftcssScroller2', [
                     console.log('Looping');
                     $timeout(function () {
                         scope.ui.shouldScroll = false;
-                        scope.leftPos.left = window.innerWidth + 'px';
+                        scope.topPos.left = window.innerWidth + 'px';
                         scope.ui.shouldScroll = true;
-                        scope.leftPos.left = '';
+                        scope.topPos.left = '';
                     });
                     // elem.append(angular.element(
                     //     '<style>' +
@@ -332,7 +332,7 @@ app.directive('leftnsScroller2', ['$timeout', function ($timeout) {
 
             var DELAY = 10;
 
-            scope.leftPos = {};
+            scope.topPos = {};
 
             var i, dx, left;
 
@@ -342,7 +342,7 @@ app.directive('leftnsScroller2', ['$timeout', function ($timeout) {
                     beginScroll();
                     return;
                 }
-                scope.leftPos.left = --left + 'px';
+                scope.topPos.left = --left + 'px';
                 $timeout(loop, DELAY);
             }
 
@@ -353,7 +353,7 @@ app.directive('leftnsScroller2', ['$timeout', function ($timeout) {
                     return document.getElementById('scroller-ul').offsetWidth;
                 }).then(function (width) {
                     left = window.innerWidth;
-                    scope.leftPos.left = left + 'px';
+                    scope.topPos.left = left + 'px';
                     dx = width + left;
                     console.log('Scroll starting. Got width:', width, 'and window width:', window.innerWidth, 'and dx:', dx);
                     loop();
@@ -406,11 +406,11 @@ app.directive('leftvScroller2', ['$timeout', function ($timeout) {
         link: function (scope) {
             var SPEED = 125;
 
-            scope.leftPos = {};
+            scope.topPos = {};
 
             function loop() {
                 console.log("Looping");
-                scope.leftPos.left = window.innerWidth+'px';
+                scope.topPos.left = window.innerWidth+'px';
 
                 $timeout(function () {
                     return document.getElementById('scroller-ul');
@@ -444,7 +444,7 @@ app.directive('lefttmScroller2', function($timeout){
         templateUrl: 'app/components/scroller/leftscroller2.template.html',
         link: function (scope, elem, attrs) {
 
-            scope.leftPos = { left: window.innerWidth+'px' };
+            scope.topPos = { left: window.innerWidth+'px' };
             
             var DELAY = 8;
 
@@ -469,7 +469,7 @@ app.directive('lefttmScroller2', function($timeout){
                 lastUpdated = (new Date).getTime();
                 i+=(dTime/DELAY);
                 left -= dTime / DELAY;
-                scope.leftPos.left = left + 'px';
+                scope.topPos.left = left + 'px';
                 $timeout(loop);
             }
 
@@ -479,7 +479,7 @@ app.directive('lefttmScroller2', function($timeout){
                 loadWidth().then(function (width) {
                     dx = width + window.innerWidth;
                     left = window.innerWidth;
-                    scope.leftPos.left = left + 'px';
+                    scope.topPos.left = left + 'px';
                     console.log('Scroll starting. Got width:', width, 'and window width:', window.innerWidth, 'and dx:', dx);
                     loop();
                 });

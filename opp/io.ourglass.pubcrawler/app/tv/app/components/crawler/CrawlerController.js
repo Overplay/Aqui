@@ -82,6 +82,54 @@ app.directive('pubCrawler', [
 
                 scope.leftPos = {};
 
+                   scope.logo should be the path to the logo to show on the left side
+                   scope.bannerAd should be the path to a full banner add to be shown periodically
+
+                   none of these are implemented yet
+
+
+                   */
+
+                var crawlerVelocity = 50;
+                var scrollerWidth;
+                var nextUpIndex = 0;
+                var scrollerUl = document.getElementById( 'scroller-ul' );
+
+                // This is on a scope var for debugging on Android
+                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
+
+                // Dump crawler off screen
+                function resetCrawlerTransition(){
+
+                    scope.topPos = {
+                        '-webkit-transform': "translate(" + $window.innerWidth + 'px, 0px)',
+                        'transform': "translate(" + $window.innerWidth + 'px, 0px)',
+                        'transition': 'all 0s'
+                    };
+
+                }
+
+                function startCrawlerTransition() {
+
+                    var tranTime = scrollerWidth / crawlerVelocity;
+                    //$log.debug( "Tranny time: " + tranTime );
+                    // Let the DOM render real quick then start transition
+                    $timeout( function () {
+
+                        scope.topPos = {
+                            '-webkit-transform': "translate(-" + scrollerWidth + "px, 0px)",
+                            'transform': "translate(-" + scrollerWidth + "px, 0px)",
+                            'transition': "all " + tranTime + "s linear"
+                        }
+
+                    }, 100 );
+
+                    // And when tran is done, start again.
+                    $timeout( doScroll, tranTime * 1000 );
+
+                }
+
+
                 scope.ui = {
                     scrollin: false,
                     nextUp: '',

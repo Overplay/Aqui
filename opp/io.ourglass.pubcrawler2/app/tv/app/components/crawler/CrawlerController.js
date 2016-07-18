@@ -98,7 +98,7 @@ app.directive( 'pubCrawler', [
                 var SCREEN_WIDTH = window.innerWidth;
                 var _nextUpIndex = 0;
 
-                scope.leftPos = { left: SCREEN_WIDTH + 'px' };
+                scope.topPos = { left: SCREEN_WIDTH + 'px' };
 
                 scope.ui = {
                     scrollin:  false,
@@ -159,7 +159,7 @@ app.directive( 'pubCrawler', [
                 }
 
                 function assignLeft() {
-                    scope.leftPos.left = currentLeft + "px";
+                    scope.topPos.left = currentLeft + "px";
                 }
 
                 function renderNext() {

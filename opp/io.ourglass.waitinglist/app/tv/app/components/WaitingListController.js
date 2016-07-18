@@ -14,12 +14,13 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 
 	// $scope.parties = function() { return optvModel.model.parties; };
 
+	$scope.title = "Temp Title";
+
+	$scope.parties = function () {
+		return parties;
+	};
+
 	var parties = [
-		{
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
 		{
 			name: "Noah Saso",
 			partySize: 1,
@@ -46,30 +47,30 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 			name: "Logan Saso",
 			partySize: 12,
 			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: true
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: false
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: false
-		}
+		}//,
+		// {
+		// 	name: "Noah Saso",
+		// 	partySize: 1,
+		// 	tableReady: true
+		// }, {
+		// 	name: "Logan Saso",
+		// 	partySize: 12,
+		// 	tableReady: false
+		// },
+		// {
+		// 	name: "Noah Saso",
+		// 	partySize: 1,
+		// 	tableReady: false
+		// }, {
+		// 	name: "Logan Saso",
+		// 	partySize: 12,
+		// 	tableReady: false
+		// },
+		// {
+		// 	name: "Noah Saso",
+		// 	partySize: 1,
+		// 	tableReady: false
+		// }
 	];
 
 	$scope.parties = function () {
@@ -139,7 +140,7 @@ app.directive('topScroller', function ($timeout) {
 					top = 300;
 					dx = height + top;
 					scope.topPos.top = top + 'px';
-					console.log('Scroll starting. Got height:', height, 'and window height:', window.innerHeight, 'and dx:', dx);
+					console.log('Scroll starting. Got height:', height, 'and window height:', window.innerWidth, 'and dx:', dx);
 					loop();
 				});
 			}
@@ -203,7 +204,7 @@ app.directive('topScrollerSteps', function ($timeout, $interval) {
 					topOfContent = 300;
 					dx = heightOfPartyContainer + topOfContent;
 					scope.topPos.top = topOfContent + 'px';
-					console.log('Scroll starting. Got height:', heightOfPartyContainer, 'and window height:', window.innerHeight, 'and dx:', dx);
+					console.log('Scroll starting. Got height:', heightOfPartyContainer, 'and window height:', window.innerWidth, 'and dx:', dx);
 					outerLoop();
 				});
 			}
@@ -256,24 +257,129 @@ app.filter('nameMaximum', function () {
 });
 
 
+app.directive('topScrollerJankFree', [
+	'$log', '$timeout', '$window', '$interval',
+	function ($log, $timeout, $window, $interval) {
+		return {
+			restrict: 'E',
+			scope: {
+				parties: '=',
+				title: '='
+			},
+			templateUrl: 'app/components/directives/topscroller.template.html',
+			link: function (scope, elem, attrs) {
+
+				if (scope.parties.length <= 5) {
+					setNoMovement();
+				} else {
+					resetCrawlerTransition();
+				}
+				/*
+				 Speed needs to be implemented
+				 scope.speed should be passed as { crawlerVelocity: 50, nextUpVelocity: 20 } as an example
+
+				 scope.logo should be the path to the logo to show on the left side
+				 scope.bannerAd should be the path to a full banner add to be shown periodically
+
+				 none of these are implemented yet
 
 
+				 */
+
+				var distanceNeeded;
+				var currentLocation;
+				var heightOfOne = 50;
+				var pixelsPerSecond = 500; //50 pixels per entry
+				var stepDelay = 1; //In seconds
+
+				// This is on a scope var for debugging on Android
+				scope.screen = {height: $window.innerHeight, width: $window.innerWidth};
+
+				// Dump crawler off screen
+				function resetCrawlerTransition() {
+
+					scope.topPos = {
+						'-webkit-transform': "translate(0px, " + 300 + 'px)',
+						'transform': "translate(0px, " + 300 + 'px)',
+						'transition': 'all 0s'
+					};
+
+				}
 
 
+				function outerLoop() {
 
 
+					$timeout(loop, stepDelay * 1000);
 
 
+				}
+
+				function setNoMovement() {
+					scope.topPos = {
+						'-webkit-transform': "translate(0px, " + 50 + "px)",
+						'transform': "translate(0px, " + 50 + "px)",
+						'transition': "all " + 0 + "s linear"
+					};
+				}
+
+				function loop() {
+
+					if (scope.parties.length <= 5) {
+						setNoMovement();
+						return;
+					}
+
+					// $log.info("Doing loop.");
+
+					var transitionTime = 50 / pixelsPerSecond;
+
+					currentLocation -= heightOfOne;
+
+					scope.topPos = {
+						'-webkit-transform': "translate(0px, " + currentLocation + "px)",
+						'transform': "translate(0px, " + currentLocation + "px)",
+						'transition': "all " + transitionTime + "s linear"
+					};
+
+					if (-currentLocation >= distanceNeeded) {
+						console.log('Done!');
+						doScroll();
+						return;
+					}
+
+					outerLoop();
+
+				}
 
 
+				// This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
+				function loadHeight() {
+					return $timeout(function () {
+						return document.getElementById('party-container').offsetHeight-247;
+					})
+				}
 
 
+				function doScroll() {
 
 
+					loadHeight()
+						.then(function (height) {
+							currentLocation = 300;
+							distanceNeeded = height + 300;
+							$log.debug("Scroller height: " + height);
+							if (scope.parties.length > 5) {
+								resetCrawlerTransition();
+							}
+							outerLoop();
+						});
 
+				}
 
+				doScroll();
 
-
-
-
-
+			}
+		}
+	}]
+);
