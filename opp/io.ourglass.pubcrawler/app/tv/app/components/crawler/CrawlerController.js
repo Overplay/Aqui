@@ -56,32 +56,25 @@ app.controller("crawlerController",
             return array;
         }
 
+        function processTweetsAndAdd(data) {
+            console.log('Tweets:', data);
+            if (data != undefined && data.statuses != undefined) {
+                // Put tweets into array
+                var tweets = [];
+                for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                    tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                }
+                // Randomly combine tweets and messages
+                $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
+            }
+            $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+        }
+
         function reloadTweets() {
             $scope.newMessageArray = $scope.messages;
             optvModel.getTweets().then(function (data) {
-                console.log('Tweets:', data);
-                if (data != undefined && data.statuses != undefined) {
-                    // Put tweets into array
-                    var tweets = [];
-                    for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
-                        tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
-                    }
-                    // Randomly combine tweets and messages
-                    $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
-                }
-                optvModel.getChannelTweets().then(function (data) {
-                    console.log('Channel Tweets:', data);
-                    if (data != undefined && data.statuses != undefined) {
-                        // Put tweets into array
-                        var tweets = [];
-                        for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
-                            tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
-                        }
-                        // Randomly combine tweets and messages
-                        $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
-                    }
-                    $scope.newMessageArray = shuffleArray($scope.newMessageArray);
-                });
+                processTweetsAndAdd(data);
+                optvModel.getChannelTweets().then(processTweetsAndAdd);
             });
         }
 
