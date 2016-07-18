@@ -169,7 +169,7 @@ app.directive('pubCrawlerXs', [
 
                     var distanceToTravel = $window.innerWidth + scrollerWidth;
                     var tranTime = distanceToTravel / crawlerVelocity;
-                    console.log(tranTime);
+                    $log.debug("Transition time: " + tranTime);
                     //$log.debug( "Tranny time: " + tranTime );
                     // Let the DOM render real quick then start transition
                     $timeout(function () {
