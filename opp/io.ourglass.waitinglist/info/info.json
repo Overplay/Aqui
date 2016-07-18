@@ -1,14 +1,15 @@
 {
+  "appId": "io.ourglass.waitinglist",
   "appType": "widget",
-  "name": "Waiting List",
+  "screenName": "Waiting List",
+  "onLauncher": true,
+  "primaryColor": -7876885,
+  "primaryColorHex": "#87CEEB",
   "reverseDomainName": "io.ourglass.waitinglist",
-  "buildNumber": 1,
-  "signature": "",
-  "iconLabel": "WaitingList",
-  "iconImage": "waitinglist.png",
-  "publisher": "Ourglass TV, Inc.",
-  "show": true,
-  "primaryColor": "#F0F0F0",
-  "secondaryColor": "#FF1010",
-  "textColor": "#FFFFFF"
+  "secondaryColor": 0,
+  "secondaryColorHex": "#000000",
+  "icon": "wl.png",
+  "iconPath": "www/opp/io.ourglass.waitinglist/assets/icon/wl.png",
+  "iconImage": "www/opp/io.ourglass.waitinglist/assets/icon/wl.png",
+  "iconLabel": "Waiting List"
 }

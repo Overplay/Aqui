@@ -28,16 +28,41 @@
 
     <!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
 
+    <script id="templates/modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">System Settings</h1>
+                <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">System Name</span>
+                        <input ng-model="sysInfo.name" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">System Location</span>
+                        <input ng-model="sysInfo.locationWithinVenue" type="text">
+                    </label>
+                    <button class="button button-full button-positive" ng-click="updateSystem()">Update</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+
     <title>OGTV Control</title>
 </head>
 
 <body ng-controller="conController">
 
-<!--Shuffleboard Remote Control -->
 
-<ion-header-bar class="bar bar-header bar-royal">
-    <h1 class="title">OG Control</h1>
+<ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Control Panel
+        <button class="button button-clear button-light" ng-click="modal.show()">Settings</button>
+    </h1>
 </ion-header-bar>
+
 <ion-content>
     <div class="row header">
         <div class="col"><h4>Running Apps</h4></div>
