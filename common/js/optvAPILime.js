@@ -9,7 +9,7 @@
  This version talks to AmstelBrightServer on Android ONLY
 
  ****************************************************************************/
-
+var GLOBAL_APPDATA_UPDATE_METHOD = undefined;
 
 angular.module( 'ngOpTVApi', [] )
     .factory( 'optvModel', function ( $http, $log, $timeout ) {
@@ -66,7 +66,7 @@ angular.module( 'ngOpTVApi', [] )
             this.lastUpdated = 0;
             var _this = this;
 
-            function updateIfChanged( data ) {
+            this.updateIfChanged = function( data ) {
 
                 switch (DATA_UPDATE_METHOD){
 
@@ -91,33 +91,13 @@ angular.module( 'ngOpTVApi', [] )
                 }
             }
 
-            // TODO should probably replace with $interval
-            this.poll = function () {
-
-                $timeout( function () {
-
-                    dbout("wasteful model poll starting");
-                    $http.get( apiPath + 'appdata/' + _appName+"?dt="+new Date().getTime(), { cache: false } )
-                        .then( function ( data ) {
-                            updateIfChanged( data.data );
-                            if ( _this.running ) _this.poll();
-                        })
-                        .catch( function (err){
-                            $log.error( logLead() + " couldn't poll model!" );
-                            if ( _this.running ) _this.poll();
-                        });
-
-
-                }, _pollInterval );
-
-            }
         }
 
-
         function startDataPolling() {
-            $log.info( logLead() + " starting data polling." );
+            $log.info( logLead() + " fuck data polling." );
             appWatcher = new AppDataWatcher();
-            appWatcher.poll();
+            GLOBAL_APPDATA_UPDATE_METHOD = appWatcher.updateIfChanged;
+            //appWatcher.poll();
         }
 
         service.init = function ( params ) {
@@ -147,7 +127,7 @@ angular.module( 'ngOpTVApi', [] )
                             dbout( "model data (appData) already existed via http." + data.data );
                             service.model = data.data;
                             _dataCb(service.model);
-                            startDataPolling();
+                            //startDataPolling();
                         }
                     })
                     .catch( function(err){
@@ -228,3 +208,16 @@ angular.module( 'ngOpTVApi', [] )
     }
 )
 
+function thisIsAtest(appData){
+    if(appData){
+        GLOBAL_APPDATA_UPDATE_METHOD(appData);
+    }
+}
+
+function updateAppData(newAppData){
+    console.log("this was actually called!");
+    
+    console.log(newAppData);
+
+    GLOBAL_APPDATA_UPDATE_METHOD(newAppData);
+}
