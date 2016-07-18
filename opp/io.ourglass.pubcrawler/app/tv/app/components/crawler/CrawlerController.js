@@ -28,7 +28,6 @@ app.controller("crawlerController",
         $scope.newMessageArray = [];
 
         function modelUpdate(data) {
-
             $scope.messages = data.messages;
             if(!$scope.newMessageArray) $scope.newMessageArray = $scope.messages;
             $scope.comingUpMessages = data.comingUpMessages;
@@ -73,7 +72,9 @@ app.controller("crawlerController",
         function reloadTweets() {
             $scope.newMessageArray = $scope.messages;
             optvModel.getTweets().then(function (data) {
+                console.log('User selected tweets processing');
                 processTweetsAndAdd(data);
+                console.log('Channel tweets next');
                 optvModel.getChannelTweets().then(processTweetsAndAdd);
             });
         }
