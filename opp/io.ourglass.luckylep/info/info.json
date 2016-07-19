@@ -1,0 +1,15 @@
+{
+  "appId": "io.ourglass.luckylep",
+  "appType": "widget",
+  "screenName": "Lucky",
+  "onLauncer": true,
+  "primaryColor": -16744448,
+  "primaryColorHex": "#008000",
+  "reverseDomainName": "io.ourglass.luckylep",
+  "secondaryColor": 0,
+  "secondaryColorHex": "#000000",
+  "icon": "lep.png",
+  "iconPath": "www/opp/io.ourglass.luckylep/assets/icons/lep.png",
+  "iconImage": "www/opp/io.ourglass.luckylep/assets/icons/lep.png",
+  "iconLabel": "Lucky"
+}

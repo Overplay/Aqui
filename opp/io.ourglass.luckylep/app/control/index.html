@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="luckLepTVApp">
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+
+<script src="../../../../common/bower_components/angular/angular.min.js"></script>
+
+<!--<script src="assets/bower_components/lodash/lodash.min.js"></script>-->
+
+
+<!-- App Main and AngularJS Routes -->
+
+
+<script src="app/optvShuffConApp.module.js"></script>
+<script src="/js/optvAPIPHP.js"></script>
+
+<!-- Controllers -->
+
+<script src="app/components/shuffcon/ShuffconController.js"></script>
+
+
+<!-- App Specific and Overridden CSS -->
+<link href="assets/css/styles.css" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+
+
+<title>OPTV Lep Control</title>
+</head>
+
+<body ng-controller="shuffconController">
+
+<!--Shuffleboard Remote Control -->
+
+
+<h1>Lucky Lep</h1>
+
+
+<div class="ctrl-holder bottom">
+
+  <div class="sq-button rd2" ng-click="cheat()"><i class="fa fa-bomb">&nbsp;CHEAT</i></div>
+
+</div>
+
+
+</body>
+</html>
