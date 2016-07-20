@@ -159,7 +159,7 @@ angular.module( 'ngOpTVApi', [] )
 
             }
 
-        }
+        };
 
         
         service.save = function () {
@@ -210,7 +210,7 @@ angular.module( 'ngOpTVApi', [] )
 
             return $http.post( apiPath + 'scrape/'+ _appName, { query: twitterQuery });
 
-        }
+        };
 
         function stripData( response  ) {
             return response.data;
@@ -221,10 +221,24 @@ angular.module( 'ngOpTVApi', [] )
             return $http.get( apiPath + 'scrape/' + _appName )
                 .then(stripData);
 
-        }
+        };
+
+        service.getChannelTweets = function ( ) {
+
+            return $http.get( apiPath + 'scrape/io.ourglass.core.channeltweets' )
+                .then(stripData);
+
+        };
+
+        service.getChannelInfo = function ( ) {
+
+            return $http.get( apiPath + 'system/channel' )
+                .then(stripData);
+
+        };
 
         return service;
 
     }
-)
+);
 

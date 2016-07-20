@@ -38,8 +38,8 @@ app.controller("conController",
                 });
         };
 
-        $scope.openController = function (appId) {
-            window.location.href = "/www/opp/" + appId + '/app/control/index.html';
+        $scope.openController = function (appId, appName) {
+            window.location.href = "/www/opp/" + appId + '/app/control/index.html?name=' + appName;
         };
 
         function reloadAppList() {

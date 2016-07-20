@@ -143,3 +143,10 @@ li {
     opacity: 1;
 }
 
+.name-change {
+    transition: all 250ms ease;
+}
+
+.hide-name {
+    opacity: 0;
+}

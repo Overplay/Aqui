@@ -28,9 +28,8 @@ app.controller("crawlerController",
         $scope.newMessageArray = [];
 
         function modelUpdate(data) {
-
             $scope.messages = data.messages;
-            if(!$scope.newMessageArray) $scope.newMessageArray = $scope.messages;
+            if (!$scope.newMessageArray) $scope.newMessageArray = $scope.messages;
             $scope.comingUpMessages = data.comingUpMessages;
 
             // Combine Twitter queries into one string and set
@@ -56,21 +55,27 @@ app.controller("crawlerController",
             return array;
         }
 
-        function reloadTweets() {
-            optvModel.getTweets().then(function (data) {
-                console.log('Tweets:', data);
-                if (data != undefined && data.statuses != undefined) {
-                    // Put tweets into array
-                    var tweets = [];
-                    for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
-                        tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
-                    }
-                    // Randomly combine tweets and messages
-                    $scope.newMessageArray = $scope.messages.concat(tweets);
-                } else {
-                    $scope.newMessageArray = $scope.messages;
+        function processTweetsAndAdd(data) {
+            console.log('Tweets:', data);
+            if (data != undefined && data.statuses != undefined) {
+                // Put tweets into array
+                var tweets = [];
+                for (var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                    tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
                 }
-                $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+                // Randomly combine tweets and messages
+                $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
+            }
+            $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+        }
+
+        function reloadTweets() {
+            $scope.newMessageArray = $scope.messages;
+            optvModel.getTweets().then(function (data) {
+                console.log('User selected tweets processing');
+                processTweetsAndAdd(data);
+                console.log('Channel tweets next');
+                optvModel.getChannelTweets().then(processTweetsAndAdd);
             });
         }
 
@@ -115,8 +120,8 @@ app.controller("crawlerController",
  *
  */
 app.directive('pubCrawlerXs', [
-    '$log', '$timeout', '$window', '$interval',
-    function ($log, $timeout, $window, $interval) {
+    '$log', '$timeout', '$window', '$interval', 'optvModel',
+    function ($log, $timeout, $window, $interval, optvModel) {
         return {
             restrict: 'E',
             scope: {
@@ -152,7 +157,7 @@ app.directive('pubCrawlerXs', [
                 var scrollerUl = document.getElementById('scroller-ul');
 
                 // This is on a scope var for debugging on Android
-                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
+                scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
 
                 // Dump crawler off screen
                 function resetCrawlerTransition() {
@@ -167,8 +172,10 @@ app.directive('pubCrawlerXs', [
 
                 function startCrawlerTransition() {
 
-                    var tranTime = scrollerWidth / crawlerVelocity;
-                    $log.debug( "Tranny time: " + tranTime );
+                    var distanceToTravel = $window.innerWidth + scrollerWidth;
+                    var tranTime = distanceToTravel / crawlerVelocity;
+                    $log.debug("Transition time: " + tranTime);
+                    //$log.debug( "Tranny time: " + tranTime );
                     // Let the DOM render real quick then start transition
                     $timeout(function () {
 
@@ -185,10 +192,13 @@ app.directive('pubCrawlerXs', [
 
                 }
 
+                var NEXT_UP_DURATION = 5000;
 
                 scope.ui = {
                     scrollin: false,
-                    nextUp: ''
+                    nextUp: '',
+                    isNextUp: true,
+                    isChangingName: false
                 };
 
 
@@ -199,19 +209,67 @@ app.directive('pubCrawlerXs', [
 
                     scope.ui.nextUp = '';
                     scope.ui.scrollin = false;
+                    scope.ui.isNextUp = true;
+                    scope.ui.isChangingName = false;
 
                     $timeout(function () {
 
                         scope.ui.nextUp = scope.comingUpArray[nextUpIndex];
                         nextUpIndex++;
-                        if (nextUpIndex == scope.comingUpArray.length)
+                        if (nextUpIndex == scope.comingUpArray.length) {
                             nextUpIndex = 0;
-                        scope.ui.scrollin = true;
+                            scope.ui.scrollin = true;
 
-                        $timeout(function () {
-                            scope.ui.scrollin = false;
-                            $timeout(scrollNextUp, 250);
-                        }, 5000)
+                            $timeout(function () {
+                                scope.ui.scrollin = false;
+                                $timeout(function () {
+                                    optvModel.getChannelInfo().then(function (data) {
+                                        if (data != undefined && data.programTitle != undefined) {
+                                            scope.ui.isChangingName = true;
+                                            $timeout(function () {
+                                                scope.ui.nextUp = data.programTitle;
+                                                scope.ui.isNextUp = false;
+                                                scope.ui.isChangingName = false;
+                                                $timeout(function () {
+                                                    scope.ui.scrollin = true;
+                                                    $timeout(function () {
+                                                        scope.ui.scrollin = false;
+                                                        $timeout(function () {
+                                                            scope.ui.isChangingName = true;
+                                                            $timeout(scrollNextUp, 250);
+                                                        }, 500);
+                                                    }, (NEXT_UP_DURATION * 2));
+                                                }, 250);
+                                            }, 250);
+                                        } else {
+                                            scope.ui.nextUp = scope.comingUpArray[nextUpIndex];
+                                            nextUpIndex++;
+                                            scope.ui.scrollin = true;
+
+                                            $timeout(function () {
+                                                scope.ui.scrollin = false;
+                                                $timeout(scrollNextUp, 250);
+                                            }, NEXT_UP_DURATION);
+                                        }
+                                    });
+                                }, 500);
+                            }, NEXT_UP_DURATION);
+                        } else {
+                            scope.ui.scrollin = true;
+
+                            $timeout(function () {
+                                scope.ui.scrollin = false;
+                                $timeout(scrollNextUp, 250);
+                            }, NEXT_UP_DURATION);
+                        }
+                        // if (nextUpIndex == scope.comingUpArray.length)
+                        //     nextUpIndex = 0;
+                        // scope.ui.scrollin = true;
+                        //
+                        // $timeout(function () {
+                        //     scope.ui.scrollin = false;
+                        //     $timeout(scrollNextUp, 250);
+                        // }, NEXT_UP_DURATION);
 
 
                     }, 250)
@@ -251,7 +309,7 @@ app.directive('pubCrawlerXs', [
                 }
 
                 var waitToStart = $interval(function () {
-                    if(scope.newMessageArray) {
+                    if (scope.newMessageArray) {
                         doScroll();
                         $interval.cancel(waitToStart);
                     }
