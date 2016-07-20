@@ -37,7 +37,7 @@
     width: 100%;
     border: solid 1px lightgray !important;
     border-top: none !important;
-    transition: top 500ms ease;
+    transition: top 300ms ease;
     z-index: -1;
 }
 

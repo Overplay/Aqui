@@ -54,6 +54,9 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
         function sendTextToParty(party) {
             var phone = party.phone;
             console.log('Sending text alert to', phone, '...');
+            // SEND TEXT HERE
+            // Set to false so doesn't send again but it should never get here but just in case
+            party.phone = false;
         }
 
         var CHECK_INTERVAL = 1000; // milliseconds
@@ -67,11 +70,9 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                 if ((currentDate - party.dateCreated) / 1000 / 60 >= WAIT_TIME_BEFORE_SEND) {
                     // Send text
                     sendTextToParty(party);
-                    // Set to false so doesn't send again but it should never get here but just in case
-                    party.phone = false;
                 }
             }
-            $interval(checkAndSendTextAlert, CHECK_INTERVAL);
+            $timeout(checkAndSendTextAlert, CHECK_INTERVAL);
         }
 
         function initialize() {
@@ -106,7 +107,7 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                 dataCallback: retrieveData
             });
 
-            checkAndSendTextAlert();
+            // checkAndSendTextAlert();
 
             emptyNewParty();
 
@@ -189,13 +190,17 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
             }
         };
 
+        function promptToConfirmTableReady(party) {
+            party.tableReady = true;
+            sendTextToParty(party);
+            optvModel.save();
+        }
+
         $scope.doPartyBnAction = function (party, $event) {
             var label = $event.target.innerHTML;
             switch (label.trim().toLowerCase()) {
                 case 'table ready':
-                case 'table not ready':
-                    party.tableReady = !party.tableReady;
-                    optvModel.save();
+                    promptToConfirmTableReady(party);
                     break;
                 case 'delete':
                     $scope.toggleOptions(party, true);
