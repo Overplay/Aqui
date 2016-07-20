@@ -14,6 +14,15 @@ html, body {
     display: none;
 }
 
+.overflow-container{
+
+    height: 250px;
+    outline: green 1px;
+    position: relative;
+    overflow: hidden;
+
+}
+
 .party-card {
 
     margin-bottom: 3px;
@@ -23,9 +32,10 @@ html, body {
 
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    border-radius: 3px;
 
     width: 190px;
+
+    /*width: 290px;*/
 
     height: 47px;
     /*line-height: 15px;*/
@@ -38,6 +48,14 @@ html, body {
 
 }
 
+.party-title{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    text-shadow: 2px 2px 5px black;
+    color: white;
+    height: 50px;
+}
 
 /*.party-card.ng-enter {*/
 
@@ -62,6 +80,9 @@ html, body {
 .party-details-container {
     display: flex;
     flex-flow: row;
+    z-index: 0;
+    line-height: 36px;
+
 }
 
 .party-order,.party-size,.ready-size,.ready-order{

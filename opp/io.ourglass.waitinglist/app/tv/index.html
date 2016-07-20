@@ -9,7 +9,6 @@
     <script src="../../../../common/bower_components/angular/angular.min.js"></script>
     <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
     <script src="../../../../common/js/optvAPILime.js"></script>
-    <script src="../../../../common/bower_components/angular-animate/angular-animate.js"></script>
 
     <script src="app/optvWaitingList.module.js"></script>
     <script src="app/components/WaitingListController.js"></script>
@@ -23,7 +22,8 @@
 <body ng-controller="waitingListController">
 
 <!--<top-scroller parties="parties()"></top-scroller>-->
-<top-scroller-steps parties="parties()"></top-scroller-steps>
+<!--<top-scroller-steps parties="parties()"></top-scroller-steps>-->
+<top-scroller-jank-free id="top-scroller" parties="parties()" title="title"></top-scroller-jank-free>
 
 </body>
 </html>
