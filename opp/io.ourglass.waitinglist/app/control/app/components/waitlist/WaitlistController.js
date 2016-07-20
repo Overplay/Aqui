@@ -198,7 +198,6 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                     optvModel.save();
                     break;
                 case 'delete':
-                case 'seated':
                     $scope.toggleOptions(party, true);
                     break;
             }
