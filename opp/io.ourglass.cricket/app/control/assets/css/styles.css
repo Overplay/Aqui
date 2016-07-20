@@ -1,0 +1,188 @@
+@font-face {
+    font-family: "Dosis";
+    src: url('../fonts/Dosis-Regular.ttf');
+}
+
+@font-face {
+    font-family: "Dosis-Bold";
+    src: url('../fonts/Dosis-ExtraBold.ttf');
+}
+
+html {
+    margin: 0;
+    aabackground-color: #F000F0;
+
+}
+
+body {
+    margin: 0;
+    aabackground-color: #8ef058;
+    font-family: 'Dosis', sans-serif;
+
+}
+
+h1 {
+    width: 100%;
+    background-color: #001c20;
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 0;
+    padding: 5px;
+}
+
+.img-button {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    margin: 1%;
+    text-align: center;
+    line-height: 50px;
+    font-size: 80px;
+}
+
+.sq-button {
+    display: inline-block;
+    width: 33%;
+    height: 50px;
+    border-radius: 5px;
+    margin: 4px;;
+    text-align: center;
+    line-height: 50px;
+    font-size: 15px;
+}
+
+.score-button {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    border-radius: 30px;
+    margin: 1%;
+    text-align: center;
+    line-height: 65px;
+    font-size: 50px;
+}
+
+
+.rt {
+    margin-right: 15%;
+}
+
+.lt {
+    margin-left: 15%;
+}
+
+.red-sk {
+    border: 3px solid red;
+    color: white;
+    background-color: red;
+}
+
+.blue-sk {
+    border: 3px solid blue;
+    color: white;
+    background-color: blue;
+}
+
+.rd2 {
+    color: white;
+    background-color: #ea526f;
+}
+
+.bl2 {
+    color: white;
+    background-color: #1b9aaa;
+}
+
+.y {
+    color: white;
+    background-color: #ff9512;
+}
+
+.ctrl-holder {
+
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+
+}
+
+.rounded-border {
+    border: 2px solid #eee;
+    border-radius: 15px;
+    margin-top: 5px;
+}
+
+.bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 95%;
+}
+
+.form-control {
+    border: 0 solid white;
+    -webkit-box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+    0 0 16px rgba(0,0,0,0.1);
+    -moz-box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+    0 0 16px rgba(0,0,0,0.1);
+    box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+    0 0 16px rgba(0,0,0,0.1);
+    padding: 15px;
+    width: 100%;
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;
+}
+
+.unselectable {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+}
+
+.boardCol {
+    margin-left: 5%;
+    width: 40%;
+    display: inline-block;
+}
+
+.boardRow {
+    margin-bottom: 5px;
+}
+
+.boardRow .boardRowValue {
+    margin: 0;
+    display: inline-block;
+    width: 25%
+}
+
+.boardRow .boardRowMultiplier {
+    text-align: right;
+    display: inline-block;
+    margin: 0
+}
+
+.boardRow .boardRowTotal {
+    display: inline;
+    font-size: 15px
+}
+
+.boardRow .boardRowValue #player1 {
+    color: red
+}
+
+.boardRow .boardRowValue #player2 {
+    color: blue
+}
+
+.hidden {
+    color: white
+}

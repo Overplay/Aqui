@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="optvDartsApp">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+    <script src="assets/bower_components/angular/angular.js"></script>
+    <script src="assets/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="assets/bower_components/lodash/lodash.js"></script>
+
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="app/optvDartsApp.module.js"></script>
+    <script src="../../../../common/js/optvAPILime.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/components/darts/DartsController.js"></script>
+
+
+    <!-- Directives -->
+
+    <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    <link href='http://fonts.googleapis.com/css?family=Dosis:300,400' rel='stylesheet' type='text/css'>
+
+
+    <!-- App Specific and Overridden CSS -->
+    <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+
+    <title>OPTV Cricket</title>
+</head>
+
+<body>
+
+<!-- semis skeuomorph look -->
+<div class="applet" ng-controller="dartsController" style=" font-family: 'Architects Daughter'" ng-click="set()">
+    <div class="applet-banner" style="padding-top: 15px">Ourglass Cricket</div>
+    <div style="margin-top: 59px">
+        <div style="margin-top: 1.7px" ng-repeat="row in rows">
+            <h3 style="color: white; margin: 0; padding: 0; display: inline; margin-left: 25px; position: absolute" ng-class="{'hide': !row.p1.score}">{{row.p1.score}}</h3>
+            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 64px; position: absolute" ng-class="{'hide': !row.p1.numHits}">
+                <img style="margin-top: 5px" ng-if="row.p1.numHits == 1"src="assets/img/1Hit.png">
+                <img style="margin-top: 5px" ng-if="row.p1.numHits == 2" src="assets/img/2Hits.png">
+                <img style="margin-top: 5px" ng-if="row.p1.numHits >= 3"src="assets/img/3Hitsb.png">
+            </h3>
+            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 121px; position: absolute">
+                <img style="margin-top: 5px" ng-if="row.p2.numHits == 1"src="assets/img/1Hit.png">
+                <img style="margin-top: 5px" ng-if="row.p2.numHits == 2" src="assets/img/2Hits.png">
+                <img style="margin-top: 5px" ng-if="row.p2.numHits >= 3"src="assets/img/3Hitsb.png">
+            </h3>
+            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 154px; position: absolute;" ng-class="{'hide': !row.p2.score}">{{row.p2.score}}</h3>
+            &nbsp;
+        </div>
+        <div style="margin-top: 6.5px">
+            <h3 style="color: white; margin: 0; padding: 0; display: inline; margin-left: 25px; position: absolute" >{{score.red}}</h3>
+            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 154px; position: absolute" >{{score.blue}}</h3>
+            &nbsp;
+        </div>
+    </div>
+</div>
+
+<div style="position: absolute; color: #db4b4b; top: 52px; left: 42px; font-family: 'Architects Daughter'; font-weight: bold; font-size: 13px">player 1</div>
+<div style="position: absolute; color: #69aed2; top: 52px; left: 111px; font-family: 'Architects Daughter'; font-weight: bold; font-size: 13px">player 2</div>
+
+</body>
+</html>

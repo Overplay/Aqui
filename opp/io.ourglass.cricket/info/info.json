@@ -1,0 +1,15 @@
+{
+    "appId": "io.ourglass.cricket",
+    "appType": "widget",
+    "screenName": "Cricket",
+    "onLauncher": "true",
+    "primaryColor": -5658199, 
+    "primaryColorHex": "#A9A9A9",
+    "reverseDomainName": "io.ourglass.cricket",
+    "secondaryColor": 0,
+    "secondaryColorHex": "#000000",
+    "icon": "cricket.jpg",
+    "iconPath": "www/opp/io.ourglass.cricket/assets/icon/cricket.jpg",
+    "iconImage": "www/opp/io.ourglass.cricket/assets/icon/cricket.jpg",
+    "iconLabel": "Cricket"
+}

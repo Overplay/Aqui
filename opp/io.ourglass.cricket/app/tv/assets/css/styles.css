@@ -1,0 +1,79 @@
+@font-face {
+    font-family: "Dosis";
+    src: url('../fonts/Dosis-Regular.ttf');
+}
+
+@font-face {
+    font-family: "Dosis-Bold";
+    src: url('../fonts/Dosis-ExtraBold.ttf');
+}
+
+html {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Dosis', sans-serif;
+}
+
+.op0 {
+    opacity: 0;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.blue {
+    background-color: blue;
+    color: white;
+}
+
+.applet {
+    height: 300px;
+    width: 200px;
+    padding-top: 0;
+    border-radius: 8px;
+    background-image: url('../img/smaller_board.jpg');
+    background-size: cover;
+}
+
+.applet-banner {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    text-align: center;
+    font-size: 17px;
+    text-shadow: 2px 2px 2px rgb(101, 101, 101);
+    padding-top: 5px;
+}
+
+.score-box {
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+    font-size: 30px;
+    border-radius: 5px;
+    xxwidth: 75px;
+    xxmargin-top: 7px;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    color: white;
+}
+
+.grow {
+    transform: scale(1.2, 1.2);
+    -webkit-transform: scale(1.2, 1.2);
+    opacity: 0.8;
+}
+
+.hide {
+    color: #336f4d !important;
+}

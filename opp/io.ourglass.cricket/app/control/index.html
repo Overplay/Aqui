@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html ng-app="optvDartsConApp">
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+
+<script src="assets/bower_components/angular/angular.min.js"></script>
+<script src="assets/bower_components/lodash/lodash.min.js"></script>
+
+
+<!-- App Main and AngularJS Routes -->
+
+
+<script src="app/optvDartsConApp.module.js"></script>
+<script src="../../../../common/js/optvAPILime.js"></script>
+
+<!-- Controllers -->
+
+<script src="app/components/dartscon/DartsconController.js"></script>
+
+
+<!-- App Specific and Overridden CSS -->
+<link href="assets/css/styles.css" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+
+
+<title>OPTV Darts Control</title>
+</head>
+
+<body ng-controller="dartsconController" style="background-color: white;">
+
+<!--Darts Remote Control -->
+
+
+<h1>Cricket</h1>
+
+<div class="width: 100%">
+    <div style="margin: 0; margin-left: 20%; width: 30%; display: inline-block">
+        <h2 style="margin: 0;color: red">Player 1</h2>
+    </div>
+    <div style="margin: 0; width: 30%; display: inline-block; text-align: left">
+        <h2 style="margin: 0; color: blue">Player 2</h2>
+    </div>
+</div>
+<div class="unselectable">
+    <div class="boardCol">
+        <div ng-repeat="boardLine in player1.board" class="boardRow">
+            <h2 class="boardRowValue" ng-click="useDart(player1, $index, 1)">{{boardLine.text}}</h2>
+            <h2 class="boardRowMultiplier" ng-click="useDart(player1, $index, 2)">x2</h2>
+            <h2 class="boardRowMultiplier" ng-class="{'hidden': $index == (player2.board.length - 1)}" ng-click="useDart(player1, $index, 3)">x3</h2>
+            <img width="10%" style="display: inline" src="assets/img/red-dart-icon.png" ng-if="boardLine.darts.length">
+            <h2 class="boardRowTotal" id="player1" ng-if="boardLine.darts.length > 1">x{{boardLine.darts.length}}</h2>
+        </div>
+    </div>
+    <div class="boardCol">
+        <div ng-repeat="boardLine in player2.board" class="boardRow">
+            <h2 class="boardRowValue" ng-click="useDart(player2, $index, 1)">{{boardLine.text}}</h2>
+            <h2 class="boardRowMultiplier" ng-click="useDart(player2, $index, 2)">x2</h2>
+            <h2 class="boardRowMultiplier" ng-class="{'hidden': $index == (player2.board.length - 1)}" ng-click="useDart(player2, $index, 3)">x3</h2>
+            <img width="10%" style="display: inline" src="assets/img/blue-dart-icon.png" ng-if="boardLine.darts.length">
+            <h2 class="boardRowTotal" id="player2" ng-if="boardLine.darts.length > 1">x{{boardLine.darts.length}}</h2>
+        </div>
+    </div>
+</div>
+<div class="width: 100%">
+    <div class="rounded-border" style="margin: 0; margin-left: 20%; width: 30%; display: inline-block; text-align: left">
+        <img src="assets/img/dart-icon.png" width="30%" ng-if="player1.dartsUsed > 0"><img src="assets/img/red-dart-icon.png" width="30%" ng-if="player1.dartsUsed <= 0">
+        <img src="assets/img/dart-icon.png" width="30%" ng-if="player1.dartsUsed > 1"><img src="assets/img/red-dart-icon.png" width="30%" ng-if="player1.dartsUsed <= 1">
+        <img src="assets/img/dart-icon.png" width="30%" ng-if="player1.dartsUsed > 2"><img src="assets/img/red-dart-icon.png" width="30%" ng-if="player1.dartsUsed <= 2">
+    </div>
+    <div class="rounded-border" style="margin: 0; width: 30%; display: inline-block; text-align: left">
+        <img src="assets/img/dart-icon.png" width="30%" ng-if="player2.dartsUsed > 0"><img src="assets/img/blue-dart-icon.png" width="30%" ng-if="player2.dartsUsed <= 0">
+        <img src="assets/img/dart-icon.png" width="30%" ng-if="player2.dartsUsed > 1"><img src="assets/img/blue-dart-icon.png" width="30%" ng-if="player2.dartsUsed <= 1">
+        <img src="assets/img/dart-icon.png" width="30%" ng-if="player2.dartsUsed > 2"><img src="assets/img/blue-dart-icon.png" width="30%" ng-if="player2.dartsUsed <= 2">
+    </div>
+</div>
+
+
+<h1 style="background-color: white"><div class="sq-button" style="background-color: green" ng-click="finishTurn()">Finish Turn</div></h1>
+
+<div class="ctrl-holder bottom">
+  <div class="sq-button rd2" ng-click="resetScores()"><i class="fa fa-bomb">&nbsp;RESET</i></div>
+  <div class="sq-button bl2" ng-click="move()"><i class="fa fa-arrows"></i>&nbsp;MOVE</div>
+  <div class="sq-button y" ng-click="home()"><i class="fa fa-home"></i>&nbsp;HOME</div>
+
+</div>
+
+
+</body>
+</html>
