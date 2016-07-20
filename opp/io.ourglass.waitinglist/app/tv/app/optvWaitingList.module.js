@@ -3,6 +3,5 @@
  */
 
 var app = angular.module('optvWaitingList', [
-	'ngOpTVApi',
-	'ngAnimate'
+	'ngOpTVApi'
 ]);

@@ -12,42 +12,42 @@
 
 app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
 
-	// $scope.parties = function() { return optvModel.model.parties; };
+	$scope.title = "Waiting List";
 
-	$scope.title = "Temp Title";
+	$scope.parties = function() { return optvModel.model.parties; };
 
-	$scope.parties = function () {
-		return parties;
-	};
+	// $scope.parties = function () {
+	// 	return parties;
+	// };
 
-	var parties = [
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: true
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Christopher Saso",
-			partySize: 1,
-			tableReady: false
-		}, {
-			name: "Arabella Appleseed Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: false
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		}//,
+	// var parties = [
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: true
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Christopher Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
+	// 	}, {
+	// 		name: "Arabella Appleseed Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
 		// {
 		// 	name: "Noah Saso",
 		// 	partySize: 1,
@@ -71,11 +71,7 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 		// 	partySize: 1,
 		// 	tableReady: false
 		// }
-	];
-
-	$scope.parties = function () {
-		return parties;
-	};
+	//];
 
 	function handleDataCallback(data) {
 		if (data.length != optvModel.model.parties.length) {
@@ -222,7 +218,7 @@ app.filter('nameMaximum', function () {
 
 		var words = data.split(" ");
 		var countedLetters = 0;
-		var CHARLIMIT = 12;
+		var CHARLIMIT = 6;
 		var returnMe = data;
 
 
@@ -289,8 +285,8 @@ app.directive('topScrollerJankFree', [
 				var distanceNeeded;
 				var currentLocation;
 				var heightOfOne = 50;
-				var pixelsPerSecond = 500; //50 pixels per entry
-				var stepDelay = 1; //In seconds
+				var pixelsPerSecond = 25; //50 pixels per entry
+				var stepDelay = 3; //In seconds
 
 				// This is on a scope var for debugging on Android
 				scope.screen = {height: $window.innerHeight, width: $window.innerWidth};
@@ -299,8 +295,8 @@ app.directive('topScrollerJankFree', [
 				function resetCrawlerTransition() {
 
 					scope.topPos = {
-						'-webkit-transform': "translate(0px, " + 300 + 'px)',
-						'transform': "translate(0px, " + 300 + 'px)',
+						'-webkit-transform': "translate(0px, " + 250 + 'px)',
+						'transform': "translate(0px, " + 250 + 'px)',
 						'transition': 'all 0s'
 					};
 
@@ -356,7 +352,7 @@ app.directive('topScrollerJankFree', [
 				// This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
 				function loadHeight() {
 					return $timeout(function () {
-						return document.getElementById('party-container').offsetHeight-247;
+						return document.getElementById('party-container').offsetHeight-197;
 					})
 				}
 
@@ -366,8 +362,8 @@ app.directive('topScrollerJankFree', [
 
 					loadHeight()
 						.then(function (height) {
-							currentLocation = 300;
-							distanceNeeded = height + 300;
+							currentLocation = 250;
+							distanceNeeded = height + 250;
 							$log.debug("Scroller height: " + height);
 							if (scope.parties.length > 5) {
 								resetCrawlerTransition();
