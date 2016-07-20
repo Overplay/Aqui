@@ -230,6 +230,13 @@ angular.module( 'ngOpTVApi', [] )
 
         };
 
+        service.getChannelInfo = function ( ) {
+
+            return $http.get( apiPath + 'system/channel' )
+                .then(stripData);
+
+        };
+
         return service;
 
     }
