@@ -128,7 +128,7 @@ app.directive('pubCrawlerXs', [
                 logo: '=',
                 comingUpArray: '=',
                 newMessageArray: '=',
-git a                bannerAd: '=',
+                bannerAd: '=',
                 speed: '=?'
             },
             templateUrl: 'app/components/crawler/pubcrawler.template.html',
