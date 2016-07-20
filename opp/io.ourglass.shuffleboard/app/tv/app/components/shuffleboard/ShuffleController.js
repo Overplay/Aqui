@@ -23,8 +23,8 @@ app.controller( "shuffleController",
 
         function updateLocalScore() {
 
-            var animRed = $scope.score.red < _remoteScore.red;
-            var animBlue = $scope.score.blue < _remoteScore.blue;
+            var animRed = $scope.score.red != _remoteScore.red;
+            var animBlue = $scope.score.blue != _remoteScore.blue;
 
             $scope.score.red = _remoteScore.red;
             $scope.score.blue = _remoteScore.blue;

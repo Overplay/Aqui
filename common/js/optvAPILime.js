@@ -94,9 +94,10 @@ angular.module( 'ngOpTVApi', [] )
         }
 
         function startDataPolling() {
-            $log.info( logLead() + " fuck data polling." );
             appWatcher = new AppDataWatcher();
+
             GLOBAL_APPDATA_UPDATE_METHOD = appWatcher.updateIfChanged;
+            console.log(GLOBAL_APPDATA_UPDATE_METHOD);
             //appWatcher.poll();
         }
 
@@ -127,7 +128,7 @@ angular.module( 'ngOpTVApi', [] )
                             dbout( "model data (appData) already existed via http." + data.data );
                             service.model = data.data;
                             _dataCb(service.model);
-                            //startDataPolling();
+                            startDataPolling();
                         }
                     })
                     .catch( function(err){
@@ -207,12 +208,6 @@ angular.module( 'ngOpTVApi', [] )
 
     }
 )
-
-function thisIsAtest(appData){
-    if(appData){
-        GLOBAL_APPDATA_UPDATE_METHOD(appData);
-    }
-}
 
 function updateAppData(newAppData){
     console.log("this was actually called!");
