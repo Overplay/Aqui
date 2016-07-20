@@ -14,12 +14,16 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 
 	$scope.title = "Waiting List";
 
-	$scope.parties = function() { return optvModel.model.parties; };
+	$scope.parties = function() {
+		return optvModel.model.parties;
+	};
 
+	//
 	// $scope.parties = function () {
+	// 	$scope.title = "Num: " + parties.length;
 	// 	return parties;
 	// };
-
+	//
 	// var parties = [
 	// 	{
 	// 		name: "Noah Saso",
@@ -47,7 +51,7 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 	// 		name: "Logan Saso",
 	// 		partySize: 12,
 	// 		tableReady: false
-	// 	},
+	// 	}];
 		// {
 		// 	name: "Noah Saso",
 		// 	partySize: 1,
@@ -265,11 +269,17 @@ app.directive('topScrollerJankFree', [
 			templateUrl: 'app/components/directives/topscroller.template.html',
 			link: function (scope, elem, attrs) {
 
-				if (scope.parties.length <= 5) {
-					setNoMovement();
-				} else {
+				try{
+					if (scope.parties.length <= 5) {
+						setNoMovement();
+					} else {
+						resetCrawlerTransition();
+					}
+				} catch (err)
+				{
 					resetCrawlerTransition();
 				}
+
 				/*
 				 Speed needs to be implemented
 				 scope.speed should be passed as { crawlerVelocity: 50, nextUpVelocity: 20 } as an example
@@ -295,8 +305,8 @@ app.directive('topScrollerJankFree', [
 				function resetCrawlerTransition() {
 
 					scope.topPos = {
-						'-webkit-transform': "translate(0px, " + 250 + 'px)',
-						'transform': "translate(0px, " + 250 + 'px)',
+						'-webkit-transform': "translate(0px, " + 300 + 'px)',
+						'transform': "translate(0px, " + 300 + 'px)',
 						'transition': 'all 0s'
 					};
 
@@ -313,9 +323,9 @@ app.directive('topScrollerJankFree', [
 
 				function setNoMovement() {
 					scope.topPos = {
-						'-webkit-transform': "translate(0px, " + 50 + "px)",
-						'transform': "translate(0px, " + 50 + "px)",
-						'transition': "all " + 0 + "s linear"
+						'-webkit-transform': "translate(0px, 0px)",
+						'transform': "translate(0px, 0px)",
+						'transition': "all 0s linear"
 					};
 				}
 
@@ -323,6 +333,7 @@ app.directive('topScrollerJankFree', [
 
 					if (scope.parties.length <= 5) {
 						setNoMovement();
+						doScroll();
 						return;
 					}
 
@@ -365,8 +376,16 @@ app.directive('topScrollerJankFree', [
 							currentLocation = 250;
 							distanceNeeded = height + 250;
 							$log.debug("Scroller height: " + height);
-							if (scope.parties.length > 5) {
-								resetCrawlerTransition();
+							try{
+								if (scope.parties.length > 5) {
+									resetCrawlerTransition();
+								} else {
+									setNoMovement();
+								}
+							} catch (err) {
+								$log.error(err.message);
+								//$timeout(doScroll(), 1000);
+								//Due to the fact that scope.parties() probably has nothing in it yet
 							}
 							outerLoop();
 						});
