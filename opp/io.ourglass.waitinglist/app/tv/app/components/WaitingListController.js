@@ -295,8 +295,8 @@ app.directive('topScrollerJankFree', [
 				var distanceNeeded;
 				var currentLocation;
 				var heightOfOne = 50;
-				var pixelsPerSecond = 25; //50 pixels per entry
-				var stepDelay = 3; //In seconds
+				var transitionTime = 1; //In seconds. MUST BE LOWER THAN stepDelay
+				var stepDelay = 2; //In seconds
 
 				// This is on a scope var for debugging on Android
 				scope.screen = {height: $window.innerHeight, width: $window.innerWidth};
@@ -339,7 +339,6 @@ app.directive('topScrollerJankFree', [
 
 					// $log.info("Doing loop.");
 
-					var transitionTime = 50 / pixelsPerSecond;
 
 					currentLocation -= heightOfOne;
 
