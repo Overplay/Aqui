@@ -28,7 +28,6 @@ app.controller("crawlerController",
         $scope.newMessageArray = [];
 
         function modelUpdate(data) {
-
             $scope.messages = data.messages;
             if(!$scope.newMessageArray) $scope.newMessageArray = $scope.messages;
             $scope.comingUpMessages = data.comingUpMessages;
@@ -56,21 +55,27 @@ app.controller("crawlerController",
             return array;
         }
 
-        function reloadTweets() {
-            optvModel.getTweets().then(function (data) {
-                console.log('Tweets:', data);
-                if (data != undefined && data.statuses != undefined) {
-                    // Put tweets into array
-                    var tweets = [];
-                    for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
-                        tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
-                    }
-                    // Randomly combine tweets and messages
-                    $scope.newMessageArray = $scope.messages.concat(tweets);
-                } else {
-                    $scope.newMessageArray = $scope.messages;
+        function processTweetsAndAdd(data) {
+            console.log('Tweets:', data);
+            if (data != undefined && data.statuses != undefined) {
+                // Put tweets into array
+                var tweets = [];
+                for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                    tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
                 }
-                $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+                // Randomly combine tweets and messages
+                $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
+            }
+            $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+        }
+
+        function reloadTweets() {
+            $scope.newMessageArray = $scope.messages;
+            optvModel.getTweets().then(function (data) {
+                console.log('User selected tweets processing');
+                processTweetsAndAdd(data);
+                console.log('Channel tweets next');
+                optvModel.getChannelTweets().then(processTweetsAndAdd);
             });
         }
 
@@ -167,8 +172,10 @@ app.directive('pubCrawlerXs', [
 
                 function startCrawlerTransition() {
 
-                    var tranTime = scrollerWidth / crawlerVelocity;
-                    $log.debug( "Tranny time: " + tranTime );
+                    var distanceToTravel = $window.innerWidth + scrollerWidth;
+                    var tranTime = distanceToTravel / crawlerVelocity;
+                    $log.debug("Transition time: " + tranTime);
+                    //$log.debug( "Tranny time: " + tranTime );
                     // Let the DOM render real quick then start transition
                     $timeout(function () {
 

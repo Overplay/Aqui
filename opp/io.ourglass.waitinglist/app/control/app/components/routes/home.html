@@ -10,17 +10,12 @@
         <ul class="party-options-table">
             <li>
                 <button class="button button-energized button-full"
-                        ng-click="doPartyBnAction(party, $event)">{{!party.tableReady && 'Table Ready' || 'Table Not Ready'}}
+                        ng-click="doPartyBnAction(party, $event)">{{!party.tableReady && 'Table Ready' || 'Notification Sent'}}
                 </button>
             </li>
             <li>
                 <button class="button button-assertive button-full"
                         ng-click="doPartyBnAction(party, $event)">Delete
-                </button>
-            </li>
-            <li>
-                <button class="button button-positive button-full"
-                        ng-click="doPartyBnAction(party, $event)">Seated
                 </button>
             </li>
         </ul>
