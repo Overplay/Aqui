@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="luckyLepTVApp">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="app/optvLuckyLepApp.module.js"></script>
+    <script src="../../../../common/js/optvAPILime.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/components/luckylep/LuckyLepController.js"></script>
+
+    <!-- App Specific and Overridden CSS -->
+    <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+
+    <title>OG LuckyLep</title>
+</head>
+
+<body>
+
+<!-- semis skeuomorph look -->
+<div class="hot-pocket">
+
+    <div class="applet" ng-controller="luckyLepController" ng-class="{ 'show' : lep.show }">
+        <img src="assets/img/guinness_logo.jpg" width="100%" class="logo"/>
+        <div class="name-box">
+            <p>Hey <span class="name">{{lep.winner}}</span> who's gonna drink?</p>
+        </div>
+        <div class="lep-holder">
+            <img src="assets/img/lep.gif" class="lep"/>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

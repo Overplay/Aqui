@@ -19,7 +19,7 @@
 }
 .party-animate.ng-leave.ng-leave-active {
     opactiy: 0;
-    /*margin-bottom: -60px;*/
+    margin-bottom: -60px;
     transform: scale(0);
 }
 

@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    width: 300px;
+    width: 200px;
     height: 300px;
     /*border: 1px solid hotpink;*/
     font-size: 30px;
@@ -33,6 +33,7 @@ html, body {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
 
+    width: 190px;
 
     /*width: 290px;*/
 
@@ -42,6 +43,8 @@ html, body {
     -webkit-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
     -moz-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
     box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
+
+
 
 }
 
@@ -54,25 +57,25 @@ html, body {
     height: 50px;
 }
 
-.party-card.ng-enter {
+/*.party-card.ng-enter {*/
 
-    transition: all 500ms ease-out;
-    opacity: 0;
+    /*transition: all 500ms ease-out;*/
+    /*opacity: 0;*/
 
-}
+/*}*/
 
-.party-card.ng-enter-active {
-    opacity: 1;
-}
+/*.party-card.ng-enter-active {*/
+    /*opacity: 1;*/
+/*}*/
 
-.party-card.ng-leave {
-    transition: all 500ms ease-in;
-    opacity: 1;
-}
+/*.party-card.ng-leave {*/
+    /*transition: all 500ms ease-in;*/
+    /*opacity: 1;*/
+/*}*/
 
-.party-card.ng-leave-active {
-    opacity: 0;
-}
+/*.party-card.ng-leave-active {*/
+    /*opacity: 0;*/
+/*}*/
 
 .party-details-container {
     display: flex;
@@ -130,7 +133,7 @@ html, body {
     margin-right: 10px;
     padding: 3px 0 0 5px;
     left: 30px;
-    width: 213px;
+    width: 113px;
     overflow: hidden;
     white-space: nowrap;
 

@@ -1,0 +1,107 @@
+
+
+@font-face {
+    font-family: "Dosis-Bold";
+    src: url(../../../../../../common/fonts/Dosis-ExtraBold.ttf);
+}
+
+html {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Dosis', sans-serif;
+}
+
+.hot-pocket {
+
+    width: 200px;
+    height: 300px;
+
+}
+
+.op0 {
+    opacity: 0;
+}
+
+.applet {
+    width: 200px;
+    height: 300px;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+    border: 3px solid #646065;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 250ms;
+    margin: auto;
+    -webkit-transform: rotateY(90deg);
+    -moz-transform: rotateY(90deg);
+    -ms-transform: rotateY(90deg);
+    -o-transform: rotateY(90deg);
+    transform: rotateY(90deg);
+
+
+}
+
+.show {
+    opacity: 1;
+    width: 200px;
+
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+
+}
+
+
+
+.app-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.name-box {
+    font-family: Dosis-Bold, sans-serif;
+    width: 90%;
+    padding: 10px;
+    margin-top: -20px;
+    color: white;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.name {
+    color: greenyellow;
+    text-transform: uppercase;
+
+}
+
+.lep-holder > img {
+    width: 100%;
+    display: block;
+    margin: auto;
+    position: absolute;
+}
+
+.logo {
+    top: 70px;
+
+}
+
+.lep {
+    top: -30px;
+}
+
+.grow {
+    transform: scale(1.2, 1.2);
+    -webkit-transform: scale(1.2, 1.2);
+    opacity: 0.8;
+}
+
+.lep-holder {
+    position: relative;
+}

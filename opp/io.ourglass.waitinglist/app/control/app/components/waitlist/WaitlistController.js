@@ -195,6 +195,7 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                 case 'table ready':
                 case 'table not ready':
                     party.tableReady = !party.tableReady;
+                    optvModel.save();
                     break;
                 case 'delete':
                 case 'seated':

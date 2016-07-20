@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html ng-app="ogConApp">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+
+    <script src="../common/ionic/ionic.bundle.min.js"></script>
+    <script src="../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+
+    <!-- App Main and AngularJS Routes -->
+
+
+    <script src="app/ogConApp.module.js"></script>
+
+    <!-- Controllers -->
+
+    <script src="app/components/controller/ConController.js"></script>
+
+    <link href="../common/ionic/ionic.min.css" rel="stylesheet"/>
+
+    <!-- App Specific and Overridden CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+    <!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+
+    <script id="templates/modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">System Settings</h1>
+                <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">System Name</span>
+                        <input ng-model="sysInfo.name" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">System Location</span>
+                        <input ng-model="sysInfo.locationWithinVenue" type="text">
+                    </label>
+                    <button class="button button-full button-positive" ng-click="updateSystem()">Update</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+
+    <title>OGTV Control</title>
+</head>
+
+<body ng-controller="conController">
+
+
+<ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Control Panel
+        <button class="button button-clear button-light" ng-click="modal.show()">Settings</button>
+    </h1>
+</ion-header-bar>
+
+<ion-content>
+    <div class="row header">
+        <div class="col"><h4>Running Apps</h4></div>
+    </div>
+    <div class="row row-center" ng-show="runningApps.length < 1">
+        <p class="no-apps">There are no running apps.</p>
+    </div>
+    <div class="row" ng-repeat="app in runningApps track by $index">
+        <div class="col-10">
+            <div class="app-icon"><img ng-src="/{{app.iconPath}}" alt=""/></div>
+        </div>
+        <div class="col app-name">
+            {{app.screenName}}
+        </div>
+        <div class="col-20">
+            <button class="button button-small button-dark button-outline button-row-left" ng-click="openController(app.appId)">Control</button>
+        </div>
+        <div class="col-20">
+            <button class="button button-small button-positive button-row-middle" ng-click="callApiEndpoint(app.appId, '/move')">Move</button>
+        </div>
+        <div class="col-20">
+            <button class="button button-small button-assertive button-row-right" ng-click="callApiEndpoint(app.appId, '/kill')">Stop</button>
+        </div>
+    </div>
+    <div class="row"><br></div>
+    <div class="row header">
+        <div class="col"><h4>Sleeping Apps</h4></div>
+    </div>
+    <div class="row" ng-show="sleepingApps.length < 1">
+        <p class="no-apps">There are no sleeping apps.</p>
+    </div>
+    <div class="row row-center" ng-repeat="app in sleepingApps track by $index">
+        <div class="col-10">
+            <div class="app-icon"><img ng-src="/{{app.iconPath}}" alt=""/></div>
+        </div>
+        <div class="col app-name">
+            {{app.screenName}}
+        </div>
+        <div class="col-60">
+            <button class="button button-small button-balanced" ng-click="callApiEndpoint(app.appId, '/launch')">Launch</button>
+        </div>
+    </div>
+    <!-- make pretty and add buttons -->
+</ion-content>
+
+</body>
+</html>

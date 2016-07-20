@@ -13,20 +13,24 @@
 app.controller("crawlerController",
     function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
 
+        var TWEET_COUNT = 7; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
+
         console.log("Loading crawlerController");
 
-        $scope.messages = ["Golden State pushes series to decisive Game 7",
-            "Try our new Ranch Chicken Salad, $7.99",
-            "Don't forget our 4th of July Party!",
-            "Try Rheingorold IPA, Hop to It",
-            "Bangers and Mash on Special for Happy Hour"];
+        $scope.messages = ["Try Budweiser Crown, $1.99 with Ourglass discount", "Get Ready for Rio", "3 for 1 appetizers till 7"];
         $scope.comingUpMessages = ["1:00 Giants vs. DBacks",
             "4:30 GSW Pregame",
             "5:00 Warriors v Cavs"];
         $scope.twitterQueries = [];
 
+        $scope.oldTwitterQuery = "";
+
+        $scope.newMessageArray = [];
+
         function modelUpdate(data) {
+
             $scope.messages = data.messages;
+            if(!$scope.newMessageArray) $scope.newMessageArray = $scope.messages;
             $scope.comingUpMessages = data.comingUpMessages;
 
             // Combine Twitter queries into one string and set
@@ -34,7 +38,40 @@ app.controller("crawlerController",
             angular.forEach(data.twitterQueries, function (value) {
                 query += value.method + value.query + ' ';
             });
-            optvModel.setTwitterQuery(query.trim());
+            query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
+            if ($scope.oldTwitterQuery != query) {
+                $scope.oldTwitterQuery = query;
+                optvModel.setTwitterQuery(query);
+                console.log('New twitter query:', query);
+            }
+        }
+
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        function reloadTweets() {
+            optvModel.getTweets().then(function (data) {
+                console.log('Tweets:', data);
+                if (data != undefined && data.statuses != undefined) {
+                    // Put tweets into array
+                    var tweets = [];
+                    for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                        tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                    }
+                    // Randomly combine tweets and messages
+                    $scope.newMessageArray = $scope.messages.concat(tweets);
+                } else {
+                    $scope.newMessageArray = $scope.messages;
+                }
+                $scope.newMessageArray = shuffleArray($scope.newMessageArray);
+            });
         }
 
         function updateFromRemote() {
@@ -45,42 +82,109 @@ app.controller("crawlerController",
                 initialValue: {
                     messages: $scope.messages,
                     comingUpMessages: $scope.comingUpMessages
-                }
+                },
+                pollInterval: 10000
             });
+
+            $interval(reloadTweets, 30000);
+            reloadTweets();
 
         }
 
         // NFC why this is here...oh wait..maybe because of the weird size issue in the emulators
-        $scope.$watch(function () {
-            return $window.innerWidth;
-        }, function (value) {
-            console.log(value);
-            $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
-        });
+        // $scope.$watch(function () {
+        //     return $window.innerWidth;
+        // }, function (value) {
+        //     console.log(value);
+        //     $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
+        // });
 
         updateFromRemote();
 
     });
 
 
-app.directive('pubCrawler', [
-    '$log', '$timeout', '$window',
-    function ($log, $timeout, $window) {
-
-        console.log('pub-crawler directive working');
-
+/**
+ *
+ * This directive uses Google's recommendations for removing "janks" in HTML/CSS animations.
+ * Only transforms are used with CSS transitions. This improves performance by:
+ * - Preventing the layout and paint rendering pipeline steps that happen with other changes (like position)
+ * - By using transitions, we only need a callback and the end of the transition, not once per frame
+ *
+ * Performance using this technique is excellent and looks nearly as good as a CNN/ESPN scroller.
+ *
+ */
+app.directive('pubCrawlerXs', [
+    '$log', '$timeout', '$window', '$interval',
+    function ($log, $timeout, $window, $interval) {
         return {
             restrict: 'E',
             scope: {
-                messages: '=',
-                comingUpMessages: '='
+                logo: '=',
+                comingUpArray: '=',
+                newMessageArray: '=',
+                bannerAd: '=',
+                speed: '=?'
             },
             templateUrl: 'app/components/crawler/pubcrawler.template.html',
             link: function (scope, elem, attrs) {
 
-                var DELAY = 10;
 
-                scope.leftPos = {};
+                /*
+                 Speed needs to be implemented
+                 scope.speed should be passed as { crawlerVelocity: 50, nextUpVelocity: 20 } as an example
+
+                 scope.logo should be the path to the logo to show on the left side
+                 scope.bannerAd should be the path to a full banner add to be shown periodically
+
+                 none of these are implemented yet
+
+
+                 */
+
+                scope.displayMessages = _.clone(scope.newMessageArray);
+
+                var shouldRefreshMessages = false;
+
+                var crawlerVelocity = 140;
+                var scrollerWidth;
+                var nextUpIndex = 0;
+                var scrollerUl = document.getElementById('scroller-ul');
+
+                // This is on a scope var for debugging on Android
+                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
+
+                // Dump crawler off screen
+                function resetCrawlerTransition() {
+
+                    scope.leftPos = {
+                        '-webkit-transform': "translate(" + $window.innerWidth + 'px, 0px)',
+                        'transform': "translate(" + $window.innerWidth + 'px, 0px)',
+                        'transition': 'all 0s'
+                    };
+
+                }
+
+                function startCrawlerTransition() {
+
+                    var tranTime = scrollerWidth / crawlerVelocity;
+                    $log.debug( "Tranny time: " + tranTime );
+                    // Let the DOM render real quick then start transition
+                    $timeout(function () {
+
+                        scope.leftPos = {
+                            '-webkit-transform': "translate(-" + scrollerWidth + "px, 0px)",
+                            'transform': "translate(-" + scrollerWidth + "px, 0px)",
+                            'transition': "all " + tranTime + "s linear"
+                        }
+
+                    }, 100);
+
+                    // And when tran is done, start again.
+                    $timeout(doScroll, tranTime * 1000);
+
+                }
+
 
                    scope.logo should be the path to the logo to show on the left side
                    scope.bannerAd should be the path to a full banner add to be shown periodically
@@ -132,67 +236,77 @@ app.directive('pubCrawler', [
 
                 scope.ui = {
                     scrollin: false,
-                    nextUp: '',
-                    nidx: 0
+                    nextUp: ''
                 };
 
-                function scroll() {
+
+                function scrollNextUp() {
+
+                    if (scope.comingUpArray.length == 0)
+                        return;
 
                     scope.ui.nextUp = '';
                     scope.ui.scrollin = false;
 
                     $timeout(function () {
 
-                        scope.ui.nextUp = scope.comingUpMessages[scope.ui.nidx];
-                        scope.ui.nidx++;
-                        if (scope.ui.nidx == scope.comingUpMessages.length)
-                            scope.ui.nidx = 0;
+                        scope.ui.nextUp = scope.comingUpArray[nextUpIndex];
+                        nextUpIndex++;
+                        if (nextUpIndex == scope.comingUpArray.length)
+                            nextUpIndex = 0;
                         scope.ui.scrollin = true;
 
                         $timeout(function () {
                             scope.ui.scrollin = false;
-                            $timeout(scroll, 250);
+                            $timeout(scrollNextUp, 250);
                         }, 5000)
+
 
                     }, 250)
                 }
 
-                scroll();
+                scrollNextUp();
 
-                var i, dx, left;
 
-                function loop() {
-                    if (i++ >= dx) {
-                        console.log('Done!');
-                        beginScroll();
-                        return;
+                // This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
+                function loadWidth() {
+                    return $timeout(function () {
+                        return scrollerUl.offsetWidth;
+                    })
+                }
+
+                // Watch for a change in messages, and then flag to refresh messages if changed
+                scope.$watch('newMessageArray', function () {
+                    shouldRefreshMessages = true;
+                    console.log('Refresh Messages!', scope.newMessageArray);
+                });
+
+                function doScroll() {
+
+                    if (shouldRefreshMessages) {
+                        scope.displayMessages = _.clone(scope.newMessageArray);
+                        shouldRefreshMessages = false;
                     }
-                    scope.leftPos.left = --left + 'px';
-                    $timeout(loop, DELAY);
+
+                    loadWidth()
+                        .then(function (width) {
+                            $log.debug("Scroller width: " + width);
+                            scrollerWidth = width;
+                            resetCrawlerTransition();
+                            startCrawlerTransition();
+                        });
+
                 }
 
-                function beginScroll() {
-                    console.log('Beginning scroll...');
-                    i = 1;
-                    $timeout(function () {
-                        return document.getElementById('scroller-ul').offsetWidth;
-                    }).then(function (width) {
-                        left = window.innerWidth;
-                        scope.leftPos.left = left + 'px';
-                        dx = width + left;
-                        console.log('Scroll starting. Got width:', width, 'and window width:', window.innerWidth, 'and dx:', dx);
-                        loop();
-                    });
-                }
-
-                beginScroll();
+                var waitToStart = $interval(function () {
+                    if(scope.newMessageArray) {
+                        doScroll();
+                        $interval.cancel(waitToStart);
+                    }
+                });
 
             }
         }
     }]
 );
-
-
-
-
 
