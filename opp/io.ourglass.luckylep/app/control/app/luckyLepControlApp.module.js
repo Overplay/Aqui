@@ -9,7 +9,7 @@
  **********************************/
 
 
-var app = angular.module('luckyLepTVApp', [
+var app = angular.module('luckyLepControlApp', [
     'ngOpTVApi'
 ]);
 

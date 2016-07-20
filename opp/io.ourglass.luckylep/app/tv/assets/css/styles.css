@@ -14,22 +14,44 @@ body {
     font-family: 'Dosis', sans-serif;
 }
 
+.hot-pocket {
+
+    width: 200px;
+    height: 300px;
+
+}
+
 .op0 {
     opacity: 0;
 }
 
 .applet {
-    width: 0;
+    width: 200px;
     height: 300px;
     text-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
-    xxborder: 1px solid lawngreen;
+    border: 3px solid #646065;
+    border-radius: 4px;
     opacity: 0;
-    transition: all 500ms;
+    transition: all 250ms;
+    margin: auto;
+    -webkit-transform: rotateY(90deg);
+    -moz-transform: rotateY(90deg);
+    -ms-transform: rotateY(90deg);
+    -o-transform: rotateY(90deg);
+    transform: rotateY(90deg);
+
+
 }
 
 .show {
     opacity: 1;
     width: 200px;
+
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
 
 }
 

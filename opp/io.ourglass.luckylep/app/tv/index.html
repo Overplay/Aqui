@@ -27,15 +27,20 @@
 <body>
 
 <!-- semis skeuomorph look -->
-<div class="applet" ng-controller="luckyLepController" ng-class="{ 'show' : lep.show }">
-    <img src="assets/img/guinness_logo.jpg" width="100%" class="logo"/>
-    <div class="name-box">
-        <p>Hey <span class="name">{{lep.winner}}</span> who's gonna drink?</p>
+<div class="hot-pocket">
+
+    <div class="applet" ng-controller="luckyLepController" ng-class="{ 'show' : lep.show }">
+        <img src="assets/img/guinness_logo.jpg" width="100%" class="logo"/>
+        <div class="name-box">
+            <p>Hey <span class="name">{{lep.winner}}</span> who's gonna drink?</p>
+        </div>
+        <div class="lep-holder">
+            <img src="assets/img/lep.gif" class="lep"/>
+        </div>
     </div>
-    <div class="lep-holder" >
-        <img src="assets/img/lep.gif" class="lep"/>
-    </div>
+
 </div>
+
 
 </body>
 </html>

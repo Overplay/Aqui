@@ -8,14 +8,17 @@ app.controller( "luckyLepController",
         $log.debug("Loading controller...");
 
         $scope.lep = { winner: "treb", show: true };
-        $scope.guests = []
+        var guests = ['Sally', 'Jenny', 'Craig', 'Treb', 'Mitch', 'Ethan', 'Katrina', 'Bubba']
 
     
         $interval( function(){
         
             $scope.lep.show = !$scope.lep.show;
+            var rando = Math.floor( Math.random() * 8 );
+            $scope.lep.winner = guests[rando];
+            optvModel.moveApp("io.ourglass.luckylep");
             
-        }, 15000)
+        }, 5000)
         
         
         // function getGuests(){
