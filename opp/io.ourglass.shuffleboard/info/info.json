@@ -4,12 +4,12 @@
   "screenName": "Shuffleboard",
   "onLauncher": true,
   "primaryColor": -5658199,
-  "primaryColorHex": "#A9A9A9",
+  "primaryColorHex": "#ffcc33",
   "reverseDomainName": "io.ourglass.shuffleboard",
   "secondaryColor": 0,
-  "secondaryColorHex": "#000000",
-  "icon": "shuffle.png",
-  "iconPath": "www/opp/io.ourglass.shuffleboard/assets/icon/shuffle.png",
-  "iconImage": "www/opp/io.ourglass.shuffleboard/assets/icon/shuffle.png",
+  "secondaryColorHex": "#cc9900",
+  "icon": "shuffle2.png",
+  "iconPath": "www/opp/io.ourglass.shuffleboard/assets/icon/shuffle2.png",
+  "iconImage": "www/opp/io.ourglass.shuffleboard/assets/icon/shuffle2.png",
   "iconLabel": "ShuffleBoard"
 }

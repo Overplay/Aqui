@@ -10,7 +10,6 @@
 
 
 var app = angular.module('optvDartsApp', [
-    'ngSanitize',
     'ngOpTVApi'
 ]);
 
