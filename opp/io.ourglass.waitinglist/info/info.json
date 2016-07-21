@@ -6,12 +6,12 @@
   "screenName": "Waiting List",
   "onLauncher": true,
   "primaryColor": -7876885,
-  "primaryColorHex": "#87CEEB",
+  "primaryColorHex": "#8080ff",
   "reverseDomainName": "io.ourglass.waitinglist",
   "secondaryColor": 0,
-  "secondaryColorHex": "#000000",
-  "icon": "wl.png",
-  "iconPath": "www/opp/io.ourglass.waitinglist/assets/icon/wl.png",
-  "iconImage": "www/opp/io.ourglass.waitinglist/assets/icon/wl.png",
+  "secondaryColorHex": "#4d4dff",
+  "icon": "clip.png",
+  "iconPath": "www/opp/io.ourglass.waitinglist/assets/icon/clip.png",
+  "iconImage": "www/opp/io.ourglass.waitinglist/assets/icon/clip.png",
   "iconLabel": "Waiting List"
 }
