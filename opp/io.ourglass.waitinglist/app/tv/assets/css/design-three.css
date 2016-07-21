@@ -5,7 +5,8 @@ html, body {
     /*border: 1px solid hotpink;*/
     font-size: 28px;
     font-family: "Titilium Web", sans-serif;
-    background: url(https://www.moveedoo.com/app/images/posters/293660.jpg);
+    background-size: 200px 300px;
+    background: url(http://www.covermagazine.hk/en/wp-content/uploads/sites/3/2014/03/Frites_Stella-Artois-200x300.jpg) no-repeat;
     overflow: hidden;
 
 }
@@ -16,7 +17,7 @@ html, body {
 
 .overflow-container {
 
-    height: 250px;
+    height: 260px;
     position: relative;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.30)
@@ -34,12 +35,12 @@ html, body {
     position: relative;
     z-index: 1;
     line-height: 40px;
-    padding: 5px;
-    height: 40px;
+    font-size: 24px;
+    padding: 8px;
+    height: 30px;
     text-align: center;
     background-color: white;
     border-radius: 0 0 3px 3px;
-
 }
 
 .party-details-container {
