@@ -34,13 +34,14 @@ html, body {
 .party-title {
     position: relative;
     z-index: 1;
-    line-height: 40px;
+    line-height: 30px;
     font-size: 24px;
-    padding: 8px;
     height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     text-align: center;
-    background-color: white;
-    border-radius: 0 0 3px 3px;
+    background-color: black;
+    color: ghostwhite;
 }
 
 .party-details-container {
@@ -88,12 +89,12 @@ html, body {
 }
 
 .party-card-name {
-    padding-left: 5px;
+    padding-left: 10px;
     text-shadow: 2px 2px 5px black;
     order: 1;
     width: 130px;
     overflow: hidden;
     white-space: nowrap;
-    background: rgba(255, 255, 255, 0.40);
+    background: rgba(0, 0, 0, 0.8);
 
 }

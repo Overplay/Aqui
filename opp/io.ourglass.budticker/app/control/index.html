@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="optvDSConApp">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ALL COMMON LIBS NEED TO COMMON FROM THE /COMMON PATH -->
+
+    <script src="../../../../common/ionic/ionic.bundle.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="../../../../common/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+
+    <script src="app/optvDSConApp.module.js"></script>
+    <script src="../../../../common/js/optvAPILime.js"></script>
+
+    <script src="app/components/tabs/pubcrawler.routes.js"></script>
+
+    <!-- Controllers -->
+
+    <script src="app/components/dsConController.js"></script>
+
+
+    <!-- App Specific and Overridden CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet"/>
+    <link href="../../../../common/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../../../../common/ionic/ionic.min.css"/>
+
+    <title>Guinness PubCrawler Control</title>
+</head>
+
+<body ng-controller="dsConController">
+
+<!-- Remote Control -->
+
+<div class="bar bar-header bar-dark">
+    <h1 class="title">Pub Crawler | {{getSelectedTabTitle()}}</h1>
+</div>
+
+<ion-view class="has-header">
+    <ion-tabs class="tabs-dark">
+        <ion-tab ng-repeat="tab in tabs" title="{{tab}}" href="#/{{getTabURI(tab)}}">
+            <ui-view></ui-view>
+        </ion-tab>
+    </ion-tabs>
+</ion-view>
+
+</body>
+</html>

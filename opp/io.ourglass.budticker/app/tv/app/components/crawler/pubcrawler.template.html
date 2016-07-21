@@ -1,0 +1,21 @@
+<div class="frame">
+    <div class="left-scroller-holder">
+        <div class="floor">&nbsp;</div>
+
+        <img class="overlay" src="assets/img/gbcrawler1280x.png"/>
+        <img class="right-animation" src="assets/img/beerswirl.gif"/>
+
+        <ul id="scroller-ul" ng-style="leftPos" class="hwlayer">
+            <li ng-repeat="msg in displayMessages">{{ msg }}&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        </ul>
+        <div class="next-up-holder">
+            <!--<h1>{{ screen.width }} x {{ screen.height }}</h1>-->
+            <h1 class="name-change" ng-class="{'hide-name': ui.isChangingName}">{{ ui.isNextUp && 'Coming Up' ||
+                'Now Playing' }}</h1>
+            <p ng-class="{ 'scroll-in': ui.scrollin }" class="next-up hwlayer">{{ ui.nextUp }}</p>
+            <!--<p>4:00 Giants v DBacks</p>-->
+        </div>
+    </div>
+    <img class="right-logo" src="assets/img/budlight.png"/>
+</div>
+

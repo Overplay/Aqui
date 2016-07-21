@@ -1,0 +1,15 @@
+{
+  "appId": "io.ourglass.budticker",
+  "appType": "crawler",
+  "screenName": "BudTicker",
+  "onLauncer": true,
+  "primaryColor": -16744448,
+  "primaryColorHex": "#cc0000",
+  "reverseDomainName": "io.ourglass.budticker",
+  "secondaryColor": 0,
+  "secondaryColorHex": "#990000",
+  "icon": "bud.png",
+  "iconPath": "www/opp/io.ourglass.budticker/assets/icons/bud.png",
+  "iconImage": "www/opp/io.ourglass.budticker/assets/icons/bud.png",
+  "iconLabel": "BudTicker"
+}
