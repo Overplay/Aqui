@@ -14,7 +14,9 @@
  2. There will be a variety of convenience endpoints that coincide with TV application functionality
  ****************************************************************************/
 const API_PATH = '/api';
-var GLOBAL_ 
+var GLOBAL_UPDATE_TARGET = updateIfChanged;
+var DATA_UPDATE_METHOD = 'objectEquality';
+
 angular.module('ngOgTVApi', [])
     .factory('ogTVModel', function($http){
         //local variables
@@ -38,9 +40,43 @@ angular.module('ngOgTVApi', [])
                 service.model = data;
                 _dataCb(service.model);
             })
-
+            
         };
 
+        /**
+         * function which updates the model in service if the newData passes the criteria of the DATA_UPDATE_METHOD
+         * @param newData - data to compare to the service.model and potentially replace it
+         */
+        function updateIfChanged(newData){
+            switch (DATA_UPDATE_METHOD) {
+                case 'lastUpdated':
+                    if (!service.model.lastUpdated || newData.lastUpdated > service.model.lastUpdated) {
+                        debugPrint("service has old data, updating");
+                        service.model = newData;
+                        _dataCb(service.model);
+                    }
+                    else {
+                        debugPrint("service still has the most recent, not updating");
+                    }
+                    break;
+                case 'objectEquality':
+                    //need to first make copies with no lastUpdated
+                    var tempCurrent = JSON.parse(JSON.stringify(service.model));
+                    delete tempCurrent.lastUpdated;
+                    var tempNew = JSON.parse(JSON.stringify(newData));
+                    delete tempNew.lastUpdated;
+                    if (!_.isEqual(tempCurrent, tempNew)) {
+                        debugPrint('tempCurrent is outdated, updating');
+                        service.model = newData;
+                        _dataCb(service.model);
+                    }
+                    else {
+                        debugPrint("service still has the most recent, not updating");
+                    }
+                    break;
+            }
+        }
+        
         function debugPrint(args){
             $log.debug("ogTVAPI (" + _appName + "): ", Array.prototype.slice.call(arguments));
         }

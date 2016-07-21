@@ -2,6 +2,8 @@
   "appId": "io.ourglass.waitinglist",
   "appType": "widget",
   "screenName": "Waiting List",
+  "height": "300",
+  "width": "200",
   "onLauncher": true,
   "primaryColor": -7876885,
   "primaryColorHex": "#87CEEB",
