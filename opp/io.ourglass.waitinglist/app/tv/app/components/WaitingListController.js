@@ -12,19 +12,18 @@
 
 app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
 
-	$scope.title = "Waiting List";
+	$scope.title = "WAITING LIST";
 
 	$scope.parties = function() {
 		return optvModel.model.parties;
 	};
 
-	//
+
 	// $scope.parties = function () {
-	// 	$scope.title = "Num: " + parties.length;
-	// 	return parties;
+	// 	return demoPartiesList;
 	// };
-	//
-	// var parties = [
+
+	// var demoPartiesList = [
 	// 	{
 	// 		name: "Noah Saso",
 	// 		partySize: 1,
@@ -39,43 +38,25 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 	// 		partySize: 1,
 	// 		tableReady: false
 	// 	}, {
-	// 		name: "Arabella Appleseed Saso",
+	// 		name: "Logan Saso",
 	// 		partySize: 12,
 	// 		tableReady: false
 	// 	},
 	// 	{
-	// 		name: "Noah Saso",
+	// 		name: "Christopher Saso",
 	// 		partySize: 1,
 	// 		tableReady: false
 	// 	}, {
 	// 		name: "Logan Saso",
 	// 		partySize: 12,
 	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Christopher Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
 	// 	}];
-		// {
-		// 	name: "Noah Saso",
-		// 	partySize: 1,
-		// 	tableReady: true
-		// }, {
-		// 	name: "Logan Saso",
-		// 	partySize: 12,
-		// 	tableReady: false
-		// },
-		// {
-		// 	name: "Noah Saso",
-		// 	partySize: 1,
-		// 	tableReady: false
-		// }, {
-		// 	name: "Logan Saso",
-		// 	partySize: 12,
-		// 	tableReady: false
-		// },
-		// {
-		// 	name: "Noah Saso",
-		// 	partySize: 1,
-		// 	tableReady: false
-		// }
-	//];
+
 
 	function handleDataCallback(data) {
 		if (data.length != optvModel.model.parties.length) {
@@ -269,6 +250,7 @@ app.directive('topScrollerJankFree', [
 			templateUrl: 'app/components/directives/topscroller.template.html',
 			link: function (scope, elem, attrs) {
 
+
 				try{
 					if (scope.parties.length <= 5) {
 						setNoMovement();
@@ -292,6 +274,7 @@ app.directive('topScrollerJankFree', [
 
 				 */
 
+				var wasPaused = false;
 				var distanceNeeded;
 				var currentLocation;
 				var heightOfOne = 50;
@@ -303,10 +286,10 @@ app.directive('topScrollerJankFree', [
 
 				// Dump crawler off screen
 				function resetCrawlerTransition() {
-
+					wasPaused = false;
 					scope.topPos = {
-						'-webkit-transform': "translate(0px, " + 300 + 'px)',
-						'transform': "translate(0px, " + 300 + 'px)',
+						'-webkit-transform': "translate(0px, " + 250 + 'px)',
+						'transform': "translate(0px, " + 250 + 'px)',
 						'transition': 'all 0s'
 					};
 
@@ -322,6 +305,7 @@ app.directive('topScrollerJankFree', [
 				}
 
 				function setNoMovement() {
+					wasPaused = true;
 					scope.topPos = {
 						'-webkit-transform': "translate(0px, 0px)",
 						'transform': "translate(0px, 0px)",
@@ -333,6 +317,12 @@ app.directive('topScrollerJankFree', [
 
 					if (scope.parties.length <= 5) {
 						setNoMovement();
+						doScroll();
+						return;
+					}
+
+					if(wasPaused){
+						resetCrawlerTransition();
 						doScroll();
 						return;
 					}

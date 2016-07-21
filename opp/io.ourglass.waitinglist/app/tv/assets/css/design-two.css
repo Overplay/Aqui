@@ -5,7 +5,7 @@ html, body {
     /*border: 1px solid hotpink;*/
     font-size: 30px;
     font-family: "Titilium Web", sans-serif;
-    /*background-color: #fdf4ff;*/
+    background-color: green;
     overflow: hidden;
 
 }
@@ -14,10 +14,9 @@ html, body {
     display: none;
 }
 
-.overflow-container{
+.overflow-container {
 
     height: 250px;
-    outline: green 1px;
     position: relative;
     overflow: hidden;
 
@@ -44,40 +43,44 @@ html, body {
     -moz-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
     box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
 
-
-
 }
 
-.party-title{
+.party-title {
     position: relative;
     z-index: 1;
     text-align: center;
     text-shadow: 2px 2px 5px black;
-    color: white;
     height: 50px;
+    line-height: 50px;
+    background-color: white;
+    -webkit-border-radius: 0 0 3px 3px;
+    -moz-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+    color: black;
 }
 
 /*.party-card.ng-enter {*/
 
-    /*transition: all 500ms ease-out;*/
-    /*opacity: 0;*/
+/*transition: all 500ms ease-out;*/
+/*opacity: 0;*/
 
 /*}*/
 
 /*.party-card.ng-enter-active {*/
-    /*opacity: 1;*/
+/*opacity: 1;*/
 /*}*/
 
 /*.party-card.ng-leave {*/
-    /*transition: all 500ms ease-in;*/
-    /*opacity: 1;*/
+/*transition: all 500ms ease-in;*/
+/*opacity: 1;*/
 /*}*/
 
 /*.party-card.ng-leave-active {*/
-    /*opacity: 0;*/
+/*opacity: 0;*/
 /*}*/
 
 .party-details-container {
+    align-self: center;
     display: flex;
     flex-flow: row;
     z-index: 0;
@@ -85,27 +88,29 @@ html, body {
 
 }
 
-.party-order,.party-size,.ready-size,.ready-order{
+.party-order, .party-size, .ready-size, .ready-order {
+    align-content: center;
     padding: 3px;
     width: 30px;
     text-align: center;
     font-size: 22px;
     line-height: 36px;
+    height: 47px;
 }
 
-.party-order,.party-size {
+.party-order, .party-size {
 
     background: #2d72ff;
 
 }
 
-.ready-order,.ready-size{
+.ready-order, .ready-size {
 
     background: #e79000;
 
 }
 
-.party-size{
+.party-size {
     border-radius: 0 3px 3px 0;
     order: 2;
 }
@@ -115,7 +120,7 @@ html, body {
     border-radius: 3px 0 0 3px;
 }
 
-.ready-size{
+.ready-size {
     border-radius: 0 3px 3px 0;
     order: 2;
 }
@@ -125,7 +130,6 @@ html, body {
     border-radius: 3px 0 0 3px;
 }
 
-
 .party-card-name {
 
     order: 1;
@@ -133,7 +137,7 @@ html, body {
     margin-right: 10px;
     padding: 3px 0 0 5px;
     left: 30px;
-    width: 113px;
+    width: 103px;
     overflow: hidden;
     white-space: nowrap;
 
