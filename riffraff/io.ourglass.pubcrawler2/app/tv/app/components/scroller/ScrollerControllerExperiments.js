@@ -17,7 +17,7 @@ historical interest. The other ScrollerController is the clean one.
 
 
 app.controller("scrollerController",
-    function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
+    function ($scope, $timeout, $http, $interval, ogControllerModel, $log, $window) {
 
         console.log("Loading scrollerController");
 

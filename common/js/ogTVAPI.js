@@ -13,12 +13,12 @@
  1. There will be a global function that will be accessible to the Android box which will recieve updated information
  2. There will be a variety of convenience endpoints that coincide with TV application functionality
  ****************************************************************************/
-const API_PATH = '/api';
-var GLOBAL_UPDATE_TARGET = updateIfChanged;
+const API_PATH = '/api/';
+var GLOBAL_UPDATE_TARGET;
 var DATA_UPDATE_METHOD = 'objectEquality';
 
 angular.module('ngOgTVApi', [])
-    .factory('ogTVModel', function($http){
+    .factory('ogTVModel', function($http, $log){
         //local variables
         var _appName;
         var _dataCb;
@@ -39,9 +39,23 @@ angular.module('ngOgTVApi', [])
                 data = data.data;
                 service.model = data;
                 _dataCb(service.model);
-            })
-            
+            });
+
+            GLOBAL_UPDATE_TARGET = updateIfChanged;
+            console.log(GLOBAL_UPDATE_TARGET);
         };
+
+        service.getTweets = function() {
+            return $http.get(API_PATH + 'scrape/' + _appName).then(stripData);
+        };
+
+        service.setTwitterQuery = function(twitterQuery){
+            return $http.post(API_PATH + 'scrape/' + _appName, {query: twitterQuery});
+        }
+
+        function stripData(response){
+            return response.data;
+        }
 
         /**
          * function which updates the model in service if the newData passes the criteria of the DATA_UPDATE_METHOD
@@ -84,5 +98,6 @@ angular.module('ngOgTVApi', [])
         function errorPrint(args){
             $log.error("ogTVAPI (" + _appName + "): ", Array.prototype.slice.call(arguments));
         }
+
         return service;
     });

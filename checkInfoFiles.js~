@@ -1,0 +1,15 @@
+var fs = require("fs");
+
+var files = fs.readdirSync("opp");
+console.log(files);
+
+files.forEach(function(appDir){
+    var infoContents = fs.readFileSync(appDir + "/info/info.json");
+    if(!infoContents){
+	console.err(appDir  + " is missing info file (should be in opp/<app>/info/info.json");
+    }
+    else {
+	var infoObj = json.parse(infoContents);
+	
+    }
+});

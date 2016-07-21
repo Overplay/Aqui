@@ -3,7 +3,7 @@
  */
 
 app.controller( "shuffconController",
-    function ( $scope, $timeout, $http, $log, optvModel ) {
+    function ($scope, $timeout, $http, $log, ogControllerModel ) {
 
         $log.info( "Loading shuffconController" );
 
@@ -14,12 +14,12 @@ app.controller( "shuffconController",
         }
 
 
-        $scope.redScore = function () { return optvModel.model.red; }
-        $scope.blueScore = function () { return optvModel.model.blue; }
+        $scope.redScore = function () { return ogControllerModel.model.red; }
+        $scope.blueScore = function () { return ogControllerModel.model.blue; }
 
         function initialize() {
 
-            optvModel.init( {
+            ogControllerModel.init( {
                 appName:         "io.ourglass.shuffleboard",
                 initialValue:    { red: 0, blue: 0 },
                 dataCallback:    function(data){}
@@ -29,16 +29,16 @@ app.controller( "shuffconController",
 
         $scope.changeBlue = function ( by ) {
 
-            optvModel.model.blue = optvModel.model.blue + by;
-            if ( optvModel.model.blue < 0 ) optvModel.model.blue = 0;
-            optvModel.save();
+            ogControllerModel.model.blue = ogControllerModel.model.blue + by;
+            if ( ogControllerModel.model.blue < 0 ) ogControllerModel.model.blue = 0;
+            ogControllerModel.save();
 
         }
 
         $scope.changeRed = function ( by ) {
-            optvModel.model.red = optvModel.model.red + by;
-            if ( optvModel.model.red < 0 ) optvModel.model.red = 0;
-            optvModel.save()
+            ogControllerModel.model.red = ogControllerModel.model.red + by;
+            if ( ogControllerModel.model.red < 0 ) ogControllerModel.model.red = 0;
+            ogControllerModel.save()
                 .then( function(d){
                     console.log(d);
                 })
@@ -50,16 +50,16 @@ app.controller( "shuffconController",
 
 
         $scope.resetScores = function () {
-            optvModel.model.red = 0;
-            optvModel.model.blue = 0;
-            optvModel.save();
+            ogControllerModel.model.red = 0;
+            ogControllerModel.model.blue = 0;
+            ogControllerModel.save();
 
         }
 
 
         $scope.move = function () {
 
-            optvModel.moveApp();
+            ogControllerModel.move();
 
 
         }

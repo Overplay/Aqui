@@ -2,8 +2,8 @@
  * Created by mkahn on 4/28/15.
  */
 
-app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http", "$log", "$location", "optvModel",
-    function ($scope, $interval, $timeout, $http, $log, $location, optvModel) {
+app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http", "$log", "$location", "ogControllerModel",
+    function ($scope, $interval, $timeout, $http, $log, $location, ogControllerModel) {
 
         $log.info("Loading waitlistController");
 
@@ -43,12 +43,12 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
         });
 
         $scope.parties = function () {
-            return optvModel.model.parties;
+            return ogControllerModel.model.parties;
         }
 
         function retrieveData(data) {
             console.log('Data Callback! - control', data);
-            optvModel.model.parties = data.parties;
+            ogControllerModel.model.parties = data.parties;
         }
 
         function sendTextToParty(party) {
@@ -61,8 +61,8 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
 
         function checkAndSendTextAlert() {
             var currentDate = new Date();
-            for (var i in optvModel.model.parties) {
-                var party = optvModel.model.parties[i];
+            for (var i in ogControllerModel.model.parties) {
+                var party = ogControllerModel.model.parties[i];
                 if (!party.phone || party.alreadySent) continue;
                 if ((currentDate - party.dateCreated) / 1000 / 60 >= WAIT_TIME_BEFORE_SEND) {
                     // Send text
@@ -76,7 +76,7 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
 
         function initialize() {
 
-            optvModel.init({
+            ogControllerModel.init({
                 appName: "io.ourglass.waitinglist",
                 initialValue: {
                     parties: [
@@ -123,8 +123,8 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
         }
 
         function partiesContainName(name) {
-            for (var i in optvModel.model.parties) {
-                var arrParty = optvModel.model.parties[i];
+            for (var i in ogControllerModel.model.parties) {
+                var arrParty = ogControllerModel.model.parties[i];
                 if (arrParty.name == name) return true;
             }
             return false;
@@ -145,8 +145,8 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                     // Add dateCreated to newParty
                     $scope.newParty.dateCreated = new Date();
                     // Give the array the party object and save/send to tv
-                    optvModel.model.parties.push($scope.newParty);
-                    optvModel.save();
+                    ogControllerModel.model.parties.push($scope.newParty);
+                    ogControllerModel.save();
                     // Return to home
                     $scope.cancel();
                 }
@@ -168,8 +168,8 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
 
         // Calculates index by comparing all 3 fields (name, partySize, dateCreated)
         function indexOfParty(party) {
-            for (var i = 0; i < optvModel.model.parties.length; i++) {
-                var arrParty = optvModel.model.parties[i];
+            for (var i = 0; i < ogControllerModel.model.parties.length; i++) {
+                var arrParty = ogControllerModel.model.parties[i];
                 if (partiesAreEqual(arrParty, party)) {
                     return i;
                 }
@@ -182,10 +182,10 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
             if (index == -1) {
                 // ns-transition-end called for a few different things, so this will always happen
                 // the above comment is fixed because I limited the end transition to one property
-                // console.log("I could not find", party, "in", optvModel.model.parties);
+                // console.log("I could not find", party, "in", ogControllerModel.model.parties);
             } else {
-                optvModel.model.parties.splice(index, 1);
-                optvModel.save();
+                ogControllerModel.model.parties.splice(index, 1);
+                ogControllerModel.save();
             }
         };
 
@@ -195,7 +195,7 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
                 case 'table ready':
                 case 'table not ready':
                     party.tableReady = !party.tableReady;
-                    optvModel.save();
+                    ogControllerModel.save();
                     break;
                 case 'delete':
                 case 'seated':

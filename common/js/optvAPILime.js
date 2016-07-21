@@ -12,7 +12,7 @@
 var GLOBAL_APPDATA_UPDATE_METHOD = undefined;
 
 angular.module( 'ngOpTVApi', [] )
-    .factory( 'optvModel', function ( $http, $log, $timeout ) {
+    .factory( 'ogControllerModel', function ($http, $log, $timeout ) {
 
         var POLL_INTERVAL_MS = 2000;  //medium
         var apiPath = '/api/';

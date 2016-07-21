@@ -11,7 +11,7 @@
 
 
 app.controller( "crawlerController",
-    function ( $scope, $timeout, $http, $interval, optvModel, $log, $window ) {
+    function ($scope, $timeout, $http, $interval, ogControllerModel, $log, $window ) {
 
         console.log( "Loading crawlerController" );
 

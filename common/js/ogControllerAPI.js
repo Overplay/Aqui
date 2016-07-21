@@ -19,8 +19,8 @@
    3. polling functionality
      a. polling is active by default, and it ensures that the controller contains the correct information
  ****************************************************************************/
-const DEFAULT_POLL_INTERVAL = 5000;
-const API_PATH = '/api';
+const DEFAULT_POLL_INTERVAL = 2000;
+const API_PATH = '/api/';
 var DATA_UPDATE_METHOD = 'objectEquality';
 
 angular.module('ngOgControllerApi', [])
@@ -51,9 +51,10 @@ angular.module('ngOgControllerApi', [])
             if(toPoll){
                 //if there is an initialValue, then post it to appData
                 if(initialValue){
-                    $http.post(apiPath + 'appdata/' + _appName, initialValue).then(
+                    $http.post(API_PATH + 'appdata/' + _appName, initialValue).then(
                         function(data){
                             debugPrint("initialized");
+                            service.model = initialValue;
                             startPolling();
                         },
                         function(err){

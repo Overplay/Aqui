@@ -11,7 +11,7 @@
 
 
 app.controller("crawlerController",
-    function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window) {
 
         var TWEET_COUNT = 7; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
 
@@ -41,7 +41,7 @@ app.controller("crawlerController",
             query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
             if ($scope.oldTwitterQuery != query) {
                 $scope.oldTwitterQuery = query;
-                optvModel.setTwitterQuery(query);
+                ogTVModel.setTwitterQuery(query);
                 console.log('New twitter query:', query);
             }
         }
@@ -57,7 +57,7 @@ app.controller("crawlerController",
         }
 
         function reloadTweets() {
-            optvModel.getTweets().then(function (data) {
+            ogTVModel.getTweets().then(function (data) {
                 console.log('Tweets:', data);
                 if (data != undefined && data.statuses != undefined) {
                     // Put tweets into array
@@ -76,7 +76,7 @@ app.controller("crawlerController",
 
         function updateFromRemote() {
 
-            optvModel.init({
+            ogTVModel.init({
                 appName: "io.ourglass.pubcrawler",
                 dataCallback: modelUpdate,
                 initialValue: {

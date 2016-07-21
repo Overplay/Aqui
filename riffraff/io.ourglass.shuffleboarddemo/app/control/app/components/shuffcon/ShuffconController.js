@@ -3,7 +3,7 @@
  */
 
 app.controller( "shuffconController",
-    function ( $scope, $timeout, $http, $log, optvModel ) {
+    function ($scope, $timeout, $http, $log, ogControllerModel ) {
 
         $log.info( "Loading shuffconController" );
 

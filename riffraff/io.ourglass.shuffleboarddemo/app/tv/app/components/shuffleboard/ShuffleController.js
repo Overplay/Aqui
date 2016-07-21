@@ -3,7 +3,7 @@
  */
 
 app.controller( "shuffleController",
-    function ( $scope, $timeout, $http, $interval, optvModel, $log, $window ) {
+    function ($scope, $timeout, $http, $interval, ogControllerModel, $log, $window ) {
 
         console.log( "Loading shuffleController" );
 

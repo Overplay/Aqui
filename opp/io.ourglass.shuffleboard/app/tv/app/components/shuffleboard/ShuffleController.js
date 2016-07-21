@@ -3,7 +3,7 @@
  */
 
 app.controller( "shuffleController",
-    function ( $scope, $timeout, $http, $interval, optvModel, $log, $window ) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window ) {
 
         console.log( "Loading shuffleController" );
 
@@ -59,7 +59,7 @@ app.controller( "shuffleController",
 
         function updateFromRemote() {
 
-            optvModel.init( {
+            ogTVModel.init( {
                 appName:         "io.ourglass.shuffleboard",
                 endpoint:        "tv",
                 dataCallback:    modelUpdate,

@@ -10,7 +10,7 @@
 
 
 var app = angular.module('optvWaitListApp', [
-    'ngOpTVApi',
+    'ngOgControllerApi',
     'ionic',
     'yaru22.angular-timeago',
     'ngAnimate'

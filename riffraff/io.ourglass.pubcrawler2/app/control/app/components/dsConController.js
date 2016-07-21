@@ -3,7 +3,7 @@
  */
 
 app.controller( "dsConController",
-    function ( $scope, $timeout, $http, $log, optvModel ) {
+    function ($scope, $timeout, $http, $log, ogControllerModel ) {
 
         $log.info( "Loading dsConController" );
 

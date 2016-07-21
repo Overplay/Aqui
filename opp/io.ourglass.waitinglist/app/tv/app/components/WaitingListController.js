@@ -10,9 +10,9 @@
 // 		'dateCreated': new Date()
 // }
 
-app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
+app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeout', function ($scope, ogTVModel, $log, $timeout) {
 
-	$scope.parties = function() { return optvModel.model.parties; };
+	$scope.parties = function() { return ogTVModel.model.parties; };
 
 	// var parties = [
 	// 	{
@@ -77,14 +77,14 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 	// };
 
 	function handleDataCallback(data) {
-		if (data.length != optvModel.model.parties.length) {
-			optvModel.model.parties = data.parties;
+		if (data.length != ogTVModel.model.parties.length) {
+			ogTVModel.model.parties = data.parties;
 		}
 	}
 
 	function updateFromRemote() {
 
-		optvModel.init({
+		ogTVModel.init({
 			appName: "io.ourglass.waitinglist",
 			endpoint: "tv",
 			dataCallback: handleDataCallback,
