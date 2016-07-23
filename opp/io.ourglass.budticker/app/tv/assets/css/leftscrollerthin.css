@@ -94,11 +94,11 @@ body {
     -ms-transform: rotateY(0deg);
     -o-transform: rotateY(0deg);
     transform: rotateY(0deg);
-    -webkit-transition: all 3s;
-    -moz-transition: all 3s;
-    -ms-transition: all 3s;
-    -o-transition: all 3s;
-    transition: all 3s;
+    -webkit-transition: all 1.5s linear;
+    -moz-transition: all 1.5s linear;
+    -ms-transition: all 1.5s linear;
+    -o-transition: all 1.5s linear;
+    transition: all 1.5s linear;
 }
 
 .spin-logo {

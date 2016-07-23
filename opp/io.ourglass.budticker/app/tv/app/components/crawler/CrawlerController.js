@@ -194,12 +194,16 @@ app.directive('pubCrawlerThin', [
 
                 var NEXT_UP_DURATION = 5000;
 
+                var logos = [ "budlight.png", "budlime.png", "budsel.png" ];
+                var logoidx = 0;
+
                 scope.ui = {
                     scrollin: false,
                     nextUp: '',
                     isNextUp: true,
                     isChangingName: false,
-                    spinLogo: false
+                    spinLogo: false,
+                    brandLogo: logos[logoidx]
                 };
 
 
@@ -310,8 +314,16 @@ app.directive('pubCrawlerThin', [
                 }
 
                 $interval( function(){
-                    scope.ui.spinLogo = !scope.ui.spinLogo;
-                }, 6000 );
+                    scope.ui.spinLogo = true;
+                    $timeout(function(){
+
+                        logoidx++;
+                        if (logoidx==logos.length) logoidx=0;
+                        scope.ui.brandLogo = logos[logoidx];
+                        scope.ui.spinLogo = false;
+
+                    }, 1600 )
+                }, 5000 );
 
                 var waitToStart = $interval(function () {
                     if (scope.newMessageArray) {
