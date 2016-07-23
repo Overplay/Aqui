@@ -23,7 +23,7 @@ The above would connect to the target device then push all the apps over.
 
 This can take a bit, especially over WiFi. It is sometimes more expedient to just copy individual folders or files over.
 
-If you prefer to not use automation (why?) you can directly use ADB's push command.
+If you prefer to not use automation (why?), you can directly use ADB's push command.
 
 Let's say your files are in `/somewhere/aqui`, you would 
 
@@ -54,11 +54,10 @@ The `fonts` folder is for shared fonts. Many apps use the same fonts, so put the
 
 `ionic` has the most recent ionic lib for import into control apps. 
 
-`js` is other libraries such 
+`js` is other libraries such as the OG Angular interface services.
 
 
 ##OPP Project Layout
-------------------
 
 All Ourglass Angular apps share a common JS/CSS "repositiory". This was done so that we do not have libraries replicated
 in every single Angular SPA. Common files are found in the cleverly named `common` folder. In that folder is a `bower.json`
