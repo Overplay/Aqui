@@ -10,20 +10,17 @@
 // 		'dateCreated': new Date()
 // }
 
-app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeout', function ($scope, optvModel, $log, $timeout) {
+app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeout', function ($scope, ogTVModel, $log, $timeout) {
 
+	$scope.parties = function() { return ogTVModel.model.parties; };
 	$scope.title = "WAITING LIST";
 
-	$scope.parties = function() {
-		return optvModel.model.parties;
-	};
-
-
-	// $scope.parties = function () {
-	// 	return demoPartiesList;
-	// };
-
-	// var demoPartiesList = [
+	// var parties = [
+	// 	{
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
 	// 	{
 	// 		name: "Noah Saso",
 	// 		partySize: 1,
@@ -38,12 +35,12 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 	// 		partySize: 1,
 	// 		tableReady: false
 	// 	}, {
-	// 		name: "Logan Saso",
+	// 		name: "Arabella Appleseed Saso",
 	// 		partySize: 12,
 	// 		tableReady: false
 	// 	},
 	// 	{
-	// 		name: "Christopher Saso",
+	// 		name: "Noah Saso",
 	// 		partySize: 1,
 	// 		tableReady: false
 	// 	}, {
@@ -52,21 +49,43 @@ app.controller('waitingListController', ['$scope', 'optvModel', '$log', '$timeou
 	// 		tableReady: false
 	// 	},
 	// 	{
-	// 		name: "Christopher Saso",
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: true
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
 	// 		partySize: 1,
 	// 		tableReady: false
-	// 	}];
-
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
+	// 	}
+	// ];
+    //
+	// $scope.parties = function () {
+	// 	return parties;
+	// };
 
 	function handleDataCallback(data) {
-		if (data.length != optvModel.model.parties.length) {
-			optvModel.model.parties = data.parties;
+		if (data.length != ogTVModel.model.parties.length) {
+			ogTVModel.model.parties = data.parties;
 		}
 	}
 
 	function updateFromRemote() {
 
-		optvModel.init({
+		ogTVModel.init({
 			appName: "io.ourglass.waitinglist",
 			endpoint: "tv",
 			dataCallback: handleDataCallback,
@@ -121,7 +140,7 @@ app.directive('topScroller', function ($timeout) {
 					top = 300;
 					dx = height + top;
 					scope.topPos.top = top + 'px';
-					console.log('Scroll starting. Got height:', height, 'and window height:', window.innerWidth, 'and dx:', dx);
+					console.log('Scroll starting. Got height:', height, 'and window height:', window.innerHeight, 'and dx:', dx);
 					loop();
 				});
 			}
@@ -185,7 +204,7 @@ app.directive('topScrollerSteps', function ($timeout, $interval) {
 					topOfContent = 300;
 					dx = heightOfPartyContainer + topOfContent;
 					scope.topPos.top = topOfContent + 'px';
-					console.log('Scroll starting. Got height:', heightOfPartyContainer, 'and window height:', window.innerWidth, 'and dx:', dx);
+					console.log('Scroll starting. Got height:', heightOfPartyContainer, 'and window height:', window.innerHeight, 'and dx:', dx);
 					outerLoop();
 				});
 			}

@@ -11,7 +11,7 @@
 
 
 app.controller("crawlerController",
-    function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window) {
 
         var TWEET_COUNT = 7; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
 
@@ -40,7 +40,7 @@ app.controller("crawlerController",
             query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
             if ($scope.oldTwitterQuery != query) {
                 $scope.oldTwitterQuery = query;
-                optvModel.setTwitterQuery(query);
+                ogTVModel.setTwitterQuery(query);
                 console.log('New twitter query:', query);
             }
         }
@@ -55,6 +55,21 @@ app.controller("crawlerController",
             return array;
         }
 
+        function reloadTweets() {
+            ogTVModel.getTweets().then(function (data) {
+                console.log('Tweets:', data);
+                if (data != undefined && data.statuses != undefined) {
+                    // Put tweets into array
+                    var tweets = [];
+                    for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                        tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                    }
+                    // Randomly combine tweets and messages
+                    $scope.newMessageArray = $scope.messages.concat(tweets);
+                } else {
+                    $scope.newMessageArray = $scope.messages;
+                }
+                $scope.newMessageArray = shuffleArray($scope.newMessageArray);
         function processTweetsAndAdd(data) {
             console.log('Tweets:', data);
             if (data != undefined && data.statuses != undefined) {
@@ -81,7 +96,7 @@ app.controller("crawlerController",
 
         function updateFromRemote() {
 
-            optvModel.init({
+            ogTVModel.init({
                 appName: "io.ourglass.pubcrawler",
                 dataCallback: modelUpdate,
                 initialValue: {
@@ -157,7 +172,7 @@ app.directive('pubCrawlerXs', [
                 var scrollerUl = document.getElementById('scroller-ul');
 
                 // This is on a scope var for debugging on Android
-                scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
+                scope.screen = { width: $window.innerWidth, height: $window.innerHeight };
 
                 // Dump crawler off screen
                 function resetCrawlerTransition() {

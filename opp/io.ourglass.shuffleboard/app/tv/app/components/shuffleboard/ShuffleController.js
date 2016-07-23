@@ -3,7 +3,7 @@
  */
 
 app.controller( "shuffleController",
-    function ( $scope, $timeout, $http, $interval, optvModel, $log, $window ) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window ) {
 
         console.log( "Loading shuffleController" );
 
@@ -23,8 +23,8 @@ app.controller( "shuffleController",
 
         function updateLocalScore() {
 
-            var animRed = $scope.score.red < _remoteScore.red;
-            var animBlue = $scope.score.blue < _remoteScore.blue;
+            var animRed = $scope.score.red != _remoteScore.red;
+            var animBlue = $scope.score.blue != _remoteScore.blue;
 
             $scope.score.red = _remoteScore.red;
             $scope.score.blue = _remoteScore.blue;
@@ -59,7 +59,7 @@ app.controller( "shuffleController",
 
         function updateFromRemote() {
 
-            optvModel.init( {
+            ogTVModel.init( {
                 appName:         "io.ourglass.shuffleboard",
                 endpoint:        "tv",
                 dataCallback:    modelUpdate,

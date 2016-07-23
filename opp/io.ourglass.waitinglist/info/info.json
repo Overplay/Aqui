@@ -4,6 +4,8 @@
   "height": "200",
   "width": "300",
   "screenName": "Waiting List",
+  "height": "300",
+  "width": "200",
   "onLauncher": true,
   "primaryColor": -7876885,
   "primaryColorHex": "#8080ff",

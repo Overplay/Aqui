@@ -3,7 +3,7 @@
  */
 
 app.controller("dsConController",
-    function ($scope, $timeout, $interval, $http, optvModel, $ionicTabsDelegate) {
+    function ($scope, $timeout, $interval, $http, ogControllerModel, $ionicTabsDelegate) {
 
         $scope.messages = [];
         $scope.comingUpMessages = [];
@@ -32,7 +32,7 @@ app.controller("dsConController",
 
         function initialize() {
 
-            optvModel.init({
+            ogControllerModel.init({
                 appName: "io.ourglass.pubcrawler",
                 endpoint: "control",
                 dataCallback: modelUpdate,
@@ -68,10 +68,10 @@ app.controller("dsConController",
         };
 
         $scope.update = function () {
-            optvModel.model.messages = $scope.messages;
-            optvModel.model.comingUpMessages = $scope.comingUpMessages;
-            optvModel.model.twitterQueries = $scope.twitterQueries;
-            optvModel.save();
+            ogControllerModel.model.messages = $scope.messages;
+            ogControllerModel.model.comingUpMessages = $scope.comingUpMessages;
+            ogControllerModel.model.twitterQueries = $scope.twitterQueries;
+            ogControllerModel.save();
         };
 
         initialize();
