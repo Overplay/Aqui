@@ -39,6 +39,13 @@ body {
 
 /*@media screen and (max-width: 1280px) {*/
 
+.frame {
+    height: 60px;
+    border-left: 1px solid rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+}
+
 .left-scroller-holder {
     font-family: sans-serif;
     width: 100%;
@@ -82,13 +89,32 @@ body {
     right: 60px;
     z-index: 101;
     max-height: 50px;
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    -webkit-transition: all 3s;
+    -moz-transition: all 3s;
+    -ms-transition: all 3s;
+    -o-transition: all 3s;
+    transition: all 3s;
+}
+
+.spin-logo {
+
+    -webkit-transform: rotateY(630deg);
+    -moz-transform: rotateY(630deg);
+    -ms-transform: rotateY(630deg);
+    -o-transform: rotateY(630deg);
+    transform: rotateY(630deg);
+
 }
 
 .next-up-holder {
     position: absolute;
-    padding: 1px;
     width: 200px;
-    height: 60px;
+    height: 40px;
     top: 0;
     left: 60px;
     z-index: 20;
@@ -97,7 +123,7 @@ body {
 
 .next-up-holder h1 {
     font-size: 12px;
-    margin-top: 5px;
+    margin-top: 3px;
     margin-bottom: 0;
     text-align: center;
 
@@ -118,7 +144,7 @@ ul {
     padding: 4px 0;
     position: relative;
     z-index: 10;
-    top: -12px;
+    top: -15px;
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
 }
 

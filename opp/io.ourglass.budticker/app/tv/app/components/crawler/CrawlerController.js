@@ -198,7 +198,8 @@ app.directive('pubCrawlerThin', [
                     scrollin: false,
                     nextUp: '',
                     isNextUp: true,
-                    isChangingName: false
+                    isChangingName: false,
+                    spinLogo: false
                 };
 
 
@@ -307,6 +308,10 @@ app.directive('pubCrawlerThin', [
                         });
 
                 }
+
+                $interval( function(){
+                    scope.ui.spinLogo = !scope.ui.spinLogo;
+                }, 6000 );
 
                 var waitToStart = $interval(function () {
                     if (scope.newMessageArray) {
