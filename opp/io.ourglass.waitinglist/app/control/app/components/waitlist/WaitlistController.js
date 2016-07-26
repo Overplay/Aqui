@@ -193,7 +193,7 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
         function promptToConfirmTableReady(party) {
             party.tableReady = true;
             sendTextToParty(party);
-            optvModel.save();
+            ogControllerModel.save();
         }
 
         $scope.doPartyBnAction = function (party, $event) {

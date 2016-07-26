@@ -3,7 +3,7 @@
  */
 
 app.controller("dartsController",
-    function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window) {
 
         console.log("Loading cricketController");
 
@@ -155,7 +155,7 @@ app.controller("dartsController",
         }
 
         function updateFromRemote() {
-            optvModel.init({
+            ogTVModel.init({
                     appName: "io.ourglass.cricket",
                     endpoint: "tv",
                     dataCallback: modelUpdate,

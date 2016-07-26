@@ -49,23 +49,33 @@ angular.module('ngOgControllerApi', [])
             _dataCb = params.dataCallback;
 
             if(toPoll){
-                //if there is an initialValue, then post it to appData
-                if(initialValue){
-                    $http.post(API_PATH + 'appdata/' + _appName, initialValue).then(
-                        function(data){
-                            debugPrint("initialized");
-                            service.model = initialValue;
-                            startPolling();
-                        },
-                        function(err){
-                            debugPrint("could not post initial value to database [fatal]");
-                        }
-                    )
-                }
-                //else go directly to polling
-                else{
-                    startPolling();
-                }
+                //check if there is already appdata loaded
+                $http.get(API_PATH + 'appdata/' + _appName).then(function(data){
+                    //if there is already appdata, then set the controllers data
+                    if(data && data.data){
+                        updateIfChanged(data.data);
+                        startPolling();
+                    }
+                    //else if there was no data but there was an initialValue, then post the initialvalue
+                    else if(initialValue){
+                        $http.post(API_PATH + 'appdata/' + _appName, initialValue).then(
+                            function(data){
+                                debugPrint("initialized");
+                                service.model = initialValue;
+                                startPolling();
+                            },
+                            function(err){
+                                debugPrint("could not post initial value to database [fatal]");
+                            }
+                        )
+                    }
+                    //else go directly to polling
+                    else{
+                        startPolling();
+                    }
+
+                }, errorPrint);
+
             }
 
         }

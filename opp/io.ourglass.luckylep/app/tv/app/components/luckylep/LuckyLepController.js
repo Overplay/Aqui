@@ -3,7 +3,7 @@
  */
 
 app.controller( "luckyLepController",
-    function ( $scope, $timeout, $http, $interval, optvModel, $log, $window ) {
+    function ( $scope, $timeout, $http, $interval, ogTVModel, $log, $window ) {
 
         $log.debug("Loading controller...");
 
@@ -16,7 +16,7 @@ app.controller( "luckyLepController",
             $scope.lep.show = !$scope.lep.show;
             var rando = Math.floor( Math.random() * 8 );
             $scope.lep.winner = guests[rando];
-            optvModel.moveApp("io.ourglass.luckylep");
+            ogTVModel.move("io.ourglass.luckylep");
             
         }, 5000)
         
@@ -59,7 +59,7 @@ app.controller( "luckyLepController",
         //
         // function updateFromRemote() {
         //
-        //     optvModel.init( {
+        //     ogTVModel.init( {
         //         appName:         "io.overplay.luckylep",
         //         endpoint:        "tv",
         //         dataCallback:    modelUpdate,

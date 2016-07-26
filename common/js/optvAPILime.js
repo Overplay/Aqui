@@ -1,3 +1,4 @@
+alert("I (optvAPILime) am being loaded somewhere and I am deprecated");
 /****************************************************************************
 
  File:       optvAPILime.js
@@ -10,6 +11,8 @@
 
  ****************************************************************************/
 var GLOBAL_APPDATA_UPDATE_METHOD = undefined;
+
+console.warn("optvAPILime is deprecated, please switch to either ogController or ogTVAPI");
 
 angular.module( 'ngOpTVApi', [] )
     .factory( 'ogControllerModel', function ($http, $log, $timeout ) {

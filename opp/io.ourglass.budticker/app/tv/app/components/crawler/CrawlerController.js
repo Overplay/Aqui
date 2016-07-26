@@ -11,7 +11,7 @@
 
 
 app.controller("crawlerController",
-    function ($scope, $timeout, $http, $interval, optvModel, $log, $window) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window) {
 
         var TWEET_COUNT = 7; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
 
@@ -40,7 +40,7 @@ app.controller("crawlerController",
             query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
             if ($scope.oldTwitterQuery != query) {
                 $scope.oldTwitterQuery = query;
-                optvModel.setTwitterQuery(query);
+                ogTVModel.setTwitterQuery(query);
                 console.log('New twitter query:', query);
             }
         }
@@ -71,17 +71,17 @@ app.controller("crawlerController",
 
         function reloadTweets() {
             $scope.newMessageArray = $scope.messages;
-            optvModel.getTweets().then(function (data) {
+            ogTVModel.getTweets().then(function (data) {
                 console.log('User selected tweets processing');
                 processTweetsAndAdd(data);
                 console.log('Channel tweets next');
-                optvModel.getChannelTweets().then(processTweetsAndAdd);
+                ogTVModel.getChannelTweets().then(processTweetsAndAdd);
             });
         }
 
         function updateFromRemote() {
 
-            optvModel.init({
+            ogTVModel.init({
                 appName: "io.ourglass.pubcrawler",
                 dataCallback: modelUpdate,
                 initialValue: {
@@ -120,8 +120,8 @@ app.controller("crawlerController",
  *
  */
 app.directive('pubCrawlerThin', [
-    '$log', '$timeout', '$window', '$interval', 'optvModel',
-    function ($log, $timeout, $window, $interval, optvModel) {
+    '$log', '$timeout', '$window', '$interval', 'ogTVModel',
+    function ($log, $timeout, $window, $interval, ogTVModel) {
         return {
             restrict: 'E',
             scope: {
@@ -228,7 +228,7 @@ app.directive('pubCrawlerThin', [
                             $timeout(function () {
                                 scope.ui.scrollin = false;
                                 $timeout(function () {
-                                    optvModel.getChannelInfo().then(function (data) {
+                                    ogTVModel.getChannelInfo().then(function (data) {
                                         if (data != undefined && data.programTitle != undefined) {
                                             scope.ui.isChangingName = true;
                                             $timeout(function () {

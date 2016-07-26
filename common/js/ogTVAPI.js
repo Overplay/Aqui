@@ -53,6 +53,17 @@ angular.module('ngOgTVApi', [])
             return $http.post(API_PATH + 'scrape/' + _appName, {query: twitterQuery});
         }
 
+        service.getChannelTweets = function ( ) {
+            return $http.get(API_PATH + 'scrape/io.ourglass.core.channeltweets' )
+                .then(stripData);
+        };
+
+        service.getChannelInfo = function ( ) {
+            return $http.get(API_PATH + 'system/channel' )
+                .then(stripData);
+        };
+
+
         function stripData(response){
             return response.data;
         }

@@ -61,7 +61,7 @@ app.controller("crawlerController",
                 if (data != undefined && data.statuses != undefined) {
                     // Put tweets into array
                     var tweets = [];
-                    for(var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                    for (var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
                         tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
                     }
                     // Randomly combine tweets and messages
@@ -70,59 +70,60 @@ app.controller("crawlerController",
                     $scope.newMessageArray = $scope.messages;
                 }
                 $scope.newMessageArray = shuffleArray($scope.newMessageArray);
-        function processTweetsAndAdd(data) {
-            console.log('Tweets:', data);
-            if (data != undefined && data.statuses != undefined) {
-                // Put tweets into array
-                var tweets = [];
-                for (var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
-                    tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                function processTweetsAndAdd(data) {
+                    console.log('Tweets:', data);
+                    if (data != undefined && data.statuses != undefined) {
+                        // Put tweets into array
+                        var tweets = [];
+                        for (var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
+                            tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                        }
+                        // Randomly combine tweets and messages
+                        $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
+                    }
+                    $scope.newMessageArray = shuffleArray($scope.newMessageArray);
                 }
-                // Randomly combine tweets and messages
-                $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
-            }
-            $scope.newMessageArray = shuffleArray($scope.newMessageArray);
-        }
 
-        function reloadTweets() {
-            $scope.newMessageArray = $scope.messages;
-            optvModel.getTweets().then(function (data) {
-                console.log('User selected tweets processing');
-                processTweetsAndAdd(data);
-                console.log('Channel tweets next');
-                optvModel.getChannelTweets().then(processTweetsAndAdd);
+                function reloadTweets() {
+                    $scope.newMessageArray = $scope.messages;
+                    /*ogTVModel.getTweets().then(function (data) {
+                        console.log('User selected tweets processing');
+                        processTweetsAndAdd(data);
+                        console.log('Channel tweets next');
+                        ogTVModel.getChannelTweets().then(processTweetsAndAdd);
+                    });*/
+                }
+
+                function updateFromRemote() {
+
+                    ogTVModel.init({
+                        appName: "io.ourglass.pubcrawler",
+                        dataCallback: modelUpdate,
+                        initialValue: {
+                            messages: $scope.messages,
+                            comingUpMessages: $scope.comingUpMessages
+                        },
+                        pollInterval: 10000
+                    });
+
+                    $interval(reloadTweets, 30000);
+                    reloadTweets();
+
+                }
+
+                // NFC why this is here...oh wait..maybe because of the weird size issue in the emulators
+                // $scope.$watch(function () {
+                //     return $window.innerWidth;
+                // }, function (value) {
+                //     console.log(value);
+                //     $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
+                // });
+
+                updateFromRemote();
+
             });
         }
-
-        function updateFromRemote() {
-
-            ogTVModel.init({
-                appName: "io.ourglass.pubcrawler",
-                dataCallback: modelUpdate,
-                initialValue: {
-                    messages: $scope.messages,
-                    comingUpMessages: $scope.comingUpMessages
-                },
-                pollInterval: 10000
-            });
-
-            $interval(reloadTweets, 30000);
-            reloadTweets();
-
-        }
-
-        // NFC why this is here...oh wait..maybe because of the weird size issue in the emulators
-        // $scope.$watch(function () {
-        //     return $window.innerWidth;
-        // }, function (value) {
-        //     console.log(value);
-        //     $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
-        // });
-
-        updateFromRemote();
-
     });
-
 
 /**
  *
@@ -135,8 +136,8 @@ app.controller("crawlerController",
  *
  */
 app.directive('pubCrawlerXs', [
-    '$log', '$timeout', '$window', '$interval', 'optvModel',
-    function ($log, $timeout, $window, $interval, optvModel) {
+    '$log', '$timeout', '$window', '$interval', 'ogTVModel',
+    function ($log, $timeout, $window, $interval, ogTVModel) {
         return {
             restrict: 'E',
             scope: {
@@ -238,7 +239,7 @@ app.directive('pubCrawlerXs', [
                             $timeout(function () {
                                 scope.ui.scrollin = false;
                                 $timeout(function () {
-                                    optvModel.getChannelInfo().then(function (data) {
+                                    ogTVModel.getChannelInfo().then(function (data) {
                                         if (data != undefined && data.programTitle != undefined) {
                                             scope.ui.isChangingName = true;
                                             $timeout(function () {
@@ -334,4 +335,3 @@ app.directive('pubCrawlerXs', [
         }
     }]
 );
-

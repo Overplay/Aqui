@@ -3,7 +3,7 @@
  */
 
 app.controller("dartsconController",
-    function ($scope, $timeout, $http, $log, optvModel) {
+    function ($scope, $timeout, $http, $log, ogControllerModel) {
 
         $log.info("Loading cricketconController");
 
@@ -65,7 +65,7 @@ app.controller("dartsconController",
         $scope.player2 = new playerInfo();
 
         function initialize() {
-            optvModel.init({
+            ogControllerModel.init({
                 appName: "io.ourglass.cricket",
                 endpoint: "control",
                 initialValue: {
@@ -74,36 +74,36 @@ app.controller("dartsconController",
                 dataCallback: dataChanged,
                 messageCallback: inboundMessage
             });
-            if(!optvModel.turns){
-                optvModel.turns = [];
+            if(!ogControllerModel.turns){
+                ogControllerModel.turns = [];
             }
         }
 
         $scope.finishTurn = function () {
-            console.log(optvModel);
-            if(!optvModel.model.turns){
-                optvModel.model.turns = [];
+            console.log(ogControllerModel);
+            if(!ogControllerModel.model.turns){
+                ogControllerModel.model.turns = [];
             }
-            addPlayerInfoToTurns(optvModel.model.turns, $scope.player1, $scope.player2);
-            optvModel.save();
+            addPlayerInfoToTurns(ogControllerModel.model.turns, $scope.player1, $scope.player2);
+            ogControllerModel.save();
             $scope.player1 = new playerInfo();
             $scope.player2 = new playerInfo();
         }
 
 
         $scope.resetScores = function () {
-            optvModel.model.turns = [];
-            optvModel.save();
+            ogControllerModel.model.turns = [];
+            ogControllerModel.save();
             $scope.player1 = new playerInfo();
             $scope.player2 = new playerInfo();
         }
 
         $scope.home = function () {
-            optvModel.postMessage({dest: "io.ourglass.mainframe", data: {dash: 'toggle'}});
+            ogControllerModel.postMessage({dest: "io.ourglass.mainframe", data: {dash: 'toggle'}});
         }
 
         $scope.move = function () {
-            optvModel.moveApp()
+            ogControllerModel.move()
                 .then(function (newSlot) {
                     $log.info("CricketControl. Moved to slot: " + numSlot);
 
