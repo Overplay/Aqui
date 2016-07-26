@@ -6,7 +6,11 @@ These are the static webpages served up by the native Android webserver running 
 
 The webpages must be located in the following path on the OG Android device:
 
-    /mnt/sdcard/www
+    /mnt/sdcard/www[release codename]
+    
+    So for AQUI, the files are in /mnt/sdcard/wwwaqui
+    
+The codename thing is done so we can run copies of each release level independently on the same hardware/emu.
     
 ##Getting the Files to the Right Place
 
