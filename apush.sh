@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-adb push ./common/. /mnt/sdcard/www/common
-adb push ./opp/. /mnt/sdcard/www/opp
-adb push ./control/. /mnt/sdcard/www/control
+WEBROOT=wwwaqui
+
+adb push ./common/. /mnt/sdcard/$WEBROOT/common
+adb push ./opp/. /mnt/sdcard/$WEBROOT/opp
+adb push ./control/. /mnt/sdcard/$WEBROOT/control
+

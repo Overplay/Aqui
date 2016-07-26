@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-adb push "./$1/." "/mnt/sdcard/www/$1"
+WEBROOT=wwwaqui
+
+adb push "./$1/." "/mnt/sdcard/$WEBROOT/$1"
