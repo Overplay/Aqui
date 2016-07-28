@@ -1,15 +1,21 @@
+//icon needs to be in www/opp/<appId>/assets/icons
+
 {
   "appId": "io.ourglass.budticker",
   "appType": "crawler",
-  "screenName": "BudTicker",
-  "onLauncer": true,
-  "primaryColor": -16744448,
-  "primaryColorHex": "#cc0000",
-  "reverseDomainName": "io.ourglass.budticker",
-  "secondaryColor": 0,
-  "secondaryColorHex": "#990000",
+  "appName": "BudTicker",
+
   "icon": "bud.png",
-  "iconPath": "www/opp/io.ourglass.budticker/assets/icons/bud.png",
-  "iconImage": "www/opp/io.ourglass.budticker/assets/icons/bud.png",
-  "iconLabel": "BudTicker"
+  "iconLabel": "BudTicker",
+
+  "primaryColorHex": "#cc0000",
+  "secondaryColorHex": "#990000",
+
+  "height": 60,
+
+  "initialValue": {
+    "messages": [],
+    "comingUpMessages": [],
+    "twitterQueries": []
+  }
 }

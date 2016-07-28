@@ -1,19 +1,18 @@
 {
   "appId": "io.ourglass.waitinglist",
   "appType": "widget",
+  "appName": "Waiting List",
+
+  "icon": "clip.png",
+  "iconLabel": "Waiting List",
+
+  "primaryColorHex": "#8080ff",
+  "secondaryColorHex": "#4d4dff",
+
   "height": "200",
   "width": "300",
-  "screenName": "Waiting List",
-  "height": "300",
-  "width": "200",
-  "onLauncher": true,
-  "primaryColor": -7876885,
-  "primaryColorHex": "#8080ff",
-  "reverseDomainName": "io.ourglass.waitinglist",
-  "secondaryColor": 0,
-  "secondaryColorHex": "#4d4dff",
-  "icon": "clip.png",
-  "iconPath": "www/opp/io.ourglass.waitinglist/assets/icon/clip.png",
-  "iconImage": "www/opp/io.ourglass.waitinglist/assets/icon/clip.png",
-  "iconLabel": "Waiting List"
+
+  "initialValue": {
+    "parties": []
+  }
 }

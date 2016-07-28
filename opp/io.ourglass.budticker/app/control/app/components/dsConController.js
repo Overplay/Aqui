@@ -35,10 +35,9 @@ app.controller("dsConController",
             ogControllerModel.init({
                 appName: "io.ourglass.pubcrawler",
                 endpoint: "control",
-                dataCallback: modelUpdate,
-                initialValue: {messages: [], comingUpMessages: [], twitterQueries: []}
+                dataCallback: modelUpdate
             });
-
+            
         }
 
         $scope.newMessage = function () {

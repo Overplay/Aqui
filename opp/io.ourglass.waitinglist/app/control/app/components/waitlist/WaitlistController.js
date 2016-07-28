@@ -79,31 +79,6 @@ app.controller("waitlistController", ["$scope", "$interval", "$timeout", "$http"
 
             ogControllerModel.init({
                 appName: "io.ourglass.waitinglist",
-                initialValue: {
-                    parties: [
-                        {
-                            name: 'Noah',
-                            partySize: 5,
-                            dateCreated: new Date((new Date()).valueOf() - (60000 * 20)),
-                            phone: '4084990902',
-                            tableReady: false
-                        },
-                        {
-                            name: 'Logan',
-                            partySize: 8,
-                            dateCreated: new Date((new Date()).valueOf() - (60000 * 5)),
-                            phone: '4088333405',
-                            tableReady: false
-                        },
-                        {
-                            name: 'Saso',
-                            partySize: 11,
-                            dateCreated: new Date((new Date()).valueOf() - (60000 * 50)),
-                            phone: '4082672769',
-                            tableReady: false
-                        }
-                    ]
-                },
                 dataCallback: retrieveData
             });
 

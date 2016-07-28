@@ -68,9 +68,6 @@ app.controller("dartsconController",
             ogControllerModel.init({
                 appName: "io.ourglass.cricket",
                 endpoint: "control",
-                initialValue: {
-                    turns: []
-                },
                 dataCallback: dataChanged,
                 messageCallback: inboundMessage
             });

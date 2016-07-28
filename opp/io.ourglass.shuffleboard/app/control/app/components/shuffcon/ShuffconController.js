@@ -21,7 +21,6 @@ app.controller( "shuffconController",
 
             ogControllerModel.init( {
                 appName:         "io.ourglass.shuffleboard",
-                initialValue:    { red: 0, blue: 0 },
                 dataCallback:    function(data){}
             } );
 

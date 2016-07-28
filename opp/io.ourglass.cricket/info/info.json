@@ -2,14 +2,14 @@
     "appId": "io.ourglass.cricket",
     "appType": "widget",
     "screenName": "Cricket",
-    "onLauncher": "true",
-    "primaryColor": -5658199, 
-    "primaryColorHex": "#808080",
-    "reverseDomainName": "io.ourglass.cricket",
-    "secondaryColor": 0,
-    "secondaryColorHex": "#606060",
+
     "icon": "dart.png",
-    "iconPath": "www/opp/io.ourglass.cricket/assets/icon/dart.png",
-    "iconImage": "www/opp/io.ourglass.cricket/assets/icon/dart.png",
-    "iconLabel": "Cricket"
+    "iconLabel": "Cricket",
+
+    "primaryColorHex": "#808080",
+    "secondaryColorHex": "#606060",
+
+    "initialValue": {
+        "turns": []
+    }
 }

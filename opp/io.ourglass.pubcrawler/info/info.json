@@ -1,15 +1,19 @@
 {
   "appId": "io.ourglass.pubcrawler",
   "appType": "crawler",
-  "screenName": "PubCrawler",
-  "onLauncer": true,
-  "primaryColor": -16744448,
-  "primaryColorHex": "#00b300",
-  "reverseDomainName": "io.ourglass.pubcrawler",
-  "secondaryColor": 0,
-  "secondaryColorHex": "#006600",
+  "appName": "PubCrawler",
+
   "icon": "pub.png",
-  "iconPath": "www/opp/io.ourglass.pubcrawler/assets/icon/pub.png",
-  "iconImage": "www/opp/io.ourglass.pubcrawler/assets/icon/pub.png",
-  "iconLabel": "PubCrawler"
+  "iconLabel": "PubCrawler",
+
+  "primaryColorHex": "#00b300",
+  "secondaryColorHex": "#006600",
+
+  "height": 60,
+
+  "initialValue": {
+    "messages": [],
+    "comingUpMessages": [],
+    "twitterQueries": []
+  }
 }

@@ -13,116 +13,62 @@
 app.controller("crawlerController",
     function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window) {
 
-        var TWEET_COUNT = 7; // If tweets received is lower than this number, code will automatically use the tweet count to prevent crashing
+        var TWEET_COUNT = 7, //MAGIC NUMBER?
+            TWEET_UPDATE_INTERVAL = 30000; 
 
-        console.log("Loading crawlerController");
+        $scope.displayArr = [];
+        $scope.comingUpMessages = []
 
-        $scope.messages = ["Try Budweiser Crown, $1.99 with Ourglass discount", "Get Ready for Rio", "3 for 1 appetizers till 7"];
-        $scope.comingUpMessages = ["1:00 Giants vs. DBacks",
-            "4:30 GSW Pregame",
-            "5:00 Warriors v Cavs"];
-        $scope.twitterQueries = [];
+        //information pertaining to user control of application
+        var crawlerMessages = {
+            user: [],
+            comingUp: [],
+            twitter: [],
 
-        $scope.oldTwitterQuery = "";
-
-        $scope.newMessageArray = [];
-
-        function modelUpdate(data) {
-            $scope.messages = data.messages;
-            if (!$scope.newMessageArray) $scope.newMessageArray = $scope.messages;
-            $scope.comingUpMessages = data.comingUpMessages;
-
-            // Combine Twitter queries into one string and set
-            var query = "";
-            angular.forEach(data.twitterQueries, function (value) {
-                query += value.method + value.query + ' ';
-            });
-            query = encodeURIComponent(query.trim()) + '&lang=en&result_type=popular&include_entities=false';
-            if ($scope.oldTwitterQuery != query) {
-                $scope.oldTwitterQuery = query;
-                ogTVModel.setTwitterQuery(query);
-                console.log('New twitter query:', query);
+            //function to set the display messages to the randomized concatenation of user and twitter messages
+            //and coming up
+            updateDisplay: function(){
+                var tempArr = this.user.concat(this.twitter);
+                tempArr.sort(function() { return 0.5 - Math.random()});
+                $scope.displayArr = tempArr;
+                $scope.comingUpMessages = this.comingUp;
             }
+        };
+
+        function modelUpdate(data){
+            crawlerMessages.user = data.messages;
+            crawlerMessages.comingUp = data.comingUpMessages;
+
+            crawlerMessages.updateDisplay();
         }
 
-        function shuffleArray(array) {
-            for (var i = array.length - 1; i > 0; i--) {
-                var j = Math.floor(Math.random() * (i + 1));
-                var temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-            return array;
-        }
+        function reloadTweets(){
+            ogTVModel.getTweets().then(function(data){
+                if(data && data.data &&  data.data.statuses){
+                    data = data.data;
+                    var tempArr = [];
 
-        function reloadTweets() {
-            ogTVModel.getTweets().then(function (data) {
-                console.log('Tweets:', data);
-                if (data != undefined && data.statuses != undefined) {
-                    // Put tweets into array
-                    var tweets = [];
-                    for (var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
-                        tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
+                    var count = data.statuses.length > TWEET_COUNT ? TWEET_COUNT : data.statuses.length;
+                    for(var i = 0; i < count; i++){
+                        var usableTweet = data.statuses[i].text;
+                        usableTweet.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+                        tempArr.push(usableTweet);
                     }
-                    // Randomly combine tweets and messages
-                    $scope.newMessageArray = $scope.messages.concat(tweets);
-                } else {
-                    $scope.newMessageArray = $scope.messages;
+                    crawlerMessages.twitter = tempArr;
+
+                    crawlerMessages.updateDisplay();
                 }
-                $scope.newMessageArray = shuffleArray($scope.newMessageArray);
-                function processTweetsAndAdd(data) {
-                    console.log('Tweets:', data);
-                    if (data != undefined && data.statuses != undefined) {
-                        // Put tweets into array
-                        var tweets = [];
-                        for (var i = 0; i < (TWEET_COUNT <= data.statuses.length ? TWEET_COUNT : data.statuses.length); i++) {
-                            tweets.push(data.statuses[i].text.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, ''));
-                        }
-                        // Randomly combine tweets and messages
-                        $scope.newMessageArray = $scope.newMessageArray.concat(tweets);
-                    }
-                    $scope.newMessageArray = shuffleArray($scope.newMessageArray);
-                }
-
-                function reloadTweets() {
-                    $scope.newMessageArray = $scope.messages;
-                    /*ogTVModel.getTweets().then(function (data) {
-                        console.log('User selected tweets processing');
-                        processTweetsAndAdd(data);
-                        console.log('Channel tweets next');
-                        ogTVModel.getChannelTweets().then(processTweetsAndAdd);
-                    });*/
-                }
-
-                function updateFromRemote() {
-
-                    ogTVModel.init({
-                        appName: "io.ourglass.pubcrawler",
-                        dataCallback: modelUpdate,
-                        initialValue: {
-                            messages: $scope.messages,
-                            comingUpMessages: $scope.comingUpMessages
-                        },
-                        pollInterval: 10000
-                    });
-
-                    $interval(reloadTweets, 30000);
-                    reloadTweets();
-
-                }
-
-                // NFC why this is here...oh wait..maybe because of the weird size issue in the emulators
-                // $scope.$watch(function () {
-                //     return $window.innerWidth;
-                // }, function (value) {
-                //     console.log(value);
-                //     $scope.screen = {width: $window.innerWidth, height: $window.innerHeight};
-                // });
-
-                updateFromRemote();
-
-            });
+            })
         }
+        
+
+        ogTVModel.init({
+            appName: "io.ourglass.pubcrawler",
+            dataCallback: modelUpdate
+        }).then(function(){
+            $interval(reloadTweets(), TWEET_UPDATE_INTERVAL);
+        });
+
     });
 
 /**
