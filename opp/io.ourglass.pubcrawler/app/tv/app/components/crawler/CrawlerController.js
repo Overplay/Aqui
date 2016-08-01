@@ -66,7 +66,8 @@ app.controller("crawlerController",
             appName: "io.ourglass.pubcrawler",
             dataCallback: modelUpdate
         }).then(function(){
-            $interval(reloadTweets(), TWEET_UPDATE_INTERVAL);
+            reloadTweets();
+            $interval(reloadTweets, TWEET_UPDATE_INTERVAL);
         });
 
     });

@@ -8,7 +8,7 @@
 
  This is an overhaul of the original optvAPILime.js that will not be based on polling
  Instead, the Android will interact directly with the client side javascript on the TV
- 
+
  Readthrough determined API functionality
    1. layer over the app control interface
      a. launch
@@ -22,6 +22,9 @@
 const DEFAULT_POLL_INTERVAL = 2000;
 const API_PATH = '/api/';
 var DATA_UPDATE_METHOD = 'objectEquality';
+var TWITTER_LANGUAGE = 'en';
+var TWITTER_RESULT_TYPE = 'popular';
+var TWITTER_INCLUDE_ENTITIES = 'false';
 
 angular.module('ngOgControllerApi', [])
     .factory('ogControllerModel', function($http, $log, $interval){
@@ -30,7 +33,7 @@ angular.module('ngOgControllerApi', [])
         var _pollInterval;
         var _dataCb;
         var _intervalRef;
-        
+
         var service = {model: {}};
 
         /**
@@ -42,40 +45,16 @@ angular.module('ngOgControllerApi', [])
          */
         service.init = function(params, noPoll){
             var toPoll = !noPoll;
-            var initialValue = params.initialValue;
+            if(params.initialValue){
+                $log.warn("initialValue is deprecated, set this field in the info.json instead");
+            }
 
             _appName = params.appName;
             _pollInterval = params.pollInterval || DEFAULT_POLL_INTERVAL;
             _dataCb = params.dataCallback;
 
             if(toPoll){
-                //check if there is already appdata loaded
-                $http.get(API_PATH + 'appdata/' + _appName).then(function(data){
-                    //if there is already appdata, then set the controllers data
-                    if(data && data.data){
-                        updateIfChanged(data.data);
-                        startPolling();
-                    }
-                    //else if there was no data but there was an initialValue, then post the initialvalue
-                    else if(initialValue){
-                        $http.post(API_PATH + 'appdata/' + _appName, initialValue).then(
-                            function(data){
-                                debugPrint("initialized");
-                                service.model = initialValue;
-                                startPolling();
-                            },
-                            function(err){
-                                debugPrint("could not post initial value to database [fatal]");
-                            }
-                        )
-                    }
-                    //else go directly to polling
-                    else{
-                        startPolling();
-                    }
-
-                }, errorPrint);
-
+                startPolling();
             }
 
         }
@@ -175,6 +154,20 @@ angular.module('ngOgControllerApi', [])
                     }
                     break;
             }
+        }
+
+        service.updateTwitterQuery = function(paramsArr){
+            var query = "";
+
+            paramsArr.forEach(function(param){
+                query += param.method + param.query + " OR ";
+            })
+            query = encodeURIComponent(query.trim());
+            query += '&lang=' + TWITTER_LANGUAGE;
+            query += '&result_type=' + TWITTER_RESULT_TYPE;
+            query += '&include_entities=' + TWITTER_INCLUDE_ENTITIES;
+
+            return $http.post( API_PATH + 'scrape/'+ _appName, { query: query });
         }
 
         return service;

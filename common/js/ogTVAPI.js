@@ -35,7 +35,7 @@ angular.module('ngOgTVApi', [])
                 return false;
             }
             //get the current state of the data
-            $http.get(API_PATH + 'appdata/' + _appName).then(function(data){
+            var prom = $http.get(API_PATH + 'appdata/' + _appName).then(function(data){
                 data = data.data;
                 service.model = data;
                 _dataCb(service.model);
@@ -43,15 +43,14 @@ angular.module('ngOgTVApi', [])
 
             GLOBAL_UPDATE_TARGET = updateIfChanged;
             console.log(GLOBAL_UPDATE_TARGET);
+
+            return prom;
         };
 
         service.getTweets = function() {
-            return $http.get(API_PATH + 'scrape/' + _appName).then(stripData);
+            console.log(API_PATH + 'scrape/' + _appName);
+            return $http.get(API_PATH + 'scrape/' + _appName);
         };
-
-        service.setTwitterQuery = function(twitterQuery){
-            return $http.post(API_PATH + 'scrape/' + _appName, {query: twitterQuery});
-        }
 
         service.getChannelTweets = function ( ) {
             return $http.get(API_PATH + 'scrape/io.ourglass.core.channeltweets' )
