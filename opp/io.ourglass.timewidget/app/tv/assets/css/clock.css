@@ -1,0 +1,107 @@
+@font-face {
+    font-family: oldNews;
+    src: url(../fonts/OldNewspaperTypes.ttf);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.clock-holder {
+    border: 2px solid blue;
+    width: 200px;
+    height: 64px;
+    font-family: oldNews, courier;
+}
+
+
+.flipper {
+    display: inline-block;
+    /*background-color: orange;*/
+    color: white;
+    height: 50px;
+    width: 30px;
+    margin: 1px;
+    overflow: hidden;
+    line-height: 48px;
+    text-align: center;
+    font-size: 25px;
+    margin-right: 0;
+    /*-webkit-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.5);*/
+    /*-moz-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.5);*/
+    /*box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.5);*/
+    z-index: 1;
+    position: relative;
+    perspective: 100px;
+    -webkit-perspective: 100px;
+    font-family: oldNews, courier;
+
+
+}
+
+.flipper:hover .card{
+    transform: rotateX(180deg);
+    /*box-shadow: -5px 5px 5px #aaa;*/
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.5s linear;
+
+}
+
+.extra-gap {
+    margin-right: 2px;
+}
+
+.colon {
+    display: inline-block;
+    width: 10px;
+}
+
+#f1_container {
+    position: relative;
+    /*margin: 10px auto;*/
+    /*width: 450px;*/
+    /*height: 281px;*/
+    z-index: 1;
+    height: 56px;
+    width: 30px;
+    display:inline-block;
+    perspective: 1000;
+
+
+}
+
+#f1_card {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.5s linear;
+}
+#f1_container:hover #f1_card {
+    transform: rotateX(180deg);
+    /*box-shadow: -5px 5px 5px #aaa;*/
+}
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-color: black;
+    border-radius: 3px;
+
+
+}
+.face.back {
+    display: block;
+    transform: rotateX(180deg);
+    /*box-sizing: border-box;*/
+    /*padding: 10px;*/
+    color: white;
+    text-align: center;
+    /*background-color: #aaa;*/
+}

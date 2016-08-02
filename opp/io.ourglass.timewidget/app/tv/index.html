@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="optvTimeApp">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+
+    <script src="../../../../common/js/ogTVAPI.js"></script>
+
+    <script src="app/optvTimeApp.js"></script>
+    <script src="app/components/TimeController.js"></script>
+
+    <link href="assets/css/clock.css" rel="stylesheet">
+
+</head>
+<body ng-controller="timeController">
+
+<!--<div class="clock-holder">-->
+    <!--<div class="flipper">{{ time.hourMSD }}</div>-->
+    <!--<div class="flipper extra-gap">{{ time.hourLSD }}</div>-->
+    <!--&lt;!&ndash;<div class="colon">:</div>&ndash;&gt;-->
+    <!--<div class="flipper">{{ time.minuteMSD }}</div>-->
+    <!--<div class="flipper extra-gap">{{ time.minuteLSD }}</div>-->
+    <!--&lt;!&ndash;<div class="colon">:</div>&ndash;&gt;-->
+    <!--<div class="flipper">{{ time.secondMSD }}</div>-->
+    <!--<div class="flipper">{{ time.secondLSD }}</div>-->
+<!--</div>-->
+
+<div class="flipper">
+    <div class="card">
+        <div class="face">
+            <div>{{ time.hourMSD + 1}}</div>
+        </div>
+        <div class="back face center">
+            <div>{{ time.hourMSD }}</div>
+
+        </div>
+    </div>
+</div>
+
+<div class="flipper">
+    <div class="card">
+        <div class="face">
+            <div>{{ time.hourLSD + 1}}</div>
+        </div>
+        <div class="back face center">
+            <div>{{ time.hourLSD }}</div>
+
+        </div>
+    </div>
+</div>
+
+<div class="flipper">
+    <div class="card">
+        <div class="face">
+            <div>{{ time.minuteMSD + 1}}</div>
+        </div>
+        <div class="back face center">
+            <div>{{ time.minuteMSD }}</div>
+
+        </div>
+    </div>
+</div>
+
+<div class="flipper">
+    <div class="card">
+        <div class="face">
+            <div>{{ time.minuteLSD + 1}}</div>
+        </div>
+        <div class="back face center">
+            <div>{{ time.minuteLSD }}</div>
+
+        </div>
+    </div>
+</div>
+
+<div class="flipper">
+    <div class="card">
+        <div class="face">
+            <div>{{ time.secondMSD + 1}}</div>
+        </div>
+        <div class="back face center">
+            <div>{{ time.secondMSD }}</div>
+
+        </div>
+    </div>
+</div>
+
+<div class="flipper">
+    <div class="card">
+        <div class="face">
+            <div>{{ time.secondLSD + 1}}</div>
+        </div>
+        <div class="back face center">
+            <div>{{ time.secondLSD }}</div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
