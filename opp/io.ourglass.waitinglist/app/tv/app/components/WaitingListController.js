@@ -12,70 +12,72 @@
 
 app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeout', function ($scope, ogTVModel, $log, $timeout) {
 
-	$scope.parties = function() { return ogTVModel.model.parties; };
+	$scope.parties = function() {
+		return ogTVModel.model.parties;
+	};
+
+
 	$scope.title = "WAITING LIST";
 
-	var parties = [
-		{
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: true
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Christopher Saso",
-			partySize: 1,
-			tableReady: false
-		}, {
-			name: "Arabella Appleseed Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: false
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: true
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: false
-		}, {
-			name: "Logan Saso",
-			partySize: 12,
-			tableReady: false
-		},
-		{
-			name: "Noah Saso",
-			partySize: 1,
-			tableReady: false
-		}
-	];
-    
-	$scope.parties = function () {
-		return parties;
-	};
+
+	// var parties = [
+	// 	{
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: true
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Christopher Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
+	// 	}, {
+	// 		name: "Arabella Appleseed Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: true
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
+	// 	}, {
+	// 		name: "Logan Saso",
+	// 		partySize: 12,
+	// 		tableReady: false
+	// 	},
+	// 	{
+	// 		name: "Noah Saso",
+	// 		partySize: 1,
+	// 		tableReady: false
+	// 	}
+	// ];
+
 
 	function handleDataCallback(data) {
 		if (data.length != ogTVModel.model.parties.length) {
@@ -87,7 +89,6 @@ app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeou
 
 		ogTVModel.init({
 			appName: "io.ourglass.waitinglist",
-			endpoint: "tv",
 			dataCallback: handleDataCallback,
 			initialValue: {parties: []}
 		});

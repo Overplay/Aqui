@@ -14,11 +14,11 @@ html, body {
 }
 
 .widget {
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0,0,0,0.60);
     width: 150px;
     height: 380px;
     /*border: 1px solid hotpink;*/
-    font-family: EXOREG, monospace;
+    font-family: EXOBLACK, monospace;
     font-size: 16px;
 }
 
@@ -27,13 +27,13 @@ html, body {
 }
 
 .party-title {
-    font-family: EXOREG, monospace;
+    font-family: EXOBLACK, monospace;
     font-size: 18px;
     height: 24px;
     padding-top: 5px;
     padding-bottom: 5px;
     text-align: center;
-    color: ghostwhite;
+    color: #ffffff;
 }
 
 .overflow-container {
@@ -106,8 +106,8 @@ html, body {
 }
 
 .num-in-party {
-    font-size: 12px;
-    opacity: 0.5;
+    font-size: 14px;
+    opacity: 0.7;
 }
 
 .num-in-party:before {
