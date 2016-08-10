@@ -1,0 +1,19 @@
+<div class="left-scroller-holder">
+
+    <div class="scroll-window">
+        <ul id="scroller-ul" ng-style="leftPos" class="hwlayer">
+            <li ng-repeat="msg in displayMessages track by $index">{{ msg }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon ion-record small"></i>&nbsp;</li>
+        </ul>
+    </div>
+
+    <div class="next-up-holder font-smoothing">
+        <!--<h1>{{ screen.width }} x {{ screen.height }}</h1>-->
+        <h1 class="name-change font-smoothing" ng-class="{'hide-name': ui.isChangingName}">{{ ui.isNextUp && 'Coming Up' || 'Now Playing' }}</h1>
+        <p ng-class="{ 'scroll-in': ui.scrollin }" class="next-up hwlayer">{{ ui.nextUp }}</p>
+        <!--<p>4:00 Giants v DBacks</p>-->
+    </div>
+
+    <div class="advert-holder">
+        <img class="advert-holder-img" src="assets/img/BUD_LIGHT.png"/>
+    </div>
+</div>

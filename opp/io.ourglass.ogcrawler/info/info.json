@@ -1,0 +1,19 @@
+{
+  "appId": "io.ourglass.ogcrawler",
+  "appType": "crawler",
+  "appName": "OGCrawler",
+
+  "icon": "space.png",
+  "iconLabel": "OGCrawler",
+
+  "primaryColorHex": "#00b300",
+  "secondaryColorHex": "#006600",
+
+  "height": 60,
+
+  "initialValue": {
+    "messages": ["Free beer tomorrow", "One bourbon, one scotch, one beer. Half off."],
+    "comingUpMessages": [ "1:00 - LAC vs GSW", "3:00 - Olympic Swimming"],
+    "twitterQueries": [ "#TrumpSacrifice"]
+  }
+}
