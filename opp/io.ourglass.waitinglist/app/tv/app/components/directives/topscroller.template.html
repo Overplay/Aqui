@@ -1,18 +1,31 @@
-<div class="party-title">
-    {{title}}
-</div>
-<div class="overflow-container">
-    <div id="party-container" style="position: relative;" ng-style="topPos">
+<div class="widget">
+    <div class="party-title">
+        {{title}}
+    </div>
+    <div class="overflow-container">
+        <div id="party-container" style="position: relative;" ng-style="topPos">
 
-        <div ng-repeat="party in parties" class="party-card" id="{{'scroll'+$index}}">
+            <div ng-repeat="party in parties" class="party-card" id="{{'scroll'+$index}}">
 
 
-            <div class="party-details-container">
-                <div ng-class="{'party-order': !party.tableReady, 'ready-order':  party.tableReady}">{{$index + 1}}</div>
-                <div class="party-card-name">{{party.name | nameMaximum}}</div>
-                <div ng-class="{'party-size': !party.tableReady, 'ready-size':  party.tableReady}"><span class="party-circle">{{party.partySize}}</span></div>
+                <div class="party-details-container">
+
+                    <div class="queue-place" ng-class="{'waiting': !party.tableReady, 'ready':  party.tableReady}">
+                        {{$index + 1}}
+                    </div>
+
+                    <div class="name-and-size" ng-class="{ 'ready-text': party.tableReady }">
+                        <div class="party-card-name">{{party.name | nameMaximum}}</div>
+                        <div class="num-in-party">{{party.partySize}}</div>
+                    </div>
+
+                </div>
+
             </div>
-
         </div>
     </div>
+    <div>
+        <img class="adlogo" src="assets/img/budlight.png"/>
+    </div>
 </div>
+

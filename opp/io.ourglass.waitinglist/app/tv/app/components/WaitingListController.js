@@ -15,67 +15,67 @@ app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeou
 	$scope.parties = function() { return ogTVModel.model.parties; };
 	$scope.title = "WAITING LIST";
 
-	// var parties = [
-	// 	{
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: true
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Christopher Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Arabella Appleseed Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: true
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}
-	// ];
-    //
-	// $scope.parties = function () {
-	// 	return parties;
-	// };
+	var parties = [
+		{
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Christopher Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Arabella Appleseed Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}
+	];
+    
+	$scope.parties = function () {
+		return parties;
+	};
 
 	function handleDataCallback(data) {
 		if (data.length != ogTVModel.model.parties.length) {
@@ -91,10 +91,6 @@ app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeou
 			dataCallback: handleDataCallback,
 			initialValue: {parties: []}
 		});
-	}
-
-	function logLead() {
-		return "waitingListController:";
 	}
 
 
@@ -296,7 +292,7 @@ app.directive('topScrollerJankFree', [
 				var wasPaused = false;
 				var distanceNeeded;
 				var currentLocation;
-				var heightOfOne = 50;
+				var heightOfOne = 40;
 				var transitionTime = 1; //In seconds. MUST BE LOWER THAN stepDelay
 				var stepDelay = 2; //In seconds
 
@@ -371,7 +367,7 @@ app.directive('topScrollerJankFree', [
 				// This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
 				function loadHeight() {
 					return $timeout(function () {
-						return document.getElementById('party-container').offsetHeight-197;
+						return document.getElementById('party-container').offsetHeight;
 					})
 				}
 
@@ -381,8 +377,8 @@ app.directive('topScrollerJankFree', [
 
 					loadHeight()
 						.then(function (height) {
-							currentLocation = 250;
-							distanceNeeded = height + 250;
+							currentLocation = 200;
+							distanceNeeded = height + 200;
 							$log.debug("Scroller height: " + height);
 							try{
 								if (scope.parties.length > 5) {

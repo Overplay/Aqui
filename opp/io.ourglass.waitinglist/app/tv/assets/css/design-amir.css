@@ -1,0 +1,115 @@
+html, body {
+    margin: 0;
+    /*background-image: url('../../../../../../common/img/phelps.jpg');*/
+}
+
+@font-face {
+    font-family: "EXOBLACK";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Bold.ttf');
+}
+
+@font-face {
+    font-family: "EXOREG";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Regular.ttf');
+}
+
+.widget {
+    background-color: rgba(0,0,0,0.75);
+    width: 150px;
+    height: 380px;
+    /*border: 1px solid hotpink;*/
+    font-family: EXOREG, monospace;
+    font-size: 16px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.party-title {
+    font-family: EXOREG, monospace;
+    font-size: 18px;
+    height: 24px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    color: ghostwhite;
+}
+
+.overflow-container {
+
+    height: 200px;
+    overflow: hidden;
+    /*border: 1px dashed red;*/
+
+}
+
+.party-card{
+    -webkit-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);
+    color: white;
+    height: 40px;
+}
+
+
+
+.party-details-container {
+    width: 150px;
+    margin-bottom: 3px;
+}
+
+.queue-place {
+    height: 80%;
+    width: 20px;
+    padding: 5px;
+    border-radius: 50%;
+    margin-left: 4px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 5px;
+
+}
+
+.name-and-size {
+    width: 100px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5px;
+
+}
+
+.waiting {
+    background-color: white;
+    color: black;
+}
+
+.ready {
+    background-color: #ff6e06;
+    color: white;
+}
+
+.ready-text {
+    color: #ff6e06;
+}
+
+.party-card-name {
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+
+.adlogo {
+    width: 150px;
+    height: 150px;
+}
+
+.num-in-party {
+    font-size: 12px;
+    opacity: 0.5;
+}
+
+.num-in-party:before {
+    content: "@";
+}
