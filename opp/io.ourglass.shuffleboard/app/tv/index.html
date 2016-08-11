@@ -20,7 +20,7 @@
 
   <!-- App Specific and Overridden CSS -->
   <!--<link href="assets/css/style.css" rel="stylesheet">-->
-  <link href="assets/css/styles.css" rel="stylesheet">
+  <link href="assets/css/styles-amir.css" rel="stylesheet">
 
 
   <title>OPTV Shuffleboard</title>
@@ -29,14 +29,26 @@
 <body>
 
 <!-- semis skeuomorph look -->
+<!--<div class="applet" ng-controller="shuffleController">-->
+  <!--<div class="logo-holder"><img src="assets/img/rein.png"/></div>-->
+  <!--<div class="score-box red-sk" ng-class="{ 'grow' : score.redHighlight }">-->
+    <!--<div>{{score.red}}</div>-->
+  <!--</div>-->
+  <!--<div class="score-box blue-sk" ng-class="{ 'grow' : score.blueHighlight }">-->
+    <!--<div>{{score.blue}}</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!-- New Look -->
 <div class="applet" ng-controller="shuffleController">
-  <div class="logo-holder"><img src="assets/img/rein.png"/></div>
-  <div class="score-box red-sk" ng-class="{ 'grow' : score.redHighlight }">
-    <div>{{score.red}}</div>
+  <div class="title">SHUFFLEBOARD</div>
+  <div class="score-box red" ng-class="{ 'grow' : score.redHighlight }">
+    {{score.red}}
   </div>
-  <div class="score-box blue-sk" ng-class="{ 'grow' : score.blueHighlight }">
-    <div>{{score.blue}}</div>
+  <div class="score-box blue" ng-class="{ 'grow' : score.blueHighlight }">
+    {{score.blue}}
   </div>
+  <div class="logo-holder"><img src="assets/img/budlight.png"/></div>
 </div>
 
 </body>

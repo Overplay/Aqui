@@ -1,0 +1,109 @@
+@font-face {
+    font-family: "Dosis";
+    src: url('../fonts/Dosis-Regular.ttf');
+}
+
+@font-face {
+    font-family: "Dosis-Bold";
+    src: url('../fonts/Dosis-ExtraBold.ttf');
+}
+
+@font-face {
+    font-family: "EXOBLACK";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Bold.ttf');
+}
+
+@font-face {
+    font-family: "EXOREG";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Regular.ttf');
+}
+
+html {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    font-family: 'EXOBLACK', monospace;
+}
+
+.op0 {
+    opacity: 0;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.blue {
+    background-color: #1c87ff;
+    color: white;
+}
+
+.red-sk {
+}
+
+.blue-sk {
+    background-image: url(../img/blueball.png);
+    background-size: contain;
+    color: white;
+}
+
+.title {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.logo-holder {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.applet {
+    width: 150px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.55);
+    position: relative;
+}
+
+.logo-holder > img {
+    width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.score-box {
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 12px;
+    padding-left: 8px;
+
+    line-height: 50px;
+    text-align: center;
+    font-size: 50px;
+    border-radius: 15%;
+    width: 50px;
+    margin-top: 12px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+}
+
+.grow {
+    transform: scale(1.2, 1.2);
+    -webkit-transform: scale(1.2, 1.2);
+    opacity: 0.8;
+}
+
+
+
+

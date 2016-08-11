@@ -12,7 +12,11 @@
 
 app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeout', function ($scope, ogTVModel, $log, $timeout) {
 
+	var TESTING = false;
+
 	$scope.parties = function() {
+		if (TESTING)
+			return parties;
 		return ogTVModel.model.parties;
 	};
 
@@ -20,63 +24,63 @@ app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeou
 	$scope.title = "WAITING LIST";
 
 
-	// var parties = [
-	// 	{
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: true
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Christopher Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Arabella Appleseed Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: true
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}, {
-	// 		name: "Logan Saso",
-	// 		partySize: 12,
-	// 		tableReady: false
-	// 	},
-	// 	{
-	// 		name: "Noah Saso",
-	// 		partySize: 1,
-	// 		tableReady: false
-	// 	}
-	// ];
+	var parties = [
+		{
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Christopher Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Arabella Appleseed Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: true
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}, {
+			name: "Logan Saso",
+			partySize: 12,
+			tableReady: false
+		},
+		{
+			name: "Noah Saso",
+			partySize: 1,
+			tableReady: false
+		}
+	];
 
 
 	function handleDataCallback(data) {
