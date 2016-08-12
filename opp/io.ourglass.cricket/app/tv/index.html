@@ -30,42 +30,60 @@
     <!--<link href="assets/css/style.css" rel="stylesheet">-->
     <link href="assets/css/styles.css" rel="stylesheet">
 
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-
     <title>OPTV Cricket</title>
 </head>
 
 <body>
 
 <!-- semis skeuomorph look -->
-<div class="applet" ng-controller="dartsController" style=" font-family: 'Architects Daughter'" ng-click="set()">
-    <div class="applet-banner" style="padding-top: 15px">Ourglass Cricket</div>
-    <div style="margin-top: 59px">
+<div class="applet" ng-controller="dartsController">
+    <div class="applet-banner">Darts</div>
+    <div class="applet-body">
         <div style="margin-top: 1.7px" ng-repeat="row in rows">
-            <h3 style="color: white; margin: 0; padding: 0; display: inline; margin-left: 25px; position: absolute" ng-class="{'hide': !row.p1.score}">{{row.p1.score}}</h3>
-            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 64px; position: absolute" ng-class="{'hide': !row.p1.numHits}">
-                <img style="margin-top: 5px" ng-if="row.p1.numHits == 1"src="assets/img/1Hit.png">
-                <img style="margin-top: 5px" ng-if="row.p1.numHits == 2" src="assets/img/2Hits.png">
-                <img style="margin-top: 5px" ng-if="row.p1.numHits >= 3"src="assets/img/3Hitsb.png">
+            <h3 class="marker-holder-left" ng-class="{'hide': !row.p1.numHits}">
+                <img class="marker-image" ng-if="row.p1.numHits == 1" src="assets/img/newLook/1Hit.png">
+                <img class="marker-image" ng-if="row.p1.numHits == 2" src="assets/img/newLook/2Hits.png">
+                <img class="marker-image" ng-if="row.p1.numHits >= 3" src="assets/img/newLook/3Hitsb.png">
             </h3>
-            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 121px; position: absolute">
-                <img style="margin-top: 5px" ng-if="row.p2.numHits == 1"src="assets/img/1Hit.png">
-                <img style="margin-top: 5px" ng-if="row.p2.numHits == 2" src="assets/img/2Hits.png">
-                <img style="margin-top: 5px" ng-if="row.p2.numHits >= 3"src="assets/img/3Hitsb.png">
+            <h3 class="marker-holder-center">
+                <p class="marker-text">{{$last ? "B" : 20 - $index}}</p>
             </h3>
-            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 154px; position: absolute;" ng-class="{'hide': !row.p2.score}">{{row.p2.score}}</h3>
+            <h3 class="marker-holder-right">
+                <img class="marker-image" ng-if="row.p2.numHits == 1" src="assets/img/newLook/1Hit.png">
+                <img class="marker-image" ng-if="row.p2.numHits == 2" src="assets/img/newLook/2Hits.png">
+                <img class="marker-image" ng-if="row.p2.numHits >= 3" src="assets/img/newLook/3Hitsb.png">
+            </h3>
             &nbsp;
         </div>
-        <div style="margin-top: 6.5px">
-            <h3 style="color: white; margin: 0; padding: 0; display: inline; margin-left: 25px; position: absolute" >{{score.red}}</h3>
-            <h3 style="color: white; margin: 0; padding: 0; display: inline; left: 154px; position: absolute" >{{score.blue}}</h3>
+
+        <!-- scores -->
+        <div class="score-wrapper">
+            <h3 class="score score-red">{{score.red}}</h3>
+            <h3 class="score score-blue">{{score.blue}}</h3>
             &nbsp;
         </div>
     </div>
 </div>
+<!-- bottom logo -->
+<img src="assets/img/BUD-LIGHT-LOGO-2-2016-320x250.jpg" width="140px">
 
-<div style="position: absolute; color: #db4b4b; top: 52px; left: 42px; font-family: 'Architects Daughter'; font-weight: bold; font-size: 13px">player 1</div>
-<div style="position: absolute; color: #69aed2; top: 52px; left: 111px; font-family: 'Architects Daughter'; font-weight: bold; font-size: 13px">player 2</div>
+<!-- player Names -->
+<div style="width:140px; position: absolute; top: 30px">
+    <div class="player-name-holder player-name-holder-left"><p class="player-name-text left">P1</p></div>
+    <div class="player-name-holder player-name-holder-right"><p class="player-name-text right">P2</p></div>
+</div>
+
+<!-- top T -->
+<div class="t-wrapper" style="top: 33px">
+    <div class="t-line">&nbsp;</div>
+    <hr class="t-base" style="margin-top: -.1px" width="100px"color="#808080" size="4px">
+</div>
+
+<!-- bottom T -->
+<div class="t-wrapper" style="top: 215px">
+    <hr class="t-base" width="100px"color="#808080" size="4px">
+    <div class="t-line">&nbsp;</div>
+</div>
 
 </body>
 </html>

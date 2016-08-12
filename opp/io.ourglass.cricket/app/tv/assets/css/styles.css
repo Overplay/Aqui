@@ -1,11 +1,6 @@
 @font-face {
-    font-family: "Dosis";
-    src: url('../fonts/Dosis-Regular.ttf');
-}
-
-@font-face {
-    font-family: "Dosis-Bold";
-    src: url('../fonts/Dosis-ExtraBold.ttf');
+    font-family: 'Exo2';
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Light.ttf');
 }
 
 html {
@@ -14,7 +9,7 @@ html {
 
 body {
     margin: 0;
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Exo2', sans-serif;
 }
 
 .op0 {
@@ -32,11 +27,11 @@ body {
 }
 
 .applet {
-    height: 300px;
-    width: 200px;
+    height: 250px;
+    width: 140px;
     padding-top: 0;
-    border-radius: 8px;
-    background-image: url('../img/smaller_board.jpg');
+    background-color: rgba(0,0,0, .6);
+    xxbackground-image: url('../img/smaller_board.jpg');
     background-size: cover;
 }
 
@@ -48,7 +43,11 @@ body {
     text-align: center;
     font-size: 17px;
     text-shadow: 2px 2px 2px rgb(101, 101, 101);
-    padding-top: 5px;
+    padding-top: 7px;
+}
+
+.applet .applet-body {
+    margin-top: 35px;
 }
 
 .score-box {
@@ -74,6 +73,120 @@ body {
     opacity: 0.8;
 }
 
-.hide {
-    color: #336f4d !important;
+/*.hide {*/
+    /*color: rgba(0,0,0,0) !important;*/
+/*}*/
+
+.marker-holder-center {
+    color: white;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    width: 140px;
+}
+
+.marker-holder-center .marker-text {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0 auto;
+    width: 24px;
+    border-right: 2px solid #808080;
+    border-left: 2px solid #808080
+}
+
+.marker-holder-left {
+    color: white; 
+    margin: 0; 
+    padding: 0; 
+    display: inline; 
+    width: 33px;
+    text-align: center;
+    position: absolute;
+    left: 20px;
+}
+
+.marker-holder-left img {
+    width: 15px;
+}
+
+.marker-holder-right img{
+    width: 15px;
+}
+
+.marker-holder-right {
+    color: white;
+    margin: 0; 
+    padding: 0; 
+    display: inline;
+    position: absolute;
+    width: 33px;
+    text-align: center;
+    left: 87px;
+}
+
+.marker-image {
+    margin-top: 5px;
+}
+
+.score-wrapper {
+    margin-top: 11.5px;
+}
+
+.score-wrapper .score {
+    color: white;
+    margin: 0;
+    padding: 0;
+    width: 48px;
+    display: inline-block;
+    text-align: center;
+}
+
+.score-wrapper .score-red {
+    margin-left: 20px;
+}
+
+.score-wrapper .score-blue {
+    margin-right: 20px;
+}
+
+.player-name-holder {
+    display: inline-table;
+    width: 48px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+
+.player-name-holder-left {
+    margin-left: 20px;
+}
+
+.player-name-holder-right {
+    margin-right: 20px;
+}
+
+.player-name-holder .player-name-text {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+
+.t-wrapper {
+    position: absolute;
+    width: 140px;
+}
+
+.t-wrapper .t-base {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.t-wrapper .t-line {
+    display: inline-block;
+    height: 23px;
+    border-left: 4px solid #808080;
+    margin-left: 68px;
 }

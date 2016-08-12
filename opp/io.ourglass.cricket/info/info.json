@@ -1,6 +1,7 @@
 {
     "appId": "io.ourglass.cricket",
     "appType": "widget",
+    "appName": "Cricket",
     "screenName": "Cricket",
 
     "icon": "dart.png",
@@ -9,6 +10,9 @@
     "primaryColorHex": "#808080",
     "secondaryColorHex": "#606060",
 
+    "height": 380,
+    "width": 140,
+    
     "initialValue": {
         "turns": []
     }
