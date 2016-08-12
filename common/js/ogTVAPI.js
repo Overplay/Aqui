@@ -17,6 +17,10 @@ const API_PATH = '/api/';
 var GLOBAL_UPDATE_TARGET;
 var DATA_UPDATE_METHOD = 'objectEquality';
 
+var TWITTER_LANGUAGE = 'en';
+var TWITTER_RESULT_TYPE = 'popular';
+var TWITTER_INCLUDE_ENTITIES = 'false';
+
 angular.module('ngOgTVApi', [])
     .factory('ogTVModel', function($http, $log){
         //local variables
@@ -61,6 +65,20 @@ angular.module('ngOgTVApi', [])
             return $http.get(API_PATH + 'system/channel' )
                 .then(stripData);
         };
+
+        service.updateTwitterQuery = function ( paramsArr ) {
+            var query = "";
+
+            paramsArr.forEach( function ( param ) {
+                query += param.method + param.query + " OR ";
+            } )
+            query = encodeURIComponent( query.trim() );
+            query += '&lang=' + TWITTER_LANGUAGE;
+            query += '&result_type=' + TWITTER_RESULT_TYPE;
+            query += '&include_entities=' + TWITTER_INCLUDE_ENTITIES;
+
+            return $http.post( API_PATH + 'scrape/' + _appName, { query: query } );
+        }
 
 
         function stripData(response){
