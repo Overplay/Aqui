@@ -45,7 +45,11 @@ app.controller( "shuffleController",
             //$scope.$apply(function () {
             $log.info( logLead() + " got a model update: " + angular.toJson( data ) );
             _remoteScore = data;
-            updateLocalScore();
+            
+            $scope.$apply( function(){
+                updateLocalScore();
+
+            });
 
             //});
 
@@ -61,9 +65,7 @@ app.controller( "shuffleController",
 
             ogTVModel.init( {
                 appName:         "io.ourglass.shuffleboard",
-                endpoint:        "tv",
-                dataCallback:    modelUpdate,
-                initialValue:    { red: 0, blue: 0 }
+                dataCallback:    modelUpdate
             } );
 
         }
