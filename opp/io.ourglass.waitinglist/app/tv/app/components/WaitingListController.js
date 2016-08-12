@@ -21,7 +21,7 @@ app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeou
 	};
 
 
-	$scope.title = "WAITING LIST";
+	$scope.title = "Waiting List";
 
 
 	var parties = [
