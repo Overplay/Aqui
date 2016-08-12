@@ -1,14 +1,4 @@
 @font-face {
-    font-family: "Dosis";
-    src: url('../fonts/Dosis-Regular.ttf');
-}
-
-@font-face {
-    font-family: "Dosis-Bold";
-    src: url('../fonts/Dosis-ExtraBold.ttf');
-}
-
-@font-face {
     font-family: 'Exo2';
     src: url('../../../../../../common/fonts/Exo_2/Exo2-Light.ttf');
 }
