@@ -21,7 +21,8 @@
     "angular-animate": "*",
     "angular-ui-router": "*",
     "bootstrap": "*",
-    "angular-timeago": "*"
+    "angular-timeago": "*",
+    "moment": "^2.14.1"
   },
   "main": ""
 }
