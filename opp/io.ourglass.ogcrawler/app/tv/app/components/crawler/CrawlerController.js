@@ -11,7 +11,7 @@
 
 
 app.controller("crawlerController",
-    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window, $q) {
 
 
         var TWEET_COUNT = 7, //MAGIC NUMBER?
@@ -39,27 +39,39 @@ app.controller("crawlerController",
         function modelUpdate(data){
             crawlerMessages.user = data.messages;
             crawlerMessages.comingUp = data.comingUpMessages;
-
+            ogTVModel.updateTwitterQuery(data.twitterQueries);
             crawlerMessages.updateDisplay();
         }
 
         function reloadTweets(){
-            ogTVModel.getTweets().then(function(data){
-                if(data && data.data &&  data.data.statuses){
-                    data = data.data;
+
+            var specificTweets, channelTweets;
+
+            $q.all( [ ogTVModel.getTweets(), ogTVModel.getChannelTweets()])
+                .then( function(tweets){
+
+                    var mergedTweets = _.merge(tweets[0], tweets[1]);
+                    
                     var tempArr = [];
 
-                    var count = data.statuses.length > TWEET_COUNT ? TWEET_COUNT : data.statuses.length;
-                    for(var i = 0; i < count; i++){
-                        var usableTweet = data.statuses[i].text;
-                        usableTweet.replace(/&amp;/g, '&').replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-                        tempArr.push(usableTweet);
+                    var count = ( mergedTweets.statuses.length > TWEET_COUNT ) ? TWEET_COUNT : mergedTweets.statuses.length;
+
+                    for ( var i = 0; i < count; i++ ) {
+                        var usableTweet = mergedTweets.statuses[ i ].text;
+                        usableTweet = usableTweet.replace( /(?:https?|ftp):\/\/[\n\S]+/g, '' );
+                        usableTweet = usableTweet.replace( /&amp;/g, '&' );
+                        tempArr.push( usableTweet );
                     }
                     crawlerMessages.twitter = tempArr;
 
                     crawlerMessages.updateDisplay();
-                }
-            })
+
+                })
+                .catch( function(err){
+                    $log.error("Shat meeself getting tweets!");
+                })
+
+
         }
         
 
