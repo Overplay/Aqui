@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width">
 
   <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
   <script src="../../../../common/bower_components/angular/angular.min.js"></script>
@@ -13,7 +13,7 @@
 
   <!-- App Main and AngularJS Routes -->
   <script src="app/optvShuffleApp.module.js"></script>
-  <script src="../../../../common/js/ogTVAPI.js"></script>
+  <script src="../../../../common/js/ogAPI.js"></script>
 
   <!-- Controllers -->
   <script src="app/components/shuffleboard/ShuffleController.js"></script>
@@ -41,14 +41,14 @@
 
 <!-- New Look -->
 <div class="applet" ng-controller="shuffleController">
-  <div class="title">SHUFFLEBOARD</div>
+  <div class="title">Shuffleboard</div>
   <div class="score-box red" ng-class="{ 'grow' : score.redHighlight }">
     {{score.red}}
   </div>
   <div class="score-box blue" ng-class="{ 'grow' : score.blueHighlight }">
     {{score.blue}}
   </div>
-  <div class="logo-holder"><img src="assets/img/budlight.png"/></div>
+  <div class="logo-holder"><og-advertisement type="widget"></og-advertisement><!--img src="assets/img/budlight.png"/--></div>
 </div>
 
 </body>
