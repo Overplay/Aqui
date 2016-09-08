@@ -10,7 +10,7 @@
 
 
 var app = angular.module('optvShuffleApp', [
-    'ngOgTVApi'
+    'ourglassAPI'
 ]);
 
 
