@@ -15,5 +15,8 @@
     
     "initialValue": {
         "turns": []
-    }
+    },
+
+    "version": 1.0,
+    "installDate": 1475073632093
 }

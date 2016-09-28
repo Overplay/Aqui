@@ -15,6 +15,9 @@
     "messages": ["Free beer tomorrow", "One bourbon, one scotch, one beer. Half off."],
     "comingUpMessages": [ "1:00 - LAC vs GSW", "3:00 - Olympic Swimming"],
     "twitterQueries": [ "#Olympics"]
-  }
+  },
+
+  "version": 1.0,
+  "installDate": 1475073632093
 
 }
