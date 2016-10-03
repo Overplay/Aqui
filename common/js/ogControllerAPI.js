@@ -100,6 +100,7 @@ angular.module('ngOgControllerApi', [])
             });
         }
 
+ 
         //convenience methods
         function debugPrint(args){
             $log.debug("ogControllerAPI (" + _appName + "): ", Array.prototype.slice.call(arguments));

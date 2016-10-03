@@ -113,3 +113,11 @@ html, body {
 .num-in-party:before {
     content: "@";
 }
+
+.logo-holder {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}

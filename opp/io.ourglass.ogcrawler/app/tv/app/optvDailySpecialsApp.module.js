@@ -9,6 +9,6 @@
  **********************************/
 
 
-var app = angular.module('optvDailySpecialsApp', ['ngOgTVApi']);
+var app = angular.module('optvDailySpecialsApp', ['ourglassAPI']);
 
 

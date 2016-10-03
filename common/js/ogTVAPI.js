@@ -69,8 +69,11 @@ angular.module('ngOgTVApi', [])
         service.updateTwitterQuery = function ( paramsArr ) {
             var query = "";
 
-            paramsArr.forEach( function ( param ) {
-                query += param.method + param.query + " OR ";
+            paramsArr.forEach( function ( param, index, arr ) {
+                query += param.method + param.query ;
+                if (!index==(arr.length-1)){
+                    query += " OR ";
+                }
             } )
             query = encodeURIComponent( query.trim() );
             query += '&lang=' + TWITTER_LANGUAGE;

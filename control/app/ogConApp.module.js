@@ -9,6 +9,6 @@
  **********************************/
 
 
-var app = angular.module('ogConApp', ['ionic']);
+var app = angular.module('ogConApp', []);
 
 

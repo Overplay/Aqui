@@ -16,17 +16,6 @@ ion-content {
     /*border: solid 1px grey;*/
 }
 
-.app-name {
-    position: relative;
-    left: 6px;
-}
-
-.app-icon {
-    background-color: black;
-    border: solid 6px black;
-    width: 40px;
-    height: 40px;
-}
 
 .no-apps {
     font-family: 'Helvetica Neue Light', 'Arial', sans-serif;

@@ -1,22 +1,90 @@
 /**
  * Created by ethan on 8/31/16.
  */
+
+var GLOBAL_UPDATE_TARGET;
+
 (function (window, angular, undefined) {
 
     'use strict';
 
     var API_PATH = '/api/';
-    var GLOBAL_UPDATE_TARGET;
     var DATA_UPDATE_METHOD = 'objectEquality';
 
     var TWITTER_LANGUAGE = 'en';
     var TWITTER_RESULT_TYPE = 'popular';
     var TWITTER_INCLUDE_ENTITIES = 'false';
+    
     angular.module('ourglassAPI', [])
-        .factory('ogTVModel', function ($http, $log) {
+
+        .factory( 'ogAds', function ( $http, $log, $q ) {
+
+            var _currentAd;
+            var service = {};
+            
+            service.getNextAd = function () {
+
+                return $http.get( API_PATH + "ad" )
+                    .then( function ( data ) {
+                        _currentAd = data.data;
+                        return _currentAd;
+                    } )
+
+            }
+
+            service.getCurrentAd = function () {
+
+                if ( _currentAd ) {
+                    return $q.resolve( _currentAd )
+                } else {
+                    return service.getNextAd();
+                }
+
+            }
+
+            service.getImgUrl = function(adType){
+
+                if (_currentAd && _currentAd[adType+'Url']){
+                    return _currentAd[ adType + 'Url' ]
+                } else {
+
+                    switch (adType){
+
+                        case "crawler":
+                            return "/www/common/img/oglogo_crawler_ad.png";
+
+                        case "widget":
+                            return "/www/common/img/oglogo_widget_ad.png";
+
+                        default:
+                            throw Error("No such ad type: "+adType);
+
+                    }
+
+                }
+
+            }
+
+            service.getCurrentAd()
+                .then( function( ca ){
+                    $log.debug("ogAds: advert loaded during startup")
+                })
+            
+            return service;
+            
+        })
+
+    /***************************
+     *
+     * TV-Side app service
+     *
+     ***************************/
+        .factory('ogTVModel', function ($http, $log, $q) {
+
             //local variables
             var _appName;
             var _dataCb;
+            var _currentAd;
 
             var service = {model: {}};
 
@@ -29,6 +97,7 @@
                     _appName = _dataCb = undefined;
                     return false;
                 }
+
                 //get the current state of the data
                 var prom = $http.get(API_PATH + 'appdata/' + _appName).then(function (data) {
                     data = data.data;
@@ -43,8 +112,9 @@
             };
 
             service.getTweets = function () {
-                console.log(API_PATH + 'scrape/' + _appName);
-                return $http.get(API_PATH + 'scrape/' + _appName);
+                var endpoint = API_PATH + 'scrape/' + _appName;
+                return $http.get(endpoint)
+                    .then(stripData);
             };
 
             service.getChannelTweets = function () {
@@ -70,7 +140,6 @@
 
                 return $http.post(API_PATH + 'scrape/' + _appName, {query: query});
             }
-
 
             function stripData(response) {
                 return response.data;
@@ -193,6 +262,17 @@
                 });
             }
 
+            /**
+             * posts up an SMS message request
+             * @param args
+             */
+            service.sendSms = function (phoneNumber, message){
+                //TODO need to implement the endpoint in AB and need some security...
+                return $http.post(API_PATH + 'app/' + appid + '/notify', { phoneNumber: phoneNumber, message: message });
+
+            }
+
+
             //convenience methods
             function debugPrint(args) {
                 $log.debug("ogControllerAPI (" + _appName + "): ", Array.prototype.slice.call(arguments));
@@ -266,6 +346,45 @@
 
             return service;
         })
+        
+        .directive('ogAdvert', function( $log, ogAds, $interval, $timeout ) {
+            return {
+                restrict: 'E',
+                template: '<img width="100%" height="100%" style="-webkit-transition: opacity 0.5s; transition: opacity 0.5s;" ' +
+                          'ng-style="adstyle" ng-src=\"{{adurl}}\"/>',
+                link: function( scope, elem, attrs ){
+                
+                    var interval = parseInt(attrs.interval) || 15000;
+                    var adType = attrs.type || 'widget';
+                    var intervalPromise;
+
+                    scope.adstyle = { opacity: 0.0 };
+                    
+                    if (adType!='widget' && adType!='crawler'){
+                        throw Error("Unsupported ad type. Must be widget or crawler")
+                    }
+                    
+                    function update(){
+
+                        scope.adstyle.opacity = 0;
+                        $timeout(function(){ 
+                            scope.adurl = ogAds.getImgUrl( adType ); 
+                            scope.adstyle.opacity = 1;
+                            // HACK ALERT...let's trigger a new ad load
+                            $timeout( ogAds.getNextAd, 200 );
+
+                        }, 1200);
+
+                    }
+
+                    update();
+
+                    intervalPromise = $interval(update, interval);
+
+                }
+            }
+        
+        })
 
         .directive('ogAdvertisement', function () {
             return {
@@ -275,6 +394,7 @@
                 },
                 template: '<img width="100%" ng-src=\"{{adurl}}\">',
                 controller: function ($scope, $http) {
+
                     var ipAddress = "http://localhost";
 
                     try {

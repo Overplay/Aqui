@@ -3,7 +3,7 @@
  */
 
 app.controller("conController",
-    function ($scope, $timeout, $http, $log, $ionicModal) {
+    function ($scope, $timeout, $http, $log, $interval) {
 
         $log.info("Loading conController");
 
@@ -43,10 +43,12 @@ app.controller("conController",
         };
 
         function reloadAppList() {
-            $scope.runningApps = [];
-            $scope.sleepingApps = [];
+            
+            
             $http.get("/api/system/apps")
                 .then(function (data) {
+                        $scope.runningApps = [];
+                        $scope.sleepingApps = [];
                         angular.forEach(data.data, function (app) {
                             if (app.running) {
                                 $scope.runningApps.push(app);
@@ -60,11 +62,11 @@ app.controller("conController",
 
         reloadAppList();
 
-        $ionicModal.fromTemplateUrl( 'templates/modal.html', {
-            scope: $scope
-        } ).then( function ( modal ) {
-            $scope.modal = modal;
-        } );
+        // $ionicModal.fromTemplateUrl( 'templates/modal.html', {
+        //     scope: $scope
+        // } ).then( function ( modal ) {
+        //     $scope.modal = modal;
+        // } );
 
         $scope.updateSystem = function () {
             $log.debug("Updating and Hiding modal");
@@ -72,5 +74,7 @@ app.controller("conController",
             updateSysInfo();
         };
 
+        $interval(reloadAppList, 1000);
+        
 
     });

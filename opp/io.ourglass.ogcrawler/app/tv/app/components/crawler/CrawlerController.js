@@ -11,7 +11,7 @@
 
 
 app.controller("crawlerController",
-    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window, $q) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window, $q, ogAds) {
 
 
         var TWEET_COUNT = 7, //MAGIC NUMBER?
@@ -25,14 +25,28 @@ app.controller("crawlerController",
             user: [],
             comingUp: [],
             twitter: [],
+            ads: [],
 
             //function to set the display messages to the randomized concatenation of user and twitter messages
             //and coming up
             updateDisplay: function(){
-                var tempArr = this.user.concat(this.twitter);
-                tempArr.sort(function() { return 0.5 - Math.random()});
-                $scope.displayArr = tempArr;
-                $scope.comingUpMessages = this.comingUp;
+                var _this = this;
+                ogAds.getCurrentAd()
+                    .then( function(ad){
+
+                        var tempArr = _this.user.concat( _this.twitter );
+                        tempArr = tempArr.concat( ad.textAds );
+                        tempArr.sort( function () { return 0.5 - Math.random()} );
+
+                        tempArr = tempArr.filter( function ( x ) {
+                            return (x !== (undefined || ''));
+                        } );
+                        
+                        $scope.displayArr = tempArr;
+                        $scope.comingUpMessages = _this.comingUp;
+
+                    })
+
             }
         };
 
