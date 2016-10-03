@@ -14,5 +14,8 @@
 
   "initialValue": {
     "parties": []
-  }
+  },
+
+  "version": 1.0,
+  "installDate": 1475073632093
 }

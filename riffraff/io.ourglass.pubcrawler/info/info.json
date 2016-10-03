@@ -15,5 +15,8 @@
     "messages": [],
     "comingUpMessages": [],
     "twitterQueries": []
-  }
+  },
+
+  "version": 1.0,
+  "installDate": 1475073632093
 }

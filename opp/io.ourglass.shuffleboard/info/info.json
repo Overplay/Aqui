@@ -15,5 +15,8 @@
   "initialValue": {
     "red": 0,
     "blue": 0
-  }
+  },
+
+  "version": 1.0,
+  "installDate": 1475073632093
 }
