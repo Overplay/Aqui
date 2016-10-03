@@ -23,18 +23,19 @@
         border-left: 2px solid #20B8EB;
         padding-left: 10px;
         padding-right: 10px;
-        height: 60px;
+        height: 65px;
         width: 70%;
     }
 
     .app-name {
-        font-weight: 400;
+        font-weight: 200;
         font-size: 20px;
         margin-bottom: 5px;
     }
 
     .app-cell-buttons button {
-        margin-right: 15px;
+        margin-right: 10px;
+        font-weight: 200;
     }
 
 </style>
@@ -50,14 +51,14 @@
         </div>
         <div class="app-cell-buttons">
             <button class="btn btn-warning" style="float: left;" ng-click="control()">CONTROL</button>
-            <button class="btn btn-primary" style="float: left;" ng-click="move()">MOVE</button>
-            <button class="btn btn-danger" style="float: left;" ng-click="kill()">X</button>
+            <button class="btn btn-primary pull-center" style="float: left;" ng-click="move()">MOVE</button>
+            <button class="btn btn-danger pull-right" style="float:left;" ng-click="kill()"><span class="glyphicon glyphicon-stop"></span></button>
         </div>
     </div>
 
-    <div class="app-cell-left" ng-if="!running" style="padding-top: 15px;">
+    <div class="app-cell-left" ng-if="!running" style="padding-top:20px;">
         <span class="app-name">{{app.appName}} </span>
-        <button class="btn btn-success pull-right" ng-click="launch()" ><span class="glyphicon glyphicon-expand"></span> </button>
+        <button class="btn btn-success" style="float:right; margin-right:15px" ng-click="launch()"><span class="glyphicon glyphicon-play"></span></button>
 
     </div>
 

@@ -29,14 +29,14 @@
 <body ng-controller="conController">
 
 
-<div class="container">
+<div class="container" style="padding:10px 0px 10px 35px">
     <div class="row">
-        <h4>RUNNING</h4>
+        <h3>RUNNING</h3>
         <p class="no-apps" ng-show="runningApps.length < 1">There are no running apps.</p>
         <app-cell ng-repeat="app in runningApps track by $index" app="app" running="true"></app-cell>
     </div>
     <div class="row">
-        <h4>SLEEPING</h4>
+        <h3>SLEEPING</h3>
         <p class="no-apps" ng-show="sleepingApps.length < 1">There are no sleeping apps.</p>
         <app-cell ng-repeat="app in sleepingApps track by $index" app="app" ></app-cell>
     </div>
