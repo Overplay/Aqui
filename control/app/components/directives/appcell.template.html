@@ -7,22 +7,22 @@
     }
 
     .app-icon {
-        height: 60px;
-        width: 60px;
+        height: 45px;
+        width: 45px;
         position: absolute;
-        top: 7px;
+        top: 15px;
         left: 15px;
     }
 
     .app-cell-left {
         position: absolute;
         top: 5px;
-        left: 80px;
+        left: 60px;
         /*border: 1px solid yellow;*/
         margin-left: 10px;
         border-left: 2px solid #20B8EB;
         padding-left: 10px;
-        padding-right: 10px;
+        /*padding-right: 10px;*/
         height: 65px;
         width: 70%;
     }
@@ -34,7 +34,8 @@
     }
 
     .app-cell-buttons button {
-        margin-right: 10px;
+        margin-right: 5px;
+        margin-bottom: 10px;
         font-weight: 200;
     }
 
@@ -58,7 +59,7 @@
 
     <div class="app-cell-left" ng-if="!running" style="padding-top:20px;">
         <span class="app-name">{{app.appName}} </span>
-        <button class="btn btn-success" style="float:right; margin-right:15px" ng-click="launch()"><span class="glyphicon glyphicon-play"></span></button>
+        <button class="btn btn-success" style="float:right; margin-right:5px" ng-click="launch()"><span class="glyphicon glyphicon-play"></span></button>
 
     </div>
 
