@@ -10,8 +10,8 @@
     "primaryColorHex": "#808080",
     "secondaryColorHex": "#606060",
 
-    "height": 380,
-    "width": 140,
+    "height": 53,
+    "width": 11,
     
     "initialValue": {
         "turns": []

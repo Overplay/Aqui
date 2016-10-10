@@ -9,7 +9,7 @@
   "primaryColorHex": "#00b300",
   "secondaryColorHex": "#006600",
 
-  "height": 60,
+  "height": 12,
 
   "initialValue": {
     "messages": [],
