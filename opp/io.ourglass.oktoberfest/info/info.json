@@ -1,0 +1,24 @@
+{
+  "appId": "io.ourglass.oktoberfest",
+  "appType": "widget",
+  "appName": "Oktoberfest",
+
+  "icon": "beersolid.png",
+  "iconLabel": "Oktoberfest",
+
+  "primaryColorHex": "#A9A9A9",
+  "secondaryColorHex": "#000000",
+
+  "height": 55,
+  "width": 100,
+
+  "initialValue": {
+    "message": "",
+    "speed": 1,
+    "gameTime": 30,
+    "gameBalls": 20
+    },
+
+  "version": 1.0,
+  "installDate": 1475073632093
+}

@@ -1,0 +1,13 @@
+<div id="game">
+    <div class="gm-hdr">Der Bier Pong</div>
+    <div class="gm-msg" ng-hide="!message" ng-class="{ 'op0': hideMessage }">{{ message }}</div>
+    <div class="gm-score">
+        <span class="score-hdr balls">BALLS</span>
+        <span class="score-val balls">{{ ballsRemaining }}</span>
+        <span class="score-hdr time">TIME</span>
+        <span class="score-val time">{{ timeRemaining }}</span>
+        <span class="score-hdr score">SCORE</span>
+        <span class="score-val score">{{ score }}</span>
+        <img class="logo" src="./app/oglogo_crawler_ad.png"/>
+    </div>
+</div>

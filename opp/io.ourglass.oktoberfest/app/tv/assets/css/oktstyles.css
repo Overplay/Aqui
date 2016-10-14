@@ -1,0 +1,139 @@
+@font-face {
+    font-family: "Kraut";
+    src: url('../fonts/FetteUNZFraktur.ttf');
+}
+
+@font-face {
+    font-family: "Dosis-Bold";
+    src: url('../fonts/Dosis-ExtraBold.ttf');
+}
+
+@font-face {
+    font-family: "EXOBLACK";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Bold.ttf');
+}
+
+@font-face {
+    font-family: "EXOREG";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Regular.ttf');
+}
+
+html {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    font-family: 'EXOBLACK', monospace;
+}
+
+.op0 {
+    opacity: 0;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.blue {
+    background-color: #1c87ff;
+    color: white;
+}
+
+#game {
+
+    width: 300px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0.55);
+    border: 2px solid white;
+    position: relative;
+    overflow: hidden;
+}
+
+.gm-hdr {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 50px;
+    width: 100%;
+    background-color: #000;
+    color: white;
+    font-family: Kraut, monospace;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+
+
+}
+
+.gm-score {
+    position: absolute;
+    top: 390px;
+    left: 0px;
+    height: 120px;
+    width: 100%;
+    background-color: #000;
+    color: white;
+}
+
+.score-hdr {
+    position: absolute;
+    top: 10px;
+}
+
+.score-hdr.balls {
+    left: 30px;
+}
+
+.score-hdr.time {
+    left: 120px;
+}
+
+.score-hdr.score {
+    left: 210px;
+}
+
+.score-val {
+    position: absolute;
+    top: 20px;
+    font-size: 40px;
+    color: yellow;
+}
+
+.score-val.balls {
+    left: 30px;
+}
+
+.score-val.time {
+    left: 115px;
+}
+
+.score-val.score {
+    left: 220px;
+}
+
+.logo {
+
+    position: absolute;
+    top: 65px;
+    left: 50px;
+    width: 60%;
+}
+
+.gm-msg {
+
+    position: absolute;
+    top: 150px;
+    width: 100%;
+    font-size: 50px;
+    color: aquamarine;
+    text-align: center;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.53);
+    transition: opacity 0.5s;
+    opacity: 1;
+}
+
+.op0 {
+    opacity: 0;
+}

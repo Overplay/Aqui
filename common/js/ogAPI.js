@@ -187,6 +187,11 @@ var GLOBAL_UPDATE_TARGET;
                 $log.error("ogTVAPI (" + _appName + "): ", Array.prototype.slice.call(arguments));
             }
 
+            service.save = function () {
+                return $http.post( API_PATH + 'appdata/' + _appName, service.model );
+            }
+
+
             return service;
         })
         .factory('ogControllerModel', function ($http, $log, $interval) {
@@ -196,6 +201,7 @@ var GLOBAL_UPDATE_TARGET;
             var _dataCb;
             var _intervalRef;
 
+            var DEFAULT_POLL_INTERVAL = 500;
             var service = {model: {}};
 
             /**

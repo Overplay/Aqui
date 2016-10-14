@@ -130,5 +130,17 @@ angular.module('ngOgTVApi', [])
             $log.error("ogTVAPI (" + _appName + "): ", Array.prototype.slice.call(arguments));
         }
 
+
+        /**
+         * saves the current state of the application
+         * @returns {HttpPromise}
+         */
+
+         // THESE NEEDS TO STAY ON TV SIDE IN CASE TV SIDE NEEDS TO SAVE DATA (Game, for example)
+        service.save = function () {
+            return $http.post( API_PATH + 'appdata/' + _appName, service.model );
+        }
+
+
         return service;
     });

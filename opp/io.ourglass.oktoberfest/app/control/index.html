@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="oktoberfestConApp">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="app/OktoberfestControlApp.module.js"></script>
+    <script src="../../../../common/js/ogAPI.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/OktoberfestConController.js"></script>
+
+    <!-- App Specific and Overridden CSS -->
+    <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    <link href="assets/css/oktstyles.css" rel="stylesheet">
+
+
+    <title>Oktoberfest</title>
+
+    <!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+
+
+    <title>Oktoberfest Control</title>
+</head>
+
+<body ng-controller="okConController">
+
+<!--Shuffleboard Remote Control -->
+
+<button ng-click="message('start')">Start</button>
+<br>
+<button ng-click="message('reset')">Reset</button>
+<br>
+<button ng-click="message('drop')">Drop Ball</button>
+<br>
+
+
+</body>
+</html>
