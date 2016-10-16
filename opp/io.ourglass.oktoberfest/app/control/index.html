@@ -20,7 +20,7 @@
 
     <!-- App Specific and Overridden CSS -->
     <!--<link href="assets/css/style.css" rel="stylesheet">-->
-    <link href="assets/css/oktstyles.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
 
 
     <title>Oktoberfest</title>
@@ -33,14 +33,17 @@
 
 <body ng-controller="okConController">
 
-<!--Shuffleboard Remote Control -->
-
-<button ng-click="message('start')">Start</button>
-<br>
-<button ng-click="message('reset')">Reset</button>
-<br>
-<button ng-click="message('drop')">Drop Ball</button>
-<br>
+<div class="wilkommen">Wilkommen zum Bier Pong</div>
+<img class="ball"  ng-class="{ 'drop': hideStart, 'done': done }" ng-click="message('drop')" src="assets/img/pongball.png"/>
+<img class="start" ng-click="start()" ng-hide="hideStart" src="assets/img/start.png"/>
+<div class="tap" ng-hide="hideStart">Press START then tap the ball to drop Ping Pong balls in the stein!</div>
+<div class="over" ng-hide="!done">Game Over</div>
+<!--<button ng-click="message('start')">Start</button>-->
+<!--<br>-->
+<!--<button ng-click="message('reset')">Reset</button>-->
+<!--<br>-->
+<!--<button ng-click="message('drop')">Drop Ball</button>-->
+<!--<br>-->
 
 
 </body>
