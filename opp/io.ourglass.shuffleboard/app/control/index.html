@@ -6,9 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>-->
-
-    <script src="../../../../common/ionic/ionic.bundle.min.js"></script>
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
     <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
 
 
@@ -16,16 +14,14 @@
 
 
     <script src="app/optvShuffConApp.module.js"></script>
-    <script src="../../../../common/js/ogControllerAPI.js"></script>
+    <script src="../../../../common/js/ogAPI.js"></script>
 
     <!-- Controllers -->
 
     <script src="app/components/shuffcon/ShuffconController.js"></script>
 
-    <link href="../../../../common/ionic/ionic.min.css" rel="stylesheet"/>
-
     <!-- App Specific and Overridden CSS -->
-    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="assets/css/ogstyles.css" rel="stylesheet">
 
     <!--<link href="assets/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
 
@@ -36,48 +32,55 @@
 <body ng-controller="shuffconController">
 
 <!--Shuffleboard Remote Control -->
-
-<div class="row">
-    <div class="bar bar-header bar-royal">
-        <h1 class="title">Shuffleboard</h1>
+<div class="ogview">
+    <div class="oghdr">
+        <h1>Shuffleboard</h1>
     </div>
+
+    <div class="ogcontainer">
+
+        <div class="control-container bordered">
+            <svg class="red-fill left" height="60" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"
+                 ng-click="changeRed(-1)">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z"/>
+            </svg>
+            <p class="center red">{{ ui.localRed }}</p>
+            <svg class="red-fill right" height="60" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"
+                 ng-click="changeRed(1)">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+            </svg>
+
+        </div>
+
+        <div class="control-container bordered">
+            <svg class="blue-fill left" height="60" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"
+                 ng-click="changeBlue(-1)">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z"/>
+            </svg>
+            <p class="center blue">{{ ui.localBlue }}</p>
+            <svg class="blue-fill right" height="60" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg"
+                 ng-click="changeBlue(1)">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+            </svg>
+
+        </div>
+
+        <div class="control-container">
+            <a class="left" ng-click="resetScores()">Reset Scores</a>
+            <a class="right" style="text-align: right" ng-click="move()">Move App on TV</a>
+
+        </div>
+
+        <og-advert type="crawler"></og-advert>
+
+    </div>
+
 
 </div>
-
-<ionic-content class="has-header">
-    <div class="row">
-        <div class="col">
-            Howdy
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <div class="score-button blue-sk" style="font-size: 30px;">{{blueScore()}}</div>
-        </div>
-        <div class="col">
-            <div class="score-button red-sk" style="font-size: 30px;">{{redScore()}}</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="score-button blue-sk" ng-click="changeBlue(1)">+</div>
-        </div>
-        <div class="col">
-            <div class="score-button red-sk" ng-click="changeRed(1)">+</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="score-button blue-sk" ng-click="changeBlue(-1)">-</div>
-        </div>
-        <div class="col">
-            <div class="score-button red-sk" ng-click="changeRed(-1)">-</div>
-        </div>
-    </div>
-    <button class="button button-assertive button-block" ng-click="resetScores()">RESET</button>
-    <button class="button button-calm button-block" ng-click="move()">MOVE</button>
-</ionic-content>
 
 
 

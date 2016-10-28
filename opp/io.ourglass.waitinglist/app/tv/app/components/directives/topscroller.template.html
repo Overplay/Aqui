@@ -1,14 +1,14 @@
-<div class="widget">
-    <div class="party-title">
+<div class="applet">
+    <h1 class="apphdr">
         {{title}}
-    </div>
-    <div class="overflow-container">
+    </h1>
+    <div class="overflow-container" id="scroll-window">
         <div id="party-container" style="position: relative;" ng-style="topPos">
 
             <div ng-repeat="party in parties" class="party-card" id="{{'scroll'+$index}}">
 
 
-                <div class="party-details-container">
+                <!--<div class="party-details-container">-->
 
                     <div class="queue-place" ng-class="{'waiting': !party.tableReady, 'ready':  party.tableReady}">
                         {{$index + 1}}
@@ -19,13 +19,12 @@
                         <div class="num-in-party">{{party.partySize}}</div>
                     </div>
 
-                </div>
+                <!--</div>-->
 
             </div>
         </div>
     </div>
     <div class="logo-holder">
-
-    <og-advert type="widget" interval="30000"></og-advert>
-</div>
+        <og-advert type="widget" interval="30000"></og-advert>
+    </div>
 </div>

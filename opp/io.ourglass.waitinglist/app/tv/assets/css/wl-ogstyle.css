@@ -1,0 +1,114 @@
+@font-face {
+    font-family: "EXOBLACK";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Bold.ttf');
+}
+
+@font-face {
+    font-family: "EXOREG";
+    src: url('../../../../../../common/fonts/Exo_2/Exo2-Regular.ttf');
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'EXOBLACK', monospace;
+    height: 100vh;
+    width: 100vw;
+    color: #ffffff;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.applet {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.55);
+    position: relative;
+    border: 1px solid dodgerblue;
+}
+
+.apphdr {
+    font-size: 12vw;
+    height: 8vh;
+    line-height: 8vh;
+    padding-top: 0;
+    text-align: center;
+    margin: 0;
+}
+
+.overflow-container {
+
+    height: 70vh;
+    overflow: hidden;
+    border: 1px dashed red;
+
+}
+
+.party-card {
+    /*-webkit-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);*/
+    /*-moz-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);*/
+    /*box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);*/
+    color: white;
+    margin-bottom: 28vw;
+    border: 1px dashed transparent;
+    width: 100vw;
+    position: relative;
+
+}
+
+.queue-place {
+    position: absolute;
+    top: 0;
+    left: 2vw;
+    width: 20vw;
+    height: 20vw;
+    line-height: 20vw;
+    border-radius: 50%;
+    text-align: center;
+    float: left;
+    font-size: 12vw;
+}
+
+
+.name-and-size {
+    position: absolute;
+    top: 0;
+    left: 30vw;
+    border: 1px solid transparent;
+}
+
+.waiting {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.ready {
+    background-color: #ff6e06;
+    border: 2px solid #ff6e06;
+    color: white;
+}
+
+.ready-text {
+    color: #ff6e06;
+}
+
+.party-card-name {
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 10vw;
+    margin-top: 0;
+
+}
+
+.num-in-party {
+    font-size: 7vw;
+    opacity: 0.7;
+    margin-top: -1vw;
+}
+
+.num-in-party:before {
+    content: "@";
+}

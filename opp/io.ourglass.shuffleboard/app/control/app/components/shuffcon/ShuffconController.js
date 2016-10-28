@@ -7,43 +7,34 @@ app.controller( "shuffconController",
 
         $log.info( "Loading shuffconController" );
 
-        $scope.ui = { show: false };
-
-        function ready() {
-            $scope.ui.show = true;
-        }
-
-
-        $scope.redScore = function () { return ogControllerModel.model.red; }
-        $scope.blueScore = function () { return ogControllerModel.model.blue; }
+        $scope.ui = { localRed: 0, localBlue: 0 };
+        
 
         function initialize() {
 
             ogControllerModel.init( {
                 appName:         "io.ourglass.shuffleboard",
-                dataCallback:    function(data){}
+                dataCallback:    function(data){
+                    $log.debug("New data: "+data);
+                }
             } );
 
         }
 
         $scope.changeBlue = function ( by ) {
 
-            ogControllerModel.model.blue = ogControllerModel.model.blue + by;
-            if ( ogControllerModel.model.blue < 0 ) ogControllerModel.model.blue = 0;
+            $scope.ui.localBlue += by;
+            if ( $scope.ui.localBlue < 0 ) $scope.ui.localBlue = 0;
+            ogControllerModel.model.blue = $scope.ui.localBlue;
             ogControllerModel.save();
 
         }
 
         $scope.changeRed = function ( by ) {
-            ogControllerModel.model.red = ogControllerModel.model.red + by;
-            if ( ogControllerModel.model.red < 0 ) ogControllerModel.model.red = 0;
-            ogControllerModel.save()
-                .then( function(d){
-                    console.log(d);
-                })
-                .catch( function(err){
-                    console.log(err);
-                });
+            $scope.ui.localRed += by;
+            if ( $scope.ui.localRed < 0 ) $scope.ui.localRed = 0;
+            ogControllerModel.model.red = $scope.ui.localRed;
+            ogControllerModel.save();
 
         }
 
@@ -52,6 +43,7 @@ app.controller( "shuffconController",
             ogControllerModel.model.red = 0;
             ogControllerModel.model.blue = 0;
             ogControllerModel.save();
+            $scope.ui = { localRed: 0, localBlue: 0 };
 
         }
 

@@ -3,24 +3,15 @@
  */
 
 app.controller( "shuffleController",
-    function ($scope, $timeout, $http, $interval, ogTVModel, $log, $window ) {
+    function ($scope, $timeout, $http, $interval, ogTVModel, $log ) {
 
-        console.log( "Loading shuffleController" );
+        console.log( "Loading shuffleController(TV)" );
 
-        $scope.position = { corner: 0 };
         $scope.score = { red: 0, blue: 0, redHighlight: false, blueHighlight: false };
 
         var _remoteScore = {};
 
-        function logLead() { return "ShuffleController: "; }
-
-        $scope.$on( 'CPANEL', function () {
-
-            $scope.position.corner++;
-            if ( $scope.position.corner > 3 ) $scope.position.corner = 0;
-
-        } );
-
+        
         function updateLocalScore() {
 
             var animRed = $scope.score.red != _remoteScore.red;
@@ -42,24 +33,15 @@ app.controller( "shuffleController",
         }
 
         function modelUpdate( data ) {
-            //$scope.$apply(function () {
-            $log.info( logLead() + " got a model update: " + angular.toJson( data ) );
+
+            $log.info( "Got a model update: " + angular.toJson( data ) );
             _remoteScore = data;
             
-            $scope.$apply( function(){
-                updateLocalScore();
+            updateLocalScore();
 
-            });
-
-            //});
-
-            $log.debug( logLead() + "Model update callback..." )
-
+            
         }
 
-        function inboundMessage( msg ) {
-            $log.debug( logLead() + "Inbound message..." );
-        }
 
         function updateFromRemote() {
 

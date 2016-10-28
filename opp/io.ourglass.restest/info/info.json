@@ -1,16 +1,16 @@
 {
-  "appId": "io.ourglass.waitinglist",
+  "appId": "io.ourglass.restest",
   "appType": "widget",
-  "appName": "Waiting List",
+  "appName": "Resolution",
 
-  "icon": "clip.png",
-  "iconLabel": "Waiting List",
+  "icon": "rtesticon.png",
+  "iconLabel": "Resolution",
 
   "primaryColorHex": "#8080ff",
   "secondaryColorHex": "#4d4dff",
 
-  "height": 65,
-  "width": 15,
+  "height": 40,
+  "width": 10,
 
   "initialValue": {
     "parties": []

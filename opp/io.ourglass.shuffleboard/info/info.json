@@ -9,8 +9,8 @@
   "primaryColorHex": "#A9A9A9",
   "secondaryColorHex": "#000000",
 
-  "height": 55,
-  "width": 9,
+  "height": 50,
+  "width": 10,
 
   "initialValue": {
     "red": 0,
