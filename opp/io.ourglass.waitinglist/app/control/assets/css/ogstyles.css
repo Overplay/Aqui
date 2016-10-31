@@ -1,0 +1,108 @@
+@font-face {
+    font-family: "POPBLACK";
+    src: url('../../../../../../common/fonts/Poppins/Poppins-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: "POPREG";
+    src: url('../../../../../../common/fonts/Poppins/Poppins-Medium.ttf');
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    background-color: #404040;
+    color: white;
+    font-family: POPREG, monospace;
+    width: 100%;
+    height: 100%;
+}
+
+.ogview {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.oghdr {
+    margin-top: 0;
+    background-image: url(../img/topbar.png);
+    padding-left: 60px;
+    height: 60px;
+    line-height: 60px;
+}
+
+.ogcontainer {
+    margin: 5px 5px 0px 5px;
+}
+
+.control-container {
+    margin: 20px;
+    display: flex;
+    /*height: 80px;*/
+    padding-top: 5px;
+    align-items: center;
+}
+
+.control-container > p {
+    font-size: 30px;
+    border-radius: 10px;
+    padding-top: 5px;
+}
+
+.bordered {
+    border: 2px solid #ffffff;
+    border-radius: 15px;
+
+}
+
+.red {
+    background-color: #dd505b;
+}
+
+.blue {
+    background-color: #1c87ff;
+}
+
+.red-fill {
+    fill: #dd505b;
+}
+
+.blue-fill {
+    fill: #1c87ff;
+}
+
+.left {
+    order: 1;
+    flex-grow: 2;
+    /*border: 1px solid rebeccapurple;*/
+
+}
+
+
+
+.right {
+    order: 5;
+    flex-grow: 2;
+    /*border: 1px solid rebeccapurple;*/
+
+}
+
+.center {
+    order: 3;
+    flex-grow: 2;
+    text-align: center;
+    /*border: 1px solid #ffff00;*/
+
+}
+
+a {
+    color: #c9dbff;
+}
+
+og-advert {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+}
