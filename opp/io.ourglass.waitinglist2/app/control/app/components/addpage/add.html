@@ -1,0 +1,41 @@
+<div class="row">
+
+    <div class="col-md-8">
+
+        <div class="form-group">
+            <input type="text" ng-model="newParty.name"
+                   ng-class="{'add-error-underline': addErrors.name || addErrors.nameExists()}"
+                   placeholder="Name..."
+                   class="form-control" style="width: 80%;"/>
+    <span class="add-error" ng-show="addErrors.name" ng-class="{'add-error-text-opacity': addErrors.name}">
+        This field is required.
+        <br>
+    </span>
+
+    <span class="add-error" ng-show="addErrors.nameExists()"
+          ng-class="{'add-error-text-opacity': addErrors.nameExists()}">
+        This name already exists! Please enter a first or last initial.
+        <br>
+    </span>
+            <br>
+
+            <input type="number" ng-model="newParty.partySize" ng-class="{'add-error-underline': addErrors.partySize}"
+                   placeholder="Party Size..." class="form-control" style="width: 80%;"/>
+    <span class="add-error" ng-show="addErrors.partySize" ng-class="{'add-error-text-opacity': addErrors.partySize}">
+        This field is required.<br>
+    </span>
+            <br>
+            <button class="btn btn-lg btn-danger" ng-click="cancel()" style="width: 40%;">Cancel</button>
+            <button class="btn btn-lg btn-primary" ng-click="add()" style="width: 40%;">Add</button>
+        </div>
+
+    </div>
+
+
+</div>
+<!--<input type="text" ng-model="newParty.phone" phone-input-->
+<!--placeholder="Phone Number (optional)..."/>-->
+<!--<br>-->
+
+
+

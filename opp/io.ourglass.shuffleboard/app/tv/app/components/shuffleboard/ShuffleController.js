@@ -17,8 +17,8 @@ app.controller( "shuffleController",
             var animRed = $scope.score.red != _remoteScore.red;
             var animBlue = $scope.score.blue != _remoteScore.blue;
 
-            $scope.score.red = _remoteScore.red;
-            $scope.score.blue = _remoteScore.blue;
+            $scope.score.red = _remoteScore.red || 0;
+            $scope.score.blue = _remoteScore.blue || 0;
 
 
             if ( animRed ) {

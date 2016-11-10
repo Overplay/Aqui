@@ -9,13 +9,10 @@
   "primaryColorHex": "#8080ff",
   "secondaryColorHex": "#4d4dff",
 
-  "height": 65,
-  "width": 15,
+  "height": "400",
+  "width": "150",
 
   "initialValue": {
     "parties": []
-  },
-
-  "version": 1.0,
-  "installDate": 1475073632093
+  }
 }

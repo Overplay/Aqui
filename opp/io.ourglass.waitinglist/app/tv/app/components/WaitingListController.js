@@ -12,7 +12,7 @@
 
 app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeout', function ($scope, ogTVModel, $log, $timeout) {
 
-	var TESTING = true;
+	var TESTING = false;
 
 	$scope.parties = function() {
 		if (TESTING)
@@ -270,7 +270,6 @@ app.directive('topScrollerJankFree', [
 			templateUrl: 'app/components/directives/topscroller.template.html',
 			link: function (scope, elem, attrs) {
 
-				var listHeight, windowHeight, cellHeight;
 
 				try{
 					if (scope.parties.length <= 5) {
@@ -298,6 +297,7 @@ app.directive('topScrollerJankFree', [
 				var wasPaused = false;
 				var distanceNeeded;
 				var currentLocation;
+				var heightOfOne = 40;
 				var transitionTime = 1; //In seconds. MUST BE LOWER THAN stepDelay
 				var stepDelay = 2; //In seconds
 
@@ -308,8 +308,8 @@ app.directive('topScrollerJankFree', [
 				function resetCrawlerTransition() {
 					wasPaused = false;
 					scope.topPos = {
-						'-webkit-transform': "translate(0px, " + windowHeight + 'px)',
-						'transform': "translate(0px, " + windowHeight + 'px)',
+						'-webkit-transform': "translate(0px, " + 250 + 'px)',
+						'transform': "translate(0px, " + 250 + 'px)',
 						'transition': 'all 0s'
 					};
 
@@ -350,7 +350,7 @@ app.directive('topScrollerJankFree', [
 					// $log.info("Doing loop.");
 
 
-					currentLocation -= cellHeight;
+					currentLocation -= heightOfOne;
 
 					scope.topPos = {
 						'-webkit-transform': "translate(0px, " + currentLocation + "px)",
@@ -370,59 +370,34 @@ app.directive('topScrollerJankFree', [
 
 
 				// This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
-				function loadListHeight() {
+				function loadHeight() {
 					return $timeout(function () {
 						return document.getElementById('party-container').offsetHeight;
 					})
 				}
 
-				function loadWindowHeight(){
-					return $timeout( function () {
-						return document.getElementById( 'scroll-window' ).offsetHeight;
-					} )
-				}
-
-
-				function scroll(){
-
-					$log.debug( "List height: " + listHeight );
-					$log.debug( "Window height: " + windowHeight);
-
-					currentLocation = windowHeight;
-					distanceNeeded = listHeight + cellHeight;
-					try {
-						if ( listHeight > windowHeight ) {
-							resetCrawlerTransition();
-						} else {
-							setNoMovement();
-						}
-					} catch ( err ) {
-						$log.error( err.message );
-						//$timeout(doScroll(), 1000);
-						//Due to the fact that scope.parties() probably has nothing in it yet
-					}
-					outerLoop();
-				}
-
 
 				function doScroll() {
 
-					loadListHeight()
-						.then(function (height) {
-							listHeight = height;
-							if ( scope.parties.length){
-								cellHeight = height/(scope.parties.length*0.9);
-							} else {
-								cellHeight = 0; // no parties
-							}
-							$log.debug("Cell height: "+cellHeight);
-							return loadWindowHeight();
-						})
-						.then( function(height){
-							windowHeight = height;
-							scroll();
-						});
 
+					loadHeight()
+						.then(function (height) {
+							currentLocation = 200;
+							distanceNeeded = height + 200;
+							$log.debug("Scroller height: " + height);
+							try{
+								if (scope.parties.length > 5) {
+									resetCrawlerTransition();
+								} else {
+									setNoMovement();
+								}
+							} catch (err) {
+								$log.error(err.message);
+								//$timeout(doScroll(), 1000);
+								//Due to the fact that scope.parties() probably has nothing in it yet
+							}
+							outerLoop();
+						});
 
 				}
 

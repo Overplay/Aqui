@@ -15,11 +15,11 @@ html, body {
 
 .widget {
     background-color: rgba(0,0,0,0.50);
-    width: 100vw;
-    height: 100vh;
+    width: 150px;
+    height: 380px;
     /*border: 1px solid hotpink;*/
     font-family: EXOBLACK, monospace;
-    font-size: 6vh;
+    font-size: 16px;
 }
 
 ::-webkit-scrollbar {
@@ -28,8 +28,8 @@ html, body {
 
 .party-title {
     font-family: EXOBLACK, monospace;
-    font-size: 6vh;
-    height: 10vh;
+    font-size: 18px;
+    height: 24px;
     padding-top: 5px;
     padding-bottom: 5px;
     text-align: center;
@@ -38,7 +38,7 @@ html, body {
 
 .overflow-container {
 
-    height: 50vh;
+    height: 200px;
     overflow: hidden;
     /*border: 1px dashed red;*/
 
@@ -49,14 +49,14 @@ html, body {
     /*-moz-box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);*/
     /*box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.08);*/
     color: white;
-    height: 10vh;
-    margin-bottom: 4vh;
+    height: 40px;
 }
 
 
 
 .party-details-container {
-    width: 100vw;
+    width: 150px;
+    margin-bottom: 3px;
 }
 
 .queue-place {
@@ -73,7 +73,7 @@ html, body {
 }
 
 .name-and-size {
-    width: 66vw;
+    width: 100px;
     display: inline-block;
     vertical-align: top;
     margin-left: 5px;
@@ -101,24 +101,15 @@ html, body {
 }
 
 .adlogo {
-    width: 100vw;
-    height: 100vw;
+    width: 150px;
+    height: 150px;
 }
 
 .num-in-party {
-    font-size: 5vh;
+    font-size: 14px;
     opacity: 0.7;
 }
 
 .num-in-party:before {
     content: "@";
 }
-
-.logo-holder {
-    width: 100vw;
-    position: absolute;
-    top: 59vh;
-    left: 0;
-}
-
-
