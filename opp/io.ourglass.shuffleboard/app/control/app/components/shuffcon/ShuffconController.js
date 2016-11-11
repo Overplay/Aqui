@@ -14,9 +14,9 @@ app.controller( "shuffconController",
 
             ogControllerModel.init( {
                 appName:         "io.ourglass.shuffleboard",
-                dataCallback:    function(data){
-                    $log.debug("New data: "+data);
-                }
+                // dataCallback:    function(data){
+                //     $log.debug("New data: "+data);
+                // }
             } );
 
         }
