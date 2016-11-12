@@ -32,6 +32,28 @@ html, body {
     line-height: 60px;
 }
 
+.ogappheader {
+    display: table;
+    font-family: POPBLACK;
+    font-size: 2em;
+    font-weight: bold;
+    height: 60px;
+    margin: 0px 0px 10px 0px;
+}
+
+.ogappheadertext {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ogappheaderside {
+    height: 60px;
+    width: 20px;
+    background-color: #21b9e6;
+    float: left;
+    margin-right: 10px;
+}
+
 .ogcontainer {
     margin: 5px 5px 0px 5px;
 }
