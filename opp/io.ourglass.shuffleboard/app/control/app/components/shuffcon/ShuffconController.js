@@ -8,7 +8,6 @@ app.controller( "shuffconController",
         $log.info( "Loading shuffconController" );
 
         $scope.ui = { localRed: 0, localBlue: 0 };
-        
 
         function initialize() {
 

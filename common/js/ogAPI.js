@@ -436,6 +436,16 @@ var GLOBAL_UPDATE_TARGET;
                 }
             }
         })
+
+        .directive('ogAppHeader', function () {
+            return {
+                link: function (scope, elem, attr) {
+                    scope.name = attr.name || "Missing Name Attribute";
+                },
+                templateUrl: '../../../../common/partials/ogappheader.template.html'
+            };
+        })
+
         .controller('Controller', ['$scope', function($scope) {
         }]);
     var currentAd;
