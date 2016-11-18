@@ -1,0 +1,22 @@
+{
+  "appId": "io.ourglass.nowserving",
+  "appType": "widget",
+  "appName": "NowServing",
+
+  "icon": "nowserve.png",
+  "iconLabel": "NowServing",
+
+  "primaryColorHex": "#A9A9A9",
+  "secondaryColorHex": "#000000",
+
+  "height": 50,
+  "width": 10,
+
+  "initialValue": {
+    "ticketNumber": 0
+  },
+
+  "version": 1.0,
+  "installDate": 1475073632093
+
+}

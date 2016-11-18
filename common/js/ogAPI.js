@@ -194,7 +194,12 @@ var GLOBAL_UPDATE_TARGET;
 
             return service;
         })
+
+        /**
+         * Control App Side
+         */
         .factory('ogControllerModel', function ($http, $log, $interval) {
+        
             //local variables
             var _appName;
             var _pollInterval;
@@ -211,17 +216,18 @@ var GLOBAL_UPDATE_TARGET;
              * @param params
              * @param [noPoll] pass in true to disable polling
              */
-            service.init = function (params, noPoll) {
-                var toPoll = !noPoll;
+            service.init = function (params, poll) {
+                
                 if (params.initialValue) {
-                    $log.warn("initialValue is deprecated, set this field in the info.json instead");
+                    $log.error("initialValue is deprecated, set this field in the info.json instead");
+                    throw new Error( "initialValue is deprecated, set this field in the info.json instead");
                 }
 
                 _appName = params.appName;
                 _pollInterval = params.pollInterval || DEFAULT_POLL_INTERVAL;
                 _dataCb = params.dataCallback;
 
-                if (toPoll) {
+                if (poll) {
                     startPolling();
                 }
 

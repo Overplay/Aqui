@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="ogNowServingApp">
+<head>
+    <meta charset="UTF-8">
+
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <!--<meta name="viewport" content="width=device-width">-->
+
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="app/ogNowServingApp.module.js"></script>
+    <script src="../../../../common/js/ogAPI.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/components/mainscreen/mainscreen.controller.js"></script>
+
+    <!-- App Specific and Overridden CSS -->
+    <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    <link href="../../../../common/css/og.css" rel="stylesheet">
+
+
+    <title>Ourglass Now Waiting</title>
+</head>
+<body ng-controller="mainScreenController">
+    <h3 style="font-size: 50vw;">{{ ticketNumber }}</h3>
+</body>
+</html>
