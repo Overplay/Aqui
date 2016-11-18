@@ -345,10 +345,14 @@ var GLOBAL_UPDATE_TARGET;
             service.updateTwitterQuery = function (paramsArr) {
                 var query = "";
 
-                paramsArr.forEach(function (param) {
-                    query += param.method + param.query + " OR ";
-                })
-                query = encodeURIComponent(query.trim());
+                paramsArr.forEach(function (param, idx, arr) {
+                    query += param.method + param.query;
+                    if (idx!=(arr.length-1)){
+                        query += ' ';
+                    }
+                });
+
+                //query = encodeURIComponent(query.trim());
                 query += '&lang=' + TWITTER_LANGUAGE;
                 query += '&result_type=' + TWITTER_RESULT_TYPE;
                 query += '&include_entities=' + TWITTER_INCLUDE_ENTITIES;

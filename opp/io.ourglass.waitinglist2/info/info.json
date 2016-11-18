@@ -9,8 +9,8 @@
   "primaryColorHex": "#8080ff",
   "secondaryColorHex": "#4d4dff",
 
-  "height": 65,
-  "width": 15,
+  "height": 55,
+  "width": 12,
 
   "initialValue": {
     "parties": []

@@ -9,16 +9,16 @@
 
     <!-- ALL COMMON LIBS NEED TO COMMON FROM THE /COMMON PATH -->
 
-    <script src="../../../../common/ionic/ionic.bundle.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
     <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
-    <script src="../../../../common/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="../../../../common/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
     <!-- App Main and AngularJS Routes -->
 
     <script src="app/optvDSConApp.module.js"></script>
-    <script src="../../../../common/js/ogControllerAPI.js"></script>
-
-    <script src="app/components/tabs/pubcrawler.routes.js"></script>
+    <script src="../../../../common/js/ogAPI.js"></script>
 
     <!-- Controllers -->
 
@@ -26,28 +26,91 @@
 
 
     <!-- App Specific and Overridden CSS -->
-    <link href="assets/css/styles.css" rel="stylesheet"/>
-    <link href="../../../../common/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="../../../../common/ionic/ionic.min.css"/>
+    <link rel="stylesheet" href="../../../../common/css/og.css"/>
 
     <title>Guinness PubCrawler Control</title>
 </head>
 
 <body ng-controller="dsConController">
 
-<!-- Remote Control -->
+<og-app-header name="OG Crawler"></og-app-header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
 
-<div class="bar bar-header bar-dark">
-    <h1 class="title">Pub Crawler | {{getSelectedTabTitle()}}</h1>
+        <button class="btn btn-primary" ng-click="update()" style="width: 100%;">UPDATE</button>
+
+            <uib-tabset>
+                <uib-tab heading="Messages">
+                    <div class="row" style="margin-top: 10px;">
+                        <button class="btn btn-success" ng-click="newMessage()">NEW</button>
+                    </div>
+                    <div class="row" ng-repeat="msg in messages track by $index">
+                        <input type="text" placeholder="New Message..."
+                               ng-model="messages[$index]">
+                        <button class="btn delbtn" ng-click="delMessage($index)">DEL</button>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Coming Up">
+                    <div style="position: absolute; width: 90%; left: 5%;">
+                        <div class="row" style="display: block; margin: auto;">
+                            <div class="col" style="width: 25%; float: left;">
+                                <div class="btn" ng-click="newComingUpMessage()">NEW</div>
+                            </div>
+                            <div class="col" style="width: 25%; float: right;">
+                                <div class="btn" ng-click="update()">UPDATE</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="display: block; margin: auto;"
+                             ng-repeat="comingUp in comingUpMessages track by $index">
+                            <div class="col" style="width: 79%; float: left;">
+                                <input type="text" placeholder="New Message..."
+                                       ng-model="comingUpMessages[$index]">
+                            </div>
+                            <div class="col" style="width: 19%; float: right;">
+                                <div class="btn delbtn" ng-click="delComingUpMessage($index)">DEL</div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Twitter">
+                    <div style="position: absolute; width: 90%; left: 5%;">
+                        <div class="row" style="display: block; margin: auto;">
+                            <div class="col">
+                                <div class="btn-toolbar">
+                                    <div class="btn-group btn-group-justified">
+                                        <div class="btn" ng-click="newTwitterQuery('')">TEXT</div>
+                                        <div class="btn" ng-click="newTwitterQuery('#')">#</div>
+                                        <div class="btn" ng-click="newTwitterQuery('@')">@</div>
+                                    </div>
+                                    <div class="btn-group btn-group-justified" style="width: 30%; float: right;">
+                                        <div class="btn" ng-click="update()">UPDATE</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="display: block; margin: auto; margin-bottom: 8px !important;"
+                             ng-repeat="twitterQuery in twitterQueries track by $index">
+                            <div style="width: 79%; float: left;">
+                                <div class="twitter-input">
+                                    <label>{{twitterQuery.method}}</label>
+                                    <input type="text" placeholder="New Query..."
+                                           ng-model="twitterQueries[$index].query"/>
+                                </div>
+                            </div>
+                            <div style="width: 19%; float: right;">
+                                <div class="btn delbtn" ng-click="delTwitterQuery($index)">DEL</div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
 </div>
-
-<ion-view class="has-header">
-    <ion-tabs class="tabs-dark">
-        <ion-tab ng-repeat="tab in tabs" title="{{tab}}" href="#/{{getTabURI(tab)}}">
-            <ui-view></ui-view>
-        </ion-tab>
-    </ion-tabs>
-</ion-view>
 
 </body>
 </html>

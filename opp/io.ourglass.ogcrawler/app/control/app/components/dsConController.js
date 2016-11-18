@@ -3,7 +3,7 @@
  */
 
 app.controller("dsConController",
-    function ($scope, $timeout, $interval, $http, ogControllerModel, $ionicTabsDelegate) {
+    function ($scope, $timeout, $interval, $http, ogControllerModel) {
 
         $scope.messages = [];
         $scope.comingUpMessages = [];
