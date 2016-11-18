@@ -55,5 +55,7 @@ app.controller( "shuffleController",
         // Honk Hionk beep!
 
         updateFromRemote();
+        
+        
 
     } );
