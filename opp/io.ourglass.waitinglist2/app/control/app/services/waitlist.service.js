@@ -40,6 +40,10 @@ app.factory('waitList', function($log, $http, $timeout, $rootScope, ogController
     
         // TODO: Erik, add a check to make sure no Party with the same name gets added 
         // Use Lodash
+
+        // if (_.find(_currentList, {name: name})) {
+        //     return false;
+        // }
         
         _currentList.push({ name: name, 
                             partySize: size,
@@ -62,6 +66,10 @@ app.factory('waitList', function($log, $http, $timeout, $rootScope, ogController
 
         // TODO: Erik, test. If there is no such name it should return false
         // Use Lodash
+
+        // if (_.find(_currentList, {name: name})) {
+        //     return false;
+        // }
 
         _currentList = _.without(_currentList, { name: name });
 
