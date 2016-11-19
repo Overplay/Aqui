@@ -19,12 +19,16 @@
     <!-- App Specific and Overridden CSS -->
     <!--<link href="assets/css/style.css" rel="stylesheet">-->
     <link href="../../../../common/css/og.css" rel="stylesheet">
-
+    <link href="assets/nowserving-og-style.css" rel="stylesheet">
 
     <title>Ourglass Now Waiting</title>
 </head>
 <body ng-controller="mainScreenController">
-    <h3 style="font-size: 25vw;">Now Serving:</h3>
-    <h3 style="font-size: 50vw;">{{ ticketNumber }}</h3>
+    <div class="title">Now Serving</div>
+    <div class="ticket-number">{{ ticketNumber }}</div>
+
+    <div class="logo-holder">
+        <og-advert type="widget" interval="30000"></og-advert>
+    </div>
 </body>
 </html>

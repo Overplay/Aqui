@@ -1,0 +1,19 @@
+.title {
+    text-align: center;
+    padding-top: 3vh;
+    color: white;
+}
+
+.logo-holder {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.ticket-number {
+    font-size: 50vw;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
