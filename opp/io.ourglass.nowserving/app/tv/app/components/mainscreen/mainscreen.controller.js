@@ -10,10 +10,9 @@ app.controller("mainScreenController", function($scope, $log, ogTVModel, $interv
     
     function modelChanged(newValue){
         
-        $scope.$apply(function(){
-            $log.info( "Model changed, yay!" );
-            $scope.ticketNumber = newValue.ticketNumber;
-        });
+        $log.info( "Model changed, yay!" );
+        $scope.ticketNumber = newValue.ticketNumber;
+        $scope.$apply();
     }
 
     function updateFromRemote() {

@@ -242,6 +242,17 @@ var GLOBAL_UPDATE_TARGET;
             }
 
             /**
+             * 
+             */
+             service.loadModel = function(){
+                 return $http.get( API_PATH + 'appdata/' + _appName )
+                    .then( function ( response ) {
+                        service.data = response.data;
+                        return service.data;
+                    });
+             }
+
+            /**
              * performs a post to the move endpoint for either the current app or the appid that is passed in
              * @param [appid] the app to move, if not included, then move the _appName
              * @returns {HttpPromise}

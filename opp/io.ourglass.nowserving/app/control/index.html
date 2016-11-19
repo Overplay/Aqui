@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ogNowServingControlApp">
+<head>
+    <meta charset="UTF-8">
+
+
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="app/ogNowServingControlApp.module.js"></script>
+    <script src="../../../../common/js/ogAPI.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/components/controlscreen/controlscreen.controller.js"></script>
+
+    <!-- App Specific and Overridden CSS -->
+    <!--<link href="assets/css/style.css" rel="stylesheet">-->
+    <link href="../../../../common/css/og.css" rel="stylesheet">
+
+
+
+    <title>Now Serving Control</title>
+</head>
+<body ng-controller="ogNowServingController">
+<og-app-header name="Now Serving"></og-app-header>
+<div class="container-fluid">
+    <div class="row">
+        <h3>{{ ticketNumber }}</h3>
+    </div>
+    <div class="row">
+        <button class="btn btn-primary" ng-click="incrementTicket()" style="width: 100%;">NEXT TICKET</button>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <button class="btn btn-danger" ng-click="clear()" style="width: 100%;">RESET TO ZERO</button>
+    </div>
+</div>
+</body>
+</html>
