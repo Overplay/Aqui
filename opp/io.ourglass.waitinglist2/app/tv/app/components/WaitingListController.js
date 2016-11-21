@@ -35,7 +35,7 @@ app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeou
 			partySize: 1,
 			tableReady: true
 		}, {
-			name: "Logan Saso",
+			name: "Frank Saso",
 			partySize: 12,
 			tableReady: false
 		},
@@ -49,34 +49,34 @@ app.controller('waitingListController', ['$scope', 'ogTVModel', '$log', '$timeou
 			tableReady: false
 		},
 		{
-			name: "Noah Saso",
+			name: "Jenni Saso",
 			partySize: 1,
 			tableReady: false
 		}, {
-			name: "Logan Saso",
+			name: "Vivek Saso",
 			partySize: 12,
 			tableReady: false
 		},
 		{
-			name: "Noah Saso",
+			name: "Jimmy Saso",
 			partySize: 1,
 			tableReady: true
 		}, {
-			name: "Logan Saso",
+			name: "Juan Saso",
 			partySize: 12,
 			tableReady: false
 		},
 		{
-			name: "Noah Saso",
+			name: "Du Saso",
 			partySize: 1,
 			tableReady: false
 		}, {
-			name: "Logan Saso",
+			name: "Mitch Saso",
 			partySize: 12,
 			tableReady: false
 		},
 		{
-			name: "Noah Saso",
+			name: "Treb Saso",
 			partySize: 1,
 			tableReady: false
 		}

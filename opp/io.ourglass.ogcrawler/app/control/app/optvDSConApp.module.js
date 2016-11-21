@@ -10,8 +10,7 @@
 
 
 var app = angular.module('optvDSConApp', [
-    'ngOgControllerApi',
-    'ionic'
+    'ourglassAPI', 'ui.bootstrap'
 ]);
 
 

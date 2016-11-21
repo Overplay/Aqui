@@ -26,7 +26,7 @@ html, body {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.55);
     position: relative;
-    border: 1px solid dodgerblue;
+    /*border: 1px solid dodgerblue;*/
 }
 
 .apphdr {
@@ -40,9 +40,9 @@ html, body {
 
 .overflow-container {
 
-    height: 70vh;
+    height: 50vh;
     overflow: hidden;
-    border: 1px dashed red;
+    /*border: 1px dashed red;*/
 
 }
 
@@ -111,4 +111,11 @@ html, body {
 
 .num-in-party:before {
     content: "@";
+}
+
+.logo-holder {
+    /*border: 1px solid deeppink;*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
