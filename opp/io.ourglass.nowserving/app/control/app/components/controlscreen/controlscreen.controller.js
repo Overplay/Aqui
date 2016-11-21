@@ -8,7 +8,6 @@ app.controller( "ogNowServingController", function ( $scope, $log, ogControllerM
 
     $scope.ticketNumber = 12456;
 
-
     function saveModel() {
         ogControllerModel.save()
             .then( function ( response ) {
@@ -24,10 +23,10 @@ app.controller( "ogNowServingController", function ( $scope, $log, ogControllerM
     
         $log.debug( "Clear pressed" );
         $scope.ticketNumber = 0;
-        ogControllerModel.model = { ticketNumber: 0 };
+        ogControllerModel.model = {ticketNumber: 0};
         saveModel();
 
-    }
+    };
 
     $scope.incrementTicket = function () {
     
@@ -36,10 +35,11 @@ app.controller( "ogNowServingController", function ( $scope, $log, ogControllerM
         ogControllerModel.model.ticketNumber = $scope.ticketNumber;
         saveModel();
 
-    }
+    };
 
     function initialize() {
 
+        $log.debug( "initializing app and data" );
         ogControllerModel.init( { appName: "io.ourglass.nowserving" } );
         ogControllerModel.loadModel()
             .then( function ( latestData ) {
