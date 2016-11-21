@@ -27,6 +27,5 @@ app.controller("mainScreenController", function($scope, $log, ogTVModel, $interv
     
     updateFromRemote();
 
-
 });
 
