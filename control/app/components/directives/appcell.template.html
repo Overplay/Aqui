@@ -2,39 +2,41 @@
     .app-cell {
         /*border: 1px solid greenyellow;*/
         width: 100%;
-        height: 90px;
+        height: 18vw;
         position: relative;
     }
 
     .app-icon {
-        height: 60px;
-        width: 60px;
+        height: 15vw;
+        width: 15vw;
         position: absolute;
-        top: 7px;
-        left: 15px;
+        top: 0;
+        left: 0;
     }
 
     .app-cell-left {
         position: absolute;
-        top: 5px;
-        left: 80px;
+        top: 0;
+        left: 16vw;
         /*border: 1px solid yellow;*/
-        margin-left: 10px;
+        margin-left: 2vw;
         border-left: 2px solid #20B8EB;
-        padding-left: 10px;
-        padding-right: 10px;
-        height: 60px;
+        padding-left: 3vw;
+        padding-right: 3vw;
+        height: 15vw;
         width: 70%;
     }
 
     .app-name {
         font-weight: 400;
-        font-size: 20px;
-        margin-bottom: 5px;
+        font-size: 5vw;
+        margin-bottom: 1vw;;
     }
 
-    .app-cell-buttons button {
-        margin-right: 15px;
+    .app-cell button {
+        margin-right: 2vw;
+        font-size: 3vw;!important;
+
     }
 
 </style>
@@ -51,13 +53,13 @@
         <div class="app-cell-buttons">
             <button class="btn btn-warning" style="float: left;" ng-click="control()">CONTROL</button>
             <button class="btn btn-primary" style="float: left;" ng-click="move()">MOVE</button>
-            <button class="btn btn-danger" style="float: left;" ng-click="kill()">X</button>
+            <button class="btn btn-danger pull-right" style="" ng-click="kill()">X</button>
         </div>
     </div>
 
     <div class="app-cell-left" ng-if="!running" style="padding-top: 15px;">
         <span class="app-name">{{app.appName}} </span>
-        <button class="btn btn-success pull-right" ng-click="launch()" ><span class="glyphicon glyphicon-expand"></span> </button>
+        <button class="btn btn-success pull-right" ng-click="launch()" ><span class="glyphicon glyphicon-expand"></span></button>
 
     </div>
 

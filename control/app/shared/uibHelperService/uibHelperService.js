@@ -32,7 +32,7 @@ app.factory( 'uibHelper', function ( $log, $uibModal ) {
     service.confirmModal = function ( title, body, confirmValue ) {
 
         var modalInstance = $uibModal.open( {
-            templateUrl: 'confirmmodal.template.html',
+            templateUrl: 'app/shared/uibHelperService/confirmmodal.template.html',
             controller:  function ( $scope, $uibModalInstance, params ) {
 
                 $scope.modalUi = { title: params.title, body: params.body };

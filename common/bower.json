@@ -21,7 +21,9 @@
     "angular-animate": "*",
     "angular-ui-router": "*",
     "bootstrap": "*",
-    "angular-timeago": "*"
+    "angular-timeago": "*",
+    "angular-toastr": "^2.1.1",
+    "angular-cookies": "^1.5.9"
   },
   "main": ""
 }

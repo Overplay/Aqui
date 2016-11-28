@@ -1,0 +1,39 @@
+<style>
+    .slm-pick-item {
+        color: teal;
+        padding: 10px 0 10px 5px;
+        margin-left: 0;
+    }
+
+    .slm-picked {
+        background: #696969;
+        color: white;
+        transition: all 0.5s;
+    }
+
+    .slm-no-num {
+        list-style-type: none;
+        padding: 10px;
+    }
+</style>
+
+<div class="modal-header">
+    <h3 class="modal-title">{{ modalUi.title }}</h3>
+</div>
+<div class="modal-body" ng-show="showChoice">
+    {{ modalUi.choices[modalUi.currentChoice] }}
+</div>
+<div class="modal-body" ng-hide="showChoice">
+    {{ modalUi.body }}
+</div>
+<ol class="slm-no-num" style="margin: 10px; border: 1px solid #cacaca;">
+    <li ng-repeat="choice in modalUi.choices" class="slm-pick-item"
+        ng-class="{ 'slm-picked': modalUi.currentChoice==$index}"
+        ng-click="modalUi.currentChoice = $index">{{ choice }}</li>
+</ol>
+
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
