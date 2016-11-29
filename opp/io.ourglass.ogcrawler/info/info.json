@@ -13,8 +13,8 @@
 
   "initialValue": {
     "messages": ["Free beer tomorrow", "One bourbon, one scotch, one beer. Half off."],
-    "comingUpMessages": [ "1:00 - LAC vs GSW", "3:00 - Olympic Swimming"],
-    "twitterQueries": [ "#Olympics"]
+    "comingUpMessages": [ "1:00 - LAC vs GSW", "3:00 - Postgame"],
+    "twitterQueries": [ "@Warriors" ]
   },
 
   "version": 1.0,

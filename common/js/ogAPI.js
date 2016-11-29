@@ -354,10 +354,11 @@ var GLOBAL_UPDATE_TARGET;
             }
 
             service.updateTwitterQuery = function (paramsArr) {
+
                 var query = "";
 
                 paramsArr.forEach(function (param, idx, arr) {
-                    query += param.method + param.query;
+                    query += param;
                     if (idx!=(arr.length-1)){
                         query += ' ';
                     }
@@ -509,7 +510,7 @@ angular.module( "ourglassAPI" ).run( [ "$templateCache",
         '<div style="margin-top: 40vh; width: 100vw; text-align: center;"> {{ message }}</div>' +
         '</div>');
         
-        $templateCache.put( 'ogdirectives/appheader.html','<style>.ogappheader{display:table;font-family:POPBLACK;' +
+        $templateCache.put( 'ogdirectives/appheader.html','<style>.ogappheader{display:table;' +
             'font-size:2em;font-weight:bold;height:60px;margin:0 0 10px 0}' +
             '.ogappheadertext{display:table-cell;vertical-align:middle}' +
             '.ogappheaderside{height:60px;width:20px;background-color:#21b9e6;float:left;margin-right:10px}</style>' +
