@@ -1,0 +1,25 @@
+.title {
+    text-align: center;
+    padding-top: 3vh;
+    color: white;
+}
+
+.logo-holder {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+@keyframes blinker {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.ticket-number {
+    font-size: 50vw;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    animation: blinker 1s linear infinite alternate;
+}

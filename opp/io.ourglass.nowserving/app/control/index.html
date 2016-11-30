@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="../../../../common/bower_components/angular/angular.min.js"></script>
     <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="../../../../common/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+
 
     <!-- App Main and AngularJS Routes -->
     <script src="app/ogNowServingControlApp.module.js"></script>
@@ -15,8 +19,9 @@
     <script src="app/components/controlscreen/controlscreen.controller.js"></script>
 
     <!-- App Specific and Overridden CSS -->
-    <!--<link href="assets/css/style.css" rel="stylesheet">-->
     <link href="../../../../common/css/og.css" rel="stylesheet">
+    <link href="assets/css/nowserving-og-style.css" rel="stylesheet">
+
 
 
 
@@ -26,14 +31,17 @@
 <og-app-header name="Now Serving"></og-app-header>
 <div class="container-fluid">
     <div class="row">
-        <h3>{{ ticketNumber }}</h3>
+        <div class="ticket-number">{{ ticketNumber }}</div>
     </div>
     <div class="row">
-        <button class="btn btn-primary" ng-click="incrementTicket()" style="width: 100%;">NEXT TICKET</button>
+        <button class="btn btn-primary btn-lg ticket-button" ng-click="incrementTicket()">NEXT TICKET</button>
     </div>
-    <div class="row" style="margin-top: 10px;">
-        <button class="btn btn-danger" ng-click="clear()" style="width: 100%;">RESET TO ZERO</button>
+    <div class="row">
+        <button class="btn btn-danger btn-lg ticket-button" ng-click="clear()">RESET TO ZERO</button>
     </div>
+
+
 </div>
+
 </body>
 </html>

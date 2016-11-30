@@ -25,6 +25,9 @@
     <script src="app/services/waitlist.service.js"></script>
     <script src="../../../../common/js/ogControllerAPI.js"></script>
 
+    <script src="../../../../common/js/ogAPI.js"></script>
+
+
     <!-- Controllers -->
 
 
@@ -36,7 +39,7 @@
     <link href="assets/css/ogstyles.css" rel="stylesheet">
 
     <link href="../../../../common/css/og.css" rel="stylesheet">
-    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="assets/css/ogstyles.css" rel="stylesheet">
 
     <title>OGTV Waiting List Control</title>
 </head>
@@ -44,10 +47,11 @@
 <body>
 
 <!--Waiting List Remote Control -->
-<div class="oghdr">
-    <div class="oghdr-left hdr-gradient-blue"></div>
-    <div class="oghdr-right hdr-gradient-gray"> <h1>Waiting List</h1></div>
-</div>
+<og-app-header name="Waiting List 2"></og-app-header>
+<!--<div class="oghdr">-->
+    <!--<div class="oghdr-left hdr-gradient-blue"></div>-->
+    <!--<div class="oghdr-right hdr-gradient-gray"> <h1>Waiting List</h1></div>-->
+<!--</div>-->
 <div class="container-fluid">
     <ui-view></ui-view>
 </div>

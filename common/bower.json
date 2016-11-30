@@ -24,6 +24,7 @@
     "angular-timeago": "*",
     "angular-toastr": "^2.1.1",
     "angular-cookies": "^1.5.9"
+    "angular-bootstrap": "^2.2.0"
   },
   "main": ""
 }
