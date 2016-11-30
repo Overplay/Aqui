@@ -354,10 +354,11 @@ var GLOBAL_UPDATE_TARGET;
             }
 
             service.updateTwitterQuery = function (paramsArr) {
+
                 var query = "";
 
                 paramsArr.forEach(function (param, idx, arr) {
-                    query += param.method + param.query;
+                    query += param;
                     if (idx!=(arr.length-1)){
                         query += ' ';
                     }
@@ -463,7 +464,34 @@ var GLOBAL_UPDATE_TARGET;
                 link: function (scope, elem, attr) {
                     scope.name = attr.name || "Missing Name Attribute";
                 },
-                templateUrl: '../../../../common/partials/ogappheader.template.html'
+                templateUrl: 'ogdirectives/appheader.html'
+            };
+        })
+
+        .directive('ogHud', function($log, $timeout){
+            return {
+                scope: {
+                    message: '=',
+                    dismissAfter: '@',
+                    issue: '='
+                },
+                link: function ( scope, elem, attr ) {
+
+                    scope.ui = { show: false };
+                    
+                    scope.$watch('issue', function(nval){
+                        if (nval){
+                            $log.debug('firing HUD');
+                            scope.ui.show = true;
+                            $timeout( function(){
+                                scope.ui.show = false;
+                                scope.issue = false;
+                            }, scope.dismissAfter || 2000 );
+                        }
+                    });
+
+                },
+                templateUrl: 'ogdirectives/hud.html'
             };
         })
 
@@ -472,4 +500,21 @@ var GLOBAL_UPDATE_TARGET;
     var currentAd;
 })(window, window.angular);
 
-console.log("Hello world");
+angular.module( "ourglassAPI" ).run( [ "$templateCache", 
+    function ( $templateCache ) {
+        
+        // HUD
+        $templateCache.put( 'ogdirectives/hud.html',
+        '<div ng-if="ui.show" style="width: 100vw; height: 100vh; background-color: rgba(30,30,30,0.25);">' +
+        // '<div style="margin-top: 30vh; width: 100vw;"> <img src="/www/common/img/box.gif"/></div>' +
+        '<div style="margin-top: 40vh; width: 100vw; text-align: center;"> {{ message }}</div>' +
+        '</div>');
+        
+        $templateCache.put( 'ogdirectives/appheader.html','<style>.ogappheader{display:table;' +
+            'font-size:2em;font-weight:bold;height:60px;margin:0 0 10px 0}' +
+            '.ogappheadertext{display:table-cell;vertical-align:middle}' +
+            '.ogappheaderside{height:60px;width:20px;background-color:#21b9e6;float:left;margin-right:10px}</style>' +
+            '<div class="ogappheader"><div class="ogappheaderside"></div>' +
+            '<div class="ogappheadertext">{{name | uppercase}}</div></div>' );
+        
+    }]);

@@ -28,89 +28,78 @@
     <!-- App Specific and Overridden CSS -->
     <link rel="stylesheet" href="../../../../common/css/og.css"/>
 
-    <title>Guinness PubCrawler Control</title>
+    <title>Crawler Control</title>
 </head>
 
 <body ng-controller="dsConController">
 
 <og-app-header name="OG Crawler"></og-app-header>
 <div class="container">
+    <!-- TAB CONTROL -->
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-
-        <button class="btn btn-primary" ng-click="update()" style="width: 100%;">UPDATE</button>
-
-            <uib-tabset>
-                <uib-tab heading="Messages">
-                    <div class="row" style="margin-top: 10px;">
-                        <button class="btn btn-success" ng-click="newMessage()">NEW</button>
-                    </div>
-                    <div class="row" ng-repeat="msg in messages track by $index">
-                        <input type="text" placeholder="New Message..."
-                               ng-model="messages[$index]">
-                        <button class="btn delbtn" ng-click="delMessage($index)">DEL</button>
-                    </div>
-                </uib-tab>
-                <uib-tab heading="Coming Up">
-                    <div style="position: absolute; width: 90%; left: 5%;">
-                        <div class="row" style="display: block; margin: auto;">
-                            <div class="col" style="width: 25%; float: left;">
-                                <div class="btn" ng-click="newComingUpMessage()">NEW</div>
-                            </div>
-                            <div class="col" style="width: 25%; float: right;">
-                                <div class="btn" ng-click="update()">UPDATE</div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row" style="display: block; margin: auto;"
-                             ng-repeat="comingUp in comingUpMessages track by $index">
-                            <div class="col" style="width: 79%; float: left;">
-                                <input type="text" placeholder="New Message..."
-                                       ng-model="comingUpMessages[$index]">
-                            </div>
-                            <div class="col" style="width: 19%; float: right;">
-                                <div class="btn delbtn" ng-click="delComingUpMessage($index)">DEL</div>
-                            </div>
-                        </div>
-                    </div>
-                </uib-tab>
-                <uib-tab heading="Twitter">
-                    <div style="position: absolute; width: 90%; left: 5%;">
-                        <div class="row" style="display: block; margin: auto;">
-                            <div class="col">
-                                <div class="btn-toolbar">
-                                    <div class="btn-group btn-group-justified">
-                                        <div class="btn" ng-click="newTwitterQuery('')">TEXT</div>
-                                        <div class="btn" ng-click="newTwitterQuery('#')">#</div>
-                                        <div class="btn" ng-click="newTwitterQuery('@')">@</div>
-                                    </div>
-                                    <div class="btn-group btn-group-justified" style="width: 30%; float: right;">
-                                        <div class="btn" ng-click="update()">UPDATE</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row" style="display: block; margin: auto; margin-bottom: 8px !important;"
-                             ng-repeat="twitterQuery in twitterQueries track by $index">
-                            <div style="width: 79%; float: left;">
-                                <div class="twitter-input">
-                                    <label>{{twitterQuery.method}}</label>
-                                    <input type="text" placeholder="New Query..."
-                                           ng-model="twitterQueries[$index].query"/>
-                                </div>
-                            </div>
-                            <div style="width: 19%; float: right;">
-                                <div class="btn delbtn" ng-click="delTwitterQuery($index)">DEL</div>
-                            </div>
-                        </div>
-                    </div>
-                </uib-tab>
-            </uib-tabset>
+        <div class="og-tab-bar">
+            <a class="btn btn-default" ng-click="ui.tab = 'MESSAGES'" ng-class="{ 'tabon': ui.tab == 'MESSAGES' }"
+               style="flex-grow: 1;">MESSAGES</a>
+            <a class="btn btn-default" ng-click="ui.tab = 'UPCOMING'" ng-class="{ 'tabon': ui.tab == 'UPCOMING' }"
+               style="flex-grow: 1;">UPCOMING</a>
+            <a class="btn btn-default" ng-click="ui.tab = 'TWITTER'" ng-class="{ 'tabon': ui.tab == 'TWITTER' }"
+               style="flex-grow: 1;">TWITTER</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <!-- MESSAGES -->
+            <div ng-show="ui.tab=='MESSAGES'" style="margin-top: 10px;">
+                <button class="btn btn-success btn-full" style="width: 100%;" ng-click="newMessage()">NEW</button>
+                <p ng-if="!messages.length" style="text-align: center; margin-top: 5px;">There are no user messages.
+                    Click NEW above to add your own messages.</p>
 
+                <div ng-repeat="msg in messages track by $index">
+                    <div class="input-group" style="margin-top: 5px;">
+                        <span class="input-group-addon">{{ $index+1 }}</span>
+                        <input type="text" class="form-control" placeholder="New Message..."
+                               ng-model="messages[$index]">
+                        <span class="input-group-addon" ng-click="delMessage($index)">
+                            <span style="color: red;">X</span></span>
+                    </div>
+                </div>
+            </div>
+            <!-- UPCOMING -->
+            <div ng-show="ui.tab=='UPCOMING'" style="margin-top: 10px;">
+                <button class="btn btn-success btn-full" style="width: 100%;" ng-click="newComingUpMessage()">NEW
+                </button>
+                <div ng-repeat="comingUp in comingUpMessages track by $index">
+                    <div class="input-group" style="margin-top: 5px;">
+                        <span class="input-group-addon">{{ $index+1 }}</span>
+                        <input type="text" class="form-control" placeholder="New Message..."
+                               ng-model="comingUpMessages[$index]">
+                        <span class="input-group-addon" ng-click="delComingUpMessage($index)">
+                            <span style="color: red;">X</span></span>
+                    </div>
+                </div>
+            </div>
+            <!-- TWITTER -->
+            <div ng-show="ui.tab=='TWITTER'" style="margin-top: 10px;">
+                <button class="btn btn-success btn-full" style="width: 100%;" ng-click="newTwitterQuery()">NEW
+                </button>
+                <p style="margin-top: 5px; text-align: center; font-size: 0.95rem; color: #d0d0d0;">If you want to receive tweets with specific hashtags or to/from specific senders, include the # or @ in the query.</p>
+                <p ng-if="!twitterQueries.length" style="text-align: center; margin-top: 5px;">There are no Twitter queries.
+                    Click NEW above to add your own queries.</p>
+
+                <div ng-repeat="twitterQuery in twitterQueries track by $index">
+                    <div class="input-group" style="margin-top: 5px;">
+                        <span class="input-group-addon">{{ $index+1 }}</span>
+                        <input type="text" class="form-control" placeholder="New Query..."
+                               ng-model="twitterQueries[$index]">
+                        <span class="input-group-addon" ng-click="delTwitterQuery($index)">
+                            <span style="color: red;">X</span></span>
+                    </div>
+                </div>
+            </div>
+            <!-- end of tabs -->
+        </div>
+    </div>
 </div>
-
+<button class="btn btn-primary btn-full" style="position: absolute; bottom: 0;" ng-click="update()">UPDATE</button>
 </body>
 </html>

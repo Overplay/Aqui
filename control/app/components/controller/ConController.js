@@ -3,22 +3,28 @@
  */
 
 app.controller("conController",
-    function ($scope, $timeout, $http, $log, $interval) {
+    function ($scope, $timeout, $http, $log, $interval, uibHelper, $cookies, $location) {
 
         $log.info("Loading conController");
+
+        $cookies.put("ourglass", "yoyoy");
+        
+        $scope.ui = { showApps: true, mode: 'admin', showAdvanced: false, showHud: false };
+        $scope.hudMessage = "";
 
         $scope.runningApps = [];
         $scope.sleepingApps = [];
 
-        $scope.sysInfo = {};
+        $scope.system = {};
 
         function getSysInfo(){
 
             $http.get("/api/system/device")
                 .then( function(data){
 
-                    $scope.sysInfo.name = data.data.name;
-                    $scope.sysInfo.locationWithinVenue = data.data.locationWithinVenue;
+                    $scope.system = data.data;
+                    // $scope.system.name = data.data.name;
+                    // $scope.system.locationWithinVenue = data.data.locationWithinVenue;
 
                 })
         }
@@ -62,19 +68,29 @@ app.controller("conController",
 
         reloadAppList();
 
-        // $ionicModal.fromTemplateUrl( 'templates/modal.html', {
-        //     scope: $scope
-        // } ).then( function ( modal ) {
-        //     $scope.modal = modal;
-        // } );
+       
+       $scope.updateSystemName = function(){
+        uibHelper.confirmModal("Update?", "Are you sure you want to update the name and location?", true)
+            .then(function(resp){
+                $log.debug("Responded yes...");
+                $scope.hudMessage = "Updating...";
+                $scope.ui.showHud = true;
+                
+                $http.post('/api/system/device', { name: $scope.system.name,
+                    locationWithinVenue: $scope.system.locationWithinVenue})
+                    .then(function(response){
+                    "use strict";
+                        $scope.ui.showHud = false;
+                    })
+            })
+       }
 
-        $scope.updateSystem = function () {
-            $log.debug("Updating and Hiding modal");
-            $scope.modal.hide();
-            updateSysInfo();
-        };
+       $scope.register = function(){
+            $log.debug("Registering using code.");
 
+       }
+       
         $interval(reloadAppList, 1000);
-        
+        getSysInfo();
 
     });

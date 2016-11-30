@@ -8,6 +8,7 @@ app.controller("dsConController",
         $scope.messages = [];
         $scope.comingUpMessages = [];
         $scope.twitterQueries = [];
+        $scope.ui = { tab: "MESSAGES" };
 
         $scope.tabs = ['Messages', 'Coming Up', 'Twitter'];
 
@@ -37,6 +38,11 @@ app.controller("dsConController",
                 endpoint: "control",
                 dataCallback: modelUpdate
             });
+            
+            ogControllerModel.loadModel()
+                .then( function(data){
+                    modelUpdate(data);
+                });
 
         }
 
@@ -48,9 +54,9 @@ app.controller("dsConController",
             $scope.comingUpMessages.push("");
             $scope.update();
         };
-        $scope.newTwitterQuery = function (method) {
-            $scope.twitterQueries.push({method: method, query: ""});
-            $scope.update();
+        $scope.newTwitterQuery = function () {
+            $scope.twitterQueries.push("");
+            //$scope.update();
         };
 
         $scope.delMessage = function (index) {

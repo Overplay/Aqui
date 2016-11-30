@@ -5098,7 +5098,7 @@ button.close {
 
 .modal-content {
   position: relative;
-  background-color: #fff;
+  background-color: #424854;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -6289,3 +6289,29 @@ button.close {
   text-shadow: none;
   text-transform: uppercase;
   font-weight: bold; }
+
+.og-tab-bar {
+  /*border: 1px solid #a0a0a0;*/
+  width: 100%;
+  margin-bottom: 5px;
+  display: flex;
+}
+
+.og-tab-bar .btn {
+
+  width: 49vw;
+  background-color: #0c6887;
+  color: #d0d0d0;
+  flex-grow: 1;
+  margin-left: 2px;
+
+
+}
+
+.tabon {
+  border-bottom: 2px solid white;
+}
+
+.btn-full {
+  width: 100%;
+}
