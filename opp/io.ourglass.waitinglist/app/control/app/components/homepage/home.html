@@ -1,0 +1,20 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-lg btn-success" style="width: 100%;" ui-sref="add">
+                <span class="glyphicon glyphicon-plus-sign">&nbsp;</span>Add Party
+            </a>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 10px;">
+            <party-cell ng-repeat="party in parties track by $index" party="party"></party-cell>
+            <p ng-if="(!parties || !parties.length) && !ui.firstLoad" style="text-align: center;">There is currently no waiting list.</p>
+            <p ng-if="ui.firstLoad" style="text-align: center;">Checking for updates to list.</p>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,51 @@
+<style>
+    .gaptop {
+        margin-top: 8px;;
+    }
+</style>
+<div class="container">
+    <h4 style="text-align: center; color: #5bc0de">ADD A PARTY</h4>
+    <div class="row">
+
+        <div class="col-md-10 col-md-offset-1" style="margin-top: 5px;">
+
+            <div class="form gaptop">
+                <input type="text" ng-model="newParty.name"
+                       ng-class="{'add-error-underline': addErrors.name || addErrors.nameExists}"
+                       placeholder="Name..."
+                       class="form-control"/>
+
+            <span class="add-error" ng-show="addErrors.name" ng-class="{'add-error-text-opacity': addErrors.name}">
+                This field is required.
+            </span>
+
+            <span class="add-error" ng-show="addErrors.nameExists"
+                  ng-class="{'add-error-text-opacity': addErrors.nameExists}">
+                This name already exists! Please enter a first or last initial.
+            </span>
+
+                <input type="number" ng-model="newParty.partySize"
+                       ng-class="{'add-error-underline': addErrors.partySize}"
+                       placeholder="Party Size..." class="form-control gaptop"/>
+
+            <span class="add-error" ng-show="addErrors.partySize"
+                  ng-class="{'add-error-text-opacity': addErrors.partySize}">
+                This field is required.
+            </span>
+            </div>
+        </div>
+    </div>
+    <!-- Buttons -->
+
+        <button class="btn btn-lg btn-primary gaptop" ng-click="add()" style="width: 100%;">Add</button>
+
+
+
+
+</div>
+
+
+
+<a class="btn btn-lg btn-danger" ui-sref="home" style="width: 100%; position: absolute; bottom: 0;">Cancel</a>
+
+
