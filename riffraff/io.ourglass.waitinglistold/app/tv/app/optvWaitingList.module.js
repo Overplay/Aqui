@@ -3,6 +3,6 @@
  */
 
 var app = angular.module('optvWaitingList', [
-	'ourglassAPI',
+	'ngOgTVApi',
 	'ngAnimate'
 ]);

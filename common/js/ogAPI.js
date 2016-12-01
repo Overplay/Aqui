@@ -468,7 +468,7 @@ var GLOBAL_UPDATE_TARGET;
             };
         })
 
-        .directive('ogHud', function($log, $timeout){
+        .directive('ogHud', ["$log", "$timeout", function($log, $timeout){
             return {
                 scope: {
                     message: '=',
@@ -493,16 +493,16 @@ var GLOBAL_UPDATE_TARGET;
                 },
                 templateUrl: 'ogdirectives/hud.html'
             };
-        })
+        }])
 
         .controller('Controller', ['$scope', function($scope) {
         }]);
     var currentAd;
 })(window, window.angular);
 
-angular.module( "ourglassAPI" ).run( [ "$templateCache", 
+angular.module( "ourglassAPI" ).run( [ "$templateCache",
     function ( $templateCache ) {
-        
+
         // HUD
         $templateCache.put( 'ogdirectives/hud.html',
         '<div ng-if="ui.show" style="width: 100vw; height: 100vh; background-color: rgba(30,30,30,0.25);">' +

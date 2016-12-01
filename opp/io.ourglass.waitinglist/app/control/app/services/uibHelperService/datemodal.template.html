@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{ modalUi.title }}</h3>
+</div>
+<div class="modal-body">
+    {{ modalUi.body }}
+    <!--
+    <uib-datepicker ng-model="modalUi.date" class="well well-sm" datepicker-options="options"></uib-datepicker>
+    -->
+    <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="MMMM-dd-yyyy" ng-model="modalUi.date"
+               is-open="modalUi.dateOpened"
+               datepicker-options="modalUi.datePickerOptions" ng-required="true" close-text="Close"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="modalUi.dateOpened = !modalUi.dateOpened"><i
+                    class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+    </p>
+    <uib-timepicker ng-model="modalUi.time" hour-step="1" minute-step="15"
+                    show-meridian="true"></uib-timepicker>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
