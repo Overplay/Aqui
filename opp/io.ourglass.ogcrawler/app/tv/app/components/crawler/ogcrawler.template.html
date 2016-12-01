@@ -2,7 +2,7 @@
 
     <div class="scroll-window">
         <ul id="scroller-ul" ng-style="leftPos" class="hwlayer">
-            <li ng-repeat="msg in displayMessages track by $index">{{ msg }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon ion-record small"></i>&nbsp;</li>
+            <li ng-repeat="msg in displayMessages track by $index" ng-style="msg.color">{{ msg.message }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon ion-record small"></i>&nbsp;</li>
         </ul>
     </div>
 

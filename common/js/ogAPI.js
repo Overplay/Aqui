@@ -357,17 +357,12 @@ var GLOBAL_UPDATE_TARGET;
 
                 var query = "";
 
-                paramsArr.forEach(function (param, idx, arr) {
-                    query += param;
-                    if (idx!=(arr.length-1)){
-                        query += ' ';
-                    }
-                });
+                query = paramsArr.join('+OR+');
 
                 //query = encodeURIComponent(query.trim());
-                query += '&lang=' + TWITTER_LANGUAGE;
-                query += '&result_type=' + TWITTER_RESULT_TYPE;
-                query += '&include_entities=' + TWITTER_INCLUDE_ENTITIES;
+                // query += '&lang=' + TWITTER_LANGUAGE;
+                // query += '&result_type=' + TWITTER_RESULT_TYPE;
+                // query += '&include_entities=' + TWITTER_INCLUDE_ENTITIES;
 
                 return $http.post(API_PATH + 'scrape/' + _appName, {query: query});
             }

@@ -35,17 +35,30 @@ app.controller( "crawlerController",
 
                 var _this = this;
                 ogAds.getCurrentAd()
-                    .then( function ( ad ) {
+                    .then( function(currentAd){
+                        _this.ads = currentAd.textAds || [];
+                     } )
+                    .then( reloadTweets )
+                    .then( function () {
 
-                        var tempArr = _this.user.concat( _this.twitter );
-                        tempArr = tempArr.concat( ad.textAds );
-                        tempArr.sort( function () { return 0.5 - Math.random() } );
+                        var tempArr = [];
+                        _this.user.forEach(function(um){
+                            tempArr.push({ message: um, color: { color: '#ffffff'}})
+                        });
 
-                        tempArr = tempArr.filter( function ( x ) {
-                            return (x !== (undefined || ''));
+                        _this.twitter.forEach( function ( um ) {
+                            tempArr.push({ message: um, color: { color: '#36bcf9' }})
                         } );
 
-                        _this.crawlerFeed = tempArr;
+                        _this.ads.forEach( function ( um ) {
+                            tempArr.push({ message: um, color: { color: '#ccf936' }})
+                        } );
+                        
+                        tempArr = tempArr.filter( function ( x ) {
+                            return (x !== (undefined || !x.message));
+                        } );
+
+                        _this.crawlerFeed = _.shuffle(tempArr);
                         return true;
                     } )
 
@@ -66,7 +79,7 @@ app.controller( "crawlerController",
 
         function reloadTweets() {
 
-            $q.all( [ ogTVModel.getTweets(), ogTVModel.getChannelTweets() ] )
+            return $q.all( [ ogTVModel.getTweets(), ogTVModel.getChannelTweets() ] )
                 .then( function ( tweets ) {
 
                     var mergedTweets = _.merge( tweets[ 0 ], tweets[ 1 ] );
@@ -83,7 +96,7 @@ app.controller( "crawlerController",
                     }
 
                     $scope.crawlerModel.twitter = tempArr;
-
+                    return true;
                     //crawlerMessages.updateDisplay();
 
                 } )
@@ -99,7 +112,7 @@ app.controller( "crawlerController",
             appName:      "io.ourglass.ogcrawler",
             dataCallback: modelUpdate
         } ).then( function () {
-            $interval( reloadTweets, TWEET_UPDATE_INTERVAL );
+            $scope.crawlerModel.updateDisplay();
         } );
 
     } );

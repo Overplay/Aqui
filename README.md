@@ -1,6 +1,5 @@
 #AQUI: Web Apps and Support Tools for OG Hardware
 
-*NOTE: This project was formally known as Amstel Bright with Lime. This repo is the result of merging in the new JS injection technique for updating the data model without the need to poll (on the TV side).*
 
 These are the static webpages served up by the native Android webserver running on the OG hardware (a part of Amstel Bright). 
 
@@ -11,6 +10,13 @@ The webpages must be located in the following path on the OG Android device:
     So for AQUI, the files are in /mnt/sdcard/wwwaqui
     
 The codename thing is done so we can run copies of each release level independently on the same hardware/emu.
+
+If you are trying something very experimental, you can put the code in:
+
+    /mnt/sdcard/wwwaquiexperimental
+    
+The apps can then be accessed directly using `wwwx` in the path instead of `www`. The hardware will still serve the TV side from
+`www` however (we should probably put a switch in AB to let this be switchable...)
     
 ##Getting the Files to the Right Place
 
@@ -23,9 +29,8 @@ Example:
     adb connect 10.1.10.37
     ./push opp
     
-The above would connect to the target device then push all the apps over.
-
-This can take a bit, especially over WiFi. It is sometimes more expedient to just copy individual folders or files over.
+The above would connect to the target device then push all the apps over. This can take a bit, especially over WiFi. It is sometimes more 
+expedient to just copy individual folders or files over.
 
 If you prefer to not use automation (why?), you can directly use ADB's push command.
 
@@ -37,9 +42,23 @@ Let's say your files are in `/somewhere/aqui`, you would
 But seriously, use the scripts.
 
 
-##NodeJS Tools
+## Cleaning and Refreshing the Apps
 
-[ Ethan, add some documentation here, please.]
+The AmstelBright code does not re-enumerate the `www` folder until told to do so. So you may install a new app using `push` then never
+see it. You need to kick AB to let it know. There is a REST endpoint to do this, or more simply, use the `./refresh.sh` script:
+
+    adb connect localhost
+    ./refresh.sh localhost
+    
+If you're not running on an emu, then use the IP address instead of `localhost`.
+
+The PUSH scripts do not do any erasing. So if you want an old app gone, you need to do that through adb shell.
+
+    adb shell
+    > cd /mnt/sdcard/wwwaqui/opp
+    > rm -rf [appname]
+
+
 
 #Overall Folder Layout
 
@@ -55,8 +74,6 @@ Most, if not all, sharable assets go here.
 A `bower.json` is included to import, via Bower, all shared dependencies. Examples include angular.js, lodash, bootstrap, etc. If you need to import a library, do it here and then reference it from your app.
 
 The `fonts` folder is for shared fonts. Many apps use the same fonts, so put them here.
-
-`ionic` has the most recent ionic lib for import into control apps. 
 
 `js` is other libraries such as the OG Angular interface services.
 
@@ -103,4 +120,14 @@ RiffRaff
 --------
 
 Junk we are keeping around for reference. May eventually be whacked.
+
+Litesim
+-------
+
+A Sails.JS simulator we're working on. Not quite ready for primetime.
+
+
+##HISTORICAL
+
+*NOTE: This project was formally known as Amstel Bright with Lime. This repo is the result of merging in the new JS injection technique for updating the data model without the need to poll (on the TV side).*
 
