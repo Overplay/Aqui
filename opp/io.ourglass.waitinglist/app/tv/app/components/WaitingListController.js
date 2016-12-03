@@ -303,12 +303,23 @@ app.directive('topScrollerJankFree', [
 				// This is on a scope var for debugging on Android
 				scope.screen = {height: $window.innerHeight, width: $window.innerWidth};
 
+
+				function setScrollHeight() {
+					var outerFrame = document.getElementById("outer-frame");
+					var scrollWindow = document.getElementById("scroll-window");
+
+					var newHeight = Math.floor(outerFrame.offsetHeight / cellHeight) * cellHeight;
+					$log.info("newHeight: " + newHeight);
+					scrollWindow.setAttribute("style", "height: " + newHeight + "px");
+					$log.info("new scroll ht: " + scrollWindow.offsetHeight);
+				}
+
 				// Dump crawler off screen
 				function resetCrawlerTransition() {
 					wasPaused = false;
 					scope.topPos = {
-						'-webkit-transform': "translate(0px, " + windowHeight + 'px)',
-						'transform': "translate(0px, " + windowHeight + 'px)',
+						'-webkit-transform': "translate(0px, " + (Math.ceil(windowHeight / cellHeight) * cellHeight) + 'px)',
+						'transform': "translate(0px, " + (Math.ceil(windowHeight / cellHeight) * cellHeight) + 'px)',
 						'transition': 'all 0s'
 					};
 
@@ -334,7 +345,9 @@ app.directive('topScrollerJankFree', [
 
 				function loop() {
 
-					if (scope.parties.length <= 5) {
+					if (scope.parties.length <= Math.floor(windowHeight / cellHeight)) {
+						// if the number of parties is less than the available window space
+						// then don't scroll
 						setNoMovement();
 						doScroll();
 						return;
@@ -349,7 +362,9 @@ app.directive('topScrollerJankFree', [
 					// $log.info("Doing loop.");
 
 
-					currentLocation -= cellHeight;
+					currentLocation = currentLocation - cellHeight;
+					$log.debug( "new currentLocation: " + currentLocation );
+					$log.debug( "currLoc / cellHeight: " + (currentLocation / cellHeight));
 
 					scope.topPos = {
 						'-webkit-transform': "translate(0px, " + currentLocation + "px)",
@@ -381,6 +396,21 @@ app.directive('topScrollerJankFree', [
 					} )
 				}
 
+				function loadCellHeight(){
+					return $timeout( function () {
+						var cellHt = 0;
+						if (scope.parties.length) {
+							var elem = document.getElementById('scroll0'); // should maybe be changed from scroll0 to generic
+							var style = elem.currentStyle || window.getComputedStyle(elem);
+							cellHt = elem.offsetHeight + parseInt(style.marginTop, 10) + parseInt(style.marginBottom, 10);
+							$log.debug("loadCellHeight found: " + cellHt);
+						} else {
+							$log.debug("loadCellHeight not found - no parties");
+						}
+						return cellHt;
+					} )
+				}
+
 
 				function scroll(){
 
@@ -388,9 +418,10 @@ app.directive('topScrollerJankFree', [
 					$log.debug( "Window height: " + windowHeight);
 
 					currentLocation = windowHeight;
+					$log.debug( "currentLocation at start: " + currentLocation );
 					distanceNeeded = listHeight + cellHeight;
 					try {
-						if ( listHeight > windowHeight ) {
+						if (scope.parties.length > Math.floor(windowHeight / cellHeight)) {
 							resetCrawlerTransition();
 						} else {
 							setNoMovement();
@@ -409,12 +440,19 @@ app.directive('topScrollerJankFree', [
 					loadListHeight()
 						.then(function (height) {
 							listHeight = height;
-							if ( scope.parties.length){
-								cellHeight = height/(scope.parties.length*0.9);
+
+							return loadCellHeight();
+						})
+						.then ( function(cell) {
+							if ( scope.parties.length ){
+								cellHeight = cell;
 							} else {
 								cellHeight = 0; // no parties
 							}
-							$log.debug("Cell height: "+cellHeight);
+
+							setScrollHeight();
+
+							$log.debug("Cell height: " + cellHeight);
 							return loadWindowHeight();
 						})
 						.then( function(height){
