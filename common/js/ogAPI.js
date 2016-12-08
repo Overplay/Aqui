@@ -367,6 +367,11 @@ var GLOBAL_UPDATE_TARGET;
                 return $http.post(API_PATH + 'scrape/' + _appName, {query: query});
             }
 
+
+            service.changeChannel = function(channelNum){
+                return $http.post( API_PATH + 'program/change', { channel: channelNum } );
+            }
+
             return service;
         })
         
