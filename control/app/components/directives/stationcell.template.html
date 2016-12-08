@@ -1,0 +1,69 @@
+<style>
+    .station-cell {
+        /*border: 1px solid greenyellow;*/
+        width: 100%;
+        height: 18vw;
+        position: relative;
+    }
+
+    .station-icon {
+        height: 15vw;
+        width: 15vw;
+        position: relative;
+        top: 0;
+        left: 0;
+        padding: 5px;
+    }
+
+    .station-cell-left {
+        position: absolute;
+        top: 0;
+        left: 16vw;
+        /*border: 1px solid yellow;*/
+        margin-left: 2vw;
+        border-left: 2px solid #20B8EB;
+        padding-left: 3vw;
+        padding-right: 3vw;
+        height: 15vw;
+        width: 70%;
+    }
+
+    .station-name {
+        font-weight: 400;
+        font-size: 5vw;
+        margin-bottom: 1vw;
+    }
+
+    .app-cell button {
+        margin-right: 2vw;
+        font-size: 3vw;!important;
+
+    }
+
+    .station-logo-holder {
+        /*border: 1px solid hotpink;*/
+    }
+
+    .channel-num {
+        font-weight: 100;
+        font-size: 4vw;
+    }
+
+</style>
+
+
+<div class="station-cell">
+    <div  style="float: left; background-color: white;" class="station-logo-holder">
+        <img class="station-icon" ng-src="{{station.logoUrl}}"/>
+    </div>
+    <div class="station-cell-left">
+        <div class="app-name">
+            {{station.callsign}}&nbsp;<span class="channel-num">{{ station.channelNumber }}</span>
+        </div>
+        <div class="app-cell-buttons">
+            <button class="btn btn-warning" style="float: left; width: 100%;" ng-click="control()">CHANGE TO</button>
+        </div>
+    </div>
+</div>
+
+

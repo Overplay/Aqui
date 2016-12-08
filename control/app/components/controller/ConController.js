@@ -9,13 +9,14 @@ app.controller("conController",
 
         $cookies.put("ourglass", "yoyoy");
         
-        $scope.ui = { showApps: true, mode: 'admin', showAdvanced: false, showHud: false };
+        $scope.ui = { showApps: true, mode: 'admin', showAdvanced: false, showHud: false, tab: 'apps' };
         $scope.hudMessage = "";
 
         $scope.runningApps = [];
         $scope.sleepingApps = [];
 
         $scope.system = {};
+        $scope.stations = [];
 
         function getSysInfo(){
 
@@ -27,6 +28,16 @@ app.controller("conController",
                     // $scope.system.locationWithinVenue = data.data.locationWithinVenue;
 
                 })
+
+            $http.get( "/api/program/channels" )
+                .then( function ( data ) {
+
+                    $scope.stations = data.data;
+                    // $scope.system.name = data.data.name;
+                    // $scope.system.locationWithinVenue = data.data.locationWithinVenue;
+
+                } )
+
         }
 
         function updateSysInfo(){
@@ -94,3 +105,5 @@ app.controller("conController",
         getSysInfo();
 
     });
+
+app.dir

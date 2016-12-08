@@ -20,6 +20,7 @@
     <script src="app/ogConApp.module.js"></script>
     <script src="app/components/controller/ConController.js"></script>
     <script src="app/components/directives/AppCell.directive.js"></script>
+    <script src="app/components/directives/StationCell.directive.js"></script>
     <script src="app/shared/uibHelperService/uibHelperService.js"></script>
 
 
@@ -45,6 +46,12 @@
             border-bottom: 2px solid white;
         }
 
+        .scroll-area {
+            height: 80vh;
+            /*background-color: green;*/
+            overflow-y: scroll;
+        }
+
     </style>
     <title>OGTV Control</title>
 </head>
@@ -56,11 +63,12 @@
 </div>
 
 <div class="og-tab-bar">
-    <a class="btn btn-default" ng-click="ui.showApps = true" ng-class="{ 'tabon': ui.showApps }">APPS</a>
-    <a class="btn btn-default" ng-click="ui.showApps = false" ng-class="{ 'tabon': !ui.showApps }">SETTINGS</a>
+    <a class="btn btn-default" ng-click="ui.tab = 'apps'" ng-class="{ 'tabon': ui.tab=='apps' }">APPS</a>
+    <a class="btn btn-default" ng-click="ui.tab = 'tv'" ng-class="{ 'tabon': ui.tab == 'tv' }">TV</a>
+    <a class="btn btn-default" ng-click="ui.tab = 'settings'" ng-class="{ 'tabon': ui.tab == 'settings' }">SETTINGS</a>
 </div>
 
-<div class="container" ng-show="ui.showApps">
+<div class="container" ng-show="ui.tab == 'apps'">
     <div class="row">
         <div class="col-md-12">
             <h4>RUNNING</h4>
@@ -78,7 +86,7 @@
     </div>
 </div>
 
-<div class="container" ng-show="!ui.showApps">
+<div class="container" ng-show="ui.tab == 'settings'">
     <div class="row">
         <div class="col-md-10">
             <!--<h4>SYSTEM</h4>-->
@@ -118,6 +126,28 @@
 
     </div>
 
+</div>
+
+<div class="container" ng-show="ui.tab == 'tv'">
+    <div class="row">
+        <div class="col-md-12">
+            <form style="margin-top: 10px;">
+                <div class="form-group">
+                    <label for="inputStationName">Station Name</label>
+                    <input type="text" class="form-control" id="inputStationName" placeholder="Station Name" ng-model="stationSearch">
+                </div>
+            </form>
+            <div class="scroll-area">
+                <station-cell ng-repeat="station in stations | filter: stationSearch" station="station"></station-cell>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
 </div>
 
 </body>
