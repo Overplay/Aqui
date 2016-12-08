@@ -25,14 +25,16 @@
         color: darkorange;
     }
 
-    .party-controls.ng-hide-remove {
-        transition: all 0.35s;
-        transform: scaleY(1);
+    .party-controls.ng-enter,
+    .party-controls.ng-leave.ng-leave-active {
+        transform: scaleY(0);
+        transition: all .35s;
     }
 
-    .party-controls.ng-hide {
-        transform: scaleY(0);
-        transition: all 0.35s;
+    .party-controls.ng-leave,
+    .party-controls.ng-enter.ng-enter-active {
+        transition: all .35s;
+        transform: scaleY(1);
     }
 
 </style>
@@ -43,7 +45,7 @@
 
     </div>
      <div class="party-time">{{party.dateCreated | timeAgo}}</div>
-    <div class="party-controls" ng-show="showControls">
+    <div class="party-controls" ng-if="showControls">
         <button class="btn btn-primary" ng-click="sit()">{{ party.tableReady ? "SIT":"TABLE READY" }}</button>
         <button class="btn btn-danger pull-right" ng-click="remove()">DELETE</button>
     </div>

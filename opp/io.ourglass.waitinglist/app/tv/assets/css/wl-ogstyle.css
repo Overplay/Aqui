@@ -38,11 +38,20 @@ html, body {
     margin: 0;
 }
 
+.overflow-frame {
+
+    height: 50vh;
+    overflow: hidden;
+
+}
+
 .overflow-container {
 
     height: 50vh;
     overflow: hidden;
     /*border: 1px dashed red;*/
+    margin-right: 5vw;
+    margin-left: 5vw;
 
 }
 
@@ -61,7 +70,7 @@ html, body {
 .queue-place {
     position: absolute;
     top: 0;
-    left: 2vw;
+    left: 0;
     width: 20vw;
     height: 20vw;
     line-height: 20vw;
@@ -75,7 +84,7 @@ html, body {
 .name-and-size {
     position: absolute;
     top: 0;
-    left: 30vw;
+    left: 28vw;
     border: 1px solid transparent;
 }
 
