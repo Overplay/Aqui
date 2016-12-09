@@ -19,7 +19,7 @@
 .ticket-number {
     font-size: 50vw;
     text-align: center;
-    color: red;
+    color: white;
     font-weight: bold;
     animation: blinker 1s linear infinite alternate;
 }
