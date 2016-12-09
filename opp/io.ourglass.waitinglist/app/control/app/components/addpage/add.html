@@ -32,6 +32,15 @@
                   ng-class="{'add-error-text-opacity': addErrors.partySize}">
                 This field is required.
             </span>
+
+                <input type="number" ng-model="newParty.phone"
+                       ng-class="{'add-error-underline': addErrors.phone}"
+                       placeholder="Phone Number..." class="form-control gaptop"/>
+
+            <span class="add-error" ng-show="addErrors.phone"
+                  ng-class="{'add-error-text-opacity': addErrors.phone}">
+                This field is required.
+            </span>
             </div>
         </div>
     </div>
