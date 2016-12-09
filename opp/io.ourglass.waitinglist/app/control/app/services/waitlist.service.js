@@ -10,7 +10,7 @@ app.factory( 'waitList', function ( $log, $http, $timeout, $rootScope, ogControl
     
     var service = {};
 
-    var _currentList = [];
+    var _currentList;
 
     /**
      * Factory method for generic party object. Don't use new Party()!
