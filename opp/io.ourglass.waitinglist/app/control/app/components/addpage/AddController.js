@@ -8,7 +8,7 @@ app.controller("addController", function ($scope, $log, waitList, $state ) {
 
  
 
-        $scope.addErrors = { name: false, partySize: false, nameExists: false }
+        $scope.addErrors = { name: false, partySize: false, nameExists: false, phone: false}
   
 
 
@@ -45,16 +45,32 @@ app.controller("addController", function ($scope, $log, waitList, $state ) {
                 tableReady: false
             };
         }
-    
+
+
+        function verifyPhoneNumber( phone ) {
+            phone = phone.toString();
+            var phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+            return phoneRegex.test( phone );
+        }
+
+        function formatPhoneNumber( phone ) {
+            phone = phone.toString();
+            var phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+            return !phoneRegex.test( phone ) ? null : phone.replace(phoneRegex, "($1) $2-$3");
+        }
 
         $scope.add = function () {
         
             if ($scope.newParty.name == "*Demo"){
                 waitList.loadTestData();
+                $state.go('home');
                 return;
             }
 
-            if ( $scope.newParty.name.trim() && $scope.newParty.partySize > 0) {
+            if ( $scope.newParty.name.trim() && $scope.newParty.partySize > 0 && verifyPhoneNumber($scope.newParty.phone)) {
+
+                $scope.newParty.phone = formatPhoneNumber( $scope.newParty.phone );
+                $log.debug("formatted phone number: " + $scope.newParty.phone );
 
                 if ( waitList.addParty( $scope.newParty )){
                     $log.debug("Party added OK");
@@ -67,6 +83,7 @@ app.controller("addController", function ($scope, $log, waitList, $state ) {
                 // Fill in all fields
                 if (!$scope.newParty.name.trim()) $scope.addErrors.name = true;
                 if (!$scope.newParty.partySize) $scope.addErrors.partySize = true;
+                if (!verifyPhoneNumber($scope.newParty.phone)) $scope.addErrors.phone = true;
             }
         }
 
