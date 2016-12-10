@@ -58,10 +58,11 @@
     </div>
     <div class="station-cell-left">
         <div class="app-name">
-            {{station.callsign}}&nbsp;<span class="channel-num">{{ station.channelNumber }}</span>
+            {{station.callsign}}&nbsp;<span class="channel-num">{{ station.channelNumber }}-{{ station.stationID }}</span>
         </div>
         <div class="app-cell-buttons">
-            <button class="btn btn-warning" style="float: left; width: 100%;" ng-click="control()">CHANGE TO</button>
+            {{ station.nowshowing && station.nowshowing.showName }}
+         <!--<button class="btn btn-warning" style="float: left; width: 100%;" ng-click="control()">CHANGE TO</button>-->
         </div>
     </div>
 </div>

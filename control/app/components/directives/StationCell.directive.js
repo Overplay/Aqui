@@ -8,7 +8,7 @@ app.directive( 'stationCell',
             restrict:    'E',
             scope:       {
                 station: '='
-            },
+                },
             templateUrl: 'app/components/directives/stationcell.template.html',
             link:        function ( scope, elem, attrs ) {
 
@@ -40,6 +40,7 @@ app.directive( 'stationCell',
                             $rootScope.$broadcast( 'RELOAD_APPS' )
                         } );
                 }
+                
                 
                 scope.control = function(){
                     window.location.href = "/www/opp/" + scope.app.appId + '/app/control/index.html?name=' + scope.app.appName;

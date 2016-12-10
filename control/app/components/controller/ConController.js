@@ -18,14 +18,15 @@ app.controller("conController",
         $scope.system = {};
         $scope.stations = [];
 
+        var listings = []
+        $scope.listHash = {}
+
         function getSysInfo(){
 
             $http.get("/api/system/device")
                 .then( function(data){
 
                     $scope.system = data.data;
-                    // $scope.system.name = data.data.name;
-                    // $scope.system.locationWithinVenue = data.data.locationWithinVenue;
 
                 })
 
@@ -33,8 +34,16 @@ app.controller("conController",
                 .then( function ( data ) {
 
                     $scope.stations = data.data;
-                    // $scope.system.name = data.data.name;
-                    // $scope.system.locationWithinVenue = data.data.locationWithinVenue;
+
+                } )
+
+            $http.get( "/api/program/showsNextHour" )
+                .then( function ( data ) {
+
+                    listings = data.data;
+                    listings.forEach(function(l){
+                        $scope.listHash[l.stationID] = l;
+                    })
 
                 } )
 

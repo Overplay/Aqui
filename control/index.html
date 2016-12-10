@@ -131,14 +131,16 @@
 <div class="container" ng-show="ui.tab == 'tv'">
     <div class="row">
         <div class="col-md-12">
+            [ALL][FAVORITES][SPORTS][NEWS]
             <form style="margin-top: 10px;">
                 <div class="form-group">
-                    <label for="inputStationName">Station Name</label>
+                    <label for="inputStationName">Search by anything...</label>
                     <input type="text" class="form-control" id="inputStationName" placeholder="Station Name" ng-model="stationSearch">
                 </div>
             </form>
             <div class="scroll-area">
-                <station-cell ng-repeat="station in stations | filter: stationSearch" station="station"></station-cell>
+                <station-cell ng-repeat="station in stations | filter: stationSearch"
+                    station="station" listings="listHash"></station-cell>
             </div>
         </div>
 
