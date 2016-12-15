@@ -52,16 +52,16 @@
 </style>
 
 
-<div class="station-cell">
+<div class="station-cell" ng-click="changeChannel()">
     <div  style="float: left; background-color: white;" class="station-logo-holder">
-        <img class="station-icon" ng-src="{{station.logoUrl}}"/>
+        <img class="station-icon" ng-src="http://cdn.tvpassport.com/image/station/100x100/{{grid.channel.logoFilename}}"/>
     </div>
     <div class="station-cell-left">
         <div class="app-name">
-            {{station.callsign}}&nbsp;<span class="channel-num">{{ station.channelNumber }}-{{ station.stationID }}</span>
+            {{grid.channel.callsign}}&nbsp;<span class="channel-num">{{ grid.channel.channelNumber }}-{{ grid.channel.stationID }}</span>
         </div>
         <div class="app-cell-buttons">
-            {{ station.nowshowing && station.nowshowing.showName }}
+            {{ grid.listings[0].showName }}
          <!--<button class="btn btn-warning" style="float: left; width: 100%;" ng-click="control()">CHANGE TO</button>-->
         </div>
     </div>

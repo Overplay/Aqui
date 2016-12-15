@@ -135,7 +135,8 @@ app.directive( 'pubCrawlerXs', [
             scope:       {
                 logo:     '=',
                 ogModel:  '=',
-                bannerAd: '='
+                bannerAd: '=',
+                nextUp: '='
             },
             templateUrl: 'app/components/crawler/ogcrawler.template.html',
             link:        function ( scope, elem, attrs ) {
@@ -167,7 +168,7 @@ app.directive( 'pubCrawlerXs', [
                 function updateModel() {
 
                     scope.displayMessages = _.clone( scope.ogModel.crawlerFeed );
-                    scope.comingUpArray = _.clone( scope.ogModel.comingUp );
+                    //scope.comingUpArray = _.clone( scope.ogModel.comingUp );
 
                 }
 
@@ -216,7 +217,7 @@ app.directive( 'pubCrawlerXs', [
 
                 function scrollNextUp() {
 
-                    if ( scope.comingUpArray && scope.comingUpArray.length == 0 )
+                    if ( scope.nextUp && scope.nextUp.length == 0 )
                         return;
 
                     scope.ui.nextUp = '';

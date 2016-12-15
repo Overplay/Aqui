@@ -368,13 +368,26 @@ var GLOBAL_UPDATE_TARGET;
             }
 
 
-            service.changeChannel = function(channelNum){
-                return $http.post( API_PATH + 'program/change', { channel: channelNum } );
+
+
+            return service;
+        })
+
+        .factory( 'ogProgramGuide', function ( $http, $log, $interval ) {
+
+            var service = {};
+
+            service.getNext4Listings = function(){
+
+            }
+
+            service.changeChannel = function ( channelNum ) {
+                return $http.post( API_PATH + 'tv/change/'+channelNum );
             }
 
             return service;
         })
-        
+
         .directive('ogAdvert', function( $log, ogAds, $interval, $timeout ) {
             return {
                 restrict: 'E',
@@ -467,6 +480,20 @@ var GLOBAL_UPDATE_TARGET;
                 templateUrl: 'ogdirectives/appheader.html'
             };
         })
+        
+        .directive('ogFallbackImg', function($log) {
+                return {
+                    restrict: 'A',
+                    link:     function( scope, element, attrs ) {
+                    
+                        element.bind( 'error', function () {
+                            $log.debug("Source not found for image, using fallback");
+                            attrs.$set( "src", attrs.ogFallbackImg );
+                         } );
+                         
+                    }
+                }
+            })
 
         .directive('ogHud', ["$log", "$timeout", function($log, $timeout){
             return {

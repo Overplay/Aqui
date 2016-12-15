@@ -62,6 +62,9 @@
     <og-hud issue="ui.showHud" message="hudMessage"></og-hud>
 </div>
 
+<!--<img og-fallback-img="app/img/space.png" src="bag/of/shit"/>-->
+
+
 <div class="og-tab-bar">
     <a class="btn btn-default" ng-click="ui.tab = 'apps'" ng-class="{ 'tabon': ui.tab=='apps' }">APPS</a>
     <a class="btn btn-default" ng-click="ui.tab = 'tv'" ng-class="{ 'tabon': ui.tab == 'tv' }">TV</a>
@@ -139,8 +142,8 @@
                 </div>
             </form>
             <div class="scroll-area">
-                <station-cell ng-repeat="station in stations | filter: stationSearch"
-                    station="station" listings="listHash"></station-cell>
+                <station-cell ng-repeat="grid in gridListing | filter: stationSearch"
+                    grid="grid" listings="listHash"></station-cell>
             </div>
         </div>
 
@@ -154,4 +157,3 @@
 
 </body>
 </html>
-
