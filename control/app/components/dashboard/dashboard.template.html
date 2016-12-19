@@ -1,0 +1,17 @@
+<div class="container" ng-show="ui.tab == 'apps'">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>RUNNING</h4>
+            <p class="no-apps" ng-show="runningApps.length < 1">There are no running apps.</p>
+            <app-cell ng-repeat="app in runningApps track by $index" app="app" running="true"></app-cell>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>SLEEPING</h4>
+            <p class="no-apps" ng-show="sleepingApps.length < 1">There are no sleeping apps.</p>
+            <app-cell ng-repeat="app in sleepingApps track by $index" app="app"></app-cell>
+        </div>
+    </div>
+</div>

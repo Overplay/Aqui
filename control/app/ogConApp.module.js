@@ -9,7 +9,7 @@
  **********************************/
 
 
-var app = angular.module('ogConApp', ['ui.bootstrap', 'ngAnimate', 'toastr', 'ourglassAPI', 'ngCookies']);
+var app = angular.module('ogConApp', [ 'ui.router', 'ui.bootstrap', 'ngAnimate', 'toastr', 'ourglassAPI', 'ngCookies']);
 
 
 app.config( [ '$cookiesProvider', function ( $cookiesProvider ) {
@@ -20,4 +20,18 @@ app.config( [ '$cookiesProvider', function ( $cookiesProvider ) {
     // $cookiesProvider.defaults.secure = true;
     // $cookiesProvider.defaults.expires = exp_date;
     // $cookiesProvider.defaults.domain = my_domain;
+
+    
+    
 } ] );
+
+
+
+app.run( function ( $rootScope, $log ) {
+
+    $rootScope.$on( '$stateChangeError', function ( event, toState, toParams, fromState, fromParams, error ) {
+        event.preventDefault();
+        $log.error( error );
+    } );
+
+} );

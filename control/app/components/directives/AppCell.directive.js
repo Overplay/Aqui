@@ -19,7 +19,7 @@ app.directive( 'appCell',
                 };
                 
                 scope.launch = function(){
-                    $http.post( "/api/app/" + scope.app.appId + '/launch', {} )
+                    $http.post( "/api/app/" + scope.app.appId + '/launch')
                         .then( function ( data ) {
                             $log.debug('Launch done')
                             $rootScope.$broadcast('RELOAD_APPS')
@@ -27,14 +27,14 @@ app.directive( 'appCell',
                 }
 
                 scope.move = function () {
-                    $http.post( "/api/app/" + scope.app.appId + '/move', {} )
+                    $http.post( "/api/app/" + scope.app.appId + '/move' )
                         .then( function ( data ) {
                             $log.debug( 'Move done' )
                         } );
                 }
 
                 scope.kill = function () {
-                    $http.post( "/api/app/" + scope.app.appId + '/kill', {} )
+                    $http.post( "/api/app/" + scope.app.appId + '/kill')
                         .then( function ( data ) {
                             $log.debug( 'Move done' )
                             $rootScope.$broadcast( 'RELOAD_APPS' )

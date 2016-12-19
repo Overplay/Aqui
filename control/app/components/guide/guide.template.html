@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            [ALL][FAVORITES][SPORTS][NEWS]
+            <form style="margin-top: 10px;">
+                <div class="form-group">
+                    <label for="inputStationName">Search by anything...</label>
+                    <input type="text" class="form-control" id="inputStationName" placeholder="Station Name"
+                           ng-model="stationSearch">
+                </div>
+            </form>
+            <div class="scroll-area">
+                <station-cell ng-repeat="grid in gridListing | filter: stationSearch"
+                              grid="grid" listings="listHash"></station-cell>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+</div>
