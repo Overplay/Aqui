@@ -7,13 +7,13 @@ body {
 }
 
 @font-face {
-    font-family: "UBLACK";
-    src: url('../../../../../../common/fonts/Ubuntu/Ubuntu-B.ttf');
+    font-family: "POPBLACK";
+    src: url('../../../../../../common/fonts/Poppins/Poppins-SemiBold.ttf');
 }
 
 @font-face {
-    font-family: "UREG";
-    src: url('../../../../../../common/fonts/Ubuntu/Ubuntu-R.ttf');
+    font-family: "POPREG";
+    src: url('../../../../../../common/fonts/Poppins/Poppins-Medium.ttf');
 }
 
 
@@ -26,7 +26,7 @@ body {
 
 .small {
     font-size: 24px;
-    color: rgba(61, 150, 255, 0.35);
+    color: rgba(238, 72, 57, 0.35);
 }
 
 /* 1080
@@ -41,14 +41,14 @@ body {
 /*@media screen and (max-width: 1280px) {*/
 
 .left-scroller-holder {
-    font-family: EXOREG, sans-serif;
+    font-family: POPREG, sans-serif;
     width: 100%;
     position: relative;
     margin-left: 0;
     margin-right: 0;
     height: 60px;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.50);
 
 }
 
@@ -56,7 +56,7 @@ body {
     position: absolute;
     left: 19%;
     width: 62%;
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    /*border-right: 1px solid rgba(255, 255, 255, 0.15);*/
     overflow: hidden;
 
 }
@@ -122,14 +122,14 @@ body {
 
 .next-up-holder h1 {
     font-size: 16px;
-    margin-top: 3px;
+    margin-top: 0;
     margin-bottom: 4px;
     text-align: right;
 
 }
 
 .next-up-holder p {
-    margin-top: 2px;
+    margin-top: -2px;
     font-size: 14px;
     margin-bottom: 0;
     text-align: right;
@@ -142,7 +142,7 @@ ul {
     padding: 4px 0;
     position: relative;
     z-index: 10;
-    top: -8px;
+    top: -12px;
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
 }
 
@@ -153,7 +153,7 @@ li {
     -webkit-box-sizing: border-box;
     display: inline-block;
     margin: 0 20px;
-    font-size: 26px;
+    font-size: 28px;
     color: white;
 }
 
@@ -179,11 +179,11 @@ li {
 
 .name-change {
     transition: all 250ms ease;
-    font-family: EXOBLACK, sans-serif;
+    font-family: POPBLACK, sans-serif;
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
 
 }
 
-.hide-name {
+.hide {
     opacity: 0;
 }

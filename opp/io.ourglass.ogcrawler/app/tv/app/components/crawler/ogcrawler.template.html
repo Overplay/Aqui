@@ -7,10 +7,8 @@
     </div>
 
     <div class="next-up-holder font-smoothing">
-        <!--<h1>{{ screen.width }} x {{ screen.height }}</h1>-->
-        <h1 class="name-change font-smoothing" ng-class="{'hide-name': ui.isChangingName}">{{ ui.isNextUp && 'Coming Up' || 'Now Playing' }}</h1>
-        <p ng-class="{ 'scroll-in': ui.scrollin }" class="next-up hwlayer">{{ ui.nextUp }}</p>
-        <!--<p>4:00 Giants v DBacks</p>-->
+        <h1 class="name-change font-smoothing" ng-class="{'hide': nup.isChangingTitle}">{{ nup.title }}</h1>
+        <p ng-class="{ 'scroll-in': nup.scrollin }" class="next-up hwlayer">{{ nup.message }}</p>
     </div>
 
     <div class="advert-holder">

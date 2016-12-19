@@ -377,8 +377,8 @@ var GLOBAL_UPDATE_TARGET;
 
             var service = {};
 
-            service.getNext4Listings = function(){
-
+            service.getNowAndNext = function(){
+                return $http.get( API_PATH + 'tv/currentgrid');
             }
 
             service.changeChannel = function ( channelNum ) {

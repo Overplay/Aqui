@@ -134,6 +134,15 @@ app.controller("conController",
 
        $scope.register = function(){
             $log.debug("Registering using code.");
+            $http.post('/api/system/regcode?regcode='+$scope.system.regCode)    
+                .then( function(resp){
+                    //We got a good response, so we should be registered
+                    uibHelper.headsupModal("System Registered", "Thanks for using Ourglass!");
+                })
+                .catch( function(err){
+                    uibHelper.headsupModal( "Something Bad Happened!", "Could not register Ourglass system. Please try again!" );
+                    
+                })
 
        }
        

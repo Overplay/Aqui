@@ -11,7 +11,7 @@
 
 
 app.controller( "crawlerController",
-    function ( $scope, $timeout, $http, $interval, ogTVModel, $log, $window, $q, ogAds ) {
+    function ( $scope, $timeout, $http, $interval, ogTVModel, $log, $window, $q, ogAds, ogProgramGuide ) {
 
 
         var TWEET_COUNT = 7, //MAGIC NUMBER?
@@ -23,7 +23,6 @@ app.controller( "crawlerController",
         //information pertaining to user control of application
         $scope.crawlerModel = {
             user:        [],
-            comingUp:    [],
             twitter:     [],
             ads:         [],
             crawlerFeed: [],
@@ -114,6 +113,11 @@ app.controller( "crawlerController",
         } ).then( function () {
             $scope.crawlerModel.updateDisplay();
         } );
+        
+        $scope.nextUp = {
+            nowShowing: "",
+            comingUp: []
+        }
 
     } );
 
@@ -128,8 +132,8 @@ app.controller( "crawlerController",
  *
  */
 app.directive( 'pubCrawlerXs', [
-    '$log', '$timeout', '$window', '$interval', 'ogTVModel',
-    function ( $log, $timeout, $window, $interval, ogTVModel ) {
+    '$log', '$timeout', '$window', '$interval', 'ogTVModel', 'ogProgramGuide',
+    function ( $log, $timeout, $window, $interval, ogTVModel, ogProgramGuide ) {
         return {
             restrict:    'E',
             scope:       {
@@ -151,6 +155,11 @@ app.directive( 'pubCrawlerXs', [
 
                  none of these are implemented yet
                  */
+
+                var testNextUp = attrs.testNextUp!=undefined;
+                var currentGrid = { nowPlaying: "Sum Shit", grid: { listings: [
+                    { showName: "Yoga Caliente" }, { showName: "Pervs Watching Yoga" }, { showName: "Ping Pong" }
+                ]} };
 
                 scope.displayMessages = _.clone( scope.ogModel.crawlerFeed );
 
@@ -207,87 +216,111 @@ app.directive( 'pubCrawlerXs', [
 
                 var NEXT_UP_DURATION = 5000;
 
-                scope.ui = {
-                    scrollin:       false,
+                scope.nup = {
                     nextUp:         '',
                     isNextUp:       true,
-                    isChangingName: false
-                };
-
-
-                function scrollNextUp() {
-
-                    if ( scope.nextUp && scope.nextUp.length == 0 )
-                        return;
-
-                    scope.ui.nextUp = '';
-                    scope.ui.scrollin = false;
-                    scope.ui.isNextUp = true;
-                    scope.ui.isChangingName = false;
-
-                    $timeout( function () {
-
-                        scope.ui.nextUp = scope.comingUpArray[ nextUpIndex ];
-                        nextUpIndex++;
-                        if ( nextUpIndex == scope.comingUpArray.length ) {
-                            nextUpIndex = 0;
-                            scope.ui.scrollin = true;
-
-                            $timeout( function () {
-                                scope.ui.scrollin = false;
-                                $timeout( function () {
-                                    ogTVModel.getChannelInfo().then( function ( data ) {
-                                        if ( data != undefined && data.programTitle != undefined ) {
-                                            scope.ui.isChangingName = true;
-                                            $timeout( function () {
-                                                scope.ui.nextUp = data.programTitle;
-                                                scope.ui.isNextUp = false;
-                                                scope.ui.isChangingName = false;
-                                                $timeout( function () {
-                                                    scope.ui.scrollin = true;
-                                                    $timeout( function () {
-                                                        scope.ui.scrollin = false;
-                                                        $timeout( function () {
-                                                            scope.ui.isChangingName = true;
-                                                            $timeout( scrollNextUp, 250 );
-                                                        }, 500 );
-                                                    }, (NEXT_UP_DURATION * 2) );
-                                                }, 250 );
-                                            }, 250 );
-                                        } else {
-                                            scope.ui.nextUp = scope.comingUpArray[ nextUpIndex ];
-                                            nextUpIndex++;
-                                            scope.ui.scrollin = true;
-
-                                            $timeout( function () {
-                                                scope.ui.scrollin = false;
-                                                $timeout( scrollNextUp, 250 );
-                                            }, NEXT_UP_DURATION );
-                                        }
-                                    } );
-                                }, 500 );
-                            }, NEXT_UP_DURATION );
-                        } else {
-                            scope.ui.scrollin = true;
-
-                            $timeout( function () {
-                                scope.ui.scrollin = false;
-                                $timeout( scrollNextUp, 250 );
-                            }, NEXT_UP_DURATION );
-                        }
-                        // if (nextUpIndex == scope.comingUpArray.length)
-                        //     nextUpIndex = 0;
-                        // scope.ui.scrollin = true;
-                        //
-                        // $timeout(function () {
-                        //     scope.ui.scrollin = false;
-                        //     $timeout(scrollNextUp, 250);
-                        // }, NEXT_UP_DURATION);
-
-
-                    }, 250 )
+                    isChangingTitle: false,
+                    scrollin: false
                 }
 
+                function GridAnimator(){
+
+                    this.upcomingIdx = 0;
+                    this.mode = 'nowshowing';
+
+                    this.switchTitle = function(title){
+                        scope.nup.isChangingTitle = true;
+                        $timeout((function(newTitle){
+                            return function(){
+                                scope.nup.title = newTitle
+                                scope.nup.isChangingTitle = false;
+                            }
+                        })(title), 1000);
+                    }
+
+                    this.switchMessage = function ( msg ) {
+                        scope.nup.scrollin = false;
+                        $timeout( (function ( newMessage ) {
+                            return function () {
+                                scope.nup.message = newMessage
+                                scope.nup.scrollin = true;
+                            }
+                        })( msg ), 1000 );
+                    }
+                    
+                    this.init = function(){
+
+                        var _this = this;
+                        ogProgramGuide.getNowAndNext()
+                            .then( function ( data ) {
+                                $log.debug("Program guide grid loaded!")
+                                currentGrid = data.data
+                                _this.start();
+                            } )
+                            .catch( function ( err ) {
+                                $log.debug( "Program guide failed to load" );
+                                //TODO reclaim screen real estate
+                                $timeout( function(){
+                                    _this.init();
+                                }, 30000);
+                            } )
+                            
+                    }
+
+                    this.start = function(){
+
+                        this.mode = 'nowshowing';
+                        this.upcomingIdx = 0;
+                        this.switchTitle("Now Showing");
+                        scope.nup.scollin = false;
+                        var _this = this;
+                        $timeout(function(){
+                            _this.switchMessage( currentGrid.nowPlaying )
+                        }, 1000);
+                        $timeout(function(){
+                            _this.switchMessage("");
+                            _this.switchTitle("Coming Up")
+                            $timeout(function(){
+                                _this.nextUp();
+                            }, 1000);
+                        }, NEXT_UP_DURATION*1.5);
+                    }
+
+                    this.nextUp = function () {
+
+                        var listings = currentGrid.grid.listings;
+
+                        var _this = this;
+                        if (listings.length == 0){
+                            this.switchMessage("No Lisitings");
+                        } else {
+                            if (this.upcomingIdx<listings.length){
+                                this.switchMessage(this.makeSensibleMessageFrom(listings[this.upcomingIdx++]));
+                                $timeout(function(){
+                                    _this.nextUp();
+                                }, NEXT_UP_DURATION);
+                            } else {
+                                this.switchMessage( "" );
+                                $timeout(function(){ _this.init() }, 500);
+                            }
+                        }
+                    }
+
+                    // The listings have REDONCULOUS exceptions to what is in show name, teams, etc.
+                    this.makeSensibleMessageFrom = function(listing){
+
+                        //First, look for team names
+                        if (listing.team1 && listing.team2){
+                            return listing.team1 + " v "+ listing.team2;
+                        }
+
+                        return listing.showName;
+                    }
+
+                }
+                
+
+ 
 
                 // This promise weirdness is necessary to allow the DOM to be compiled/laid out outside of angular
                 function loadWidth() {
@@ -306,10 +339,12 @@ app.directive( 'pubCrawlerXs', [
                             scrollerWidth = width;
                             resetCrawlerTransition();
                             startCrawlerTransition();
-                            scrollNextUp();
                         } );
 
                 }
+                
+                var ga = new GridAnimator();
+                ga.init();
 
                 var waitToStart = $interval( function () {
                     if ( scope.ogModel ) {

@@ -60,6 +60,44 @@ app.factory( 'uibHelper', function ( $log, $uibModal ) {
 
     /**
      *
+     * Provides a very basic UIB heads-up modal with almost no options. Returns the result promise.
+     *
+     * Usage:  uibHelper.headsupModal("My Title", "Body Text")
+     *          .then( function(){
+     *          });
+     *
+     * @param title
+     * @param body
+     * @returns {*}
+     */
+    service.headsupModal = function ( title, body ) {
+
+        var modalInstance = $uibModal.open( {
+            templateUrl: 'app/shared/uibHelperService/headsupmodal.template.html',
+            controller:  function ( $scope, $uibModalInstance, params ) {
+
+                $scope.modalUi = { title: params.title, body: params.body };
+
+                $scope.ok = function () {
+                    $uibModalInstance.close();
+                }
+                
+
+            },
+            resolve:     {
+                params: function () {
+                    return { title: title, body: body };
+                }
+            }
+        } );
+
+        return modalInstance.result;
+
+
+    }
+
+    /**
+     *
      * Provides a very  UIB  modal to pick a date. Returns the result promise.
      *
      * Usage:  uibHelper.dateModal("My Title", "Body Text", currentDateChoice)
