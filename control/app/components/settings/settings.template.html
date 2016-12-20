@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <!--<h4>SYSTEM</h4>-->
+            <form style="margin-top: 10px;">
+                <div class="form-group">
+                    <label for="inputName">System Name</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="system.name">
+                </div>
+                <div class="form-group">
+                    <label for="inputLocation">Location in Venue</label>
+                    <input type="text" class="form-control" id="inputLocation" placeholder="Location"
+                           ng-model="system.locationWithinVenue">
+                </div>
+
+            </form>
+            <button class="btn btn-warning" style="width: 100%;" ng-click="updateSystemName()">UPDATE</button>
+            <p>&nbsp;</p>
+            <form style="margin-top: 10px;" ng-show="ui.showAdvanced">
+                <p ng-if="system.venue">This system is already registered to a venue. You can change the registration by
+                    entering a
+                    new registration code.</p>
+                <p ng-if="!system.venue">
+                    Enter a venue registration code to assign this system to a particular venue.</p>
+                <div class="form-group">
+                    <label for="inputRegCode">Registration Code</label>
+                    <input type="text" class="form-control" id="inputRegCode" placeholder="Code"
+                           ng-model="system.regCode">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;"
+                        ng-click="register()">REGISTER
+                </button>
+
+            </form>
+            <button class="btn btn-danger" style="width: 100%; margin-top: 10px;"
+                    ng-click="ui.showAdvanced = !ui.showAdvanced">{{ ui.showAdvanced?"HIDE ADVANCED SETTINGS":"SHOW
+                REGISTER"}}
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

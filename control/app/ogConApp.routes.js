@@ -30,4 +30,16 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             }
 
         } )
+
+        .state( 'settings', {
+            url:         '/settings',
+            templateUrl: 'app/components/settings/settings.template.html',
+            controller:  'settingsController',
+            resolve:     {
+                ogDevice: function ( ogNet ) {
+                    return ogNet.getDeviceInfo();
+                }
+            }
+
+        } )
 });

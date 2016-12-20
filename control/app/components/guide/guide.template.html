@@ -1,5 +1,7 @@
 <div class="container">
-    <div class="row">
+    <div class="jumbotron" ng-if="ui.loading">     <h3 style="color: black; text-align: center">Loading Guide</h3>
+    </div>
+    <div class="row" ng-if="!ui.loading">
         <div class="col-md-12">
             [ALL][FAVORITES][SPORTS][NEWS]
             <form style="margin-top: 10px;">
@@ -16,9 +18,5 @@
         </div>
 
     </div>
-    <div class="row">
-        <div class="col-md-12">
 
-        </div>
-    </div>
 </div>

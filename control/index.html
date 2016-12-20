@@ -22,9 +22,11 @@
     <script src="app/ogConApp.routes.js"></script>
     <script src="app/shared/ognet.service.js"></script>
 
-
     <script src="app/components/controller/ConController.js"></script>
     <script src="app/components/dashboard/dashboard.controller.js"></script>
+    <script src="app/components/guide/guide.controller.js"></script>
+    <script src="app/components/settings/settings.controller.js"></script>
+
     <script src="app/components/directives/AppCell.directive.js"></script>
     <script src="app/components/directives/StationCell.directive.js"></script>
     <script src="app/shared/uibHelperService/uibHelperService.js"></script>
@@ -68,100 +70,15 @@
     <og-hud issue="ui.showHud" message="hudMessage"></og-hud>
 </div>
 
-<!--<img og-fallback-img="app/img/space.png" src="bag/of/shit"/>-->
-
 
 <div class="og-tab-bar">
-    <a class="btn btn-default" ng-click="ui.tab = 'apps'" ng-class="{ 'tabon': ui.tab=='apps' }">APPS</a>
-    <a class="btn btn-default" ng-click="ui.tab = 'tv'" ng-class="{ 'tabon': ui.tab == 'tv' }">TV</a>
-    <a class="btn btn-default" ng-click="ui.tab = 'settings'" ng-class="{ 'tabon': ui.tab == 'settings' }">SETTINGS</a>
+    <a class="btn btn-default" ui-sref="dashboard" ui-sref-active="tabon">APPS</a>
+    <a class="btn btn-default" ui-sref="guide" ui-sref-active="tabon">TV</a>
+    <a class="btn btn-default" ui-sref="settings" ui-sref-active="tabon">SETTINGS</a>
 </div>
 
 <ui-view></ui-view>
 
-<!--<div class="container" ng-show="ui.tab == 'apps'">-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-            <!--<h4>RUNNING</h4>-->
-            <!--<p class="no-apps" ng-show="runningApps.length < 1">There are no running apps.</p>-->
-            <!--<app-cell ng-repeat="app in runningApps track by $index" app="app" running="true"></app-cell>-->
-        <!--</div>-->
-
-    <!--</div>-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-        <!--<h4>SLEEPING</h4>-->
-        <!--<p class="no-apps" ng-show="sleepingApps.length < 1">There are no sleeping apps.</p>-->
-        <!--<app-cell ng-repeat="app in sleepingApps track by $index" app="app" ></app-cell>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--<div class="container" ng-show="ui.tab == 'settings'">-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-10">-->
-            <!--&lt;!&ndash;<h4>SYSTEM</h4>&ndash;&gt;-->
-            <!--<form style="margin-top: 10px;">-->
-                <!--<div class="form-group">-->
-                    <!--<label for="inputName">System Name</label>-->
-                    <!--<input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="system.name">-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                    <!--<label for="inputLocation">Location in Venue</label>-->
-                    <!--<input type="text" class="form-control" id="inputLocation" placeholder="Location"-->
-                           <!--ng-model="system.locationWithinVenue">-->
-                <!--</div>-->
-
-            <!--</form>-->
-            <!--<button class="btn btn-warning" style="width: 100%;" ng-click="updateSystemName()">UPDATE</button>-->
-            <!--<p>&nbsp;</p>-->
-            <!--<form style="margin-top: 10px;" ng-show="ui.showAdvanced">-->
-                <!--<p ng-if="system.venue">This system is already registered to a venue. You can change the registration by entering a-->
-                <!--new registration code.</p>-->
-                <!--<p ng-if="!system.venue">-->
-                    <!--Enter a venue registration code to assign this system to a particular venue.</p>-->
-                <!--<div class="form-group">-->
-                    <!--<label for="inputRegCode">Registration Code</label>-->
-                    <!--<input type="text" class="form-control" id="inputRegCode" placeholder="Code" ng-model="system.regCode">-->
-                <!--</div>-->
-                <!--<button class="btn btn-primary" style="width: 100%;"-->
-                        <!--ng-click="register()">REGISTER-->
-                <!--</button>-->
-
-            <!--</form>-->
-            <!--<button class="btn btn-danger" style="width: 100%; margin-top: 10px;"-->
-                <!--ng-click="ui.showAdvanced = !ui.showAdvanced">{{ ui.showAdvanced?"HIDE ADVANCED SETTINGS":"SHOW ADVANCED SETTINGS"}}-->
-            <!--</button>-->
-
-        <!--</div>-->
-
-    <!--</div>-->
-
-<!--</div>-->
-
-<!--<div class="container" ng-show="ui.tab == 'tv'">-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-            <!--[ALL][FAVORITES][SPORTS][NEWS]-->
-            <!--<form style="margin-top: 10px;">-->
-                <!--<div class="form-group">-->
-                    <!--<label for="inputStationName">Search by anything...</label>-->
-                    <!--<input type="text" class="form-control" id="inputStationName" placeholder="Station Name" ng-model="stationSearch">-->
-                <!--</div>-->
-            <!--</form>-->
-            <!--<div class="scroll-area">-->
-                <!--<station-cell ng-repeat="grid in gridListing | filter: stationSearch"-->
-                    <!--grid="grid" listings="listHash"></station-cell>-->
-            <!--</div>-->
-        <!--</div>-->
-
-    <!--</div>-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 
 </body>
 </html>

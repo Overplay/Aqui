@@ -3,18 +3,18 @@
  */
 
 app.controller( "dashboardController",
-    function ( $scope, $timeout, ogDevice, $log, $interval, uibHelper, $cookies, ogNet ) {
+    function ( $scope, ogDevice, $log, uibHelper,ogNet, $state ) {
 
         $log.info( "Loading dashboardController" );
-
-        //This is here to test communicating with backend thru cookies for later security implementation
-        $cookies.put( "ourglass", "yoyoy" );
-
+        
         function reloadAppList() {
             ogNet.getApps()
                 .then( function ( apps ) {
                     angular.extend( $scope, apps );
-                } );
+                } )
+                .catch( function( err ){
+                    uibHelper.headsupModal( "We Have a Problem!", "We seem to have lost communication with your Ourglass system. Please check your WiFi connection and make sure the Ourglass is turned on." );
+                })
         }
         
         reloadAppList();
@@ -26,5 +26,12 @@ app.controller( "dashboardController",
                 reloadAppList();
             }
         );
+
+        if (!ogDevice.venue){
+            uibHelper.confirmModal("Register?", "This Ourglass device has not been registered with a venue. Would you like to do that now?", true)
+                .then(function(){
+                    $state.transitionTo( 'settings', { arg: 'arg' } );
+                })
+        }
 
     });

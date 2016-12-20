@@ -47,6 +47,11 @@ app.factory('ogNet', function($log, $http, $q){
                 return rval;
             });
     }
+    
+    
+    service.register = function(regcode){
+        return $http.post( '/api/system/regcode?regcode=' + $scope.system.regCode );
+    }
 
     return service;
 
