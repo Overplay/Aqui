@@ -8,7 +8,7 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
 
 
         .state( 'dashboard', {
-            url:         '/dash',
+            url:         '/dashboard',
             templateUrl: 'app/components/dashboard/dashboard.template.html',
             controller: 'dashboardController',
             resolve:     {
@@ -42,4 +42,18 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             }
 
         } )
+
+        .state( 'register', {
+            url:         '/register',
+            templateUrl: 'app/components/register/register.template.html',
+            controller:  'registerController',
+            resolve:     {
+                ogDevice: function ( ogNet ) {
+                    return ogNet.getDeviceInfo();
+                }
+            }
+
+        } )
+
+        
 });

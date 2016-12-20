@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row" ng-if="showRegistrationPanel()">
+        <div class="col-md-10">
+            <form style="margin-top: 10px;">
+                <p ng-if="device.venue" class="text-danger"><bold>This system is already registered to a venue. You can change the registration by
+                    entering a
+                    new registration code.</bold></p>
+                <p ng-if="!device.venue">
+                    Enter a venue registration code to assign this system to a particular venue.</p>
+                <div class="form-group">
+                    <label for="inputRegCode">Registration Code</label>
+                    <input type="text" class="form-control" id="inputRegCode" placeholder="Code"
+                           ng-model="system.regCode">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;"
+                        ng-click="register()">REGISTER
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
