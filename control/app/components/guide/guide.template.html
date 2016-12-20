@@ -1,9 +1,59 @@
+<style>
+    .scroll-area {
+        /*The height must be manually updated determined by the screen size*/
+        height: 77vh;
+        /*background-color: green;*/
+        overflow-y: scroll;
+    }
+
+    .station-container {
+        float: left;
+        display: inline;
+        border: 1px solid green;
+    }
+
+    .listings-container {
+        position: relative;
+        display: inline;
+        width: 70vw;
+        /*height: 75vh;*/
+        /*overflow-y: hidden;*/
+        overflow-x: auto;
+        white-space: nowrap;
+        float: right;
+        border: 1px solid orange;
+    }
+
+    .listings-time-container {
+        height: 4vh;
+        /*top: 0;*/
+        /*position: relative;*/
+        display: block;
+        border: 1px solid lightseagreen;
+    }
+
+    .listings-time {
+        width: 49vw;
+        display: inline-block;
+        margin-right: 0;
+        margin-left: 0;
+        border: 1px solid lightsalmon;
+    }
+</style>
 <div class="container">
-    <div class="jumbotron" ng-if="ui.loading">     <h3 style="color: black; text-align: center">Loading Guide</h3>
-    </div>
+    <div class="jumbotron" ng-if="ui.loading"><h3 style="color: black; text-align: center;">Loading...</h3></div>
     <div class="row" ng-if="!ui.loading">
         <div class="col-md-12">
-            [ALL][FAVORITES][SPORTS][NEWS]
+            <div class="og-secondary-tab-bar">
+                <a class="btn btn-default" ng-click="ui.refineSearch = 'all'"
+                   ng-class="{ 'tabon': ui.refineSearch == 'all' }"> ALL </a>
+                <a class="btn btn-default" ng-click="ui.refineSearch = 'favorites'"
+                   ng-class="{ 'tabon': ui.refineSearch == 'favorites' }"> FAVORITES </a>
+                <a class="btn btn-default" ng-click="ui.refineSearch = 'sports'"
+                   ng-class="{ 'tabon': ui.refineSearch == 'sports' }"> SPORTS </a>
+                <a class="btn btn-default" ng-click="ui.refineSearch = 'news'"
+                   ng-class="{ 'tabon': ui.refineSearch == 'news' }"> NEWS </a>
+            </div>
             <form style="margin-top: 10px;">
                 <div class="form-group">
                     <label for="inputStationName">Search by anything...</label>
@@ -12,11 +62,66 @@
                 </div>
             </form>
             <div class="scroll-area">
-                <station-cell ng-repeat="grid in gridListing | filter: stationSearch"
-                              grid="grid" listings="listHash"></station-cell>
+                <!--<div style="height: 50vh; border: 1px solid hotpink;">-->
+                <div class="station-container">
+                    <!--The following div is used as a placeholder for the station-cell side fo view-->
+                    <div class="listings-time-container"></div>
+
+                    <station-cell ng-if="ui.refineSearch == 'all'"
+                                  ng-repeat="grid in gridListing | filter: stationSearch"
+                                  grid="grid" listings="listHash"></station-cell>
+
+                    <station-cell ng-if="ui.refineSearch == 'favorites'"
+                                  ng-repeat="grid in gridListing | filter: stationSearch"
+                                  grid="grid" listings="listHash"></station-cell>
+
+                    <station-cell ng-if="ui.refineSearch == 'sports'"
+                                  ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch"
+                                  grid="grid" listings="listHash"></station-cell>
+
+                    <station-cell ng-if="ui.refineSearch == 'news'"
+                                  ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch"
+                                  grid="grid" listings="listHash"></station-cell>
+                </div>
+
+                <div class="listings-container">
+
+                    <div class="listings-time-container">
+                        <div class="listings-time">Listing
+                        0.0</div>
+                        <div class="listings-time">Listing
+                        0.5</div>
+                        <div class="listings-time">Listing
+                        1.0</div>
+                        <div class="listings-time">Listing
+                        1.5</div>
+                        <div class="listings-time">Listing
+                        2.0</div>
+                        <div class="listings-time">Listing
+                        2.5</div>
+                        <div class="listings-time">Listing
+                        3.0</div>
+                    </div>
+
+                    <listings-cell ng-if="ui.refineSearch == 'all'"
+                                   ng-repeat="grid in gridListing | filter: stationSearch"
+                                   grid="grid" listings="listHash"></listings-cell>
+
+                    <listings-cell ng-if="ui.refineSearch == 'favorites'"
+                                   ng-repeat="grid in gridListing | filter: stationSearch"
+                                   grid="grid" listings="listHash"></listings-cell>
+
+                    <listings-cell ng-if="ui.refineSearch == 'sports'"
+                                   ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch"
+                                   grid="grid" listings="listHash"></listings-cell>
+
+                    <listings-cell ng-if="ui.refineSearch == 'news'"
+                                   ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch"
+                                   grid="grid" listings="listHash"></listings-cell>
+                </div>
+                <!--</div>-->
             </div>
         </div>
 
     </div>
-
 </div>

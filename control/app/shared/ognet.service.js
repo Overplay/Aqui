@@ -22,7 +22,7 @@ app.factory('ogNet', function($log, $http, $q){
             return $q.when( JSON.parse( grid ) );
         } else {
             // no local copy or caching is turned off, let's get fresh data
-            return $http.get( "http://api.tvmedia.ca/tv/v4/lineups/5266D/listings/grid?api_key=761cbd1955e14ff1b1af8d677a488904&timezone=-08:00" )
+            return $http.get( "/api/program/grid" )
                 .then( function ( data ) {
                     var inbound = data.data;
                     localStorage.setItem( "grid", JSON.stringify( inbound ) );

@@ -1,70 +1,59 @@
 <style>
     .station-cell {
-        /*border: 1px solid greenyellow;*/
-        width: 100%;
-        height: 18vw;
+        width: 21vw;
+        /*width: 100%;*/
+        height: 30vw;
         position: relative;
+        /*border: 1px solid greenyellow;*/
     }
 
     .station-icon {
         height: 15vw;
         width: 15vw;
-        position: relative;
         top: 0;
         left: 0;
         padding: 5px;
     }
 
     .station-cell-left {
-        position: absolute;
-        top: 0;
-        left: 16vw;
-        /*border: 1px solid yellow;*/
-        margin-left: 2vw;
-        border-left: 2px solid #20B8EB;
-        padding-left: 3vw;
+        float: left;
+        height: 25vw;
+        border-right: 2px solid #20B8EB;
         padding-right: 3vw;
-        height: 15vw;
-        width: 70%;
-    }
-
-    .station-name {
-        font-weight: 400;
-        font-size: 5vw;
-        margin-bottom: 1vw;
-    }
-
-    .app-cell button {
-        margin-right: 2vw;
-        font-size: 3vw;!important;
-
-    }
-
-    .station-logo-holder {
+        margin-right: 3vw;
         /*border: 1px solid hotpink;*/
     }
 
-    .channel-num {
-        font-weight: 100;
-        font-size: 4vw;
+    .station-logo-holder {
+        background-color: white;
+        width: 15vw;
     }
 
+    .channel-num {
+        font-weight: 500;
+        font-size: 3vw;
+        text-align: center;
+    }
+
+    .channel-name {
+        font-weight: 400;
+        font-size: 3vw;
+        text-align: center;
+        margin-top: 1vw;
+        width: 15vw;
+        overflow: hidden;
+    }
 </style>
 
 
 <div class="station-cell" ng-click="changeChannel()">
-    <div  style="float: left; background-color: white;" class="station-logo-holder">
-        <img class="station-icon" ng-src="http://cdn.tvpassport.com/image/station/100x100/{{grid.channel.logoFilename}}"/>
-    </div>
     <div class="station-cell-left">
-        <div class="app-name">
-            {{grid.channel.callsign}}&nbsp;<span class="channel-num">{{ grid.channel.channelNumber }}-{{ grid.channel.stationID }}</span>
+        <div class="station-logo-holder">
+            <img class="station-icon" og-fallback-img="assets/img/default_station_logo.png"
+                 ng-src="{{grid.channel.logoUrl}}"/>
         </div>
-        <div class="app-cell-buttons">
-            {{ grid.listings[0].showName }}
-         <!--<button class="btn btn-warning" style="float: left; width: 100%;" ng-click="control()">CHANGE TO</button>-->
-        </div>
+
+        <div class="channel-name"> {{ grid.channel.callsign }} </div>
+        <div class="channel-num"> {{ grid.channel.channelNumber }} </div>
     </div>
 </div>
-
-
