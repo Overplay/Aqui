@@ -28,10 +28,18 @@
         /*border: 1px solid green;*/
     }
 
+    .loading-box {
+        color: black;
+        text-align: center;
+        font-size: 2em;
+    }
+
 </style>
 
 <div class="container">
-    <div class="jumbotron" ng-if="ui.loading"><h3 style="color: black; text-align: center;">Loading...</h3></div>
+    <div class="loading-box jumbotron" ng-if="ui.loading">
+        <img src="assets/img/loading.png" style="width: 15vw; height: 15vw;"> Loading...
+    </div>
     <div class="row" ng-if="!ui.loading">
         <div class="col-md-12">
             <div class="og-secondary-tab-bar">
