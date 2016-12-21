@@ -153,6 +153,7 @@ app.factory('ge', function($http, ogTVModel, $log, $timeout){
                 mouseClicked()
             } )
 
+        engine.world.gravity.y = 1.0;
         buildWorld();
         goToState('ready');
 
@@ -277,7 +278,7 @@ app.factory('ge', function($http, ogTVModel, $log, $timeout){
         stein = {
             composite: Matter.Composite.create(),
             xtrans: 0,
-            transAmt: 1.5,
+            transAmt: 2.5,  //roughly speed
             direction: 1,
             update: function(){
 

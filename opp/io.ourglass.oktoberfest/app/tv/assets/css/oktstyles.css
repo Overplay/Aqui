@@ -46,8 +46,8 @@ body {
 
 #game {
 
-    width: 100%;
-    min-height: 100%;
+    width: 100vw;
+    min-height: 100vh;
     background-color: rgba(0, 0, 0, 0.55);
     /*border: 2px solid #57b4ff;*/
     position: relative;
@@ -65,7 +65,7 @@ body {
     font-family: Kraut, monospace;
     text-align: center;
     /*line-height: 15%;*/
-    font-size: 30px;
+    font-size: 11vw;
 
 
 }
@@ -73,7 +73,7 @@ body {
 .gm-score {
     position: absolute;
     top: 76%;
-    left: 0px;
+    left: 0;
     height: 24%;
     width: 100%;
     background-color: #000;
@@ -83,37 +83,38 @@ body {
 .score-hdr {
     position: absolute;
     top: 10%;
+    font-size: 10vw;
 }
 
 .score-hdr.balls {
-    left: 12%;
+    left: 4%;
 }
 
 .score-hdr.time {
-    left: 43%;
+    left: 39%;
 }
 
 .score-hdr.score {
-    left: 70%;
+    left: 67%;
 }
 
 .score-val {
     position: absolute;
-    top: 20%;
-    font-size: 40px;
+    top: 31%;
+    font-size: 10vw;
     color: yellow;
 }
 
 .score-val.balls {
-    left: 11%;
+    left: 10%;
 }
 
 .score-val.time {
-    left: 41%;
+    left: 43%;
 }
 
 .score-val.score {
-    left: 73%;
+    left: 77%;
 }
 
 .logo {
@@ -129,7 +130,7 @@ body {
     position: absolute;
     top: 35%;
     width: 100%;
-    font-size: 50px;
+    font-size: 21vw;
     color: aquamarine;
     text-align: center;
     text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.53);
