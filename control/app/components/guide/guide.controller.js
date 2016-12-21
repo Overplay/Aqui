@@ -10,7 +10,7 @@ app.controller( "guideController",
 
 
         function loadListings(){
-            ogNet.getGrid()
+            ogNet.getGrid(false)
                 .then( function ( g ) {
                     $scope.gridListing = g;
                     $scope.ui.loading = false;

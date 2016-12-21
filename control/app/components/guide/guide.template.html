@@ -1,4 +1,20 @@
 <style>
+
+    .og-secondary-tab-bar {
+        width: 100%;
+        margin-top: -3px;
+        margin-bottom: 5px;
+        display: flex;
+    }
+
+    .og-secondary-tab-bar .btn {
+        width: 50vw;
+        background-color: rgba(12, 184, 215, 0.76);
+        color: #d0d0d0;
+        flex-grow: 1;
+        margin: 0 1px 0 1px;
+    }
+
     .scroll-area {
         /*The height must be manually updated determined by the screen size*/
         height: 77vh;
@@ -9,37 +25,11 @@
     .station-container {
         float: left;
         display: inline;
-        border: 1px solid green;
+        /*border: 1px solid green;*/
     }
 
-    .listings-container {
-        position: relative;
-        display: inline;
-        width: 70vw;
-        /*height: 75vh;*/
-        /*overflow-y: hidden;*/
-        overflow-x: auto;
-        white-space: nowrap;
-        float: right;
-        border: 1px solid orange;
-    }
-
-    .listings-time-container {
-        height: 4vh;
-        /*top: 0;*/
-        /*position: relative;*/
-        display: block;
-        border: 1px solid lightseagreen;
-    }
-
-    .listings-time {
-        width: 49vw;
-        display: inline-block;
-        margin-right: 0;
-        margin-left: 0;
-        border: 1px solid lightsalmon;
-    }
 </style>
+
 <div class="container">
     <div class="jumbotron" ng-if="ui.loading"><h3 style="color: black; text-align: center;">Loading...</h3></div>
     <div class="row" ng-if="!ui.loading">
@@ -62,14 +52,11 @@
                 </div>
             </form>
             <div class="scroll-area">
-                <!--<div style="height: 50vh; border: 1px solid hotpink;">-->
                 <div class="station-container">
-                    <!--The following div is used as a placeholder for the station-cell side fo view-->
-                    <div class="listings-time-container"></div>
 
                     <station-cell ng-if="ui.refineSearch == 'all'"
                                   ng-repeat="grid in gridListing | filter: stationSearch"
-                                  grid="grid" listings="listHash"></station-cell>
+                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
 
                     <station-cell ng-if="ui.refineSearch == 'favorites'"
                                   ng-repeat="grid in gridListing | filter: stationSearch"
@@ -82,44 +69,8 @@
                     <station-cell ng-if="ui.refineSearch == 'news'"
                                   ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch"
                                   grid="grid" listings="listHash"></station-cell>
+
                 </div>
-
-                <div class="listings-container">
-
-                    <div class="listings-time-container">
-                        <div class="listings-time">Listing
-                        0.0</div>
-                        <div class="listings-time">Listing
-                        0.5</div>
-                        <div class="listings-time">Listing
-                        1.0</div>
-                        <div class="listings-time">Listing
-                        1.5</div>
-                        <div class="listings-time">Listing
-                        2.0</div>
-                        <div class="listings-time">Listing
-                        2.5</div>
-                        <div class="listings-time">Listing
-                        3.0</div>
-                    </div>
-
-                    <listings-cell ng-if="ui.refineSearch == 'all'"
-                                   ng-repeat="grid in gridListing | filter: stationSearch"
-                                   grid="grid" listings="listHash"></listings-cell>
-
-                    <listings-cell ng-if="ui.refineSearch == 'favorites'"
-                                   ng-repeat="grid in gridListing | filter: stationSearch"
-                                   grid="grid" listings="listHash"></listings-cell>
-
-                    <listings-cell ng-if="ui.refineSearch == 'sports'"
-                                   ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch"
-                                   grid="grid" listings="listHash"></listings-cell>
-
-                    <listings-cell ng-if="ui.refineSearch == 'news'"
-                                   ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch"
-                                   grid="grid" listings="listHash"></listings-cell>
-                </div>
-                <!--</div>-->
             </div>
         </div>
 
