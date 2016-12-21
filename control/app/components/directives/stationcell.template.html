@@ -1,10 +1,19 @@
 <style>
     .station-cell {
-        width: 21vw;
-        /*width: 100%;*/
-        height: 30vw;
+        width: 90vw;
+        /*height: 30vw;*/
         position: relative;
-        /*border: 1px solid greenyellow;*/
+        /*border: 1px solid lightblue;*/
+        margin-bottom: 5vw;
+    }
+
+    .station-logo-holder {
+        background-color: white;
+        width: 15vw;
+        height: 15vw;
+        display: inline-block;
+        margin-right: 3vw;
+        border-radius: 5px;
     }
 
     .station-icon {
@@ -15,45 +24,86 @@
         padding: 5px;
     }
 
-    .station-cell-left {
-        float: left;
-        height: 25vw;
-        border-right: 2px solid #20B8EB;
-        padding-right: 3vw;
-        margin-right: 3vw;
-        /*border: 1px solid hotpink;*/
-    }
-
-    .station-logo-holder {
-        background-color: white;
-        width: 15vw;
-    }
-
-    .channel-num {
-        font-weight: 500;
-        font-size: 3vw;
-        text-align: center;
-    }
-
     .channel-name {
         font-weight: 400;
-        font-size: 3vw;
-        text-align: center;
-        margin-top: 1vw;
-        width: 15vw;
+        font-size: 3vh;
+        text-align: left;
+        /*margin-top: 7vw;*/
         overflow: hidden;
+        width: 68vw;
+        display: inline-block;
+        /*border: 1px solid orange;*/
+
+        position: absolute;
+        top: 2vh;
+        left: 18vw;
     }
+
+    .listings {
+        display: block;
+        margin-top: 1vw;
+    }
+
+    .listing-time {
+        float: left;
+        margin-top: 1vw;
+        margin-right: 3vw;
+        overflow: hidden;
+        display: inline-block;
+        width: 15vw;
+        text-align: center;
+        /*border: 1px solid red;*/
+    }
+
+    .listing-name {
+        margin-top: 1vw;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 68vw;
+        text-align: left;
+        /*border: 1px solid red;*/
+    }
+
 </style>
 
 
 <div class="station-cell" ng-click="changeChannel()">
-    <div class="station-cell-left">
-        <div class="station-logo-holder">
-            <img class="station-icon" og-fallback-img="assets/img/default_station_logo.png"
-                 ng-src="{{grid.channel.logoUrl}}"/>
+
+    <div class="station-logo-holder">
+        <img class="station-icon" og-fallback-img="assets/img/default_station_logo.png"
+             ng-src="{{grid.channel.logoUrl}}"/>
+    </div>
+
+    <div class="channel-name" ng-if="grid.channel.callsign">
+        {{ grid.channel.callsign }} - {{ grid.channel.channelNumber}}
+    </div>
+
+    <div class="channel-name" ng-if="!grid.channel.callsign">
+        {{ grid.channel.channelNumber}}
+    </div>
+
+    <div class="listings">
+        <div class="listing-time" ng-if="!search.length">
+            Now
         </div>
 
-        <div class="channel-name"> {{ grid.channel.callsign }} </div>
-        <div class="channel-num"> {{ grid.channel.channelNumber }} </div>
+        <div class="listing-name" ng-if="grid.listings.length == 0">
+            Unknown Programming
+        </div>
+
+        <div class="listing-name" ng-if="!search.length">
+            {{ grid.listings[0].showName }}
+        </div>
+
+        <div ng-if="search.length > 0" ng-repeat="listing in grid.listings | filter: search">
+            <div class="listing-time">
+                {{ displayTime(listing.listDateTime) }}
+            </div>
+            <div class="listing-name">
+                {{ listing.showName }}
+            </div>
+        </div>
     </div>
+
 </div>
