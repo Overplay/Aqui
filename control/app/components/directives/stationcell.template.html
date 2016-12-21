@@ -3,7 +3,7 @@
         width: 90vw;
         /*height: 30vw;*/
         position: relative;
-        /*border: 1px solid lightblue;*/
+        border: 1px solid lightblue;
         margin-bottom: 5vw;
     }
 
@@ -32,7 +32,7 @@
         overflow: hidden;
         width: 68vw;
         display: inline-block;
-        /*border: 1px solid orange;*/
+        border: 1px solid orange;
 
         position: absolute;
         top: 2vh;
@@ -42,17 +42,23 @@
     .listings {
         display: block;
         margin-top: 1vw;
+        /*border: 1px solid mediumvioletred;*/
+
+        position: relative;
+        /*top: 6vh;*/
+        left: 18vw;
+        width: 68vw;
     }
 
     .listing-time {
         float: left;
         margin-top: 1vw;
-        margin-right: 3vw;
+        margin-right: 2vw;
         overflow: hidden;
         display: inline-block;
-        width: 15vw;
-        text-align: center;
-        /*border: 1px solid red;*/
+        width: 10vw;
+        text-align: left;
+        border: 1px solid red;
     }
 
     .listing-name {
@@ -60,9 +66,9 @@
         overflow: hidden;
         white-space: nowrap;
         display: inline-block;
-        width: 68vw;
+        width: 55vw;
         text-align: left;
-        /*border: 1px solid red;*/
+        border: 1px solid red;
     }
 
 </style>
@@ -84,19 +90,19 @@
     </div>
 
     <div class="listings">
-        <div class="listing-time" ng-if="!search.length">
+        <div class="listing-time" ng-hide="search">
             Now
         </div>
 
-        <div class="listing-name" ng-if="grid.listings.length == 0">
+        <div class="listing-name" ng-if="grid.listings.length == 0 && !search">
             Unknown Programming
         </div>
 
-        <div class="listing-name" ng-if="!search.length">
+        <div class="listing-name" ng-hide="grid.listings.length == 0 || search">
             {{ grid.listings[0].showName }}
         </div>
 
-        <div ng-if="search.length > 0" ng-repeat="listing in grid.listings | filter: search">
+        <div ng-show="search" ng-repeat="listing in grid.listings | filter: search">
             <div class="listing-time">
                 {{ displayTime(listing.listDateTime) }}
             </div>
