@@ -33,15 +33,30 @@ app.controller( "favoritesController",
         $scope.favoriteChannel = function ( channel ) {
             if (channel.favorite) {
                 uibHelper.confirmModal("Remove from favorites?", "Would you like to remove this channel from your favorites?", true)
-                        .then(function(){
-                            removeFavorite(channel.channelNumber);
-                        })
+                    .then(function(){
+                        removeFavorite(channel.channelNumber);
+                        locallyChangeFavorite(channel, false);
+                    })
             } else {
                 uibHelper.confirmModal("Add to favorites?", "Would you like to add this channel to your favorites?", true)
-                    .then(function(){
+                    .then(function() {
                         addFavorite(channel.channelNumber);
+                        locallyChangeFavorite(channel, true);
                     })
             }
+        };
+
+        var locallyChangeFavorite = function (channel, changeTo) {
+            for (var i = 0; i < $scope.gridListing.length; i++) {
+                if ($scope.gridListing[i].channel.channelNumber == channel.channelNumber) {
+                    $scope.gridListing[i].channel.favorite = changeTo;
+                    $log.debug('channel favorite changed locally');
+                    return true;
+                }
+            }
+
+            $log.error('unable to find channel to change favorite locally');
+            return false;
         };
 
         var addFavorite = function ( channelNum ) {
