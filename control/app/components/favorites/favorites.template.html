@@ -65,7 +65,7 @@
         text-align: left;
         /*margin-top: 7vw;*/
         overflow: hidden;
-        width: 66vw;
+        width: 60vw;
         display: inline-block;
         /*border: 1px solid orange;*/
         position: absolute;
@@ -73,9 +73,15 @@
         left: 20vw;
     }
 
-    .channel-name .btn {
-        width: 100%;
-        border-radius: 5px;
+    .favorites-box {
+        text-align: left;
+        font-size: 5vh;
+        position: absolute;
+        top: 2vh;
+        left: 80vw;
+        width: 10vw;
+        height: 10vw;
+        /*border: 1px solid hotpink;*/
     }
 
 </style>
@@ -117,16 +123,16 @@
 
                             <div class="channel-name">
                                 <div ng-if="grid.channel.callsign">
-                                    <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
-                                    <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
                                     {{ grid.channel.callsign }} - {{ grid.channel.channelNumber}}
                                 </div>
                                 <div ng-if="!grid.channel.callsign">
-                                    <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
-                                    <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
                                     {{ grid.channel.channelNumber}}
                                 </div>
+                            </div>
 
+                            <div class="favorites-box">
+                                <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
+                                <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
                             </div>
                         </div>
                     </div>

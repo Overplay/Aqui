@@ -19,7 +19,7 @@ app.controller( "favoritesController",
 
         // Functions (2) to update the listings grid automatically
         // Erik - don't forget to inject $interval
-        var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 5 min or 300000ms
+        var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 15 sec
 
         loadListings();
 
@@ -29,13 +29,6 @@ app.controller( "favoritesController",
                 $log.debug( "destroy called - canceled listings refresh $interval" );
             }
         );
-
-        // if (!ogDevice.venue){
-        //     uibHelper.confirmModal("Register?", "This Ourglass device has not been registered with a venue. Would you like to do that now?", true)
-        //         .then(function(){
-        //             $state.transitionTo( 'settings', { arg: 'arg' } );
-        //         })
-        // }
 
         $scope.favoriteChannel = function ( channel ) {
             if (channel.favorite) {
@@ -52,7 +45,7 @@ app.controller( "favoritesController",
         };
 
         var addFavorite = function ( channelNum ) {
-            $http.get( "/api/channel/favorite/:" + channelNum )
+            $http.post( "/api/channel/favorite/" + channelNum )
                 .then( function successCallback() {
                     $log.info('channel added to favorites');
                 }, function errorCallback() {
@@ -61,7 +54,7 @@ app.controller( "favoritesController",
         };
 
         var removeFavorite = function ( channelNum ) {
-            $http.get( "/api/channel/favorite/:" + channelNum + "?clear=true" )
+            $http.post( "/api/channel/favorite/" + channelNum + "?clear=true" )
                 .then( function successCallback() {
                     $log.info('channel removed from favorites');
                 }, function errorCallback() {
