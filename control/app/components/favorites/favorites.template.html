@@ -1,0 +1,137 @@
+<style>
+
+    .loading-box {
+        color: black;
+        text-align: center;
+        font-size: 2em;
+    }
+
+    .og-secondary-tab-bar {
+        width: 100%;
+        margin-top: -3px;
+        margin-bottom: 5px;
+        display: flex;
+    }
+
+    .og-secondary-tab-bar .btn {
+        width: 50vw;
+        background-color: rgba(12, 184, 215, 0.76);
+        color: #d0d0d0;
+        flex-grow: 1;
+        margin: 0 1px 0 1px;
+    }
+
+    .scroll-area {
+        /*The height must be manually updated determined by the screen size*/
+        height: 77vh;
+        /*background-color: green;*/
+        overflow-y: scroll;
+    }
+
+    .station-container {
+        float: left;
+        display: inline;
+        /*border: 1px solid green;*/
+    }
+
+    .station-cell {
+        width: 90vw;
+        /*height: 30vw;*/
+        position: relative;
+        /*border: 1px solid lightblue;*/
+        margin-bottom: 5vw;
+    }
+
+    .station-logo-holder {
+        background-color: white;
+        width: 17vw;
+        height: 17vw;
+        display: inline-block;
+        margin-right: 3vw;
+        border-radius: 5px;
+    }
+
+    .station-icon {
+        height: 17vw;
+        width: 17vw;
+        top: 0;
+        left: 0;
+        padding: 5px;
+    }
+
+    .channel-name {
+        font-weight: 400;
+        font-size: 3vh;
+        text-align: left;
+        /*margin-top: 7vw;*/
+        overflow: hidden;
+        width: 66vw;
+        display: inline-block;
+        /*border: 1px solid orange;*/
+        position: absolute;
+        top: 2vh;
+        left: 20vw;
+    }
+
+    .channel-name .btn {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+</style>
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="loading-box jumbotron" ng-if="ui.loading">
+            <img src="assets/img/loading.png" style="width: 15vw; height: 15vw;"> Loading...
+        </div>
+
+        <div class="row" ng-if="!ui.loading">
+
+            <div class="og-secondary-tab-bar">
+                <a class="btn btn-default" ng-click="ui.refineSearch = 'all'"
+                   ng-class="{ 'tabon': ui.refineSearch == 'all' }"> VIEW ALL </a>
+                <a class="btn btn-default" ng-click="ui.refineSearch = 'favorites'"
+                   ng-class="{ 'tabon': ui.refineSearch == 'favorites' }"> VIEW FAVORITES </a>
+            </div>
+
+            <form style="margin-top: 10px;">
+                <div class="form-group">
+                    <label for="inputStationName">Search by anything...</label>
+                    <input type="text" class="form-control" id="inputStationName" placeholder="Station Name"
+                           ng-model="stationSearch">
+                </div>
+            </form>
+
+            <div class="scroll-area">
+                <div class="station-container">
+
+                    <div ng-repeat="grid in gridListing | filter: stationSearch">
+
+                        <div ng-if="ui.refineSearch != 'favorites' || grid.channel.favorite" class="station-cell"
+                                ng-click="favoriteChannel( grid.channel )">
+                            <div class="station-logo-holder">
+                                <img class="station-icon" og-fallback-img="assets/img/default_station_logo.png"
+                                     ng-src="{{ grid.channel.logoUrl }}"/>
+                            </div>
+
+                            <div class="channel-name">
+                                <div ng-if="grid.channel.callsign">
+                                    <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
+                                    <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
+                                    {{ grid.channel.callsign }} - {{ grid.channel.channelNumber}}
+                                </div>
+                                <div ng-if="!grid.channel.callsign">
+                                    <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
+                                    <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
+                                    {{ grid.channel.channelNumber}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

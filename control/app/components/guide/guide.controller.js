@@ -36,6 +36,9 @@ app.controller( "guideController",
             }
         );
 
+        $scope.editFavorites = function () {
+            $log.debug("editing favorites");
+        }
 
     } );
 

@@ -42,4 +42,11 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             }
 
         } )
+
+        .state( 'favorites', {
+            url:         '/favorites',
+            templateUrl: 'app/components/favorites/favorites.template.html',
+            controller:  'favoritesController'
+        } )
+
 });

@@ -34,6 +34,11 @@
         font-size: 2em;
     }
 
+    .favorites-box {
+        margin-top: -1vh;
+        margin-bottom: 2vh;
+    }
+
 </style>
 
 <div class="container">
@@ -59,6 +64,11 @@
                            ng-model="stationSearch">
                 </div>
             </form>
+
+            <div class="favorites-box" ng-if="ui.refineSearch == 'favorites'">
+                <button class="btn btn-danger" style="width: 100%" ng-click="editFavorites()"><i class="glyphicon glyphicon-heart"></i> Edit Favorites</button>
+            </div>
+
             <div class="scroll-area">
                 <div class="station-container">
 
@@ -68,11 +78,12 @@
 
                     <station-cell ng-if="ui.refineSearch == 'favorites'"
                                   ng-repeat="grid in gridListing | filter: stationSearch"
-                                  grid="grid" listings="listHash"></station-cell>
+                                  ng-show="grid.channel.favorite == true"
+                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
 
                     <station-cell ng-if="ui.refineSearch == 'sports'"
                                   ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch"
-                                  grid="grid" listings="listHash"></station-cell>
+                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
 
                     <station-cell ng-if="ui.refineSearch == 'news'"
                                   ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch"
