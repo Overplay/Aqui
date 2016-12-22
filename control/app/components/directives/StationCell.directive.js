@@ -3,7 +3,7 @@
  */
 
 app.directive( 'stationCell',
-    function ( $log, ogProgramGuide ) {
+    function ( $log, ogProgramGuide, uibHelper ) {
         return {
             restrict:    'E',
             scope:       {
@@ -15,8 +15,12 @@ app.directive( 'stationCell',
 
 
                 scope.changeChannel = function () {
-                    $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
-                    ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
+                    uibHelper.confirmModal("Change Channel?", "Would you like to change to channel " + scope.grid.channel.channelNumber + "?", true)
+                        .then(function(){
+                            $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
+                            ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
+                        })
+
                 }
 
                 scope.displayTime = function ( timeStr) {
