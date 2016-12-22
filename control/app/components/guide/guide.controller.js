@@ -17,21 +17,15 @@ app.controller( "guideController",
                 } );
         }
 
-        // $scope.$on('$viewContentLoaded', function(){
-        //     //Here your view content is fully loaded !!
-        //     $scope.ui.loading = false;
-        // });
-        
-
         // Functions to update the listings grid automatically
-        // var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 5 min or 300000ms
+        var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 5 min or 300000ms
 
-        // $scope.$on( "$destroy",
-        //     function ( event ) {
-        //         $interval.cancel( refreshListings );
-        //         $log.debug( "destroy called - canceled listings refresh $interval" );
-        //     }
-        // );
+        $scope.$on( "$destroy",
+            function ( event ) {
+                $interval.cancel( refreshListings );
+                $log.debug( "destroy called - canceled listings refresh $interval" );
+            }
+        );
 
         loadListings();
 
