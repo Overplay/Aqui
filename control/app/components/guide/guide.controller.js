@@ -10,7 +10,7 @@ app.controller( "guideController",
 
 
         function loadListings(){
-            ogNet.getGrid(false)
+            ogNet.getGrid(true)
                 .then( function ( g ) {
                     $scope.gridListing = g;
                     $scope.ui.loading = false;
@@ -23,22 +23,17 @@ app.controller( "guideController",
         // });
         
 
-        // Functions (2) to update the listings grid automatically
-        // Erik - don't forget to inject $interval
-        var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 5 min or 300000ms
-        
+        // Functions to update the listings grid automatically
+        // var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 5 min or 300000ms
+
+        // $scope.$on( "$destroy",
+        //     function ( event ) {
+        //         $interval.cancel( refreshListings );
+        //         $log.debug( "destroy called - canceled listings refresh $interval" );
+        //     }
+        // );
+
         loadListings();
-
-        $scope.$on( "$destroy",
-            function ( event ) {
-                $interval.cancel( refreshListings );
-                $log.debug( "destroy called - canceled listings refresh $interval" );
-            }
-        );
-
-        $scope.editFavorites = function () {
-            $log.debug("editing favorites");
-        }
 
     } );
 

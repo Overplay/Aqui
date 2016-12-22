@@ -10,10 +10,11 @@ app.controller( "favoritesController",
 
 
         function loadListings(){
-            ogNet.getGrid(false)
+            ogNet.getGrid(true)
                 .then( function ( g ) {
                     $scope.gridListing = g;
                     $scope.ui.loading = false;
+                    $log.debug('loading new grid data now');
                 } );
         }
 
@@ -21,14 +22,14 @@ app.controller( "favoritesController",
         // Erik - don't forget to inject $interval
         var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 15 sec
 
-        loadListings();
-
         $scope.$on( "$destroy",
             function ( event ) {
                 $interval.cancel( refreshListings );
                 $log.debug( "destroy called - canceled listings refresh $interval" );
             }
         );
+
+        loadListings();
 
         $scope.favoriteChannel = function ( channel ) {
             if (channel.favorite) {
@@ -51,6 +52,9 @@ app.controller( "favoritesController",
                 if ($scope.gridListing[i].channel.channelNumber == channel.channelNumber) {
                     $scope.gridListing[i].channel.favorite = changeTo;
                     $log.debug('channel favorite changed locally');
+
+                    localStorage.setItem('grid', JSON.stringify( $scope.gridListing ));
+
                     return true;
                 }
             }
