@@ -1,9 +1,9 @@
 <style>
     .station-cell {
-        width: 90vw;
+        width: 91vw;
         /*height: 30vw;*/
         position: relative;
-        /*border: 1px solid lightblue;*/
+        border: 1px solid lightblue;
         margin-bottom: 5vw;
     }
 
@@ -30,9 +30,9 @@
         text-align: left;
         /*margin-top: 7vw;*/
         overflow: hidden;
-        width: 68vw;
+        width: 60vw;
         display: inline-block;
-        /*border: 1px solid orange;*/
+        border: 1px solid orange;
 
         position: absolute;
         top: 2vh;
@@ -42,12 +42,12 @@
     .listings {
         display: block;
         margin-top: 1vw;
-        /*border: 1px solid mediumvioletred;*/
+        border: 1px solid mediumvioletred;
 
         position: relative;
         /*top: 6vh;*/
         left: 18vw;
-        width: 68vw;
+        width: 73vw;
     }
 
     .listing-time {
@@ -58,7 +58,7 @@
         display: inline-block;
         width: 10vw;
         text-align: left;
-        /*border: 1px solid red;*/
+        border: 1px solid red;
     }
 
     .listing-name {
@@ -66,9 +66,20 @@
         overflow: hidden;
         white-space: nowrap;
         display: inline-block;
-        width: 55vw;
+        width: 60vw;
         text-align: left;
-        /*border: 1px solid red;*/
+        border: 1px solid red;
+    }
+
+    .favorites-box {
+        text-align: left;
+        font-size: 5vh;
+        position: absolute;
+        top: 2vh;
+        left: 80vw;
+        width: 10vw;
+        height: 10vw;
+        border: 1px solid hotpink;
     }
 
 </style>
@@ -87,6 +98,11 @@
 
     <div class="channel-name" ng-if="!grid.channel.callsign">
         {{ grid.channel.channelNumber}}
+    </div>
+
+    <div class="favorites-box" ng-click="favoriteChannel( grid.channel ); $event.stopPropagation();">
+        <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
+        <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
     </div>
 
     <div class="listings">
