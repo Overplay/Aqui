@@ -49,10 +49,9 @@ app.directive( 'stationCell',
                 };
 
                 var locallyChangeFavorite = function (channel, changeTo) {
-                    var getGrid = localStorage.getItem("grid");
+                    var localGrid = JSON.parse( localStorage.getItem("grid") );
 
-                    if ( getGrid ) {
-                        var localGrid = JSON.parse( getGrid );
+                    if ( localGrid ) {
                         for (var i = 0; i < localGrid.length; i++) {
                             if (localGrid[i].channel.channelNumber == channel.channelNumber) {
                                 localGrid[i].channel.favorite = changeTo;

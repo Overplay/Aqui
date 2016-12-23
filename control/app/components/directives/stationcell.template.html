@@ -1,6 +1,6 @@
 <style>
     .station-cell {
-        width: 91vw;
+        width: 92vw;
         /*height: 30vw;*/
         position: relative;
         border: 1px solid lightblue;
@@ -106,7 +106,7 @@
     </div>
 
     <div class="listings">
-        <div class="listing-time" ng-hide="search">
+        <div class="listing-time" ng-if="!search">
             Now
         </div>
 
@@ -118,7 +118,7 @@
             {{ grid.listings[0].showName }}
         </div>
 
-        <div ng-show="search" ng-repeat="listing in grid.listings | filter: search">
+        <div ng-if="search" ng-repeat="listing in grid.listings | filter: search">
             <div class="listing-time">
                 {{ displayTime(listing.listDateTime) }}
             </div>

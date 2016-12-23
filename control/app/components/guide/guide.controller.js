@@ -8,11 +8,13 @@ app.controller( "guideController",
         $log.info( "Loading guideController" );
         $scope.ui = { loading: true, loadError: false, refineSearch: 'all' };
 
+        var gridListing = [];
 
         function loadListings(){
             ogNet.getGrid(true)
                 .then( function ( g ) {
                     $scope.gridListing = g;
+                    // gridListing = g;
                     $scope.ui.loading = false;
                 } );
         }
@@ -27,7 +29,11 @@ app.controller( "guideController",
             }
         );
 
+
+
         loadListings();
+
+        // $scope.currGrid = gridListing.splice(0, 20);
 
     } );
 
