@@ -9,7 +9,7 @@
  **********************************/
 
 
-var app = angular.module('ogConApp', [ 'ui.router', 'ui.bootstrap', 'ngAnimate', 'toastr', 'ourglassAPI', 'ngCookies']);
+var app = angular.module('ogConApp', [ 'ui.router', 'ui.bootstrap', 'ui.ogMobile', 'ngAnimate', 'toastr', 'ourglassAPI', 'ngCookies']);
 
 
 app.config( [ '$cookiesProvider', function ( $cookiesProvider ) {

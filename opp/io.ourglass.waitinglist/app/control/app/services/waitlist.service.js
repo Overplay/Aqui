@@ -2,7 +2,7 @@
  * Created by mkahn on 11/5/16.
  */
 
-app.factory( 'waitList', function ( $log, $http, $timeout, $rootScope, ogControllerModel, $q ) {
+app.factory( 'waitList', function ( $log, $http, $timeout, $rootScope, ogAPI, $q ) {
 
     $log.debug( "Loading waitlist service." );
     
@@ -50,8 +50,8 @@ app.factory( 'waitList', function ( $log, $http, $timeout, $rootScope, ogControl
 
 
     function updateRemoteModel() {
-        ogControllerModel.model.parties = _currentList;
-        ogControllerModel.save();
+        ogAPI.model.parties = _currentList;
+        ogAPI.save();
         notify();
     }
 
@@ -119,15 +119,18 @@ app.factory( 'waitList', function ( $log, $http, $timeout, $rootScope, ogControl
         return _currentList;
     }
 
-    ogControllerModel.init( {
+    ogAPI.init( {
         appName:      "io.ourglass.waitinglist",
+        appType: 'mobile',
         dataCallback: handleUpdate
     } );
 
     service.loadModel = function(){
     
+        $log.debug("Loading model");
+    
         if (!_currentList){
-            return ogControllerModel.loadModel()
+            return ogAPI.loadModel()
                 .then( function ( modelData ) {
                     _currentList = modelData.parties;
                     notify();
@@ -138,6 +141,8 @@ app.factory( 'waitList', function ( $log, $http, $timeout, $rootScope, ogControl
         }
         
     }
+    
+    $log.debug("Done initializing waitlist service.");
 
     return service;
 

@@ -1,0 +1,23 @@
+{
+  "appId": "io.ourglass.ogcrawler",
+  "appType": "crawler",
+  "appName": "OGCrawler",
+
+  "icon": "space.png",
+  "iconLabel": "Crawler",
+
+  "primaryColorHex": "#00b300",
+  "secondaryColorHex": "#006600",
+
+  "height": 12,
+
+  "initialValue": {
+    "messages": ["Free beer tomorrow", "One bourbon, one scotch, one beer. Half off."],
+    "comingUpMessages": [ "1:00 - LAC vs GSW", "3:00 - Postgame"],
+    "twitterQueries": [ "@Warriors" ]
+  },
+
+  "version": 1.0,
+  "installDate": 1475073632093
+
+}

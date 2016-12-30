@@ -18,5 +18,5 @@
 
 var app = angular.module('optvWaitListApp', [
     'yaru22.angular-timeago',
-    'ngAnimate', 'ui.router', 'ui.bootstrap', 'ourglassAPI'
+    'ngAnimate', 'ui.router', 'ui.bootstrap', 'ourglassAPI', 'ui.ogMobile'
 ]);

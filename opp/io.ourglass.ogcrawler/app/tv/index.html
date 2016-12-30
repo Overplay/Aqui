@@ -14,11 +14,13 @@
     <script src="../../../../common/bower_components/angular-animate/angular-animate.min.js"></script>
 
     <!-- App Main and AngularJS Routes -->
-    <script src="../../../../common/js/ogAPI.js"></script>
-    <script src="app/optvDailySpecialsApp.module.js"></script>
+    <script src="../../../../common/js/ogAPI2.js"></script>
+    <script src="app/ogCrawlerTV.module.js"></script>
 
     <!-- Controllers -->
     <script src="app/components/crawler/CrawlerController.js"></script>
+    <script src="app/components/crawler/vrtmessage.directive.js"></script>
+    <script src="app/components/crawler/hzcrawler.directive.js"></script>
 
     <!-- App Specific and Overridden CSS -->
     <link href="assets/css/ogcrawler.css" rel="stylesheet"/>
@@ -29,7 +31,21 @@
 
 <body ng-controller="crawlerController">
 
-<pub-crawler-xs og-model="crawlerModel"></pub-crawler-xs>
+<!--<vert-msg-box msg-blocks="vertMessages"></vert-msg-box>-->
+<!--<pub-crawler-xs og-model="crawlerModel"></pub-crawler-xs>-->
+
+<div class="left-scroller-holder">
+
+
+    <vert-msg-box msg-blocks="vertMessages"></vert-msg-box>
+    <hz-crawler messages="crawlerMessages"></hz-crawler>
+
+    <div class="advert-holder">
+        <!--<img class="advert-holder-img" src="assets/img/OG_LOGO.png"/>-->
+        <og-advert type="crawler" interval="30000"></og-advert>
+    </div>
+</div>
+
 
 </body>
 </html>

@@ -6,30 +6,38 @@ app.controller( "guideController",
     function ( $scope, $timeout, ogDevice, $log, $interval, uibHelper, $cookies, ogNet ) {
 
         $log.info( "Loading guideController" );
-        $scope.ui = { loading: true, loadError: false, refineSearch: 'all' };
-
+        $scope.ui = { loadError: false, refineSearch: 'all', isPaired: ogDevice.isPairedToSTB };
 
         function loadListings(){
             ogNet.getGrid(false)
                 .then( function ( g ) {
                     $scope.gridListing = g;
-                    $scope.ui.loading = false;
-                } );
+                } )
+                .catch(function(err){
+                    $scope.ui.loadError = true;
+                })
+                .finally( hud.dismiss );
         }
         
 
         // Functions (2) to update the listings grid automatically
         // Erik - don't forget to inject $interval
-        var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 5 min or 300000ms
         
-        loadListings();
+        if (ogDevice.isPairedToSTB){
+        
+            var refreshListings = $interval( loadListings, 15000 ); // $interval to run every 5 min or 300000ms
 
-        $scope.$on( "$destroy",
-            function ( event ) {
-                $interval.cancel( refreshListings );
-                $log.debug( "destroy called - canceled listings refresh $interval" );
-            }
-        );
+            var hud = uibHelper.curtainModal( 'Loading Guide' );
+            loadListings();
+
+            $scope.$on( "$destroy",
+                function ( event ) {
+                    $interval.cancel( refreshListings );
+                    $log.debug( "destroy called - canceled listings refresh $interval" );
+                }
+            );
+        }
+       
 
 
     } );

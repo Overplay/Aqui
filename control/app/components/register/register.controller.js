@@ -15,6 +15,8 @@ app.controller( "registerController",
         
         $scope.device = ogDevice;
         
+        $scope.system = { regcode: ""}
+        
         if (ogDevice.venue){
             $log.debug("Already regged");
             uibHelper.confirmModal("Re-Register?", 
@@ -30,15 +32,23 @@ app.controller( "registerController",
 
         $scope.register = function () {
             $log.debug( "Registering using code." );
-            ogNet.register( $scope.system.regCode )
+            uibHelper.curtainModal('Registering...');
+            ogNet.register( $scope.system.regcode )
                 .then( function ( resp ) {
                     //We got a good response, so we should be registered
-                    uibHelper.headsupModal( "System Registered", "Thanks for using Ourglass!" );
+                    uibHelper.headsupModal( "System Registered", "Thanks for using Ourglass!" )
+                        .then(function(){
+                            $state.transitionTo( 'dashboard' );
+                        })
                 } )
-                .catch( function ( err ) {
-                    uibHelper.headsupModal( "Something Bad Happened!", "Could not register Ourglass system. Please try again!" );
+                .catch( function ( error ) {
+                    var msg = error.data && error.data.error;
+                    
+                    uibHelper.headsupModal( "Something Bad Happened!", 
+                        msg ? msg: 'Lost connection to system. Check WiFi.' );
 
                 } )
+                .finally(uibHelper.dismissCurtain);
 
         }
         

@@ -4,14 +4,8 @@
 
 app.controller("addController", function ($scope, $log, waitList, $state ) {
 
-        $log.info("Loading adController");
-
- 
-
+        $log.info("Loading addController");
         $scope.addErrors = { name: false, partySize: false, nameExists: false, phone: false}
-  
-
-
 
         function sendTextToParty(party) {
             // var phone = party.phone;
@@ -41,7 +35,7 @@ app.controller("addController", function ($scope, $log, waitList, $state ) {
                 name: '',
                 partySize: undefined,
                 dateCreated: undefined,
-                phone: undefined,
+                mobile: undefined,
                 tableReady: false
             };
         }
@@ -66,11 +60,13 @@ app.controller("addController", function ($scope, $log, waitList, $state ) {
                 $state.go('home');
                 return;
             }
+            
+            $log.debug("Provided phone number is "+$scope.newParty.mobile);
 
-            if ( $scope.newParty.name.trim() && $scope.newParty.partySize > 0 && verifyPhoneNumber($scope.newParty.phone)) {
+            if ( $scope.newParty.name.trim() && $scope.newParty.partySize > 0 && verifyPhoneNumber($scope.newParty.mobile)) {
 
-                $scope.newParty.phone = formatPhoneNumber( $scope.newParty.phone );
-                $log.debug("formatted phone number: " + $scope.newParty.phone );
+                $scope.newParty.mobile = formatPhoneNumber( $scope.newParty.mobile );
+                $log.debug("formatted phone number: " + $scope.newParty.mobile );
 
                 if ( waitList.addParty( $scope.newParty )){
                     $log.debug("Party added OK");
@@ -83,11 +79,11 @@ app.controller("addController", function ($scope, $log, waitList, $state ) {
                 // Fill in all fields
                 if (!$scope.newParty.name.trim()) $scope.addErrors.name = true;
                 if (!$scope.newParty.partySize) $scope.addErrors.partySize = true;
-                if (!verifyPhoneNumber($scope.newParty.phone)) $scope.addErrors.phone = true;
+                if (!verifyPhoneNumber($scope.newParty.mobile)) $scope.addErrors.mobile = true;
             }
         }
 
- 
+        emptyNewParty();
  
 
     });

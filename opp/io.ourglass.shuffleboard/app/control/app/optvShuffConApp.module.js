@@ -10,7 +10,7 @@
 
 
 var app = angular.module('optvShuffConApp', [
-    'ourglassAPI'
+    'ourglassAPI', 'ui.bootstrap', 'ui.ogMobile'
 ]);
 
 

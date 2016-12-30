@@ -3,22 +3,22 @@
  */
 
 app.controller( "settingsController",
-    function ( $scope, ogDevice, $log, uibHelper, $cookies, ogNet ) {
+    function ( $scope, ogDevice, $log, uibHelper, $cookies, ogNet, $timeout ) {
 
         $log.info( "Loading settingsController" );
         $scope.ui = { loading: true, loadError: false };
-
+        
         $scope.system = { name: ogDevice.name, locationWithinVenue: ogDevice.locationWithinVenue };
 
         $scope.updateSystemName = function () {
             uibHelper.confirmModal( "Update?", "Are you sure you want to update the name and location?", true )
                 .then( function ( resp ) {
                     $log.debug( "Responded yes..." );
-                    $scope.hudMessage = "Updating...";
-                    $scope.ui.showHud = true;
+                    var hud = uibHelper.curtainModal('Updating...');
                     ogNet.updateSystemNameLocation( $scope.system.name, $scope.system.locationWithinVenue )
                         .then( function ( response ) {
-                            $scope.ui.showHud = false;
+                            hud.dismiss();
+                            uibHelper.headsupModal('Settings Changed', 'Name and or location successfully updated.');
                         } )
                 } )
         }

@@ -2,11 +2,13 @@
  * Created by mkahn on 4/28/15.
  */
 
-app.controller("homeController", function ($scope, $log, waitList, currentList, $interval ) {
+app.controller("homeController", function ($scope, $log, waitList, currentList, $interval, uibHelper ) {
 
         $log.info("Loading homeController");
         
         $scope.ui = { firstLoad: true };
+        
+        uibHelper.curtainModal('Loading Waitlist');
         
         $scope.parties = currentList;
         
@@ -16,6 +18,9 @@ app.controller("homeController", function ($scope, $log, waitList, currentList, 
                 .then( function(list){
                     $scope.parties = list;
                     $scope.ui.firstLoad = false;
+                })
+                .finally( function(){
+                    uibHelper.dismissCurtain();
                 })
             
         }, 2000);

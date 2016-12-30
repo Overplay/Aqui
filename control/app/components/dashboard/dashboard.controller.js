@@ -30,7 +30,7 @@ app.controller( "dashboardController",
         if (!ogDevice.venue){
             uibHelper.confirmModal("Register?", "This Ourglass device has not been registered with a venue. Would you like to do that now?", true)
                 .then(function(){
-                    $state.transitionTo( 'settings', { arg: 'arg' } );
+                    $state.transitionTo( 'register', { arg: 'arg' } );
                 })
         }
 

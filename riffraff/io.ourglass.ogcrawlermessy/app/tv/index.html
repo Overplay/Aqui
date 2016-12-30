@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="optvDailySpecialsApp">
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=1280">
+
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+    <script src="../../../../common/bower_components/angular-animate/angular-animate.min.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="../../../../common/js/ogAPI.js"></script>
+    <script src="app/optvDailySpecialsApp.module.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/components/crawler/CrawlerController.js"></script>
+
+    <!-- App Specific and Overridden CSS -->
+    <link href="assets/css/ogcrawler.css" rel="stylesheet"/>
+
+
+    <title>Crawler (TV)</title>
+</head>
+
+<body ng-controller="crawlerController">
+
+<pub-crawler-xs og-model="crawlerModel"></pub-crawler-xs>
+
+</body>
+</html>

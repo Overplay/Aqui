@@ -3,7 +3,7 @@
  */
 
 app.controller( "shuffconController",
-    function ($scope, $timeout, $http, $log, ogControllerModel ) {
+    function ($scope, $timeout, $http, $log, ogControllerModel, uibHelper ) {
 
         $log.info( "Loading shuffconController" );
 
@@ -39,10 +39,14 @@ app.controller( "shuffconController",
 
 
         $scope.resetScores = function () {
-            ogControllerModel.model.red = 0;
-            ogControllerModel.model.blue = 0;
-            ogControllerModel.save();
-            $scope.ui = { localRed: 0, localBlue: 0 };
+            uibHelper.confirmModal('Confirm','Are you sure you want to clear the scores?', true)
+                .then(function(){
+                    ogControllerModel.model.red = 0;
+                    ogControllerModel.model.blue = 0;
+                    ogControllerModel.save();
+                    $scope.ui = { localRed: 0, localBlue: 0 };
+                })
+            
 
         }
 

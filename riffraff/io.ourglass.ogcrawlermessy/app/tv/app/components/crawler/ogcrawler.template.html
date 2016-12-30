@@ -1,0 +1,18 @@
+<div class="left-scroller-holder">
+
+    <div class="scroll-window">
+        <ul id="scroller-ul" ng-style="leftPos" class="hwlayer">
+            <li ng-repeat="msg in displayMessages track by $index" ng-style="msg.color">{{ msg.message }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon ion-record small"></i>&nbsp;</li>
+        </ul>
+    </div>
+
+    <div class="next-up-holder font-smoothing">
+        <h1 class="name-change font-smoothing" ng-class="{'hide': nup.isChangingTitle}">{{ nup.title }}</h1>
+        <p ng-class="{ 'scroll-in': nup.scrollin }" class="next-up hwlayer">{{ nup.message }}</p>
+    </div>
+
+    <div class="advert-holder">
+        <!--<img class="advert-holder-img" src="assets/img/OG_LOGO.png"/>-->
+        <og-advert type="crawler" interval="30000"></og-advert>
+    </div>
+</div>

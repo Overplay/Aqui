@@ -3,7 +3,7 @@
  */
 
 app.controller("dsConController",
-    function ($scope, $timeout, $interval, $http, ogControllerModel) {
+    function ($scope, ogAPI, uibHelper) {
 
         $scope.messages = [];
         $scope.comingUpMessages = [];
@@ -33,16 +33,15 @@ app.controller("dsConController",
 
         function initialize() {
 
-            ogControllerModel.init({
+            ogAPI.init({
+                appType: 'mobile',
                 appName: "io.ourglass.ogcrawler",
                 endpoint: "control",
                 dataCallback: modelUpdate
             });
-            
-            ogControllerModel.loadModel()
-                .then( function(data){
-                    modelUpdate(data);
-                });
+
+            ogAPI.loadModel()
+                .then( modelUpdate );
 
         }
 
@@ -73,14 +72,27 @@ app.controller("dsConController",
         };
 
         $scope.update = function () {
-            ogControllerModel.model.messages = $scope.messages;
-            ogControllerModel.model.comingUpMessages = $scope.comingUpMessages;
+            ogAPI.model.messages = $scope.messages;
+            ogAPI.model.comingUpMessages = $scope.comingUpMessages;
 
-            ogControllerModel.model.twitterQueries = $scope.twitterQueries;
-            ogControllerModel.save();
-
-            ogControllerModel.updateTwitterQuery(ogControllerModel.model.twitterQueries);
+            ogAPI.model.twitterQueries = $scope.twitterQueries;
+            
+            uibHelper.curtainModal('Saving...');
+            ogAPI.save()
+                .then( function(){
+                    return ogAPI.updateTwitterQuery( ogAPI.model.twitterQueries );
+                })
+                .finally( uibHelper.dismissCurtain );
+            
         };
+
+        // $scope.$watch('messageForm.dirty', function(nval){
+        //
+        //     if (nval){
+        //         $scope.update();
+        //     }
+        //
+        // });
 
         initialize();
 

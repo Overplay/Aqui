@@ -31,8 +31,12 @@
 </style>
 
 <div class="container">
-    <div class="jumbotron" ng-if="ui.loading"><h3 style="color: black; text-align: center;">Loading...</h3></div>
-    <div class="row" ng-if="!ui.loading">
+    <div class="row" ng-show="!ui.isPaired">
+        <div class="offset-col-1 col-md-10" style="margin-top: 10px;">
+            <p>This Ourglass system is not paired with a satellite or cable box. To control the TV through Ourglass, please pair this system.</p>
+        </div>
+    </div>
+    <div class="row" ng-show="ui.isPaired">
         <div class="col-md-12">
             <div class="og-secondary-tab-bar">
                 <a class="btn btn-default" ng-click="ui.refineSearch = 'all'"

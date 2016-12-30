@@ -1,7 +1,7 @@
 {
   "appId": "io.ourglass.ogcrawler",
   "appType": "crawler",
-  "appName": "OGCrawler",
+  "appName": "Crawler",
 
   "icon": "space.png",
   "iconLabel": "Crawler",
@@ -12,12 +12,10 @@
   "height": 12,
 
   "initialValue": {
-    "messages": ["Free beer tomorrow", "One bourbon, one scotch, one beer. Half off."],
-    "comingUpMessages": [ "1:00 - LAC vs GSW", "3:00 - Postgame"],
+    "messages": ["I am crawler 2", "The best crawler yet"],
     "twitterQueries": [ "@Warriors" ]
   },
 
   "version": 1.0,
   "installDate": 1475073632093
-
 }

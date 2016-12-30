@@ -50,7 +50,7 @@ app.factory('ogNet', function($log, $http, $q){
     
     
     service.register = function(regcode){
-        return $http.post( '/api/system/regcode?regcode=' + $scope.system.regCode );
+        return $http.post( '/api/system/regcode?regcode=' + regcode.toUpperCase() );
     }
 
     return service;

@@ -1,0 +1,51 @@
+<style>
+    /* per anti-jank article on google */
+
+    .hwlayer {
+        will-change: transform;
+        transform: translateZ(0);
+    }
+
+    .scroll-window {
+        position: absolute;
+        left: 19%;
+        width: 62%;
+        /*border-right: 1px solid rgba(255, 255, 255, 0.15);*/
+        overflow: hidden;
+        /*background-color: #0b6380;*/
+    }
+
+
+
+    ul {
+        display: inline-block;
+        white-space: nowrap;
+        padding: 4px 0;
+        position: relative;
+        z-index: 10;
+        top: -12px;
+        text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
+        /*border: 2px solid red;*/
+    }
+
+    li {
+        height: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        display: inline-block;
+        margin: 0 20px;
+        font-size: 28px;
+        color: white;
+    }
+
+    .hide {
+        opacity: 0;
+    }
+</style>
+
+<div class="scroll-window">
+    <ul id="scroller-ul" ng-style="leftPos" class="hwlayer">
+        <li ng-repeat="msg in displayMessages track by $index" ng-style="msg.style">{{ msg.text }}&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    </ul>
+</div>
