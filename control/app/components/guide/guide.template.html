@@ -17,15 +17,43 @@
 
     .scroll-area {
         /*The height must be manually updated determined by the screen size*/
-        height: 77vh;
-        /*background-color: green;*/
+        height: 73vh;
+        /*height: 65vh;*/
+        background-color: green;
         overflow-y: scroll;
     }
 
-    .station-container {
-        float: left;
-        display: inline;
+    /*.station-container {*/
+        /*float: left;*/
+        /*display: inline;*/
         /*border: 1px solid green;*/
+    /*}*/
+
+    .loading-box {
+        color: black;
+        text-align: center;
+        font-size: 2em;
+    }
+
+    .current-channel {
+        margin-top: 1vh;
+        border: 1px solid hotpink;
+    }
+
+    .search-box {
+        margin-top: 1vh;
+        margin-bottom: 0;
+        border: 1px solid red;
+    }
+
+    .pagination-controls {
+        border: 1px solid red;
+    }
+
+    .pagination-controls .btn {
+        background-color: rgba(12, 184, 215, 0.76);
+        color: #d0d0d0;
+
     }
 
 </style>
@@ -48,34 +76,64 @@
                 <a class="btn btn-default" ng-click="ui.refineSearch = 'news'"
                    ng-class="{ 'tabon': ui.refineSearch == 'news' }"> NEWS </a>
             </div>
-            <form style="margin-top: 10px;">
+
+            <div class="current-channel">
+                Current Channel:
+            </div>
+
+            <form class="search-box">
                 <div class="form-group">
-                    <label for="inputStationName">Search by anything...</label>
+                    <label style="font-weight: normal" for="inputStationName">Search by anything...</label>
                     <input type="text" class="form-control" id="inputStationName" placeholder="Station Name"
-                           ng-model="stationSearch">
+                           ng-model="stationSearch" ng-model-options="{ debounce: 200 }">
                 </div>
             </form>
+
             <div class="scroll-area">
-                <div class="station-container">
+            <!--<div id="scroller" infinite-scroll style="max-height: 73vh; background-color: green; overflow-y: scroll;" currGrid="currList" masterGrid="testList">-->
+                <!--<div class="station-container">-->
+
+                <!--<div id="test" style="height: 400px; border: 1px solid red" ng-repeat="test in currList">-->
+                    <!--Test - {{ test.num }}-->
+                <!--</div>-->
 
                     <station-cell ng-if="ui.refineSearch == 'all'"
-                                  ng-repeat="grid in gridListing | filter: stationSearch"
+                                  ng-repeat="grid in gridListing | filter: stationSearch | limitTo: 20"
                                   grid="grid" search="stationSearch" listings="listHash"></station-cell>
 
                     <station-cell ng-if="ui.refineSearch == 'favorites'"
-                                  ng-repeat="grid in gridListing | filter: stationSearch"
-                                  grid="grid" listings="listHash"></station-cell>
+                                  ng-repeat="grid in gridListing | filter: stationSearch |  limitTo: 20"
+                                  ng-show="grid.channel.favorite == true"
+                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
 
                     <station-cell ng-if="ui.refineSearch == 'sports'"
-                                  ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch"
-                                  grid="grid" listings="listHash"></station-cell>
+                                  ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch | limitTo: 20"
+                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
 
                     <station-cell ng-if="ui.refineSearch == 'news'"
-                                  ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch"
+                                  ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch | limitTo: 20"
                                   grid="grid" listings="listHash"></station-cell>
 
-                </div>
+                <!--</div>-->
             </div>
+
+            <!--<div class="pagination-controls" ng-if="ui.refineSearch != 'favorites'">-->
+                <!--<dir-pagination-controls></dir-pagination-controls>-->
+            <!--</div>-->
+
+            <!--<div class="pagination-controls">-->
+                <!--<dir-pagination-controls></dir-pagination-controls>-->
+                <!--<button class="btn btn-default"-->
+                        <!--ng-disabled="currentPage == 0"-->
+                        <!--ng-click="currentPage=currentPage-1">-->
+                    <!--Previous-->
+                <!--</button>-->
+                <!--<button class="btn btn-default"-->
+                        <!--ng-disabled="currentPage >= gridListing.length/pageSize - 1"-->
+                        <!--ng-click="currentPage=currentPage+1">-->
+                    <!--Next-->
+                <!--</button>-->
+            <!--</div>-->
         </div>
 
     </div>
