@@ -32,6 +32,7 @@ app.directive( 'stationCell',
                     return hour + ':' + (min < 10 ? '0' + min : min);
                 }
 
+
                 scope.favoriteChannel = function ( channel ) {
                     if (channel.favorite) {
                         uibHelper.confirmModal("Remove from favorites?", "Would you like to remove this channel from your favorites?", true)

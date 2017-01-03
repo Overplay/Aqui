@@ -1,19 +1,30 @@
 <style>
     .station-cell {
         width: 92vw;
-        /*height: 30vw;*/
         position: relative;
-        border: 1px solid lightblue;
-        margin-bottom: 5vw;
+        /*border: 1px solid lightblue;*/
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-top: 5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+        display: flex;
+    }
+
+    .station-left-col {
+        flex-basis: 15vw;
+        /*border: 1px solid yellow;*/
+    }
+
+    .station-right-col {
+        flex-grow: 1;
+        /*border: 1px solid #f820ff;*/
     }
 
     .station-logo-holder {
         background-color: white;
-        width: 15vw;
-        height: 15vw;
-        display: inline-block;
         margin-right: 3vw;
         border-radius: 5px;
+        height: 15vw;
     }
 
     .station-icon {
@@ -24,6 +35,14 @@
         padding: 5px;
     }
 
+    .flex {
+        display: flex;
+    }
+
+    .flex-col {
+        flex-direction: column;
+    }
+
     .channel-name {
         font-weight: 400;
         font-size: 3vh;
@@ -31,55 +50,33 @@
         /*margin-top: 7vw;*/
         overflow: hidden;
         width: 60vw;
-        display: inline-block;
-        border: 1px solid orange;
+        /*border: 1px solid orange;*/
 
-        position: absolute;
-        top: 2vh;
-        left: 18vw;
-    }
-
-    .listings {
-        display: block;
-        margin-top: 1vw;
-        border: 1px solid mediumvioletred;
-
-        position: relative;
-        /*top: 6vh;*/
-        left: 18vw;
-        width: 73vw;
     }
 
     .listing-time {
-        float: left;
-        margin-top: 1vw;
+
         margin-right: 2vw;
-        overflow: hidden;
-        display: inline-block;
-        width: 10vw;
         text-align: left;
-        border: 1px solid red;
+        /*border: 1px solid red;*/
+        color: #969696;
+        font-weight: 200;
     }
 
     .listing-name {
-        margin-top: 1vw;
         overflow: hidden;
         white-space: nowrap;
-        display: inline-block;
-        width: 60vw;
+        /*width: 60vw;*/
         text-align: left;
-        border: 1px solid red;
+        /*border: 1px solid red;*/
     }
 
     .favorites-box {
         text-align: left;
         font-size: 5vh;
-        position: absolute;
-        top: 2vh;
-        left: 80vw;
         width: 10vw;
         height: 10vw;
-        border: 1px solid hotpink;
+        /*border: 1px solid hotpink;*/
     }
 
 </style>
@@ -87,45 +84,57 @@
 
 <div class="station-cell" ng-click="changeChannel()">
 
-    <div class="station-logo-holder">
-        <img class="station-icon" og-fallback-img="assets/img/default_station_logo.png"
-             ng-src="{{grid.channel.logoUrl}}"/>
-    </div>
-
-    <div class="channel-name" ng-if="grid.channel.callsign">
-        {{ grid.channel.callsign }} - {{ grid.channel.channelNumber}}
-    </div>
-
-    <div class="channel-name" ng-if="!grid.channel.callsign">
-        {{ grid.channel.channelNumber}}
-    </div>
-
-    <div class="favorites-box" ng-click="favoriteChannel( grid.channel ); $event.stopPropagation();">
-        <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
-        <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
-    </div>
-
-    <div class="listings">
-        <div class="listing-time" ng-if="!search">
-            Now
+    <div class="station-left-col">
+        <div class="station-logo-holder">
+            <img class="station-icon" og-fallback-img="assets/img/default_station_logo.png"
+                 ng-src="{{grid.channel.logoUrl}}"/>
         </div>
+    </div>
 
-        <div class="listing-name" ng-if="grid.listings.length == 0 && !search">
-            Unknown Programming
-        </div>
+    <div class="station-right-col">
 
-        <div class="listing-name" ng-hide="grid.listings.length == 0 || search">
-            {{ grid.listings[0].showName }}
-        </div>
+        <div class="flex">
 
-        <div ng-if="search" ng-repeat="listing in grid.listings | filter: search">
-            <div class="listing-time">
-                {{ displayTime(listing.listDateTime) }}
+            <div class="channel-name" ng-if="grid.channel.callsign">
+                {{ grid.channel.callsign }} - {{ grid.channel.channelNumber}}
             </div>
-            <div class="listing-name">
-                {{ listing.showName }}
+
+            <div class="channel-name" ng-if="!grid.channel.callsign">
+                {{ grid.channel.channelNumber}}
             </div>
+
+            <div class="favorites-box" ng-click="favoriteChannel( grid.channel ); $event.stopPropagation();">
+                <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
+                <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
+            </div>
+
+        </div>
+        <div class="flex flex-col">
+
+            <div class="flex">
+                <div class="listing-time" ng-if="!search">On
+                Now</div>
+
+                <div class="listing-name" ng-if="grid.listings.length == 0 && !search">
+                    Unknown
+                    Programming
+                </div>
+
+                <div class="listing-name" ng-hide="grid.listings.length == 0 || search">
+                    {{ grid.listings[0] | smartTitle }}
+                </div>
+            </div>
+            <div class="flex" ng-if="search" ng-repeat="listing in grid.listings | filter: search">
+                <div class="listing-time">
+                    {{ displayTime(listing.listDateTime) }}
+                </div>
+                <div class="listing-name">
+                    {{ listing | smartTitle }}
+                </div>
+            </div>
+
+
         </div>
     </div>
-
+</div>
 </div>

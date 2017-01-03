@@ -19,7 +19,7 @@
         /*The height must be manually updated determined by the screen size*/
         height: 73vh;
         /*height: 65vh;*/
-        background-color: green;
+        /*background-color: green;*/
         overflow-y: scroll;
     }
 
@@ -37,17 +37,17 @@
 
     .current-channel {
         margin-top: 1vh;
-        border: 1px solid hotpink;
+        /*border: 1px solid hotpink;*/
     }
 
     .search-box {
         margin-top: 1vh;
         margin-bottom: 0;
-        border: 1px solid red;
+        /*border: 1px solid red;*/
     }
 
     .pagination-controls {
-        border: 1px solid red;
+        /*border: 1px solid red;*/
     }
 
     .pagination-controls .btn {
@@ -67,13 +67,13 @@
     <div class="row" ng-show="ui.isPaired">
         <div class="col-md-12">
             <div class="og-secondary-tab-bar">
-                <a class="btn btn-default" ng-click="ui.refineSearch = 'all'"
+                <a class="btn btn-default" ng-click="refineSearch('all')"
                    ng-class="{ 'tabon': ui.refineSearch == 'all' }"> ALL </a>
-                <a class="btn btn-default" ng-click="ui.refineSearch = 'favorites'"
+                <a class="btn btn-default" ng-click="refineSearch('favorites')"
                    ng-class="{ 'tabon': ui.refineSearch == 'favorites' }"> FAVORITES </a>
-                <a class="btn btn-default" ng-click="ui.refineSearch = 'sports'"
+                <a class="btn btn-default" ng-click="refineSearch('sports')"
                    ng-class="{ 'tabon': ui.refineSearch == 'sports' }"> SPORTS </a>
-                <a class="btn btn-default" ng-click="ui.refineSearch = 'news'"
+                <a class="btn btn-default" ng-click="refineSearch('news')"
                    ng-class="{ 'tabon': ui.refineSearch == 'news' }"> NEWS </a>
             </div>
 
@@ -85,11 +85,13 @@
                 <div class="form-group">
                     <label style="font-weight: normal" for="inputStationName">Search by anything...</label>
                     <input type="text" class="form-control" id="inputStationName" placeholder="Station Name"
-                           ng-model="stationSearch" ng-model-options="{ debounce: 200 }">
+                           ng-model="stationSearch" ng-model-options="{ debounce: 100 }">
                 </div>
             </form>
 
-            <div class="scroll-area">
+            <div class="scroll-area" scroll-window window-size="30"
+                edge-callback="atEdge"
+                limits="scrollLimits" >
             <!--<div id="scroller" infinite-scroll style="max-height: 73vh; background-color: green; overflow-y: scroll;" currGrid="currList" masterGrid="testList">-->
                 <!--<div class="station-container">-->
 
@@ -97,22 +99,21 @@
                     <!--Test - {{ test.num }}-->
                 <!--</div>-->
 
-                    <station-cell ng-if="ui.refineSearch == 'all'"
-                                  ng-repeat="grid in gridListing | filter: stationSearch | limitTo: 20"
-                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
+                    <station-cell ng-repeat="grid in displayedGrid"
+                                  grid="grid" search="stationSearch"></station-cell>
 
-                    <station-cell ng-if="ui.refineSearch == 'favorites'"
-                                  ng-repeat="grid in gridListing | filter: stationSearch |  limitTo: 20"
-                                  ng-show="grid.channel.favorite == true"
-                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
+                    <!--<station-cell ng-if="ui.refineSearch == 'favorites'"-->
+                                  <!--ng-repeat="grid in gridListing | filter: stationSearch |  limitTo: 20"-->
+                                  <!--ng-show="grid.channel.favorite == true"-->
+                                  <!--grid="grid" search="stationSearch" listings="listHash"></station-cell>-->
 
-                    <station-cell ng-if="ui.refineSearch == 'sports'"
-                                  ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch | limitTo: 20"
-                                  grid="grid" search="stationSearch" listings="listHash"></station-cell>
+                    <!--<station-cell ng-if="ui.refineSearch == 'sports'"-->
+                                  <!--ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch | limitTo: 20"-->
+                                  <!--grid="grid" search="stationSearch" listings="listHash"></station-cell>-->
 
-                    <station-cell ng-if="ui.refineSearch == 'news'"
-                                  ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch | limitTo: 20"
-                                  grid="grid" listings="listHash"></station-cell>
+                    <!--<station-cell ng-if="ui.refineSearch == 'news'"-->
+                                  <!--ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch | limitTo: 20"-->
+                                  <!--grid="grid" listings="listHash"></station-cell>-->
 
                 <!--</div>-->
             </div>
