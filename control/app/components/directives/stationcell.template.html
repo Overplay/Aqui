@@ -11,12 +11,12 @@
     }
 
     .station-left-col {
-        flex-basis: 15vw;
+        flex: 0 0 74px;
         /*border: 1px solid yellow;*/
     }
 
     .station-right-col {
-        flex-grow: 1;
+        flex: 3;
         /*border: 1px solid #f820ff;*/
     }
 
@@ -24,14 +24,13 @@
         background-color: white;
         margin-right: 3vw;
         border-radius: 5px;
-        height: 15vw;
+        height: 60px;
+        width: 60px;
     }
 
     .station-icon {
-        height: 15vw;
-        width: 15vw;
-        top: 0;
-        left: 0;
+        height: 60px;
+        width: 60px;
         padding: 5px;
     }
 
@@ -55,19 +54,19 @@
     }
 
     .listing-time {
-
-        margin-right: 2vw;
         text-align: left;
         /*border: 1px solid red;*/
         color: #969696;
         font-weight: 200;
+        white-space: nowrap;
+        flex: 1;
     }
 
     .listing-name {
         overflow: hidden;
         white-space: nowrap;
-        /*width: 60vw;*/
         text-align: left;
+        flex: 3;
         /*border: 1px solid red;*/
     }
 
