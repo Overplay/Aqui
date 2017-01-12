@@ -111,7 +111,16 @@ app.controller( "guideController",
             );
         }
         
-        $scope.$watch('stationSearch', filterGrid);
+        $scope.$watch('stationSearch', function() {
+            $log.debug("stationSearch Modified - need to reset the scroll position");
+
+            // This is what I want to do ... but it doesn't work right :-(
+            // Move the scroller to the top of the page, but I think that I need
+            // to somehow reset the listings that are currently on the page.
+            // document.getElementById("myScroller").scrollTop = 0;
+
+            filterGrid();
+        });
 
     } );
 

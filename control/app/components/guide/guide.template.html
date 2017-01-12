@@ -23,18 +23,6 @@
         overflow-y: scroll;
     }
 
-    /*.station-container {*/
-        /*float: left;*/
-        /*display: inline;*/
-        /*border: 1px solid green;*/
-    /*}*/
-
-    .loading-box {
-        color: black;
-        text-align: center;
-        font-size: 2em;
-    }
-
     .current-channel {
         margin-top: 1vh;
         /*border: 1px solid hotpink;*/
@@ -44,16 +32,6 @@
         margin-top: 1vh;
         margin-bottom: 0;
         /*border: 1px solid red;*/
-    }
-
-    .pagination-controls {
-        /*border: 1px solid red;*/
-    }
-
-    .pagination-controls .btn {
-        background-color: rgba(12, 184, 215, 0.76);
-        color: #d0d0d0;
-
     }
 
 </style>
@@ -89,34 +67,15 @@
                 </div>
             </form>
 
-            <div class="scroll-area" scroll-window window-size="30"
+            <div id="myScroller" class="scroll-area" scroll-window window-size="30"
                 edge-callback="atEdge"
                 limits="scrollLimits" >
-
 
                     <station-cell ng-repeat="grid in displayedGrid"
                                   grid="grid" search="stationSearch"></station-cell>
 
-
             </div>
 
-            <!--<div class="pagination-controls" ng-if="ui.refineSearch != 'favorites'">-->
-                <!--<dir-pagination-controls></dir-pagination-controls>-->
-            <!--</div>-->
-
-            <!--<div class="pagination-controls">-->
-                <!--<dir-pagination-controls></dir-pagination-controls>-->
-                <!--<button class="btn btn-default"-->
-                        <!--ng-disabled="currentPage == 0"-->
-                        <!--ng-click="currentPage=currentPage-1">-->
-                    <!--Previous-->
-                <!--</button>-->
-                <!--<button class="btn btn-default"-->
-                        <!--ng-disabled="currentPage >= gridListing.length/pageSize - 1"-->
-                        <!--ng-click="currentPage=currentPage+1">-->
-                    <!--Next-->
-                <!--</button>-->
-            <!--</div>-->
         </div>
 
     </div>
