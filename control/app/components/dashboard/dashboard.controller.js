@@ -3,7 +3,7 @@
  */
 
 app.controller( "dashboardController",
-    function ( $scope, ogDevice, $log, uibHelper,ogNet, $state ) {
+    function ( $scope, ogDevice, $log, uibHelper, ogNet, $state ) {
 
         $log.info( "Loading dashboardController" );
         
