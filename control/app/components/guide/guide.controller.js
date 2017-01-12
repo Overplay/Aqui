@@ -3,7 +3,7 @@
  */
 
 app.controller( "guideController",
-    function ( $scope, $timeout, ogDevice, $log, $interval, uibHelper, $cookies, ogNet, $filter ) {
+    function ( $scope, $timeout, ogDevice, $log, $interval, uibHelper, $cookies, ogNet, $filter, ogProgramGuide, $rootScope) {
 
         $log.info( "Loading guideController" );
         $scope.ui = { loadError: false, refineSearch: 'all', isPaired: ogDevice.isPairedToSTB };
@@ -13,6 +13,18 @@ app.controller( "guideController",
         var fullGrid = [];
         $scope.displayedGrid = [];
         $scope.scrollLimits = { top: true, bottom: false };
+
+        $rootScope.currentChannel = {};
+
+        function getCurrentChannel() {
+            return ogProgramGuide.getNowAndNext()
+                .then(function (grid) {
+                    $log.debug("Got the grid and channel.");
+                    $rootScope.currentChannel = grid.grid.channel;
+                });
+        }
+
+        getCurrentChannel();
 
         function loadListings(){
             ogNet.getGrid(false)

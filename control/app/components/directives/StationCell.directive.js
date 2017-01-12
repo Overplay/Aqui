@@ -3,7 +3,7 @@
  */
 
 app.directive( 'stationCell',
-    function ( $log, ogProgramGuide, uibHelper, $http ) {
+    function ( $log, ogProgramGuide, uibHelper, $http, $rootScope ) {
         return {
             restrict:    'E',
             scope:       {
@@ -19,6 +19,7 @@ app.directive( 'stationCell',
                         .then(function(){
                             $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
                             ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
+                            $rootScope.currentChannel = scope.grid.channel;
                         })
 
                 }
