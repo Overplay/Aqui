@@ -55,7 +55,7 @@ app.controller( "guideController",
             var channelFiltered = $filter('filter')(fullGrid, $scope.stationSearch);
             var refineFiltered = refineSearchFilter(channelFiltered);
             $scope.displayedGrid = refineFiltered.slice(slideIdx, WINDOW_SIZE+slideIdx);
-            $scope.scrollLimits.top = !slideIdx;
+            $scope.scrollLimits.top = !slideIdx;  //at top when index is 0
             $scope.scrollLimits.bottom = ( slideIdx >= refineFiltered.length-WINDOW_SIZE );
 
         }
@@ -100,8 +100,6 @@ app.controller( "guideController",
         }
         
         $scope.$watch('stationSearch', filterGrid);
-       
-
 
     } );
 

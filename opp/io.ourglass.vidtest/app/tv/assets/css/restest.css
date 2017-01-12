@@ -1,0 +1,15 @@
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.full-container {
+    width: 100%;
+    height: 100%;
+    border: 2px solid lime;
+    padding: 5px;
+    background-color: #0c6887;
+    color: white;
+    font-family: Arial, sans-serif;
+}

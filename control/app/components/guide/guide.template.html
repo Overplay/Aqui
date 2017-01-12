@@ -92,30 +92,12 @@
             <div class="scroll-area" scroll-window window-size="30"
                 edge-callback="atEdge"
                 limits="scrollLimits" >
-            <!--<div id="scroller" infinite-scroll style="max-height: 73vh; background-color: green; overflow-y: scroll;" currGrid="currList" masterGrid="testList">-->
-                <!--<div class="station-container">-->
 
-                <!--<div id="test" style="height: 400px; border: 1px solid red" ng-repeat="test in currList">-->
-                    <!--Test - {{ test.num }}-->
-                <!--</div>-->
 
                     <station-cell ng-repeat="grid in displayedGrid"
                                   grid="grid" search="stationSearch"></station-cell>
 
-                    <!--<station-cell ng-if="ui.refineSearch == 'favorites'"-->
-                                  <!--ng-repeat="grid in gridListing | filter: stationSearch |  limitTo: 20"-->
-                                  <!--ng-show="grid.channel.favorite == true"-->
-                                  <!--grid="grid" search="stationSearch" listings="listHash"></station-cell>-->
 
-                    <!--<station-cell ng-if="ui.refineSearch == 'sports'"-->
-                                  <!--ng-repeat="grid in gridListing | filter: 'Sports' | filter: stationSearch | limitTo: 20"-->
-                                  <!--grid="grid" search="stationSearch" listings="listHash"></station-cell>-->
-
-                    <!--<station-cell ng-if="ui.refineSearch == 'news'"-->
-                                  <!--ng-repeat="grid in gridListing | filter: 'News' | filter: stationSearch | limitTo: 20"-->
-                                  <!--grid="grid" listings="listHash"></station-cell>-->
-
-                <!--</div>-->
             </div>
 
             <!--<div class="pagination-controls" ng-if="ui.refineSearch != 'favorites'">-->
