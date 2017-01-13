@@ -21,7 +21,7 @@ app.controller( "guideController",
             return ogProgramGuide.getNowAndNext()
                 .then(function (grid) {
                     $log.debug("Got the grid and current channel.");
-                    $rootScope.currentChannel = grid.grid.channel;
+                    $rootScope.currentChannel = grid.grid;
                 });
         }
 
@@ -122,6 +122,15 @@ app.controller( "guideController",
 
             filterGrid();
         });
+
+        $scope.clearSearch = function () {
+            $scope.stationSearch = "";
+            $log.debug("search cleared");
+        }
+
+        $scope.imageSearch = function ( imageSearch ) {
+            $scope.stationSearch = imageSearch;
+        }
 
     } );
 

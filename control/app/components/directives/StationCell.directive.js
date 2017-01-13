@@ -8,18 +8,23 @@ app.directive( 'stationCell',
             restrict:    'E',
             scope:       {
                 grid: '=',
-                search: '='
+                search: '=',
+                nowPlaying: '='
             },
             templateUrl: 'app/components/directives/stationcell.template.html',
             link:        function ( scope, elem, attrs ) {
 
+                if (attrs.nowPlaying) {
+                    $log.debug("nowPlaying is defined!!");
+                    scope.nowPlaying = attrs.nowPlaying;
+                }
 
                 scope.changeChannel = function () {
                     uibHelper.confirmModal("Change Channel?", "Would you like to change to channel " + scope.grid.channel.channelNumber + "?", true)
                         .then(function(){
                             $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
                             ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
-                            $rootScope.currentChannel = scope.grid.channel;
+                            $rootScope.currentChannel = scope.grid;
                         })
 
                 }

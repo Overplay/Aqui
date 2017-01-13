@@ -1,5 +1,5 @@
 <style>
-    .station-cell {
+    .station-cell { /* class is required by ng-class */
         width: 92vw;
         position: relative;
         /*border: 1px solid lightblue;*/
@@ -7,6 +7,16 @@
         padding-top: 10px;
         margin-top: 5px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+        display: flex;
+    }
+
+    .now-playing { /* class is required by ng-class */
+        width: 92vw;
+        position: relative;
+        /*border: 1px solid lightblue;*/
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-top: 0;
         display: flex;
     }
 
@@ -81,7 +91,8 @@
 </style>
 
 
-<div class="station-cell" ng-click="changeChannel()">
+<!--<div class="station-cell" ng-click="changeChannel()">-->
+<div ng-class="nowPlaying ? 'now-playing' : 'station-cell'" ng-click="changeChannel()">
 
     <div class="station-left-col">
         <div class="station-logo-holder">
@@ -102,7 +113,7 @@
                 {{ grid.channel.channelNumber}}
             </div>
 
-            <div class="favorites-box" ng-click="favoriteChannel( grid.channel ); $event.stopPropagation();">
+            <div ng-hide="nowPlaying" class="favorites-box" ng-click="favoriteChannel( grid.channel ); $event.stopPropagation();">
                 <i ng-if="grid.channel.favorite" class="glyphicon glyphicon-heart"></i>
                 <i ng-if="!grid.channel.favorite" class="glyphicon glyphicon-heart-empty"></i>
             </div>
