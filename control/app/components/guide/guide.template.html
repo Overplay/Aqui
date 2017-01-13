@@ -67,13 +67,16 @@
                 </div>
             </form>
 
-            <div id="myScroller" class="scroll-area" scroll-window window-size="30"
+            <div class="scroll-area" scroll-window window-size="30"
                 edge-callback="atEdge"
                 limits="scrollLimits" >
+
+                    <div id="scroller-anchor-top"></div>
 
                     <station-cell ng-repeat="grid in displayedGrid"
                                   grid="grid" search="stationSearch"></station-cell>
 
+                    <div id="scroller-anchor-bottom"></div>
             </div>
 
         </div>
