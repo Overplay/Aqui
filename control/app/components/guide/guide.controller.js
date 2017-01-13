@@ -3,7 +3,8 @@
  */
 
 app.controller( "guideController",
-    function ( $scope, $timeout, ogDevice, $log, $interval, uibHelper, $cookies, ogNet, $filter ) {
+    function ( $scope, $timeout, ogDevice, $log, $interval, uibHelper, $cookies, ogNet, $filter, ogProgramGuide,
+               $rootScope, $location, $anchorScroll) {
 
         $log.info( "Loading guideController" );
         $scope.ui = { loadError: false, refineSearch: 'all', isPaired: ogDevice.isPairedToSTB };
@@ -13,6 +14,18 @@ app.controller( "guideController",
         var fullGrid = [];
         $scope.displayedGrid = [];
         $scope.scrollLimits = { top: true, bottom: false };
+
+        $rootScope.currentChannel = {};
+
+        function getCurrentChannel() {
+            return ogProgramGuide.getNowAndNext()
+                .then(function (grid) {
+                    $log.debug("Got the grid and current channel.");
+                    $rootScope.currentChannel = grid.grid;
+                });
+        }
+
+        getCurrentChannel();
 
         function loadListings(){
             ogNet.getGrid(false)
@@ -64,7 +77,7 @@ app.controller( "guideController",
             $scope.ui.refineSearch = searchType;
             slideIdx = 0;
             filterGrid();
-        }
+        };
 
         $scope.atEdge = function(edge){
         
@@ -81,7 +94,7 @@ app.controller( "guideController",
             }
             filterGrid();
 
-        }
+        };
 
         
         if (ogDevice.isPairedToSTB){
@@ -99,7 +112,25 @@ app.controller( "guideController",
             );
         }
         
-        $scope.$watch('stationSearch', filterGrid);
+        $scope.$watch('stationSearch', function() {
+            $log.debug("stationSearch Modified - need to reset the scroll position");
+            $log.debug("slideIdx reset to 0, scrolling to scroller-anchor-top");
+            slideIdx = 0;
+
+            $location.hash('scroller-anchor-top');
+            $anchorScroll();
+
+            filterGrid();
+        });
+
+        $scope.clearSearch = function () {
+            $scope.stationSearch = "";
+            $log.debug("search cleared");
+        }
+
+        $scope.imageSearch = function ( imageSearch ) {
+            $scope.stationSearch = imageSearch;
+        }
 
     } );
 
@@ -180,14 +211,17 @@ app.directive('scrollWindow', function($log) {
 
 app.filter('smartTitle', function(){
     return function(listing){
-    
-        var title = listing.showName;
-        
-        if ( listing.team1 && listing.team2 ) {
-            title = title + ": " + listing.team1 + " v " + listing.team2 ;
+
+        // Mitch to do: something needs to be done here to check if listing is defined.
+        // I'm not sure what this does right now - need to look into it
+        if (listing) {
+            var title = listing.showName;
+
+            if (listing.team1 && listing.team2) {
+                title = title + ": " + listing.team1 + " v " + listing.team2;
+            }
+
+            return title;
         }
-        
-        return title;
-        
     }
 });

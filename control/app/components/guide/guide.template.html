@@ -17,22 +17,10 @@
 
     .scroll-area {
         /*The height must be manually updated determined by the screen size*/
-        height: 73vh;
+        height: 62vh;
         /*height: 65vh;*/
         /*background-color: green;*/
         overflow-y: scroll;
-    }
-
-    /*.station-container {*/
-        /*float: left;*/
-        /*display: inline;*/
-        /*border: 1px solid green;*/
-    /*}*/
-
-    .loading-box {
-        color: black;
-        text-align: center;
-        font-size: 2em;
     }
 
     .current-channel {
@@ -46,14 +34,21 @@
         /*border: 1px solid red;*/
     }
 
-    .pagination-controls {
-        /*border: 1px solid red;*/
+    .sports-bar {
+        margin-top: -1vh;
+        margin-bottom: 1vh;
+        /*background-color: lightcoral;*/
+        height: 5vh;
+        width: 100%;
+        text-align: center;
     }
 
-    .pagination-controls .btn {
-        background-color: rgba(12, 184, 215, 0.76);
-        color: #d0d0d0;
-
+    .sports-logo {
+        display: inline-block;
+        height: 5vh;
+        width: 5vh;
+        background: white;
+        border-radius: 2px;
     }
 
 </style>
@@ -78,45 +73,41 @@
             </div>
 
             <div class="current-channel">
-                Current Channel:
+                <station-cell now-playing="nowPlaying" grid="currentChannel"></station-cell>
             </div>
 
             <form class="search-box">
                 <div class="form-group">
-                    <label style="font-weight: normal" for="inputStationName">Search by anything...</label>
-                    <input type="text" class="form-control" id="inputStationName" placeholder="Station Name"
+                    <input type="text" class="form-control" id="inputStationName" placeholder="Search by anything..."
                            ng-model="stationSearch" ng-model-options="{ debounce: 100 }">
+                    <button ng-if="stationSearch" style="width: 100%; margin-top: 1vh;" class="btn btn-info" ng-click="clearSearch()">Clear Search</button>
                 </div>
             </form>
+
+            <div ng-if="ui.refineSearch == 'sports'" class="sports-bar">
+                <img class="sports-logo" ng-click="imageSearch('Warriors')" src="assets/img/warriors.png">
+                <img class="sports-logo" ng-click="imageSearch('SF Giants')" src="assets/img/sfgiants.png">
+                <img class="sports-logo" ng-click="imageSearch('49ers')" src="assets/img/49ers.png">
+                <img class="sports-logo" ng-click="imageSearch('Raiders')" src="assets/img/raiders.png">
+                <img class="sports-logo" ng-click="imageSearch('SJ Sharks')" src="assets/img/sharks.png">
+                <img class="sports-logo" ng-click="imageSearch('Oakland As')" src="assets/img/oakland_as.png">
+                <img class="sports-logo" ng-click="imageSearch('Cal')" src="assets/img/cal.png">
+                <img class="sports-logo" ng-click="imageSearch('SJSU')" src="assets/img/sjsu.png">
+                <img class="sports-logo" ng-click="imageSearch('Stanford')" src="assets/img/stanford.png">
+            </div>
 
             <div class="scroll-area" scroll-window window-size="30"
                 edge-callback="atEdge"
                 limits="scrollLimits" >
 
+                    <div id="scroller-anchor-top"></div>
 
                     <station-cell ng-repeat="grid in displayedGrid"
                                   grid="grid" search="stationSearch"></station-cell>
 
-
+                    <div id="scroller-anchor-bottom"></div>
             </div>
 
-            <!--<div class="pagination-controls" ng-if="ui.refineSearch != 'favorites'">-->
-                <!--<dir-pagination-controls></dir-pagination-controls>-->
-            <!--</div>-->
-
-            <!--<div class="pagination-controls">-->
-                <!--<dir-pagination-controls></dir-pagination-controls>-->
-                <!--<button class="btn btn-default"-->
-                        <!--ng-disabled="currentPage == 0"-->
-                        <!--ng-click="currentPage=currentPage-1">-->
-                    <!--Previous-->
-                <!--</button>-->
-                <!--<button class="btn btn-default"-->
-                        <!--ng-disabled="currentPage >= gridListing.length/pageSize - 1"-->
-                        <!--ng-click="currentPage=currentPage+1">-->
-                    <!--Next-->
-                <!--</button>-->
-            <!--</div>-->
         </div>
 
     </div>
