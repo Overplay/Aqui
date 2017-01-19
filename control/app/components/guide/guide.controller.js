@@ -126,11 +126,11 @@ app.controller( "guideController",
         $scope.clearSearch = function () {
             $scope.stationSearch = "";
             $log.debug("search cleared");
-        }
+        };
 
         $scope.imageSearch = function ( imageSearch ) {
             $scope.stationSearch = imageSearch;
-        }
+        };
 
     } );
 

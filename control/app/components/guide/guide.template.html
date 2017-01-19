@@ -17,9 +17,9 @@
 
     .scroll-area {
         /*The height must be manually updated determined by the screen size*/
-        height: 62vh;
+        height: 66vh;
         /*height: 65vh;*/
-        /*background-color: green;*/
+        background-color: green;
         overflow-y: scroll;
     }
 
@@ -76,7 +76,7 @@
                 <station-cell now-playing="nowPlaying" grid="currentChannel"></station-cell>
             </div>
 
-            <form class="search-box">
+            <form class="search-box" style="margin-bottom: -1vh;">
                 <div class="form-group">
                     <input type="text" class="form-control" id="inputStationName" placeholder="Search by anything..."
                            ng-model="stationSearch" ng-model-options="{ debounce: 100 }">
