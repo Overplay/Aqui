@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="ogSquaresControlApp">
+<html lang="en" ng-app="ogSquaresControlApp" class="full">
 <head>
     <meta charset="UTF-8">
 
@@ -7,26 +7,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
     <script src="../../../../common/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="../../../../common/bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+    <script src="../../../../common/bower_components/angular-animate/angular-animate.min.js"></script>
 
     <!-- App Main and AngularJS Routes -->
-    <script src="app/ogSquaresControlApp.module.js"></script>
     <script src="../../../../common/js/ogAPI2.js"></script>
+    <script src="../../../../common/js/uiOGMobile/uiOGMobile.js"></script>
+
+    <script src="app/ogSquaresControlApp.module.js"></script>
+    <script src="app/ogSquaresControlApp.routes.js"></script>
+    <script src="app/services/sqgame.service.js"></script>
 
     <!-- Controllers -->
-    <script src="app/components/controlscreen/controlscreen.controller.js"></script>
+    <script src="app/components/root/root.controller.js"></script>
+    <script src="app/components/picksquares/picksquares.controller.js"></script>
+    <script src="app/components/register/register.controller.js"></script>
+    <script src="app/components/results/results.controller.js"></script>
+    <script src="app/components/settings/settings.controller.js"></script>
+    <script src="app/components/thanks4playing/thanks4playing.controller.js"></script>
+
 
     <!-- App Specific and Overridden CSS -->
     <link href="../../../../common/css/og.css" rel="stylesheet">
     <link href="assets/css/squares-og-style.css" rel="stylesheet">
+    <link href="../../../../common/bower_components/angular-toastr/dist/angular-toastr.min.css" rel="stylesheet">
+    <link href="../../../../common/bower_components/animate.css/animate.min.css" rel="stylesheet">
 
     <title>Squares Control</title>
 </head>
 
-<body ng-controller="ogSquaresController">
+<body ng-controller="rootController">
+<style>
 
-<div> Testing </div>
+    .full {
+        background: url('assets/img/field1.jpg') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+
+    /* This is necessary to see the field thru the bootstrap body */
+    body {
+        background-color: transparent;
+    }
+
+</style>
+
+<!--<div class="full-background">-->
+    <!--<img src="assets/img/field1.jpg"/>-->
+<!--</div>-->
+
+<div class="container">
+    <ui-view></ui-view>
+</div>
 
 </body>
 </html>

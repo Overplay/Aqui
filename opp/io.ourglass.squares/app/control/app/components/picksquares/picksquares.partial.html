@@ -1,0 +1,27 @@
+<style>
+    .pick-row {
+        display: flex;
+        /*border: 1px solid white;*/
+        height: 40px;
+        margin-top: 10px;
+    }
+
+    .pick-col {
+        flex: 1;
+        /*border: 1px solid red;*/
+        background-color: #10ee70;
+        margin-left: 3px;
+    }
+    .chosen {
+        background-color: red!important;
+    }
+
+</style>
+
+<h1>Let's Pick!</h1>
+<div class="pick-row" ng-repeat="row in rows">
+    <div class="pick-col" ng-repeat="col in cols" ng-click="clicked(row,col)"
+        ng-class="{ 'chosen' : grid[row][col]}">{{ row }} : {{col}}</div>
+</div>
+
+
