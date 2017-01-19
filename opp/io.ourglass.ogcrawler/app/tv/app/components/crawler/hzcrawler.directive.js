@@ -38,7 +38,7 @@ app.directive( 'hzCrawler',
                  none of these are implemented yet
                  */
                 
-                var crawlerVelocity = attrs.speed || 110;
+                var crawlerVelocity = attrs.speed || 50;
                 var scrollerWidth;
                 var scrollerUl = document.getElementById( 'scroller-ul' );
                 var isResetTransition = true;
