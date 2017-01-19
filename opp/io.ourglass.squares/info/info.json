@@ -1,0 +1,22 @@
+{
+  "appId": "io.ourglass.squares",
+  "appType": "widget",
+  "appName": "Squares",
+
+  "icon": "squares.png",
+  "iconLabel": "Squares",
+
+  "primaryColorHex": "#A9A9A9",
+  "secondaryColorHex": "#000000",
+
+  "height": 35,
+  "width": 10,
+
+  "initialValue": {
+    "ticketNumber": 0
+  },
+
+  "version": 1.0,
+  "installDate": 1475073632093
+
+}
