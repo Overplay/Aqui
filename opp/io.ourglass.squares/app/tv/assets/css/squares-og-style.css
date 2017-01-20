@@ -1,1 +1,21 @@
 
+.app-header {
+    font-size: 12vw;
+    height: 8vh;
+    line-height: 8vh;
+    padding-top: 0;
+    text-align: center;
+    margin: 0;
+}
+
+.current-game {
+
+}
+
+.game-stats {
+
+}
+
+.current-winner {
+
+}
