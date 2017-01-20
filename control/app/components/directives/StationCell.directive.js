@@ -3,7 +3,7 @@
  */
 
 app.directive( 'stationCell',
-    function ( $log, ogProgramGuide, uibHelper, $http, $rootScope ) {
+    function ( $log, ogProgramGuide, uibHelper, $http, $rootScope, $timeout ) {
         return {
             restrict:    'E',
             scope:       {
@@ -20,12 +20,16 @@ app.directive( 'stationCell',
                 }
 
                 scope.changeChannel = function () {
-                    uibHelper.confirmModal("Change Channel?", "Would you like to change to channel " + scope.grid.channel.channelNumber + "?", true)
-                        .then(function(){
-                            $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
-                            ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
-                            $rootScope.currentChannel = scope.grid;
-                        })
+                    // uibHelper.confirmModal("Change Channel?", "Would you like to change to channel " +
+                    // scope.grid.channel.channelNumber + "?", true) .then(function(){ $log.debug( "Changing channel
+                    // to: " + scope.grid.channel.channelNumber ); ogProgramGuide.changeChannel(
+                    // scope.grid.channel.channelNumber ); $rootScope.currentChannel = scope.grid; })
+
+                    var hud = uibHelper.curtainModal( 'Changing...' );
+                    $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
+                    ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
+                    $rootScope.currentChannel = scope.grid;
+                    $timeout(function(){ hud.dismiss() }, 5000);
 
                 }
 
