@@ -2,26 +2,59 @@
     .pick-row {
         display: flex;
         /*border: 1px solid white;*/
-        height: 40px;
-        margin-top: 10px;
+        height: 5vh;
+        margin-top: 1.3vh;
     }
 
     .pick-col {
         flex: 1;
         /*border: 1px solid red;*/
         background-color: #10ee70;
-        margin-left: 3px;
+        margin-left: .5vw;
+        text-align: center;
+        font-size: 2vh;
+        height: 5vh;
+        line-height: 5vh;
+        overflow: hidden;
     }
     .chosen {
         background-color: red!important;
     }
 
+    .tracker {
+        margin-top: 2vh;
+        font-size: 5vh;
+        text-align: center;
+    }
+
+    .button-group {
+        margin-top: 2vh;
+    }
+
+    .mybtn {
+        width: 100%;
+        margin-bottom: 1vh;
+    }
+
 </style>
 
-<h1>Let's Pick!</h1>
+<h1>Pick Your Squares!</h1>
+
 <div class="pick-row" ng-repeat="row in rows">
-    <div class="pick-col" ng-repeat="col in cols" ng-click="clicked(row,col)"
-        ng-class="{ 'chosen' : grid[row][col]}">{{ row }} : {{col}}</div>
+    <div class="pick-col" ng-repeat="col in cols" ng-click="clicked(row,col)" ng-class="{ 'chosen' : grid[row][col]}">
+        <div ng-if="grid[row][col]">{{ currentUser.initials }}</div>
+        <div ng-if="!grid[row][col]">Open</div>
+    </div>
 </div>
+
+<div class="tracker">
+    Squares Picked: {{ numPicked }} of {{ currentUser.picksAllowed }}
+</div>
+
+<div class="button-group">
+    <button class="btn btn-lg btn-primary mybtn" ng-click="submitSelection()">Submit Squares</button>
+    <button class="btn btn-lg btn-warning mybtn" ng-click="clearSelections()">Clear Selection</button>
+</div>
+
 
 
