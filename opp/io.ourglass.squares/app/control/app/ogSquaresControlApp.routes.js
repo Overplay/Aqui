@@ -9,16 +9,14 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
         .state( 'welcome', {
             url:         '/welcome',
             templateUrl: 'app/components/welcome/welcome.partial.html'
-        } )
+        })
 
         .state( 'picksquares', {
             url:         '/picksquares',
             templateUrl: 'app/components/picksquares/picksquares.partial.html',
             controller:  'pickSquaresController',
-            resolve:     {
-            }
-
-        } )
+            resolve:     {}
+        })
 
         .state( 'register', {
             url:         '/register',
@@ -27,30 +25,26 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             resolve:     {
             }
 
-        } )
+        })
 
         .state( 'settings', {
-            url:         '/register',
-            templateUrl: 'app/components/reg/reg.partial.html',
-            controller:  'regController',
+            url:         '/settings',
+            templateUrl: 'app/components/settings/settings.partial.html',
+            controller:  'settingsController',
             resolve:     {}
-
-        } )
+        })
 
         .state( 'thanks4playing', {
             url:         '/thanks',
             templateUrl: 'app/components/thanks4playing/thanks4playing.partial.html',
             controller: 'thanks4playingController'
-        } )
+        })
 
         .state( 'results', {
             url:         '/results',
             templateUrl: 'app/components/results/results.partial.html',
             controller:  'resultsController',
-            resolve:     {
-            }
+            resolve:     {}
+        })
 
-        } )
-
-
-} );
+});

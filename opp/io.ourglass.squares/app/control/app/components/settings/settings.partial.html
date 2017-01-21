@@ -1,0 +1,28 @@
+<style>
+    .mybtn {
+        width: 100%;
+        margin-bottom: 1vh;
+    }
+
+    .tracker {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+        font-size: 4vh;
+        text-align: center;
+    }
+</style>
+
+<div class="jumbtron"><h1>Settings</h1></div>
+
+<div style="margin-top: 5vh">
+
+    <div class="tracker">Game Status: {{ status }}</div>
+
+    <div class="tracker" ng-if="status == 'Picking Squares'">Tiles Picked: {{ tilesPicked }} of 100</div>
+
+    <button class="btn btn-lg btn-info mybtn" ng-if="status == 'Game Active'" ng-click="viewResult()">View Active Game</button>
+    <button class="btn btn-lg btn-success mybtn" ng-if="status == 'Picking Squares'" ng-click="startGame()">START CURRENT GAME</button>
+    <button class="btn btn-lg btn-warning mybtn" ng-if="status == 'No Game Started'" ng-click="createNewGame()">CREATE NEW GAME</button>
+    <button class="btn btn-lg btn-danger mybtn" ng-if="status != 'No Game Started'" ng-click="stopGame()">STOP GAME</button>
+
+</div>

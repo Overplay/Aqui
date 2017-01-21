@@ -22,6 +22,16 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
             return;
         }
 
+        if (localStorage.getItem("gameActive") == "true") {
+            alert("The game is currently active. Please wait to register for the next game.");
+            return;
+        }
+
+        if (!localStorage.getItem("gameActive")) {
+            alert("No game has been started. Contact an admin to start a game.");
+            return;
+        }
+
         var initals = "";
 
         var array = $scope.fullname.split(' ');

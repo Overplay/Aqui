@@ -1,0 +1,107 @@
+<style>
+    .pick-row {
+        display: flex;
+        /*border: 1px solid white;*/
+        height: 5vh;
+        margin-top: 1.3vh;
+    }
+
+    .pick-col {
+        flex: 1;
+        /*border: 1px solid red;*/
+        background-color: #10ee70;
+        margin-left: .5vw;
+        text-align: center;
+        font-size: 2vh;
+        height: 5vh;
+        line-height: 5vh;
+        overflow: hidden;
+    }
+
+    .taken {
+        background-color: #10ee70!important;
+    }
+
+    .free {
+        background-color: #109b50!important;
+    }
+
+    .chosen {
+        background-color: transparent!important;
+        font-size: 3vh!important;
+        font-weight: bold!important;
+    }
+
+    .tracker {
+        margin-top: 2vh;
+        font-size: 4vh;
+        text-align: center;
+    }
+
+    .button-group {
+        margin-top: 1vh;
+    }
+
+    .mybtn {
+        width: 100%;
+        margin-bottom: 1vh;
+    }
+
+    .horizontal-team {
+        text-align: center;
+        font-size: 4vh;
+        font-weight: bold;
+    }
+
+    .wrapper {
+        /*display: inline-block;*/
+    }
+    .vertical-team {
+        transform: rotate(270deg);
+        /*width: 30px;*/
+        text-align: center;
+        font-size: 4vh;
+        font-weight: bold;
+        display: inline-block;
+        border: 1px solid hotpink;
+    }
+
+</style>
+
+<h1>Squares Results!</h1>
+
+<div class="horizontal-team">
+    {{ gridScores.horizontal.team }}
+</div>
+
+<!--<div class="vertical-team">-->
+    <!--{{ gridScores.vertical.team }}-->
+<!--</div>-->
+
+<div class="wrapper">
+    <div class="pick-row" ng-repeat="row in emptyArray track by $index">
+        <div class="pick-col" ng-repeat="col in emptyArray track by $index"
+             ng-class=" row == 0 || col == 0 ? 'chosen' : (!grid[row - 1][col - 1].taken ? 'free' : 'taken')"
+             ng-click="displayInfo(row - 1, col - 1)">
+
+            <div ng-if="col != 0 && row == 0">{{ gridScores.horizontal.order[col - 1] }}</div>
+            <div ng-if="col == 0 && row != 0">{{ gridScores.vertical.order[row - 1] }}</div>
+
+            <div ng-if="col != 0 && row != 0">
+                {{ grid[row - 1][col - 1].taken ? grid[row - 1][col - 1].user.initials : 'Open' }}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="tracker">
+    Squares Picked: {{ numPicked }} of 100
+</div>
+
+<div class="button-group">
+    <button class="btn btn-lg btn-info mybtn" ng-click="settings()">SETTINGS PAGE</button>
+</div>
+
+
+

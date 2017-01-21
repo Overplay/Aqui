@@ -31,6 +31,11 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
 
     var initializeLocalGrid = function () {
         var masterGrid = JSON.parse(localStorage.getItem('squares_grid'));
+        if (!masterGrid) {
+            alert("Unable to load an active game. Please contact an admin to start a game.");
+            $state.go("welcome");
+            return;
+        }
 
         for (var r = 0; r < 10; r++){
             var row = [];
@@ -87,6 +92,11 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     $scope.submitSelection = function () {
         if ($scope.numPicked != $rootScope.currentUser.picksAllowed) {
             alert("Please select " + $rootScope.currentUser.picksAllowed + " squares.");
+            return;
+        }
+
+        if (localStorage.getItem("gameActive") != "picking") {
+            alert("The game is currently active or has not been started, you cannot select any squares.");
             return;
         }
 
