@@ -15,8 +15,8 @@
 
     <!-- App Main and AngularJS Routes -->
 
+    <script src="../../../../common/js/uiOGMobile/uiOGMobile.js"></script>
     <script src="../../../../common/js/ogAPI2.js"></script>
-    <!--<script src="../../../../common/js/uiOGMobile/uiOGMobile.js"></script>-->
 
     <!-- Controllers -->
     <script src="app/components/mainscreen/mainscreen.controller.js"></script>
@@ -35,18 +35,20 @@
 
         <div class="current-game">
             <div class="titler">Game</div>
-            {{ game.homeTeam }} <br>
+            {{ game.home.team }} <br>
             vs. <br>
-            {{ game.awayTeam }}
+            {{ game.away.team }}
         </div>
 
         <div class="game-stats">
-            <div class="titler">Current Score</div>
-            {{ score.home }} to {{ score.away }}
+            <div ng-if="game.status" class="titler">Current Score</div>
+            <div ng-if="!game.status" class="titler">Final Score</div>
+            {{ game.home.score }} to {{ game.away.score }}
         </div>
 
         <div class="current-winner">
-            <div class="titler">Current Winner</div>
+            <div ng-if="game.status" class="titler">Current Winner</div>
+            <div ng-if="!game.status" class="titler">Winner</div>
             {{ currentWinner }}
         </div>
     </div>

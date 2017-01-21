@@ -18,7 +18,7 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     if (!$rootScope.currentUser && demoState) {
         $rootScope.currentUser = {
             picksAllowed: 3,
-            fullname: 'Erik Phillips',
+            fullname: 'Demo Phillips',
             initials: 'DEMO',
             email: 'erik.phillips@icloud.com'
         }
@@ -32,9 +32,9 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     var initializeLocalGrid = function () {
         var masterGrid = JSON.parse(localStorage.getItem('squares_grid'));
 
-        for (var c=0; c<10; c++){
+        for (var r = 0; r < 10; r++){
             var row = [];
-            for (var r=0; r<10; r++) {
+            for (var c = 0; c < 10; c++) {
                 row.push(masterGrid[r][c]);
             }
             $scope.grid.push(row);
@@ -73,6 +73,7 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
         // uibHelper.confirmModal("Clear All Selections?", "Would you like to clear all your current selections?", true)
         //     .then(function(){
         //         $scope.grid = [];
+        //         $scope.numPicked = 0;
         //         initializeGrid();
         //     });
 

@@ -21,15 +21,18 @@
 }
 
 .current-game {
-    margin-top: 3vh;
+    margin-top: 1vh;
+    overflow: hidden;
 }
 
 .game-stats {
-    margin-top: 5vh;
+    margin-top: 3vh;
+    overflow: hidden;
 }
 
 .current-winner {
-    margin-top: 5vh;
+    margin-top: 3vh;
+    overflow: hidden;
 }
 
 .logo-holder {
