@@ -43,4 +43,8 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
         $state.go("picksquares");
     };
 
+    $scope.cancel = function () {
+        $state.go("welcome");
+    }
+
 });

@@ -87,6 +87,7 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     $scope.submitSelection = function () {
         if ($scope.numPicked != $rootScope.currentUser.picksAllowed) {
             alert("Please select " + $rootScope.currentUser.picksAllowed + " squares.");
+            return;
         }
 
         localStorage.setItem('squares_grid', JSON.stringify($scope.grid));
