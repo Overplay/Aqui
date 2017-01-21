@@ -22,7 +22,14 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
             return;
         }
 
-        var initals = "EP";
+        var initals = "";
+
+        var array = $scope.fullname.split(' ');
+        if (array.length == 1) {
+            initals = array[0].charAt(0).toUpperCase();
+        } else {
+            initals = array[0].charAt(0).toUpperCase() + array[array.length - 1].charAt(0).toUpperCase();
+        }
 
         $rootScope.currentUser = {
             picksAllowed: $scope.picks,

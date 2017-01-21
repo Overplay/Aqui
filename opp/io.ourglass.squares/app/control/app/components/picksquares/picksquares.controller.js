@@ -29,31 +29,41 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
         $state.go("register");
     }
 
+    var initializeLocalGrid = function () {
+        var masterGrid = JSON.parse(localStorage.getItem('squares_grid'));
 
-    var initializeGrid = function () {
-        for (var col=0; col<10; col++){
+        for (var c=0; c<10; c++){
             var row = [];
-            for (var r=0; r<10; r++){
-                row.push(false);
+            for (var r=0; r<10; r++) {
+                row.push(masterGrid[r][c]);
             }
             $scope.grid.push(row);
         }
     };
 
-    initializeGrid();
+    initializeLocalGrid();
 
     $scope.clicked = function(row, col){
-        if (!$scope.grid[row][col] && $scope.numPicked >= $rootScope.currentUser.picksAllowed) {
-            alert("No more picks allowed.");
-            return;
+        if (!$scope.grid[row][col].taken || $scope.grid[row][col].user && $scope.grid[row][col].user.email != $rootScope.currentUser.email) {
+            if ($scope.grid[row][col].taken && $scope.grid[row][col].user.email != $rootScope.currentUser.email) {
+                alert("Square is already taken");
+                return;
+            }
+
+            if ($scope.numPicked >= $rootScope.currentUser.picksAllowed) {
+                alert("No more picks allowed.");
+                return;
+            }
         }
 
-        $scope.grid[row][col] = !$scope.grid[ row ][ col ];
+        $scope.grid[row][col].taken = !$scope.grid[row][col].taken;
 
-        if ($scope.grid[row][col]) {
+        if ($scope.grid[row][col].taken) {
             $scope.numPicked += 1;
+            $scope.grid[row][col].user = $rootScope.currentUser;
         } else {
             $scope.numPicked -= 1;
+            $scope.grid[row][col].user = undefined;
         }
     };
 
@@ -68,7 +78,7 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
 
         $scope.grid = [];
         $scope.numPicked = 0;
-        initializeGrid();
+        initializeLocalGrid();
     };
 
     $scope.submitSelection = function () {
@@ -76,7 +86,13 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
             alert("Please select " + $rootScope.currentUser.picksAllowed + " squares.");
         }
 
-        $log.debug("submit now!")
+        localStorage.setItem('squares_grid', JSON.stringify($scope.grid));
+
+        $state.go("thanks4playing");
     };
+
+    $scope.registration = function () {
+        $state.go("register");
+    }
 
 });

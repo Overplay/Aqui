@@ -1,3 +1,8 @@
+.wrapper {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    text-align: center;
+}
 
 .app-header {
     font-size: 12vw;
@@ -6,16 +11,30 @@
     padding-top: 0;
     text-align: center;
     margin: 0;
+    margin-top: 3vh;
+}
+
+.titler {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 1vh;
 }
 
 .current-game {
-
+    margin-top: 3vh;
 }
 
 .game-stats {
-
+    margin-top: 5vh;
 }
 
 .current-winner {
+    margin-top: 5vh;
+}
 
+.logo-holder {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }

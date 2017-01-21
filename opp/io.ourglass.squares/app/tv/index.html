@@ -30,18 +30,29 @@
 </head>
 <body ng-controller="mainScreenController">
 
-    <div class="app-header"> Squares </div>
+    <div class="wrapper">
+        <div class="app-header"> Squares </div>
 
-    <div class="current-game">
-        Current Game:
+        <div class="current-game">
+            <div class="titler">Game</div>
+            {{ game.homeTeam }} <br>
+            vs. <br>
+            {{ game.awayTeam }}
+        </div>
+
+        <div class="game-stats">
+            <div class="titler">Current Score</div>
+            {{ score.home }} to {{ score.away }}
+        </div>
+
+        <div class="current-winner">
+            <div class="titler">Current Winner</div>
+            {{ currentWinner }}
+        </div>
     </div>
 
-    <div class="game-stats">
-        Score:
-    </div>
-
-    <div class="current-winner">
-        Current Winner:
+    <div class="logo-holder">
+        <og-advert type="widget" interval="30000"></og-advert>
     </div>
 
 </body>
