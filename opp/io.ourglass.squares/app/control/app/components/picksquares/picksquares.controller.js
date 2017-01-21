@@ -77,9 +77,11 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
         //         initializeGrid();
         //     });
 
-        $scope.grid = [];
-        $scope.numPicked = 0;
-        initializeLocalGrid();
+        if (confirm("Clear all selections?")) {
+            $scope.grid = [];
+            $scope.numPicked = 0;
+            initializeLocalGrid();
+        }
     };
 
     $scope.submitSelection = function () {
