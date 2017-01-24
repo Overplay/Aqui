@@ -44,22 +44,23 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
         $state.go("welcome");
     }
 
-    var grid;
-    sqGameService.getCurrentGrid()
-        .then(function(g){
-            grid = g;
-            grid[0][0].pick({ name: "Bubba Watson", email: "bubba@bubba.com" })
-                .then(function(bought){
-                    $log.debug("Square bought");
-                })
-            grid[ 0 ][ 0 ].pick( { name: "Bubba Watson", email: "bubba@bubba.com" } )
-                .then( function ( bought ) {
-                    $log.debug( "Square bought" );
-                } )
-                .catch( function(err){
-                    $log.error("Could pick: "+err);
-                })
-        });
+    // This was here for testing
+    // var grid;
+    // sqGameService.getCurrentGrid()
+    //     .then(function(g){
+    //         grid = g;
+    //         grid[0][0].pick({ name: "Bubba Watson", email: "bubba@bubba.com" })
+    //             .then(function(bought){
+    //                 $log.debug("Square bought");
+    //             })
+    //         grid[ 0 ][ 0 ].pick( { name: "Bubba Watson", email: "bubba@bubba.com" } )
+    //             .then( function ( bought ) {
+    //                 $log.debug( "Square bought" );
+    //             } )
+    //             .catch( function(err){
+    //                 $log.error("Could pick: "+err);
+    //             })
+    //     });
 
 });
 
