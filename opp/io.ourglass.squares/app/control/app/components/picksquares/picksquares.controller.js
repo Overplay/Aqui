@@ -62,7 +62,7 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
             return;
         }
 
-        if ( !$scope.grid[r][c].isAvailable() ) {
+        if ( !$scope.grid[r][c].available() ) {
             toastr.warning("This square is already taken!");
             return;
         }
@@ -89,17 +89,12 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     };
 
     $scope.submitSelection = function () {
-        if ($scope.numPicked != $rootScope.currentUser.picksAllowed) {
-            alert("Please select " + $rootScope.currentUser.picksAllowed + " squares.");
+        if ($scope.numPicked != $scope.currentUser.numPicks) {
+            toastr.warning("Please select " + $scope.currentUser.numPicks + " squares.");
             return;
         }
 
-        if (localStorage.getItem("gameActive") != "picking") {
-            alert("The game is currently active or has not been started, you cannot select any squares.");
-            return;
-        }
-
-        localStorage.setItem('squares_grid', JSON.stringify($scope.grid));
+        sqGameService.submitPicksForCurrentUser( picks );
 
         $state.go("thanks4playing");
     };

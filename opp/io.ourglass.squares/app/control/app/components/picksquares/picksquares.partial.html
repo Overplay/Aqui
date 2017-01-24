@@ -50,18 +50,18 @@
 <h1>Pick Your Squares!</h1>
 
 <div class="pick-row" ng-repeat="row in rows">
-    <div class="pick-col" ng-repeat="col in cols" ng-click="clicked(row,col)"
-         ng-class=" !grid[row][col].taken ? 'free' :
-         (grid[row][col].user.email == currentUser.email ? 'chosen' : 'taken')">
+    <div class="pick-col" ng-repeat="col in cols" ng-click="clicked(row, col)"
+         ng-class=" !grid[row][col].available ? 'free' :
+         (grid[row][col].ownedBy.email == currentUser.email ? 'chosen' : 'taken')">
 
-        <div ng-if="grid[row][col].taken">{{ grid[row][col].user.initials }}</div>
-        <div ng-if="!grid[row][col].taken">Open</div>
+        <div ng-if="grid[row][col].available">{{ grid[row][col].ownedBy.initials }}</div>
+        <div ng-if="!grid[row][col].available">Open</div>
 
     </div>
 </div>
 
 <div class="tracker">
-    Squares Picked: {{ numPicked }} of {{ currentUser.picksAllowed }}
+    Squares Picked: {{ numPicked }} of {{ currentUser.numPicks }}
 </div>
 
 <div class="button-group">
