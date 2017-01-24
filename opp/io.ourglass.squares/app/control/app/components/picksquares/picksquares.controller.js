@@ -6,6 +6,8 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
 
     var demoState = true;
 
+    var skipData = true;
+
 
     $log.debug("loading pickSquaresController");
 
@@ -30,12 +32,12 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     }
 
     var initializeLocalGrid = function () {
-        var masterGrid = JSON.parse(localStorage.getItem('squares_grid'));
-        if (!masterGrid) {
-            alert("Unable to load an active game. Please contact an admin to start a game.");
-            $state.go("welcome");
-            return;
-        }
+        // var masterGrid = JSON.parse(localStorage.getItem('squares_grid'));
+        // if (!masterGrid || !skipData) {
+        //     alert("Unable to load an active game. Please contact an admin to start a game.");
+        //     $state.go("welcome");
+        //     return;
+        // }
 
         for (var r = 0; r < 10; r++){
             var row = [];
