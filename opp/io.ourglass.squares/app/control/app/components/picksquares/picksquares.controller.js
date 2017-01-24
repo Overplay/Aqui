@@ -75,18 +75,18 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     $scope.clearSelections = function () {
         $log.debug("clearing all selections");
 
-        // uibHelper.confirmModal("Clear All Selections?", "Would you like to clear all your current selections?", true)
-        //     .then(function(){
-        //         $scope.grid = [];
-        //         $scope.numPicked = 0;
-        //         initializeGrid();
-        //     });
+        uibHelper.confirmModal("Clear All Selections?", "Would you like to clear all your current selections?", true)
+            .then(function(){
+                $scope.grid = [];
+                $scope.numPicked = 0;
+                initializeGrid();
+            });
 
-        if (confirm("Clear all selections?")) {
-            $scope.grid = [];
-            $scope.numPicked = 0;
-            initializeLocalGrid();
-        }
+        // if (confirm("Clear all selections?")) {
+        //     $scope.grid = [];
+        //     $scope.numPicked = 0;
+        //     initializeLocalGrid();
+        // }
     };
 
     $scope.submitSelection = function () {
