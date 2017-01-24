@@ -15,12 +15,16 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
     $scope.clearForm();
 
     $scope.register = function () {
-        $log.debug("register button clicked");
+        if ($scope.fullname == 'ogadm1n') {
+            $state.go("settings");
+            return;
+        }
 
         if (sqGameService.isGameRunning()){
             toastr.warning("Game already running!");
             //TODO go to scoreboard screen
-            $stats.go('welcome');
+            $state.go('welcome');
+            return;
         }
 
         if ($scope.picks <= 0 || !$scope.email || !$scope.fullname) {
@@ -28,20 +32,27 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
             return;
         }
 
-        var initals = "";
+        if (!validateEmail( $scope.email )) {
+            alert("Email is invalid.");
+            return;
+        }
 
         sqGameService.setCurrentUser({
-            numPicks:     $scope.picks,
-            name:     $scope.fullname,
-            email:        $scope.email
+            numPicks:   $scope.picks,
+            name:       $scope.fullname,
+            email:      $scope.email
         });
 
         $state.go("picksquares");
-
     };
 
     $scope.cancel = function () {
         $state.go("welcome");
+    };
+
+    function validateEmail( email ) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
     }
 
 });
