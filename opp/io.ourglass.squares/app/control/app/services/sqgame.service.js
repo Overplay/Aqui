@@ -40,6 +40,10 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
             return $q.when(true);
 
         }
+        
+        this.toggle = function(playerInfo){
+            return this.available ? this.pick(playerInfo) : this.unpick(playerInfo);
+        }
 
     }
 
