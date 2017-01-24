@@ -2,7 +2,7 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.controller("registerController", function($scope, $rootScope, uibHelper, $log, $state){
+app.controller("registerController", function($scope, $rootScope, uibHelper, $log, $state, sqGameService){
 
     $log.debug("loading registerController");
 
@@ -17,40 +17,27 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
     $scope.register = function () {
         $log.debug("register button clicked");
 
+        if (sqGameService.isGameRunning()){
+            toastr.warning("Game already running!");
+            //TODO go to scoreboard screen
+            $stats.go('welcome');
+        }
+
         if ($scope.picks <= 0 || !$scope.email || !$scope.fullname) {
             alert("Please complete form");
             return;
         }
 
-        if (localStorage.getItem("gameActive") == "true") {
-            alert("The game is currently active. Please wait to register for the next game.");
-            return;
-        }
-
-        if (!localStorage.getItem("gameActive")) {
-            alert("No game has been started. Contact an admin to start a game.");
-            return;
-        }
-
         var initals = "";
 
-        var array = $scope.fullname.split(' ');
-        if (array.length == 1) {
-            initals = array[0].charAt(0).toUpperCase();
-        } else {
-            initals = array[0].charAt(0).toUpperCase() + array[array.length - 1].charAt(0).toUpperCase();
-        }
+        sqGameService.setCurrentUser({
+            numPicks:     $scope.picks,
+            name:     $scope.fullname,
+            email:        $scope.email
+        });
 
-        $rootScope.currentUser = {
-            picksAllowed: $scope.picks,
-            fullname: $scope.fullname,
-            email: $scope.email,
-            initials: initals
-        };
-
-
-        $log.debug("changing route");
         $state.go("picksquares");
+
     };
 
     $scope.cancel = function () {
@@ -58,3 +45,4 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
     }
 
 });
+
