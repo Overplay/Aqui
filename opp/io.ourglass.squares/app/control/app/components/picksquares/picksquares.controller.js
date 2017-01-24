@@ -2,7 +2,7 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log, sqGameService){
+app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log, toastr, sqGameService){
 
     var demoState = true;
     var skipData = true;
@@ -19,7 +19,7 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     $scope.currentUser = sqGameService.getCurrentUser();
 
     // Check if there is a current user, if not - go to register page
-    if ( !$scope.currentUser ) {
+    if ( !$scope.currentUser || !$scope.currentUser.name ) {
         toastr.warning("No currently registered user!");
 
         // $state.go("register");
