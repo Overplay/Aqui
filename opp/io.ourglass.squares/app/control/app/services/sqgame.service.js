@@ -26,6 +26,8 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
 
             this.ownedBy = playerInfo;
             this.available = false;
+            
+            return $q.when(true);
         }
 
         this.unpick = function(playerInfo){
@@ -34,6 +36,9 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
 
             this.ownedBy = {};
             this.available = false;
+
+            return $q.when(true);
+
         }
 
     }
