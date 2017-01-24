@@ -15,10 +15,15 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
     var _grid;
 
 
-    function Square() {
+    function Square(inboundJson) {
 
-        this.available = true;
-        this.ownedBy = {};
+        if (inboundJson.hasOwnProperty('email')){
+            this.available = false;
+            this.ownedBy = inboundJson;
+        } else {
+            this.available = true;
+            this.ownedBy = {};
+        }
         
         this.pick = function(playerInfo){
             if (!this.available)
@@ -48,6 +53,16 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
         this.ownedByCurrentUser = function () {
             if (!this.ownedBy.hasOwnProperty('email')) return false;
             return _currentUser.email == this.ownedBy.email;
+        }
+        
+        this.toPostObject = function(){
+        
+            if (this.available) return {};
+            
+            return { 
+                email: this.ownedBy.email,
+                name: this.ownedBy.name
+            }
         }
 
     }

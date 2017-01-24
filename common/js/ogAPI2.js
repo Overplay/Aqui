@@ -177,6 +177,8 @@ var GLOBAL_UPDATE_TARGET;
             // unique name, like io.ourglass.cralwer
             var _appName;
             var _appType;
+            
+            var _lockKey;
 
             // Data callback when data on AB has changed
             var _dataCb;
@@ -266,12 +268,27 @@ var GLOBAL_UPDATE_TARGET;
             };
 
             service.save = function () {
+                var postModel = _.cloneDeep(service.model);
+                postModel.lockKey = _lockKey || 0;
                 return $http.post( API_PATH + 'appdata/' + _appName, service.model );
             };
 
             service.loadModel = function () {
                 return getDataForApp()
                     .then( updateModel);
+            };
+            
+            service.loadModelAndLock = function(){
+                return getDataForApp()
+                    .then( function(model){
+                        if (!model.hasOwnProperty('lockKey'))
+                            throw new Error("Could not acquire lock");
+                            
+                        _lockKey = model.lockKey;
+                        model.lockKey = undefined;
+                        return model;
+                    })
+                    .then(updateModel);
             };
 
             /**
