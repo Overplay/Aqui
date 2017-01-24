@@ -2,9 +2,9 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.factory("sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
+app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
 
-    $log.debug("Loaded sqGameService");
+    $log.debug( "Loaded sqGameService" );
 
     var service = {};
 
@@ -12,9 +12,51 @@ app.factory("sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
     var simulateBackEnd = true;
 
     var _currentUser;
-    
-    function makeInitials(name){
-    
+    var _grid;
+
+
+    function Square() {
+
+        this.available = true;
+        this.ownedBy = {};
+        
+        this.pick = function(playerInfo){
+            if (!this.available)
+                throw new Error("Square already owned!");
+
+            this.ownedBy = playerInfo;
+            this.available = false;
+        }
+
+        this.unpick = function(playerInfo){
+            if (this.ownedBy.email!=playerInfo.email)
+                throw new Error("You don't own this square");
+
+            this.ownedBy = {};
+            this.available = false;
+        }
+
+    }
+
+ 
+
+    function initGrid() {
+
+        _grid = [];
+        //A little bit of map magic :D
+        for ( var rows = 0; rows < 10; rows++ ){
+            _grid.push([0,1,2,3,4,5,6,7,8,9].map(function(){ return new Square() }))
+        }
+
+    }
+
+
+    service.isSquareAvailable = function ( x, y ) {
+        return !_grid[ x ][ y ].hasOwnProperty( 'name' );
+    };
+
+    function makeInitials( name ) {
+
         var initials;
         var array = name.split( ' ' );
         if ( array.length == 1 ) {
@@ -22,13 +64,13 @@ app.factory("sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
         } else {
             initials = array[ 0 ].charAt( 0 ).toUpperCase() + array[ array.length - 1 ].charAt( 0 ).toUpperCase();
         }
-        
+
         return initials;
-    
+
     }
 
-    function modelUpdate(newModel){
-        $log.debug("Got an model update in gameService");
+    function modelUpdate( newModel ) {
+        $log.debug( "Got an model update in gameService" );
     }
 
     function initialize() {
@@ -44,40 +86,49 @@ app.factory("sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
 
     }
 
-    if (!simulateBackEnd){
+    if ( !simulateBackEnd ) {
         initialize();
+    } else {
+        initGrid();
     }
 
-    service.resetCurrentUser = function(){
+
+    service.resetCurrentUser = function () {
         _currentUser = {
-            name:       undefined,
-            email:      undefined,
-            numPicks:   0
+            name:     undefined,
+            email:    undefined,
+            numPicks: 0
         };
     }
 
     service.resetCurrentUser();
-    
-    service.getCurrentUser = function(){ return _currentUser; };
-    service.setCurrentUser = function(user){ 
+
+    service.getCurrentUser = function () { return _currentUser; };
+    service.setCurrentUser = function ( user ) {
         _currentUser = user;
-        _currentUser.initials = makeInitials(_currentUser.name);
+        _currentUser.initials = makeInitials( _currentUser.name );
     };
-    
-    service.isGameRunning = function(){
+
+    service.isGameRunning = function () {
         //TODO pull real game state from shared model
         return false;
     };
-    
+
     // Return the latest grid
-    service.getCurrentGrid = function(){
+    service.getCurrentGrid = function () {
+        //TODO placeholder for testing
+        return $q.when(_grid);    
     };
-    
-    service.submitPicksForCurrentUser = function(){
-    
+
+    service.pickSquare = function ( x, y, user ) {
+
+    }
+
+    service.submitPicksForCurrentUser = function () {
+
     };
 
     return service;
-    
-});
+
+} );
 
