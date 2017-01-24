@@ -2,7 +2,7 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log, toastr, sqGameService){
+app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log, toastr, sqGameService, grid){
 
     var demoState = true;
     var skipData = true;
@@ -12,9 +12,8 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     $scope.rows = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
     $scope.cols = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
     
-    $scope.grid = [];
+    $scope.grid = grid;
     $scope.numPicked = 0;
-    $scope.picks = [];
 
     $scope.currentUser = sqGameService.getCurrentUser();
 
@@ -31,6 +30,8 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
             email: 'erik.phillips@icloud.com',
             numPicks: 3
         };
+
+        sqGameService.setCurrentUser($scope.currentUser);
     }
 
     var updateScopeGrid = function () {
@@ -39,22 +40,8 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
             .then( function(grid){
                 $scope.grid = grid;
             });
-
-        // sqGameService.getCurrentGrid()
-        //     .then(function(modelGrid) {
-        //         $scope.grid = [];
-        //
-        //         for (var r = 0; r < 10; r++){
-        //             var row = [];
-        //             for (var c = 0; c < 10; c++) {
-        //                 row.push(modelGrid[r][c]);
-        //             }
-        //             $scope.grid.push(row);
-        //         }
-        //     })
     };
 
-    updateScopeGrid();
 
     $scope.clicked = function(r, c){
         if ($scope.numPicked >= $scope.currentUser.numPicks) {
@@ -62,13 +49,14 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
             return;
         }
 
-        if ( !$scope.grid[r][c].available() ) {
-            toastr.warning("This square is already taken!");
-            return;
-        }
-
-        picks.push({row: r, col: c}); // push the user's pick to the array
-
+        $scope.grid[r][c].toggle()
+            .then(function () {
+                toastr.success("Square Picked!");
+            })
+            .catch(function () {
+                // TODO also check for network error
+                toastr.warning("This square is already taken or you don't own it!");
+            })
     };
 
     $scope.clearSelections = function () {
@@ -101,6 +89,12 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
 
     $scope.registration = function () {
         $state.go("register");
-    }
+    };
+
+    $scope.squareClass = function (square) {
+        if (square.available)
+            return 'free';
+        return square.ownedByCurrentUser() ? 'chosen' : 'taken';
+    };
 
 });

@@ -51,11 +51,10 @@
 
 <div class="pick-row" ng-repeat="row in rows">
     <div class="pick-col" ng-repeat="col in cols" ng-click="clicked(row, col)"
-         ng-class=" !grid[row][col].available ? 'free' :
-         (grid[row][col].ownedBy.email == currentUser.email ? 'chosen' : 'taken')">
+         ng-class="squareClass(grid[row][col])">
 
-        <div ng-if="grid[row][col].available">{{ grid[row][col].ownedBy.initials }}</div>
-        <div ng-if="!grid[row][col].available">Open</div>
+        <div ng-if="!grid[row][col].available">{{ grid[row][col].ownedBy.initials }}</div>
+        <div ng-if="grid[row][col].available">Open</div>
 
     </div>
 </div>

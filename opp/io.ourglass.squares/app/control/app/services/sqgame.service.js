@@ -45,6 +45,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
             return this.available ? this.pick(playerInfo) : this.unpick(playerInfo);
         }
 
+        this.ownedByCurrentUser = function () {
+            if (!this.ownedBy.hasOwnProperty('email')) return false;
+            return _currentUser.email == this.ownedBy.email;
+        }
+
     }
 
  

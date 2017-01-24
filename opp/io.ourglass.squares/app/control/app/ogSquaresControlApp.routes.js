@@ -15,7 +15,12 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             url:         '/picksquares',
             templateUrl: 'app/components/picksquares/picksquares.partial.html',
             controller:  'pickSquaresController',
-            resolve:     {}
+            resolve:     {
+                grid: function (sqGameService) {
+                    return sqGameService.getCurrentGrid();
+                }
+                // TODO MITCH catch routing error somewhere
+            }
         })
 
         .state( 'register', {
