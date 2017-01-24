@@ -22,7 +22,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
         
         this.pick = function(playerInfo){
             if (!this.available)
-                throw new Error("Square already owned!");
+                return $q.reject(new Error("Square already owned!"));
 
             this.ownedBy = playerInfo;
             this.available = false;
@@ -32,7 +32,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
 
         this.unpick = function(playerInfo){
             if (this.ownedBy.email!=playerInfo.email)
-                throw new Error("You don't own this square");
+                return $q.reject(new Error("You don't own this square"));
 
             this.ownedBy = {};
             this.available = false;
@@ -132,6 +132,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
     service.submitPicksForCurrentUser = function () {
 
     };
+
 
     return service;
 
