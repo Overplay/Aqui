@@ -2,12 +2,10 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log){
+app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log, sqGameService){
 
     var demoState = true;
-
     var skipData = true;
-
 
     $log.debug("loading pickSquaresController");
 
@@ -16,79 +14,78 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     
     $scope.grid = [];
     $scope.numPicked = 0;
+    $scope.picks = [];
 
-    if (!$rootScope.currentUser && demoState) {
-        $rootScope.currentUser = {
-            picksAllowed: 3,
-            fullname: 'Demo Phillips',
-            initials: 'DEMO',
-            email: 'erik.phillips@icloud.com'
-        }
+    $scope.currentUser = sqGameService.getCurrentUser();
+
+    // Check if there is a current user, if not - go to register page
+    if ( !$scope.currentUser ) {
+        toastr.warning("No currently registered user!");
+
+        // $state.go("register");
+
+        // use this to demo
+        $scope.currentUser = {
+            name: "Erik Phillips",
+            initials: 'EP',
+            email: 'erik.phillips@icloud.com',
+            numPicks: 3
+        };
     }
 
-    if (!$rootScope.currentUser) {
-        $log.debug("no current user found");
-        $state.go("register");
-    }
+    var updateScopeGrid = function () {
 
-    var initializeLocalGrid = function () {
-        // var masterGrid = JSON.parse(localStorage.getItem('squares_grid'));
-        // if (!masterGrid || !skipData) {
-        //     alert("Unable to load an active game. Please contact an admin to start a game.");
-        //     $state.go("welcome");
-        //     return;
-        // }
+        sqGameService.getCurrentGrid()
+            .then( function(grid){
+                $scope.grid = grid;
+            });
 
-        for (var r = 0; r < 10; r++){
-            var row = [];
-            for (var c = 0; c < 10; c++) {
-                row.push(masterGrid[r][c]);
-            }
-            $scope.grid.push(row);
-        }
+        // sqGameService.getCurrentGrid()
+        //     .then(function(modelGrid) {
+        //         $scope.grid = [];
+        //
+        //         for (var r = 0; r < 10; r++){
+        //             var row = [];
+        //             for (var c = 0; c < 10; c++) {
+        //                 row.push(modelGrid[r][c]);
+        //             }
+        //             $scope.grid.push(row);
+        //         }
+        //     })
     };
 
-    initializeLocalGrid();
+    updateScopeGrid();
 
-    $scope.clicked = function(row, col){
-        if (!$scope.grid[row][col].taken || $scope.grid[row][col].user && $scope.grid[row][col].user.email != $rootScope.currentUser.email) {
-            if ($scope.grid[row][col].taken && $scope.grid[row][col].user.email != $rootScope.currentUser.email) {
-                alert("Square is already taken");
-                return;
-            }
-
-            if ($scope.numPicked >= $rootScope.currentUser.picksAllowed) {
-                alert("No more picks allowed.");
-                return;
-            }
+    $scope.clicked = function(r, c){
+        if ($scope.numPicked >= $scope.currentUser.numPicks) {
+            toastr.warning("You cannot select any more squares!");
+            return;
         }
 
-        $scope.grid[row][col].taken = !$scope.grid[row][col].taken;
-
-        if ($scope.grid[row][col].taken) {
-            $scope.numPicked += 1;
-            $scope.grid[row][col].user = $rootScope.currentUser;
-        } else {
-            $scope.numPicked -= 1;
-            $scope.grid[row][col].user = undefined;
+        if ( !$scope.grid[r][c].isAvailable() ) {
+            toastr.warning("This square is already taken!");
+            return;
         }
+
+        picks.push({row: r, col: c}); // push the user's pick to the array
+
     };
 
     $scope.clearSelections = function () {
         $log.debug("clearing all selections");
 
-        uibHelper.confirmModal("Clear All Selections?", "Would you like to clear all your current selections?", true)
-            .then(function(){
-                $scope.grid = [];
-                $scope.numPicked = 0;
-                initializeGrid();
-            });
+        // uibHelper.confirmModal("Clear All Selections?", "Would you like to clear all your current selections?", true)
+        //     .then(function(){
+        //         $scope.grid = [];
+        //         $scope.numPicked = 0;
+        //         updateScopeGrid(); // call this to reset the grid and pull any new mopves
+        //     });
 
-        // if (confirm("Clear all selections?")) {
-        //     $scope.grid = [];
-        //     $scope.numPicked = 0;
-        //     initializeLocalGrid();
-        // }
+        if (confirm("Clear all selections?")) {
+            $scope.numPicked = 0;
+            $scope.picks = [];
+            updateScopeGrid();
+        }
     };
 
     $scope.submitSelection = function () {
