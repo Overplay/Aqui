@@ -24,14 +24,14 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
             if (!this.available)
                 return $q.reject(new Error("Square already owned!"));
 
-            this.ownedBy = playerInfo;
+            this.ownedBy = playerInfo || _currentUser;
             this.available = false;
             
             return $q.when(true);
         }
 
         this.unpick = function(playerInfo){
-            if (this.ownedBy.email!=playerInfo.email)
+            if (this.ownedBy.email!=( playerInfo.email||_currentUser.email ) )
                 return $q.reject(new Error("You don't own this square"));
 
             this.ownedBy = {};
@@ -42,7 +42,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
         }
         
         this.toggle = function(playerInfo){
-            return this.available ? this.pick(playerInfo) : this.unpick(playerInfo);
+            return this.available ? this.pick(playerInfo || _currentUser ) : this.unpick(playerInfo || _currentUser );
         }
 
     }
