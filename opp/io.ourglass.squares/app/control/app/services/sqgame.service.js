@@ -2,22 +2,21 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
+app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $rootScope ) {
 
     $log.debug( "Loaded sqGameService" );
 
     var service = {};
 
-    var devMode = true;
-    var simulateBackEnd = true;
+    var _devMode = true;
+    var _simulateBackEnd = false;
 
     var _currentUser;
     var _grid;
 
+    function Square( row, col, inboundJson ) {
 
-    function Square(inboundJson) {
-
-        if (inboundJson.hasOwnProperty('email')){
+        if (inboundJson && inboundJson.hasOwnProperty('email')){
             this.available = false;
             this.ownedBy = inboundJson;
         } else {
@@ -25,14 +24,44 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
             this.ownedBy = {};
         }
         
+        this.row = row;
+        this.col = col;
+        
         this.pick = function(playerInfo){
-            if (!this.available)
-                return $q.reject(new Error("Square already owned!"));
 
-            this.ownedBy = playerInfo || _currentUser;
-            this.available = false;
-            
-            return $q.when(true);
+            if (_simulateBackEnd){
+                if ( !this.available )
+                    return $q.reject( new Error( "Square already owned!" ) );
+
+                this.ownedBy = playerInfo || _currentUser;
+                this.available = false;
+                return $q.when( 'picked' );
+
+            } else {
+
+                var _this = this;
+                return ogAPI.loadModelAndLock()
+                    .then( function(data){
+                        $log.debug("Got locked data");
+                        var cellAvailable = !data.grid[ _this.row ][ _this.col ].hasOwnProperty( 'name' );
+                        $log.debug("Cell ["+ _this.row+"]["+ _this.col+"] is " + cellAvailable?"available":"not available");
+                        if (!cellAvailable){
+                            initGrid( data.grid );
+                            throw new Error( "Cell not available any more!" );
+                        }
+
+                        _this.ownedBy = playerInfo || _currentUser;
+                        _this.available = false;
+                        data.grid[ _this.row ][ _this.col ] = playerInfo || _currentUser;
+                        return ogAPI.save();
+                    })
+                    .then( function(resp){
+                        initGrid( resp.data.grid );
+                        return "picked";
+                    });
+
+            }
+
         }
 
         this.unpick = function(playerInfo){
@@ -40,10 +69,16 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
                 return $q.reject(new Error("You don't own this square"));
 
             this.ownedBy = {};
-            this.available = false;
+            this.available = true;
 
-            return $q.when(true);
+            if (_simulateBackEnd){
 
+            } else {
+
+
+            }
+
+            return $q.when('unpicked');
         }
         
         this.toggle = function(playerInfo){
@@ -69,20 +104,36 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
 
  
 
-    function initGrid() {
+    function initGrid(jsonGrid) {
 
         _grid = [];
         //A little bit of map magic :D
-        for ( var rows = 0; rows < 10; rows++ ){
-            _grid.push([0,1,2,3,4,5,6,7,8,9].map(function(){ return new Square() }))
+        
+        if (!jsonGrid){
+            // dev mode without server data
+            for ( var row = 0; row < 10; row++ ) {
+                _grid.push( [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map( function (col) { return new Square(row,col) } ) )
+            }
+        } else {
+            // real mode
+            for ( var row = 0; row < 10; row++ ) {
+                _grid.push( [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map( function (col) { 
+                    return new Square(row, col, jsonGrid[row][col]) } ) );
+            }
+            
+            $rootScope.$broadcast('NEW_GRID', _grid);
         }
-
     }
-
-
-    service.isSquareAvailable = function ( x, y ) {
-        return !_grid[ x ][ y ].hasOwnProperty( 'name' );
-    };
+    
+    function postUpdatedGrid(){
+    
+        var postGrid = _grid.map( function(row){
+            return row.map( function ( sq ) { return sq.toPostObject(); } );;
+        });
+        
+        return postGrid;
+    
+    }
 
     function makeInitials( name ) {
 
@@ -100,25 +151,51 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
 
     function modelUpdate( newModel ) {
         $log.debug( "Got an model update in gameService" );
+        initGrid(newModel.grid);
     }
+    
+    function unlockedGridUpdate(){
+        
+        return ogAPI.loadModel()
+            .then( function ( model ) {
+                $log.debug( "Initial model loaded from AB" );
+                modelUpdate( model );
+                return _grid;
+            } );
+    }
+    
 
     function initialize() {
 
         ogAPI.init( {
             appType:      'mobile',
-            appName:      "io.ourglass.squares",
-            dataCallback: modelUpdate
+            appName:      "io.ourglass.squares"
         } );
 
-        ogAPI.loadModel()
-            .then( modelUpdate );
+        // unlockedGridUpdate()
+        //     .catch( function ( err ) {
+        //         $log.error( "FAIL Initial model load from AB" );
+        //     } );
 
     }
 
-    if ( !simulateBackEnd ) {
+    if ( !_simulateBackEnd ) {
         initialize();
     } else {
         initGrid();
+    }
+    
+    service.resetGameModel = function(){
+    
+        return $http.get('/www/opp/io.ourglass.squares/info/info.json')
+            .then(function(data){
+                ogAPI.model = data.data.initialValue;
+                return ogAPI.save();
+            })
+            .then(function(val){
+                modelUpdate(ogAPI.model);
+            })
+    
     }
 
 
@@ -126,11 +203,10 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
         _currentUser = {
             name:     undefined,
             email:    undefined,
-            numPicks: 0
+            numPicks: 0,
+            initials: undefined
         };
     }
-
-    service.resetCurrentUser();
 
     service.getCurrentUser = function () { return _currentUser; };
     service.setCurrentUser = function ( user ) {
@@ -146,17 +222,27 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q ) {
     // Return the latest grid
     service.getCurrentGrid = function () {
         //TODO placeholder for testing
-        return $q.when(_grid);    
+        
+        if (_simulateBackEnd)
+            return $q.when(_grid);    
+        
+        return unlockedGridUpdate();
+        
     };
+    
+    service.getRawGrid = function() { return _grid };
 
-    service.pickSquare = function ( x, y, user ) {
+    service.isDevelopmentMode = function(){ return _devMode; };
 
+    if ( !_devMode )
+        service.resetCurrentUser();
+    else {
+        service.setCurrentUser( {
+            name:     "Demo McDemogame",
+            email:    "mcdemo@demoface.net",
+            numPicks: 4
+        } );
     }
-
-    service.submitPicksForCurrentUser = function () {
-
-    };
-
 
     return service;
 

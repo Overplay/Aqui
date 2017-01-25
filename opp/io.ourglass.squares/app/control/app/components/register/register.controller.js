@@ -6,13 +6,24 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
 
     $log.debug("loading registerController");
 
+    //TODO: EP the $scope.fullname, $scope.email stuff should be replaced with 
+    //$scope.currentUser with a structure identical to what comes from sqGameService
+
+    if (sqGameService.isDevelopmentMode){
+        var u = sqGameService.getCurrentUser();
+        $scope.fullname = u.name;
+        $scope.email = u.email;
+        $scope.picks = u.numPicks;
+    } else
+        $scope.clearForm();
+
+
     $scope.clearForm = function () {
         $scope.fullname = undefined;
         $scope.email = undefined;
         $scope.picks = undefined;
     };
 
-    $scope.clearForm();
 
     $scope.register = function () {
         if ($scope.fullname == 'ogadm1n') {

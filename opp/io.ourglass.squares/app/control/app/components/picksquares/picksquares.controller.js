@@ -14,24 +14,13 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     
     $scope.grid = grid;
     $scope.numPicked = 0;
-
+    
     $scope.currentUser = sqGameService.getCurrentUser();
 
     // Check if there is a current user, if not - go to register page
     if ( !$scope.currentUser || !$scope.currentUser.name ) {
         toastr.warning("No currently registered user!");
-
-        // $state.go("register");
-
-        // use this to demo
-        $scope.currentUser = {
-            name: "Erik Phillips",
-            initials: 'EP',
-            email: 'erik.phillips@icloud.com',
-            numPicks: 3
-        };
-
-        sqGameService.setCurrentUser($scope.currentUser);
+        $state.go("register");
     }
 
     var updateScopeGrid = function () {
@@ -44,17 +33,29 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
 
 
     $scope.clicked = function(r, c){
-        if ($scope.numPicked >= $scope.currentUser.numPicks) {
+
+        var gridsSame = $scope.grid === sqGameService.getRawGrid();
+
+        if (($scope.numPicked >= $scope.currentUser.numPicks) && !$scope.grid[r][c].ownedByCurrentUser()) {
             toastr.warning("You cannot select any more squares!");
             return;
         }
 
         $scope.grid[r][c].toggle()
-            .then(function () {
-                toastr.success("Square Picked!");
+            .then(function (action) {
+                if (action=='picked'){
+                    toastr.success( "Square Picked!" );
+                    $scope.numPicked++;
+                } else {
+                    toastr.success( "Square Dumped!" );
+                    $scope.numPicked--;
+                }
             })
-            .catch(function () {
+            .catch(function (err) {
                 // TODO also check for network error
+                if (err.status==409){
+                    toastr.warning( "Someone else is picking, please try again" );
+                }
                 toastr.warning("This square is already taken or you don't own it!");
             })
     };
@@ -96,5 +97,14 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
             return 'free';
         return square.ownedByCurrentUser() ? 'chosen' : 'taken';
     };
+
+    $scope.$on('NEW_GRID', function(ev, newGrid){
+        $log.debug('New grid broadcast received');
+        $scope.grid = newGrid;
+    });
+
+    $scope.clearModel = function(){
+        sqGameService.resetGameModel();
+    }
 
 });

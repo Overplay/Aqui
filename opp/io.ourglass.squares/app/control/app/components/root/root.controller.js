@@ -5,7 +5,7 @@
 app.controller( "rootController", function ( $scope, $log, $interval, toastr, $rootScope ) {
 
     $log.debug( "loaded rootController" );
-    toastr.success("Yeah baby!");
+    //toastr.success("Yeah baby!");
 
     // var makeNewGrid = function () {
     //     var grid = [];

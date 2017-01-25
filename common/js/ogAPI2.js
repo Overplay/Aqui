@@ -201,6 +201,11 @@ var GLOBAL_UPDATE_TARGET;
                     .then( stripData );
             }
 
+            function getDataForAppAndLock() {
+                return $http.get( API_PATH + 'appdata/' + _appName + "?lock")
+                    .then( stripData );
+            }
+
             service.init = function ( params, poll ) {
 
                 if (!params.appType){
@@ -270,7 +275,7 @@ var GLOBAL_UPDATE_TARGET;
             service.save = function () {
                 var postModel = _.cloneDeep(service.model);
                 postModel.lockKey = _lockKey || 0;
-                return $http.post( API_PATH + 'appdata/' + _appName, service.model );
+                return $http.post( API_PATH + 'appdata/' + _appName, postModel );
             };
 
             service.loadModel = function () {
@@ -279,7 +284,7 @@ var GLOBAL_UPDATE_TARGET;
             };
             
             service.loadModelAndLock = function(){
-                return getDataForApp()
+                return getDataForAppAndLock()
                     .then( function(model){
                         if (!model.hasOwnProperty('lockKey'))
                             throw new Error("Could not acquire lock");

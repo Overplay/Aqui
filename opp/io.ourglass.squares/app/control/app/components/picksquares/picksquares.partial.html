@@ -1,16 +1,20 @@
 <style>
+
+    h1 {
+        text-align: center;
+    }
     .pick-row {
         display: flex;
         /*border: 1px solid white;*/
         height: 5vh;
-        margin-top: 1.3vh;
+        margin-top: 1.5vh;
     }
 
     .pick-col {
         flex: 1;
         /*border: 1px solid red;*/
         background-color: #10ee70;
-        margin-left: .5vw;
+        margin-left: 1vw;
         text-align: center;
         font-size: 2vh;
         height: 5vh;
@@ -18,16 +22,23 @@
         overflow: hidden;
     }
 
+    /* COLORS AND BORDERS CHOSEN FOR COLOR BLINDNESS READABILITY */
+
     .free {
         background-color: #10ee70!important;
+        border: 5px solid transparent;
+
     }
 
     .chosen {
-        background-color: red!important;
+        background-color: #ff691c !important;
+        border: 5px solid white;
     }
 
     .taken {
-        background-color: #109b50!important;
+        background-color: #4cabff !important;
+        border: 5px solid transparent;
+
     }
 
     .tracker {
@@ -42,7 +53,8 @@
 
     .mybtn {
         width: 100%;
-        margin-bottom: 1vh;
+        margin-top: 5vh;
+
     }
 
 </style>
@@ -54,19 +66,21 @@
          ng-class="squareClass(grid[row][col])">
 
         <div ng-if="!grid[row][col].available">{{ grid[row][col].ownedBy.initials }}</div>
-        <div ng-if="grid[row][col].available">Open</div>
+        <div ng-if="grid[row][col].available">&nbsp;</div>
 
     </div>
 </div>
 
 <div class="tracker">
-    Squares Picked: {{ numPicked }} of {{ currentUser.numPicks }}
+    <h1>Squares Picked: {{ numPicked }} of {{ currentUser.numPicks }}</h1>
 </div>
 
 <div class="button-group">
-    <button class="btn btn-lg btn-primary mybtn" ng-click="submitSelection()">SUBMIT SQUARES</button>
-    <button class="btn btn-lg btn-warning mybtn" ng-click="clearSelections()">CLEAR SELECTION</button>
-    <button class="btn btn-lg btn-danger mybtn" ng-click="registration()">REGISTRATION PAGE</button>
+    <button class="btn btn-lg btn-primary mybtn"
+            ui-sref="thanks4playing"
+            ng-disabled="numPicked!=currentUser.numPicks">FINISH</button>
+    <button class="btn btn-lg btn-warning mybtn" ng-click="clearModel()">CLEAR MODEL</button>
+    <!--<button class="btn btn-lg btn-danger mybtn" ng-click="registration()">REGISTRATION PAGE</button>-->
 </div>
 
 
