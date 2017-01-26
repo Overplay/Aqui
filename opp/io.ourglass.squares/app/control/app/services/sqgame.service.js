@@ -260,6 +260,50 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         } );
     }
 
+    service.startGame =function() {
+        // starts the game and locks future square sales, sets `InProgress` flag to true
+    };
+
+    service.newGame =function() {
+        // clears the grid and allows square purchases, sets `done` and `inProgress` flags to true
+    };
+
+    service.finishGame =function() {
+        // ends the game (for use when the quarter is over), grid holds all values until newGame() is called, sets `done` to true
+    };
+
+    service.abortGame =function() {
+        // releases the lock from startGame and clears the grid
+    };
+
+    service.gameInProgress =function() {
+        // returns true if the game is in progress. false otherwise
+    };
+
+    service.gameDone =function() {
+        // returns true if the game is done, false otherwise
+    };
+
+    service.setTeams =function( teams ) {
+        // parameter: {"team1": "team1name", "team2": "team2name"}
+    };
+
+    service.getTeams =function() {
+        // returns the same object as above
+    };
+
+    service.getCurrentScore =function() {
+        // returns object with current score
+    };
+
+    service.getFinalScore =function( quarter ) {
+        // returns object with final score from the specified `qtr`
+    };
+
+    service.getScoreMap =function() {
+        // returns an object with arrays of the mapped scores {rowMap: [], colMap: []}
+    };
+
     return service;
 
 } );

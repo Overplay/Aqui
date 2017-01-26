@@ -3,9 +3,10 @@
 
 </style>
 
-<h1>Let's get You Registered
-    <button class="btn btn-lg btn-danger pull-right" ng-click="cancel()">CANCEL
-    </button></h1>
+<h1>
+    Let's get You Registered
+    <button class="btn btn-lg btn-danger pull-right" ng-click="cancel()">CANCEL</button>
+</h1>
 
 <div class="row">
     <div class="col-md-10 col-offset-1">
@@ -13,19 +14,19 @@
 
             <div class="form-group">
                 <label for="formGroupExampleInput">First and Last Name</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" ng-model="fullname"
+                <input type="text" class="form-control" id="formGroupExampleInput" ng-model="currentUser.name"
                        placeholder="Your Full Name">
             </div>
 
             <div class="form-group">
                 <label for="formGroupExampleInput2">Email Address</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" ng-model="email"
+                <input type="text" class="form-control" id="formGroupExampleInput2" ng-model="currentUser.email"
                        placeholder="Your Email">
             </div>
 
             <div class="form-group">
                 <label for="formGroupExampleInput3">Number of Squares to Play?</label>
-                <input type="text" class="form-control" id="formGroupExampleInput3" ng-model="picks"
+                <input type="text" class="form-control" id="formGroupExampleInput3" ng-model="currentUser.numPicks"
                        placeholder="Number of Squares">
             </div>
 

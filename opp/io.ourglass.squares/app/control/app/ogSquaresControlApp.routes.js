@@ -36,7 +36,12 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             url:         '/settings',
             templateUrl: 'app/components/settings/settings.partial.html',
             controller:  'settingsController',
-            resolve:     {}
+            resolve:     {
+                grid: function (sqGameService) {
+                    return sqGameService.getCurrentGrid();
+                }
+                // TODO MITCH catch routing error somewhere
+            }
         })
 
         .state( 'thanks4playing', {
@@ -49,7 +54,12 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             url:         '/results',
             templateUrl: 'app/components/results/results.partial.html',
             controller:  'resultsController',
-            resolve:     {}
+            resolve:     {
+                grid: function (sqGameService) {
+                    return sqGameService.getCurrentGrid();
+                }
+                // TODO MITCH catch routing error somewhere
+            }
         })
 
 });

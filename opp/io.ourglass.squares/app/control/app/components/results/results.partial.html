@@ -18,18 +18,21 @@
         overflow: hidden;
     }
 
-    .taken {
-        background-color: #10ee70!important;
-    }
-
     .free {
-        background-color: #109b50!important;
+        background-color: #10ee70!important;
+        border: 5px solid transparent;
+
     }
 
     .chosen {
-        background-color: transparent!important;
-        font-size: 3vh!important;
-        font-weight: bold!important;
+        background-color: #ff691c !important;
+        border: 5px solid white;
+    }
+
+    .taken {
+        background-color: #4cabff !important;
+        border: 5px solid transparent;
+
     }
 
     .tracker {
@@ -68,27 +71,30 @@
 
 </style>
 
-<h1>Squares Results!</h1>
+<h1>
+    Squares Results!
+    <button class="btn btn-lg btn-danger pull-right" ng-click="cancel()">EXIT</button>
+</h1>
 
 <div class="horizontal-team">
-    {{ gridScores.horizontal.team }}
+    {{ teamNames.team1 }}
 </div>
 
 <!--<div class="vertical-team">-->
-    <!--{{ gridScores.vertical.team }}-->
+    <!--{{ teamName.team2 }}-->
 <!--</div>-->
 
 <div class="wrapper">
     <div class="pick-row" ng-repeat="row in emptyArray track by $index">
         <div class="pick-col" ng-repeat="col in emptyArray track by $index"
-             ng-class=" row == 0 || col == 0 ? 'chosen' : (!grid[row - 1][col - 1].taken ? 'free' : 'taken')"
+             ng-class=" row == 0 || col == 0 ? 'chosen' : (grid[row - 1][col - 1].available ? 'free' : 'taken')"
              ng-click="displayInfo(row - 1, col - 1)">
 
-            <div ng-if="col != 0 && row == 0">{{ gridScores.horizontal.order[col - 1] }}</div>
-            <div ng-if="col == 0 && row != 0">{{ gridScores.vertical.order[row - 1] }}</div>
+            <div ng-if="col != 0 && row == 0"> ## </div>
+            <div ng-if="col == 0 && row != 0"> ##</div>
 
             <div ng-if="col != 0 && row != 0">
-                {{ grid[row - 1][col - 1].taken ? grid[row - 1][col - 1].user.initials : 'Open' }}
+                {{ !grid[row - 1][col - 1].available ? grid[row - 1][col - 1].ownedBy.initials : '' }}
             </div>
 
         </div>
@@ -96,6 +102,7 @@
 </div>
 
 <div class="tracker">
+    Current Score: {{ currentScore.team1 }} : {{ currentScore.team2 }} <br>
     Squares Picked: {{ numPicked }} of 100
 </div>
 

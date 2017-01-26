@@ -10,19 +10,63 @@
         font-size: 4vh;
         text-align: center;
     }
+
+    .btn-box {
+        margin-top: 5vh;
+    }
+
+    .left-col {
+        width: 50%;
+        /*border: 1px solid blue;*/
+        float: left;
+        padding-right: 2vw;
+    }
+
+    .right-col {
+        width: 50%;
+        /*border: 1px solid hotpink;*/
+        float: right;
+        padding-left: 2vw;
+    }
 </style>
 
 <div class="jumbtron"><h1>Settings</h1></div>
 
 <div style="margin-top: 5vh">
 
-    <div class="tracker">Game Status: {{ status }}</div>
+    <div class="tracker">Game Status: {{ gameDone ? 'Game Complete' : gameInProgress ? 'Game In Progress' : ' Game Not Started' }}</div>
+    <div class="tracker">Tiles Picked: {{ tilesPicked }} of 100</div>
 
-    <div class="tracker" ng-if="status == 'Picking Squares'">Tiles Picked: {{ tilesPicked }} of 100</div>
+    <form>
+        <div class="form-group">
+            <label for="formTeam1">Team 1 Name:</label>
+            <input type="text" class="form-control" id="formTeam1" ng-model="teamNames.team1"
+                   placeholder="Team 1 Name">
+        </div>
 
-    <button class="btn btn-lg btn-info mybtn" ng-if="status == 'Game Active'" ng-click="viewResult()">View Active Game</button>
-    <button class="btn btn-lg btn-success mybtn" ng-if="status == 'Picking Squares'" ng-click="startGame()">START CURRENT GAME</button>
-    <button class="btn btn-lg btn-warning mybtn" ng-if="status == 'No Game Started'" ng-click="createNewGame()">CREATE NEW GAME</button>
-    <button class="btn btn-lg btn-danger mybtn" ng-if="status != 'No Game Started'" ng-click="stopGame()">STOP GAME</button>
+        <div class="form-group">
+            <label for="formTeam2">Team 2 Name:</label>
+            <input type="text" class="form-control" id="formTeam2" ng-model="teamNames.team2"
+                   placeholder="Team 2 Name">
+        </div>
+    </form>
 
+    <button class="btn btn-lg btn-info mybtn" ng-click="setTeams()">SET TEAM NAMES</button>
+
+    <div class="btn-box">
+        <div class="left-col">
+            <button class="btn btn-lg btn-info mybtn" ng-click="newGame()">CREATE NEW GAME</button>
+            <button class="btn btn-lg btn-success mybtn" ng-click="startGame()">LOCK SALES AND START PLAYING</button>
+        </div>
+
+        <div class="right-col">
+            <button class="btn btn-lg btn-warning mybtn" ng-click="finishGame()">FINISH GAME</button>
+            <button class="btn btn-lg btn-danger mybtn" ng-click="abortGame()">ABORT GAME</button>
+        </div>
+    </div>
+
+    <div class="btn-box">
+        <button class="btn btn-lg btn-info mybtn" ng-click="viewResultsPage()">VIEW RESULTS PAGE</button>
+        <button class="btn btn-lg btn-success mybtn" ng-click="refreshCurrentPage()">REFRESH PAGE</button>
+    </div>
 </div>

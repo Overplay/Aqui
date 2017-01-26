@@ -6,27 +6,27 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
 
     $log.debug("loading registerController");
 
-    //TODO: EP the $scope.fullname, $scope.email stuff should be replaced with 
-    //$scope.currentUser with a structure identical to what comes from sqGameService
+    $scope.currentUser = {};
 
-    if (sqGameService.isDevelopmentMode){
+    if (sqGameService.isDevelopmentMode) {
         var u = sqGameService.getCurrentUser();
-        $scope.fullname = u.name;
-        $scope.email = u.email;
-        $scope.picks = u.numPicks;
-    } else
+        $scope.currentUser.name = u.name;
+        $scope.currentUser.email = u.email;
+        $scope.currentUser.numPicks = u.numPicks;
+    } else {
         $scope.clearForm();
+    }
 
 
     $scope.clearForm = function () {
-        $scope.fullname = undefined;
-        $scope.email = undefined;
-        $scope.picks = undefined;
+        $scope.currentUser.name = undefined;
+        $scope.currentUser.email = undefined;
+        $scope.currentUser.numPicks = undefined;
     };
 
 
     $scope.register = function () {
-        if ($scope.fullname == 'ogadm1n') {
+        if ($scope.currentUser.name == 'ogadm1n') {
             $state.go("settings");
             return;
         }
@@ -38,20 +38,25 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
             return;
         }
 
-        if ($scope.picks <= 0 || !$scope.email || !$scope.fullname) {
-            alert("Please complete form");
+        if ($scope.currentUser.numPicks <= 0 || !$scope.currentUser.email || !$scope.currentUser.name) {
+            uibHelper.confirmModal("Incomplete Form","Please complete the whole form, selecting at least one square.");
             return;
         }
 
-        if (!validateEmail( $scope.email )) {
-            alert("Email is invalid.");
+        if ($scope.currentUser.name.split(' ').length < 2) {
+            uibHelper.confirmModal("Enter Fullname", "Please enter both a first and last name.");
+            return;
+        }
+
+        if (!validateEmail( $scope.currentUser.email )) {
+            uibHelper.confirmModal("Invalid Email Address", "Sorry, your email address seems to be invalid.");
             return;
         }
 
         sqGameService.setCurrentUser({
-            numPicks:   $scope.picks,
-            name:       $scope.fullname,
-            email:      $scope.email
+            numPicks:   $scope.currentUser.numPicks,
+            name:       $scope.currentUser.name,
+            email:      $scope.currentUser.email
         });
 
         $state.go("picksquares");
