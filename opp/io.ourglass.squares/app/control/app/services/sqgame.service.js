@@ -9,7 +9,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     var service = {};
 
     var _devMode = true;
-    var _simulateBackEnd = true;
+    var _simulateBackEnd = false;
 
     var _currentUser;
     var _grid;
