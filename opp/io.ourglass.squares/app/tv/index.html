@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width">
 
     <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
 
     <!-- App Main and AngularJS Routes -->
     <script src="app/ogSquaresApp.module.js"></script>
-    <!--<script src="../../../../common/js/ogAPI.js"></script>-->
+    <script src="app/ogSquaresApp.routes.js"></script>
 
     <!-- App Main and AngularJS Routes -->
 
@@ -20,42 +21,26 @@
 
     <!-- Controllers -->
     <script src="app/components/mainscreen/mainscreen.controller.js"></script>
+    <script src="app/services/sq-central-game.service.js"></script>
+    <script src="app/components/attract/attract.controller.js"></script>
 
     <!-- App Specific and Overridden CSS -->
-    <link href="../../../../common/css/og.css" rel="stylesheet">
     <link href="assets/css/squares-og-style.css" rel="stylesheet">
+    <link href="../../../../common/bower_components/animate.css/animate.min.css" rel="stylesheet">
 
     <title>Ourglass Squares</title>
 
 </head>
+
 <body ng-controller="mainScreenController">
+<div class="wrapper" ng-class="{ 'slide-in': slideIn }">
+    <img style="width: 95%; margin-top: 5px;" src="assets/img/sqlogo.png"/>
+    <ui-view></ui-view>
+</div>
 
-    <div class="wrapper">
-        <div class="app-header"> Squares </div>
+        <!--<h1>SQUARES SOLD: 27/100</h1>-->
+    <!--</div>-->
 
-        <div class="current-game">
-            <div class="titler">Game</div>
-            {{ game.home.team }} <br>
-            vs. <br>
-            {{ game.away.team }}
-        </div>
-
-        <div class="game-stats">
-            <div ng-if="game.status" class="titler">Current Score</div>
-            <div ng-if="!game.status" class="titler">Final Score</div>
-            {{ game.home.score }} to {{ game.away.score }}
-        </div>
-
-        <div class="current-winner">
-            <div ng-if="game.status" class="titler">Current Winner</div>
-            <div ng-if="!game.status" class="titler">Winner</div>
-            {{ currentWinner }}
-        </div>
-    </div>
-
-    <div class="logo-holder">
-        <og-advert type="widget" interval="30000"></og-advert>
-    </div>
 
 </body>
 </html>

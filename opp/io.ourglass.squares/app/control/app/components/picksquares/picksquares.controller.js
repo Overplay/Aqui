@@ -37,7 +37,8 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
         var gridsSame = $scope.grid === sqGameService.getRawGrid();
 
         if (($scope.numPicked >= $scope.currentUser.numPicks) && !$scope.grid[r][c].ownedByCurrentUser()) {
-            toastr.warning("You cannot select any more squares!");
+            // toastr.warning("You cannot select any more squares!");
+            uibHelper.confirmModal("Out of Picks","Sorry "+$scope.currentUser.name+", you are out of picks. If you want to change one of your picks, tap on it.");
             return;
         }
 

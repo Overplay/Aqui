@@ -9,7 +9,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     var service = {};
 
     var _devMode = true;
-    var _simulateBackEnd = false;
+    var _simulateBackEnd = true;
 
     var _currentUser;
     var _grid;
@@ -67,18 +67,34 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         this.unpick = function(playerInfo){
             if (this.ownedBy.email!=( playerInfo.email||_currentUser.email ) )
                 return $q.reject(new Error("You don't own this square"));
-
-            this.ownedBy = {};
-            this.available = true;
-
+            
             if (_simulateBackEnd){
-
+                this.ownedBy = {};
+                this.available = true;
+                return $q.when( 'unpicked' );
             } else {
 
+                var _this = this;
+                return ogAPI.loadModelAndLock()
+                    .then( function ( data ) {
+                        $log.debug( "Got locked data for unpick" );
+                        var ownedByEmail = data.grid[ _this.row ][ _this.col ].email;
+                        // The below should never happen!
+                        if (ownedByEmail!=_this.ownedBy.email)
+                            throw new Error("MAJOR ERROR!! Remote model has different owner than current user!");
+
+                        _this.ownedBy = {};
+                        _this.available = true;
+                        data.grid[ _this.row ][ _this.col ] = {};
+                        return ogAPI.save();
+                    } )
+                    .then( function ( resp ) {
+                        initGrid( resp.data.grid );
+                        return "unpicked";
+                    } );
 
             }
 
-            return $q.when('unpicked');
         }
         
         this.toggle = function(playerInfo){

@@ -6,12 +6,13 @@
   "iconLabel": "Squares",
   "primaryColorHex": "#A9A9A9",
   "secondaryColorHex": "#000000",
-  "height": 47,
+  "height": 60,
   "width": 10,
   "initialValue": {
     "rowScoreMap": [],
     "colScoreMap": [],
     "inProgress" : false,
+    "done": false,
     "grid": [
       [
         {},

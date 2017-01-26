@@ -1,0 +1,30 @@
+<style>
+    h1 {
+        color: #deff0d;
+        font-size: 3vh;
+        text-align: center;
+    }
+
+    h2 {
+        color: #fffefd;
+        font-size: 3vh;
+        text-align: center;
+        /*background-color: brown;*/
+        padding: 5px;
+        margin: 10px;
+    }
+
+    .og-loud {
+        margin-top: 10px;
+        font-weight: 900;
+        color: #ff9cd6;
+    }
+
+</style>
+
+<div>
+    <h1>SQUARES SOLD</h1>
+    <h2 ng-if="stillSelling">{{ totalSquaresSold }}/100</h2>
+    <h2 ng-if="!stillSelling" class="og-loud animated infinite jello">SOLD OUT!!</h2>
+
+</div>
