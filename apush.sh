@@ -7,4 +7,5 @@ HEAD="apush.sh"
 adb push ./common/. /mnt/sdcard/$WEBROOT/common
 adb push ./opp/. /mnt/sdcard/$WEBROOT/opp
 adb push ./control/. /mnt/sdcard/$WEBROOT/control
+adb push ./conf/. /mnt/sdcard/$WEBROOT/conf
 

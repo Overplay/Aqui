@@ -13,23 +13,25 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
     var _currentUser;
     var _grid;
+    var _gameInProgress;
+    var _gameOver;
 
     function Square( row, col, inboundJson ) {
 
-        if (inboundJson && inboundJson.hasOwnProperty('email')){
+        if ( inboundJson && inboundJson.hasOwnProperty( 'email' ) ) {
             this.available = false;
             this.ownedBy = inboundJson;
         } else {
             this.available = true;
             this.ownedBy = {};
         }
-        
+
         this.row = row;
         this.col = col;
-        
-        this.pick = function(playerInfo){
 
-            if (_simulateBackEnd){
+        this.pick = function ( playerInfo ) {
+
+            if ( _simulateBackEnd ) {
                 if ( !this.available )
                     return $q.reject( new Error( "Square already owned!" ) );
 
@@ -41,11 +43,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
                 var _this = this;
                 return ogAPI.loadModelAndLock()
-                    .then( function(data){
-                        $log.debug("Got locked data");
+                    .then( function ( data ) {
+                        $log.debug( "Got locked data" );
                         var cellAvailable = !data.grid[ _this.row ][ _this.col ].hasOwnProperty( 'name' );
-                        $log.debug("Cell ["+ _this.row+"]["+ _this.col+"] is " + cellAvailable?"available":"not available");
-                        if (!cellAvailable){
+                        $log.debug( "Cell [" + _this.row + "][" + _this.col + "] is " + cellAvailable ? "available" : "not available" );
+                        if ( !cellAvailable ) {
                             initGrid( data.grid );
                             throw new Error( "Cell not available any more!" );
                         }
@@ -54,21 +56,21 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                         _this.available = false;
                         data.grid[ _this.row ][ _this.col ] = playerInfo || _currentUser;
                         return ogAPI.save();
-                    })
-                    .then( function(resp){
+                    } )
+                    .then( function ( resp ) {
                         initGrid( resp.data.grid );
                         return "picked";
-                    });
+                    } );
 
             }
 
         }
 
-        this.unpick = function(playerInfo){
-            if (this.ownedBy.email!=( playerInfo.email||_currentUser.email ) )
-                return $q.reject(new Error("You don't own this square"));
-            
-            if (_simulateBackEnd){
+        this.unpick = function ( playerInfo ) {
+            if ( this.ownedBy.email != ( playerInfo.email || _currentUser.email ) )
+                return $q.reject( new Error( "You don't own this square" ) );
+
+            if ( _simulateBackEnd ) {
                 this.ownedBy = {};
                 this.available = true;
                 return $q.when( 'unpicked' );
@@ -80,8 +82,8 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                         $log.debug( "Got locked data for unpick" );
                         var ownedByEmail = data.grid[ _this.row ][ _this.col ].email;
                         // The below should never happen!
-                        if (ownedByEmail!=_this.ownedBy.email)
-                            throw new Error("MAJOR ERROR!! Remote model has different owner than current user!");
+                        if ( ownedByEmail != _this.ownedBy.email )
+                            throw new Error( "MAJOR ERROR!! Remote model has different owner than current user!" );
 
                         _this.ownedBy = {};
                         _this.available = true;
@@ -89,67 +91,71 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                         return ogAPI.save();
                     } )
                     .then( function ( resp ) {
-                        initGrid( resp.data.grid );
+                        processInboundModel( resp.data );
                         return "unpicked";
                     } );
 
             }
 
         }
-        
-        this.toggle = function(playerInfo){
-            return this.available ? this.pick(playerInfo || _currentUser ) : this.unpick(playerInfo || _currentUser );
+
+        this.toggle = function ( playerInfo ) {
+            return this.available ? this.pick( playerInfo || _currentUser ) : this.unpick( playerInfo || _currentUser );
         }
 
         this.ownedByCurrentUser = function () {
-            if (!this.ownedBy.hasOwnProperty('email')) return false;
+            if ( !this.ownedBy.hasOwnProperty( 'email' ) ) return false;
             return _currentUser.email == this.ownedBy.email;
         }
-        
-        this.toPostObject = function(){
-        
-            if (this.available) return {};
-            
-            return { 
+
+        this.toPostObject = function () {
+
+            if ( this.available ) return {};
+
+            return {
                 email: this.ownedBy.email,
-                name: this.ownedBy.name
+                name:  this.ownedBy.name
             }
         }
 
     }
 
- 
 
-    function initGrid(jsonGrid) {
+    function processInboundModel( newModelJson ) {
+
+        _gameInProgress = newModelJson.inProgress;
+        initGrid( newModelJson.grid );
+
+    }
+
+
+    function initGrid( jsonGrid ) {
 
         _grid = [];
         //A little bit of map magic :D
-        
-        if (!jsonGrid){
+
+        if ( !jsonGrid ) {
             // dev mode without server data
             for ( var row = 0; row < 10; row++ ) {
-                _grid.push( [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map( function (col) { return new Square(row,col) } ) )
+                _grid.push( [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map( function ( col ) { return new Square( row, col ) } ) )
             }
         } else {
             // real mode
             for ( var row = 0; row < 10; row++ ) {
-                _grid.push( [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map( function (col) { 
-                    return new Square(row, col, jsonGrid[row][col]) } ) );
+                _grid.push( [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map( function ( col ) {
+                    return new Square( row, col, jsonGrid[ row ][ col ] )
+                } ) );
             }
-            
-            $rootScope.$broadcast('NEW_GRID', _grid);
+
+            $rootScope.$broadcast( 'NEW_GRID', _grid );
         }
     }
-    
-    function postUpdatedGrid(){
-    
-        var postGrid = _grid.map( function(row){
-            return row.map( function ( sq ) { return sq.toPostObject(); } );;
-        });
-        
-        return postGrid;
-    
+
+    function loadModelAndProcess() {
+        return ogAPI.loadModel()
+            .then( processInboundModel );
     }
+
 
     function makeInitials( name ) {
 
@@ -167,11 +173,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
     function modelUpdate( newModel ) {
         $log.debug( "Got an model update in gameService" );
-        initGrid(newModel.grid);
+        processInboundModel( newModel );
     }
-    
-    function unlockedGridUpdate(){
-        
+
+    function unlockedGridUpdate() {
+
         return ogAPI.loadModel()
             .then( function ( model ) {
                 $log.debug( "Initial model loaded from AB" );
@@ -179,13 +185,13 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                 return _grid;
             } );
     }
-    
+
 
     function initialize() {
 
         ogAPI.init( {
-            appType:      'mobile',
-            appName:      "io.ourglass.squares"
+            appType: 'mobile',
+            appName: "io.ourglass.squares"
         } );
 
         // unlockedGridUpdate()
@@ -200,18 +206,18 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     } else {
         initGrid();
     }
-    
-    service.resetGameModel = function(){
-    
-        return $http.get('/www/opp/io.ourglass.squares/info/info.json')
-            .then(function(data){
+
+    service.resetGameModel = function () {
+
+        return $http.get( '/www/opp/io.ourglass.squares/info/info.json' )
+            .then( function ( data ) {
                 ogAPI.model = data.data.initialValue;
                 return ogAPI.save();
-            })
-            .then(function(val){
-                modelUpdate(ogAPI.model);
-            })
-    
+            } )
+            .then( function ( val ) {
+                modelUpdate( ogAPI.model );
+            } )
+
     }
 
 
@@ -238,17 +244,17 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     // Return the latest grid
     service.getCurrentGrid = function () {
         //TODO placeholder for testing
-        
-        if (_simulateBackEnd)
-            return $q.when(_grid);    
-        
-        return unlockedGridUpdate();
-        
-    };
-    
-    service.getRawGrid = function() { return _grid };
 
-    service.isDevelopmentMode = function(){ return _devMode; };
+        if ( _simulateBackEnd )
+            return $q.when( _grid );
+
+        return unlockedGridUpdate();
+
+    };
+
+    service.getRawGrid = function () { return _grid };
+
+    service.isDevelopmentMode = function () { return _devMode; };
 
     if ( !_devMode )
         service.resetCurrentUser();
@@ -260,48 +266,110 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         } );
     }
 
-    service.startGame =function() {
+    service.startGame = function () {
         // starts the game and locks future square sales, sets `InProgress` flag to true
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                _gameInProgress = true;
+                data.inProgress = true;
+                return ogAPI.save();
+            } )
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "game-started";
+            } );
     };
 
-    service.newGame =function() {
+    service.finishGame = function () {
+        // ends the game (for use when the quarter is over), grid holds all values until newGame() is called, sets
+        // `done` to true
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                _gameInProgress = false;
+                _gameOver = true;
+                data.inProgress = false;
+                data.done = true;
+                return ogAPI.save();
+            } )
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "game-done";
+            } );
+    };
+
+
+    //TODO the comment below doesn't make sense?
+
+    //TODO: Don't understand what these two methods will do
+    service.newGame = function () {
         // clears the grid and allows square purchases, sets `done` and `inProgress` flags to true
     };
 
-    service.finishGame =function() {
-        // ends the game (for use when the quarter is over), grid holds all values until newGame() is called, sets `done` to true
-    };
-
-    service.abortGame =function() {
+    service.abortGame = function () {
         // releases the lock from startGame and clears the grid
     };
 
-    service.gameInProgress =function() {
+
+    service.isGameInProgress = function () {
         // returns true if the game is in progress. false otherwise
+        return loadModelAndProcess()
+            .then( function () {
+                return _gameInProgress;
+            } )
     };
 
-    service.gameDone =function() {
+    service.isGameDone = function () {
         // returns true if the game is done, false otherwise
+        return loadModelAndProcess()
+            .then( function () {
+                return _gameOver;
+            } )
     };
 
-    service.setTeams =function( teams ) {
+    service.setTeams = function ( teams ) {
         // parameter: {"team1": "team1name", "team2": "team2name"}
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                data.teamNames = teams;
+                return ogAPI.save();
+            } )
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "team-named";
+            } );
     };
 
-    service.getTeams =function() {
+    function fetchModelAndReturnField(fieldname){
+        return ogAPI.loadModel()
+            .then( function ( data ) {
+                return data[ fieldname ];
+            } )
+    }
+
+    //TODO should these process the model too?
+    service.getTeams = function () {
         // returns the same object as above
+        return fetchModelAndReturnField('teamNames');
     };
 
-    service.getCurrentScore =function() {
+    service.getCurrentScore = function () {
         // returns object with current score
+        return fetchModelAndReturnField( 'currentScore' );
+
     };
 
-    service.getFinalScore =function( quarter ) {
+    service.getFinalScore = function ( quarter ) {
         // returns object with final score from the specified `qtr`
+        return fetchModelAndReturnField( 'q'+quarter+'FinalScore' );
+
     };
 
-    service.getScoreMap =function() {
+    service.getScoreMap = function () {
         // returns an object with arrays of the mapped scores {rowMap: [], colMap: []}
+        return ogAPI.loadModel()
+            .then( function ( data ) {
+                return { rowScoreMap: data.rowScoreMap, colScoreMap: data.colScoreMap };
+            } )
     };
 
     return service;
