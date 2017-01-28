@@ -1,0 +1,93 @@
+
+<style>
+
+    .current-score {
+        font-size: 4vh;
+        text-align: center;
+        margin-top: 4vh;
+        margin-bottom: 4vh;
+        overflow: hidden;
+    }
+
+    .mybtn {
+        width: 100%;
+        margin-bottom: 2vh;
+    }
+
+    .infobox {
+        font-size: 2vh;
+        margin-bottom: 1vh;
+        text-align: center;
+    }
+
+    .box {
+        /*float: left;*/
+        /*width: 70vw;*/
+    }
+
+    .button {
+        float: right;
+        width: 20vw;
+        height: 10vw;
+    }
+
+    .increment {
+        float: right;
+        background-color: lightblue;
+        width: 8vw;
+        height: 8vw;
+        /*border-radius: 5px;*/
+        font-size: 5vw;
+        text-align: center;
+    }
+
+    .decrement {
+        float: left;
+        background-color: lightcoral;
+        width: 8vw;
+        height: 8vw;
+        /*border-radius: 5px;*/
+        font-size: 5vw;
+        text-align: center;
+    }
+
+</style>
+
+<div>
+    <h1>Manually Set Game Score</h1>
+
+    <div class="current-score">
+        <div>Current Score</div>
+        {{ teamNames.team1 }}: {{ currentScore.team1 }} - {{ teamNames.team2 }}: {{ currentScore.team2 }}
+    </div>
+
+    <form>
+        <div class="form-group box">
+            <label for="formTeam1">New Score for {{ teamNames.team1 }}:</label>
+            <input type="text" class="form-control" id="formTeam1" ng-model="newScore.team1"
+                   placeholder="New {{ teamNames.team1 }} Score">
+        </div>
+
+        <!--<div class="button">-->
+            <!--<button class="decrement"><span class="glyphicon glyphicon-minus"></span></button>-->
+            <!--<button class="increment"><span class="glyphicon glyphicon-plus"></span></button>-->
+        <!--</div>-->
+
+        <div class="form-group box">
+            <label for="formTeam2">New Score for {{ teamNames.team2 }}:</label>
+            <input type="text" class="form-control" id="formTeam2" ng-model="newScore.team2"
+                   placeholder="New {{ teamNames.team2 }} Score">
+        </div>
+
+        <!--<div class="button">-->
+            <!--<button class="decrement"><span class="glyphicon glyphicon-minus"></button>-->
+            <!--<button class="increment"><span class="glyphicon glyphicon-plus"></button>-->
+        <!--</div>-->
+    </form>
+
+    <div class="infobox">Set new team scores here. Leave box empty to not change scores.</div>
+
+    <button class="btn btn-lg btn-info mybtn" ng-click="setScore()">SET NEW TEAM SCORES</button>
+    <button class="btn btn-lg btn-warning mybtn" ng-click="settingsPage()">SETTINGS PAGE</button>
+
+</div>

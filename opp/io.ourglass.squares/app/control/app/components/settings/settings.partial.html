@@ -34,7 +34,7 @@
 
 <div style="margin-top: 5vh">
 
-    <div class="tracker">Game Status: {{ gameDone ? 'Game Complete' : gameInProgress ? 'Game In Progress' : ' Game Not Started' }}</div>
+    <div class="tracker" style="font-size: 3vh">Game Status: {{ getGameStatusText() }}</div>
     <div class="tracker">Tiles Picked: {{ tilesPicked }} of 100</div>
 
     <form>
@@ -55,18 +55,18 @@
 
     <div class="btn-box">
         <div class="left-col">
-            <button class="btn btn-lg btn-info mybtn" ng-click="newGame()">CREATE NEW GAME</button>
-            <button class="btn btn-lg btn-success mybtn" ng-click="startGame()">LOCK SALES AND START PLAYING</button>
+            <button class="btn btn-lg btn-info mybtn" ng-click="startGame()">LOCK SALES AND START PLAYING</button>
+            <button class="btn btn-lg btn-danger mybtn" ng-click="finishGame()">FINISH GAME</button>
         </div>
 
         <div class="right-col">
-            <button class="btn btn-lg btn-warning mybtn" ng-click="finishGame()">FINISH GAME</button>
-            <button class="btn btn-lg btn-danger mybtn" ng-click="abortGame()">ABORT GAME</button>
+            <button class="btn btn-lg btn-info mybtn" ng-click="newGame()">CREATE NEW GAME</button>
+            <button class="btn btn-lg btn-danger mybtn" ng-click="manuallySetScores()">MANUALLY SET SCORES</button>
         </div>
     </div>
 
     <div class="btn-box">
-        <button class="btn btn-lg btn-info mybtn" ng-click="viewResultsPage()">VIEW RESULTS PAGE</button>
-        <button class="btn btn-lg btn-success mybtn" ng-click="refreshCurrentPage()">REFRESH PAGE</button>
+        <button class="btn btn-lg btn-success mybtn" ng-click="viewResultsPage()">VIEW RESULTS PAGE</button>
+        <button class="btn btn-lg btn-warning mybtn" ng-click="refreshCurrentPage()">MANUALLY REFRESH PAGE</button>
     </div>
 </div>

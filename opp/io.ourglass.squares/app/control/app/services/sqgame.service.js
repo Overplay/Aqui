@@ -209,8 +209,15 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
     service.resetGameModel = function () {
 
+        _gameInProgress = false;
+        _gameOver = false;
+
         return $http.get( '/www/opp/io.ourglass.squares/info/info.json' )
             .then( function ( data ) {
+                // TODO MITCH - is this okay that I added the following two lines?
+                _gameInProgress = false;
+                _gameOver = false;
+
                 ogAPI.model = data.data.initialValue;
                 return ogAPI.save();
             } )
@@ -355,8 +362,20 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     service.getCurrentScore = function () {
         // returns object with current score
         return fetchModelAndReturnField( 'currentScore' );
-
     };
+
+    service.setCurrentScore = function ( scores ) {
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                data.currentScore = scores;
+                return ogAPI.save();
+            } )
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "score-updated";
+            } );
+    };
+
 
     service.getFinalScore = function ( quarter ) {
         // returns object with final score from the specified `qtr`
@@ -368,7 +387,12 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         // returns an object with arrays of the mapped scores {rowMap: [], colMap: []}
         return ogAPI.loadModel()
             .then( function ( data ) {
-                return { rowScoreMap: data.rowScoreMap, colScoreMap: data.colScoreMap };
+                // TODO fix this when the TV model is working
+                return {
+                    rowScoreMap: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+                    colScoreMap: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                };
+                // return { rowScoreMap: data.rowScoreMap, colScoreMap: data.colScoreMap };
             } )
     };
 

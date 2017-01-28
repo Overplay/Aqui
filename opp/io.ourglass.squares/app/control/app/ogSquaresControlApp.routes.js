@@ -8,7 +8,8 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
 
         .state( 'welcome', {
             url:         '/welcome',
-            templateUrl: 'app/components/welcome/welcome.partial.html'
+            templateUrl: 'app/components/welcome/welcome.partial.html',
+            controller:  'welcomeController'
         })
 
         .state( 'picksquares', {
@@ -54,6 +55,18 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             url:         '/results',
             templateUrl: 'app/components/results/results.partial.html',
             controller:  'resultsController',
+            resolve:     {
+                grid: function (sqGameService) {
+                    return sqGameService.getCurrentGrid();
+                }
+                // TODO MITCH catch routing error somewhere
+            }
+        })
+
+        .state( 'score-manually', {
+            url:         '/score-manually',
+            templateUrl: 'app/components/score-manually/score-manually.partial.html',
+            controller:  'scoreManuallyController',
             resolve:     {
                 grid: function (sqGameService) {
                     return sqGameService.getCurrentGrid();

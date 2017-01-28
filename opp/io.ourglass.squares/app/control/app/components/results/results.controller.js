@@ -2,23 +2,27 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.controller("resultsController", function($scope, uibHelper, $log, $state, sqGameService, grid){
+app.controller("resultsController", function($scope, uibHelper, $log, $state, $timeout, $interval, sqGameService, grid){
 
     $log.debug("loading resultsController");
 
-    var DEMOSTATE = true;
 
     $scope.grid = grid;
+    $scope.currentScore = {team1: 0, team2: 0};
+    $scope.teamNames = {team1: "team1", team2: "team2"};
 
-    if (DEMOSTATE) {
-        $scope.teamNames = {team1: "Broncos", team2: "49ers"};
-        $scope.currentScore = {team1: 10, team2: 3};
-    } else {
-        $scope.teamNames = sqGameService.getTeams();
-        $scope.currentScore = sqGameService.getCurrentScore();
-    }
+    updateCurrentScore();
+    updateTeamNames();
+    updateScoreMapping();
 
-    $scope.numPicked = countTiles();
+    $interval(function () {
+        updateScopeGrid();
+        updateTeamNames();
+        updateCurrentScore();
+        updateScoreMapping();
+    }, 5000); // update information every 5 seconds
+
+
     $scope.emptyArray = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 11 elements for the ng-repeat
 
     $scope.displayInfo = function(row, col) {
@@ -34,46 +38,76 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, sq
         // TODO make the confirm box above have a line break
     };
 
-    function countTiles () {
-        if (!$scope.grid) return 0;
-
-        var count = 0;
-
-        for (var r = 0; r < 10; r++) {
-            for (var c = 0; c < 10; c++) {
-                if (!$scope.grid[r][c].available) {
-                    count++;
-                }
-            }
-        }
-
-        return count;
-    }
-
     $scope.cancel = function () {
         $state.go("welcome");
     };
 
-    function getCurrentScore() {
+    $scope.getClassType = function (row, col) {
+        if (row == 0 && col == 0) return 'empty';
+        if (row == 0 || col == 0) return 'header';
+        if (!$scope.grid[row - 1][col - 1].available) return 'taken';
+        return 'free';
+    };
+
+    function updateCurrentScore() {
         // gets the current score of the game
-        $scope.currentScore = sqGameService.getCurrentScore();
+        sqGameService.getCurrentScore()
+            .then(function( scores ) {
+                $scope.currentScore = scores;
+            })
+            .catch(function () {
+                $log.error("Unexpected rejection getting current scores - using 0-0");
+                $scope.currentScore = {team1: 0, team2: 0};
+            })
     }
 
-    function getFinalScore( quarter ) {
-        // gets the score of the specified quarter
+    function updateTeamNames() {
+        sqGameService.getTeams()
+            .then( function( t ) {
+                $scope.teamNames = t;
+            })
+            .catch(function () {
+                $log.error("Unexpected rejection getting teams - using defaults");
+                $scope.teamNames = {team1: "team1", team2: "team2"};
+            })
     }
 
-    function findWinner () {
-        var team1 = $scope.currentScore.team1;
-        var team2 = $scope.currentScore.team2;
-
-        var row = team2 % 10;
-        var col = team1 % 10;
-
-        $log.debug("Current Winner: row=" + row + ", col=" + col);
-        //TODO this needs to get the column maps
+    function updateScoreMapping() {
+        sqGameService.getScoreMap()
+            .then( function ( map ) {
+                $scope.scoreMap = map;
+                findWinner();
+            })
+            .catch( function ( err ) {
+                $log.error( "Unexpected rejection getting score map" );
+            });
     }
 
-    findWinner();
+    function updateScopeGrid() {
+        $log.debug("update grid");
+        $scope.grid = sqGameService.getRawGrid();
+    }
 
+    function findWinner() {
+        var col = $scope.currentScore.team1 % 10;
+        var row = $scope.currentScore.team2 % 10;
+        var rowMap = $scope.scoreMap.rowScoreMap;
+        var colMap = $scope.scoreMap.colScoreMap;
+
+        for (var r = 0; r < 10; r++)
+            if (rowMap[r] == row)
+                break;
+
+        for (var c = 0; c < 10; c++)
+            if (colMap[c] == col)
+                break;
+
+        if ($scope.grid[r][c].available) {
+            $scope.winner = "free square";
+        } else {
+            $scope.winner = $scope.grid[r][c].ownedBy.name;
+        }
+
+        return {rowIdx: r, colIdx: c};
+    }
 });
