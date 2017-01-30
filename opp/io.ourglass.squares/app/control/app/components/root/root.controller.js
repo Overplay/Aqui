@@ -16,6 +16,17 @@ app.controller( "rootController", function ( $scope, $log, sqGameService, footba
     function logGameInProgress( isGameRunning ) {
         $log.debug( "Game is: " + (isGameRunning ? "running!" : "not running") );
     }
+
+    function logCurrentScore(scores) {
+        $log.debug("Current Scores - team1: " + scores.team1 + ", team 2: " + scores.team2);
+    }
+
+    function logScoreMap(scoreMap) {
+        $log.debug("Score Map Col: " + scoreMap.colScoreMap);
+        $log.debug("Score Map Row: " + scoreMap.rowScoreMap);
+    }
+
+    if (RUN_TESTS){
     
     function testSetTeams(){
        return sqGameService.getTeams()
@@ -42,6 +53,53 @@ app.controller( "rootController", function ( $scope, $log, sqGameService, footba
                 $log.error( "Unexpected rejection changing game inprogress state" )
                 $log.error( err.message );
             } );
+    sqGameService.resetGameModel()
+        .then( function(){
+
+            $log.debug("Starting tests");
+            // sqGameService.getTeams()
+            //     .then( logTeams )
+            //     .then( function () {
+            //         return sqGameService.setTeams( { team1: "49ers", team2: "Cardinals" } )
+            //             .then( sqGameService.getTeams );
+            //     } )
+            //     .then( logTeams )
+            //     .catch( function(err){
+            //         $log.error("Unexpected rejection changing teams");
+            //         $log.error( err.message );
+            //     });
+
+
+            // sqGameService.isGameInProgress()
+            //     .then( logGameInProgress )
+            //     .then( sqGameService.startGame )
+            //     .then( sqGameService.isGameInProgress )
+            //     .then( logGameInProgress )
+            //     .catch( function ( err ) {
+            //         $log.error( "Unexpected rejection changing game inprogress state" );
+            //         $log.error( err.message );
+            //     } );
+
+            // sqGameService.getCurrentScore()
+            //     .then( logCurrentScore )
+            //     .catch( function ( err ) {
+            //         $log.error( "Unexpected rejection getting current scores" );
+            //         $log.error( err.message );
+            //     } );
+
+            // sqGameService.getFinalScore( 1 )
+            //     .then( logCurrentScore )
+            //     .catch( function ( err ) {
+            //         $log.error( "Unexpected rejection getting quarter scores" );
+            //         $log.error( err.message );
+            //     } );
+
+            sqGameService.getScoreMap()
+                .then( logScoreMap )
+                .catch( function ( err ) {
+                    $log.error( "Unexpected rejection getting score map" );
+                    $log.error( err.message );
+                } );
         
     }
 
@@ -56,6 +114,7 @@ app.controller( "rootController", function ( $scope, $log, sqGameService, footba
                     .then(testStartGame);
 
             } )
+        })
 
         // this is the actual code for the superbowl
         footballAPI.getLatestGameInfo( 2017020500 )

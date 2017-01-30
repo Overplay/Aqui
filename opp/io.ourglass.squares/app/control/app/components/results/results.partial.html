@@ -24,21 +24,27 @@
 
     }
 
-    .chosen {
+    .header {
         background-color: #ff691c !important;
-        border: 5px solid white;
+        border: 3px solid white;
     }
 
     .taken {
         background-color: #4cabff !important;
         border: 5px solid transparent;
+    }
 
+    .empty {
+        background-color: transparent !important;
     }
 
     .tracker {
         margin-top: 2vh;
-        font-size: 4vh;
+        font-size: 3vh;
         text-align: center;
+        /*background-color: rgba(55, 55, 55, 0.6);*/
+        border-radius: 5px;
+        overflow: hidden;
     }
 
     .button-group {
@@ -81,17 +87,17 @@
 </div>
 
 <!--<div class="vertical-team">-->
-    <!--{{ teamName.team2 }}-->
+    <!--{{ teamNames.team2 }}-->
 <!--</div>-->
 
 <div class="wrapper">
     <div class="pick-row" ng-repeat="row in emptyArray track by $index">
         <div class="pick-col" ng-repeat="col in emptyArray track by $index"
-             ng-class=" row == 0 || col == 0 ? 'chosen' : (grid[row - 1][col - 1].available ? 'free' : 'taken')"
+             ng-class="getClassType(row, col)"
              ng-click="displayInfo(row - 1, col - 1)">
 
-            <div ng-if="col != 0 && row == 0"> ## </div>
-            <div ng-if="col == 0 && row != 0"> ##</div>
+            <div ng-if="col != 0 && row == 0"> {{ scoreMap.colScoreMap[col - 1] }} </div>
+            <div ng-if="col == 0 && row != 0"> {{ scoreMap.rowScoreMap[row - 1] }} </div>
 
             <div ng-if="col != 0 && row != 0">
                 {{ !grid[row - 1][col - 1].available ? grid[row - 1][col - 1].ownedBy.initials : '' }}
@@ -102,10 +108,7 @@
 </div>
 
 <div class="tracker">
-    Current Score: {{ currentScore.team1 }} : {{ currentScore.team2 }} <br>
-    Squares Picked: {{ numPicked }} of 100
+    <div>Current Score</div>
+    {{ teamNames.team1 }}: {{ currentScore.team1 }} - {{ teamNames.team2 }}: {{ currentScore.team2 }}
+    <div>Current Winner: {{ winner }}</div>
 </div>
-
-
-
-
