@@ -11,8 +11,7 @@
   "initialValue": {
     "rowScoreMap": [],
     "colScoreMap": [],
-    "inProgress" : false,
-    "done": false,
+    "gameState" : "picking",
     "grid": [
       [
         {},
@@ -136,19 +135,10 @@
       ]
     ],
     "currentScore": { "team1": 0, "team2": 0},
-    "q1FinalScore": {
-      "team1": 0,
-      "team2": 0
-    },
-    "q2FinalScore": {
-      "team1": 0,
-      "team2": 0
-    },
-    "q3FinalScore": {
-      "team1": 0,
-      "team2": 0
-    },
-    "q4FinalScore": {
+    "currentQuarter": 0,
+    "gameClock": "0:00",
+    "perQuarterScores": [],
+    "finalScore": {
       "team1": 0,
       "team2": 0
     },

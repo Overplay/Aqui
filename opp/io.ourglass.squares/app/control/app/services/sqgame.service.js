@@ -13,8 +13,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
     var _currentUser;
     var _grid;
-    var _gameInProgress;
-    var _gameOver;
+    var _gameState;
 
     function Square( row, col, inboundJson ) {
 
@@ -123,7 +122,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
     function processInboundModel( newModelJson ) {
 
-        _gameInProgress = newModelJson.inProgress;
+        _gameState = newModelJson.gameState;
         initGrid( newModelJson.grid );
 
     }
@@ -193,12 +192,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             appType: 'mobile',
             appName: "io.ourglass.squares"
         } );
-
-        // unlockedGridUpdate()
-        //     .catch( function ( err ) {
-        //         $log.error( "FAIL Initial model load from AB" );
-        //     } );
-
+        
     }
 
     if ( !_simulateBackEnd ) {
@@ -218,7 +212,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                 modelUpdate( ogAPI.model );
             } )
 
-    }
+    };
 
 
     service.resetCurrentUser = function () {
@@ -270,8 +264,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         // starts the game and locks future square sales, sets `InProgress` flag to true
         return ogAPI.loadModelAndLock()
             .then( function ( data ) {
-                _gameInProgress = true;
-                data.inProgress = true;
+                data.gameState = "starting";
                 return ogAPI.save();
             } )
             .then( function ( resp ) {
@@ -285,10 +278,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         // `done` to true
         return ogAPI.loadModelAndLock()
             .then( function ( data ) {
-                _gameInProgress = false;
-                _gameOver = true;
-                data.inProgress = false;
-                data.done = true;
+                data.gameState = "done"; //this should really only be done by the head end
                 return ogAPI.save();
             } )
             .then( function ( resp ) {
@@ -314,7 +304,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         // returns true if the game is in progress. false otherwise
         return loadModelAndProcess()
             .then( function () {
-                return _gameInProgress;
+                return _gameState=="running";
             } )
     };
 
@@ -322,7 +312,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         // returns true if the game is done, false otherwise
         return loadModelAndProcess()
             .then( function () {
-                return _gameOver;
+                return _gameState == "done";
             } )
     };
 
@@ -371,6 +361,57 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                 return { rowScoreMap: data.rowScoreMap, colScoreMap: data.colScoreMap };
             } )
     };
+    
+    
+    service.fillGridSimPlayers = function(){
+    
+        var names = [ {
+            name:  "Alan Amber",
+            email: "aa@test.com"
+        },
+            {
+                name:  "Bob Black",
+                email: "bb@test.com"
+            },
+            {
+                name:  "Chalre Cooperston",
+                email: "cc@test.com"
+            },
+            {
+                name:  "Dick Doobie",
+                email: "dd@test.com"
+            },
+            {
+                name:  "Elber Eddy",
+                email: "ee@test.com"
+            },
+            {
+                name:  "Frank Fillers",
+                email: "ff@test.com"
+            },
+            {
+                name:  "Gerry Gambles",
+                email: "gg@test.com"
+            },
+            {
+                name:  "Hank Harley",
+                email: "hh@test.com"
+            },
+            {
+                name:  "Ithan Indigo",
+                email: "ii@test.com"
+            } ];
+        
+        for ( var row = 0; row < 10; row++ )
+            for ( var col = 0; col < 10; col++ ) {
+                ogAPI.model.grid[ row ][ col ] =  _.sample( names );
+            }
+            
+        ogAPI.save()
+            .then(service.getCurrentGrid);
+        
+    
+    }
 
     return service;
 

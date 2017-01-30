@@ -2,17 +2,28 @@
  * Created by Erik Phillips on 1/18/17.
  */
 
-app.controller("mainScreenController", function($scope, $log, $interval ){
+app.controller("mainScreenController", function($scope, $log, $interval, fbGameSim, $timeout ){
 
     $log.debug( "mainScreenController has loaded");
 
-    $scope.slideIn = false;
+    //fbGameSim.startGame();
 
-    $interval( function () {
-        $scope.slideIn = !$scope.slideIn;
-        //$log.debug( "Slide in is: " + $scope.slideIn );
-    }, 5000 );
+    $scope.slideIn = false;
     
+    function slideOut(){
+        $scope.slideIn = false;
+    }
+    
+    function slideIn(){
+        
+        $scope.slideIn = true;
+        $timeout(slideOut, 5000);
+    }
+
+    $interval( slideIn, 10000 );
+
+    // This wasn't working right...
+    //$scope.$on('MODEL_UPDATE', slideIn);
 
 });
 

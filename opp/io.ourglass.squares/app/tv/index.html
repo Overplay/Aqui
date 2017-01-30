@@ -16,12 +16,14 @@
 
     <!-- App Main and AngularJS Routes -->
 
-    <script src="../../../../common/js/uiOGMobile/uiOGMobile.js"></script>
+    <!--<script src="../../../../common/js/uiOGMobile/uiOGMobile.js"></script>-->
     <script src="../../../../common/js/ogAPI2.js"></script>
 
     <!-- Controllers -->
     <script src="app/components/mainscreen/mainscreen.controller.js"></script>
     <script src="app/services/sq-central-game.service.js"></script>
+    <script src="app/services/gamesim.service.js"></script>
+
     <script src="app/components/attract/attract.controller.js"></script>
 
     <!-- App Specific and Overridden CSS -->
@@ -34,7 +36,7 @@
 
 <body ng-controller="mainScreenController">
 <div class="wrapper" ng-class="{ 'slide-in': slideIn }">
-    <img style="width: 95%; margin-top: 5px;" src="assets/img/sqlogo.png"/>
+    <img style="width: 90%; margin-top: 5px;" src="assets/img/sqlogo.png"/>
     <ui-view></ui-view>
 </div>
 

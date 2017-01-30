@@ -2,28 +2,28 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.controller("settingsController", function($scope, uibHelper, $log, $state, sqGameService, grid ){
+app.controller( "settingsController", function ( $scope, uibHelper, $log, $state, sqGameService, grid, $q ) {
 
-    $log.debug("loading settingsController");
+    $log.debug( "loading settingsController" );
 
-    var DEMOSTATE = true;
+    var DEMOSTATE = false;
 
-    if (DEMOSTATE) {
+    if ( DEMOSTATE ) {
         $scope.gameDone = false;
         $scope.gameInProgress = false;
         $scope.tilesPicked = getTotalTilesPicks();
-        $scope.teamNames = {team1: "Broncos", team2: "49ers"};
+        $scope.teamNames = { team1: "Broncos", team2: "49ers" };
     } else {
         // gameDone = true if the game is finished
         // gameInProgress = true if the game is currently in progress
-        $scope.gameDone = sqGameService.gameDone();
-        $scope.gameInProgress = sqGameService.gameInProgress();
+        //$scope.gameDone = sqGameService.gameDone();
+        //$scope.gameInProgress = sqGameService.gameInProgress();
         $scope.tilesPicked = getTotalTilesPicks();
         $scope.teamNames = getTeams();
     }
 
     $scope.viewResultsPage = function () {
-        $state.go('results');
+        $state.go( 'results' );
     };
 
     $scope.refreshCurrentPage = function () {
@@ -33,35 +33,46 @@ app.controller("settingsController", function($scope, uibHelper, $log, $state, s
 
     $scope.startGame = function () {
         // starts current game after picking is done
+        sqGameService.startGame();
     };
 
     $scope.newGame = function () {
         // clears the grid
+        sqGameService.resetGameModel();
     };
 
     $scope.finishGame = function () {
         // finished the game when the quarter is over
     };
 
-    $scope.abortGame = function () {
-        // stops the game mid-session
+    $scope.simGame = function () {
+        sqGameService.resetGameModel()
+            .then(function(){
+                sqGameService.fillGridSimPlayers();
+                return sqGameService.startGame();
+
+            });
+
+        
     };
 
     $scope.setTeams = function () {
         // set the teams from the form
     };
 
-    function getTeams () {
+    function getTeams() {
         // gets an object with the current teams playing
     }
 
     function getTotalTilesPicks() {
         var count = 0;
-        for (var row = 0; row < 10; row++)
-            for (var col = 0; col < 10; col++)
-                if (!grid[row][col].available)
+        for ( var row = 0; row < 10; row++ )
+            for ( var col = 0; col < 10; col++ )
+                if ( !grid[ row ][ col ].available )
                     count += 1;
         return count;
     }
 
-});
+ 
+
+} );
