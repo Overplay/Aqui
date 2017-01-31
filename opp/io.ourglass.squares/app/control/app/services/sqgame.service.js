@@ -322,6 +322,14 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             } )
     };
 
+    service.isGamePicking = function () {
+        // returns true if the game is picking squares, false otherwise
+        return loadModelAndProcess()
+            .then(function () {
+                return _gameState == "picking";
+            })
+    };
+
     service.isGameDone = function () {
         // returns true if the game is done, false otherwise
         return loadModelAndProcess()

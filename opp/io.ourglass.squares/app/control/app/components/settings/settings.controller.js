@@ -25,7 +25,7 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
     $scope.getGameStatusText = function () {
         var gameState = sqGameService.getGameState();
         if ( gameState ==  'done') return 'Game Completed';
-        if ( gameState == 'running' ) return 'Game in Progress';
+        if ( gameState == 'starting' ) return 'Game in Progress';
         if ( gameState == 'picking' ) return "Picking Squares";
         return 'Game Not Yet Started';
     };
