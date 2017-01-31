@@ -11,18 +11,12 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
     $scope.currentScore = {team1: 0, team2: 0};
     $scope.teamNames = {team1: "team1", team2: "team2"};
 
+    var winnerRowCol = {rowIdx: -1, colIdx: -1};
+
+    updateScopeGrid();
     updateCurrentScore();
     updateTeamNames();
     updateScoreMapping();
-
-    $interval(function () {
-        $log.debug("results page updating");
-        updateScopeGrid();
-        updateTeamNames();
-        updateCurrentScore();
-        updateScoreMapping();
-    }, 5000); // update information every 5 seconds
-
 
     $scope.emptyArray = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 11 elements for the ng-repeat
 
@@ -43,7 +37,12 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
         $state.go("welcome");
     };
 
+    $scope.refresh = function () {
+        location.reload();
+    };
+
     $scope.getClassType = function (row, col) {
+        if (row - 1 == winnerRowCol.rowIdx && col - 1 == winnerRowCol.colIdx) return 'winner';
         if (row == 0 && col == 0) return 'empty';
         if (row == 0 || col == 0) return 'header';
         if (!$scope.grid[row - 1][col - 1].available) return 'taken';
@@ -85,7 +84,7 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
     }
 
     function updateScopeGrid() {
-        $log.debug("update grid");
+        $log.debug("update to grid");
         $scope.grid = sqGameService.getRawGrid();
     }
 
@@ -102,6 +101,8 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
         for (var c = 0; c < 10; c++)
             if (colMap[c] == col)
                 break;
+
+        winnerRowCol = {rowIdx: r, colIdx: c};
 
         if ($scope.grid[r][c].available) {
             $scope.winner = "free square";
