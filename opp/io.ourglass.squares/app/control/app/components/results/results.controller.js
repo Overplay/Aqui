@@ -16,6 +16,7 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
     updateScoreMapping();
 
     $interval(function () {
+        $log.debug("results page updating");
         updateScopeGrid();
         updateTeamNames();
         updateCurrentScore();
