@@ -249,7 +249,10 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         if ( _simulateBackEnd )
             return $q.when( _grid );
 
-        return unlockedGridUpdate();
+        return unlockedGridUpdate()
+            .catch(function(err){
+                $log.debug(err.message);
+            });
 
     };
 

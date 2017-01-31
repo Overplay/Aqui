@@ -16,9 +16,12 @@ app.factory( 'fbGameSim', function ( $timeout, $log ) {
     
     var FORCE_TIE = false;
 
+    var HIGH_SCORE = true;
+    var flimit = HIGH_SCORE?0.5:0.8;
+
     function getRandomPoints() {
 
-        return (Math.random()>0.9)?_.sample( pts ):0;
+        return (Math.random()> flimit )?_.sample( pts ):0;
     }
 
     function scoringDrive() {

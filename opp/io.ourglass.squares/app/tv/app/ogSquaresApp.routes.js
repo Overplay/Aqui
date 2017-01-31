@@ -14,14 +14,8 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
 
         .state( 'playing', {
             url:         '/playing',
-            templateUrl: 'app/components/picksquares/picksquares.partial.html',
-            controller:  'pickSquaresController',
-            resolve:     {
-                grid: function (sqGameService) {
-                    return sqGameService.getCurrentGrid();
-                }
-                // TODO MITCH catch routing error somewhere
-            }
+            templateUrl: 'app/components/playing/playing.partial.html',
+            controller:  'playingController'
         })
 
         //TODO abstract states for winners

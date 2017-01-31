@@ -2,7 +2,7 @@
  * Created by mkahn on 1/25/17.
  */
 
-app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout ) {
+app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, $state ) {
 
     $log.debug( "sqGame service loaded" );
 
@@ -85,7 +85,7 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout )
     }
 
     function modelUpdate( newModel ) {
-        $log.debug( "Got a model update!" );
+        $log.debug( "sqCentral: Got a model update!" );
 
         if ( newModel.colScoreMap.length == 0 )
             initRowColMap();
@@ -95,12 +95,13 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout )
             $log.debug( "sqCentral: Game starting!" );
             //resetGame();
             $timeout(startGameUpdates, 5000); // allow model to unlock
+            $state.go('playing');
         } else if (ogAPI.model.gameState=='picking') {
             service.localGameState = 'picking';
             totalSquaresSold();
         }
 
-        $log.debug( "Game state is: " + newModel.gameState );
+        $log.debug( "sqCentral: Game state is: " + newModel.gameState );
         $rootScope.$broadcast( 'MODEL_UPDATE', newModel );
 
 
@@ -115,23 +116,30 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout )
             modelCallback: modelUpdate
         } );
 
-        ogAPI.loadModelAndLock(); //this will automatically call the modelUpdate
+        ogAPI.loadModel(); //this will automatically call the modelUpdate
 
     }
 
     init();
 
     service.getCurrentWinner = function(){
-        
-        var col = ogAPI.model.colScoreMap.indexOf(ogAPI.model.currentScore.team1);
-        var row = ogAPI.model.rowScoreMap.indexOf(ogAPI.model.currentScore.team2);
+
+        var team1LastDigit = ogAPI.model.currentScore.team1 % 10;
+        var team2LastDigit = ogAPI.model.currentScore.team2 % 10;
+
+
+        var col = ogAPI.model.colScoreMap.indexOf( team1LastDigit);
+        var row = ogAPI.model.rowScoreMap.indexOf( team2LastDigit);
         var winner = ogAPI.model.grid[row][col];
-        if (!winner.hasOwnProperty('email'))
+        if (!winner){
+            $log.error("MISS in grid on row: "+row+ " col: "+col);
+        }
+        if (!winner || !winner.hasOwnProperty('email'))
             return { name: "", email: ""}
         
         return winner;
         
-    }
+    };
 
     return service;
 
