@@ -2,7 +2,8 @@
  * Created by erikphillips on 1/27/17.
  */
 
-app.controller("scoreManuallyController", function($scope, uibHelper, $log, $state, $timeout, $interval, toastr, sqGameService, grid) {
+app.controller("scoreManuallyController", function($scope, uibHelper, $log, $state,
+                                                   $timeout, $interval, toastr, sqGameService, grid) {
 
     $log.debug("loading scoreManuallyController");
 
@@ -18,10 +19,6 @@ app.controller("scoreManuallyController", function($scope, uibHelper, $log, $sta
         $state.go("settings");
     };
 
-    $scope.incrementScore = function ( team, by ) {
-
-    };
-
     $scope.refreshCurrentPage = function () {
         // this is needed for the admin to refresh the page to get new data
         location.reload();
@@ -32,7 +29,37 @@ app.controller("scoreManuallyController", function($scope, uibHelper, $log, $sta
         uibHelper.confirmModal( "Finish Game?", "Do you want to finish the current game?" )
             .then( function () {
                 sqGameService.finishGame();
-            } );
+            });
+    };
+
+    $scope.setScore = function ( qtr ) {
+        promptForScore(qtr == 0 ? 'Set Final Score' : ('Set Score for Quarter ' + qtr))
+            .then(function (newScore) {
+                $log.debug('got new score: team1=' + newScore.team1 + " team2=" + newScore.team2);
+            });
+    };
+
+    //TODO this needs to send back an object with the score for specified qtr, qtr == 0 for final score
+    $scope.getQuarterScore = function ( qtr ) {
+        return {team1: 0, team2: 0};
+    };
+
+    $scope.setCurrentScore = function () {
+
+        promptForScore("Set Current Score")
+            .then(function ( newScore ) {
+                sqGameService.setCurrentScore( newScore )
+                    .then(function () {
+                        toastr.success("New score set successfully.");
+                        updateCurrentScore();
+                    })
+                    .catch(function () {
+                        toastr.warning("Unable to set a new score.");
+                        updateCurrentScore();
+                    });
+            });
+
+
     };
 
     function updateTeamNames() {
@@ -59,28 +86,27 @@ app.controller("scoreManuallyController", function($scope, uibHelper, $log, $sta
             })
     }
 
-    $scope.setScore = function () {
-        var newScore = $scope.newScore;
+    function promptForScore( infotext ) {
+        var fields = [
+            {
+                type: 'text',
+                value: $scope.newScore.team1,
+                field: 'team1field',
+                label: 'Team 1 Score',
+                placeholder: 'Team 1 Score'
+            },
+            {
+                type: 'text',
+                value: $scope.newScore.team2,
+                field: 'team2field',
+                label: 'Team 2 Score',
+                placeholder: 'Team 2 Score'
+            }
+        ];
 
-        if (newScore.team1 == undefined)
-            newScore.team1 = $scope.currentScore.team1;
-        if (newScore.team2 == undefined)
-            newScore.team2 = $scope.currentScore.team2;
-
-        setCurrentScore( newScore );
-
-        $scope.newScore = {team1: undefined, team2: undefined};
-    };
-
-    function setCurrentScore( newScore ) {
-        sqGameService.setCurrentScore( newScore )
-            .then(function () {
-                toastr.success("New score set successfully.");
-                updateCurrentScore();
-            })
-            .catch(function () {
-                toastr.warning("Unable to set a new score.");
-                updateCurrentScore();
+        return uibHelper.inputBoxesModal(infotext, '', fields)
+            .then(function ( newvals ) {
+                return {team1: newvals.team1field, team2: newvals.team2field};
             });
     }
 });
