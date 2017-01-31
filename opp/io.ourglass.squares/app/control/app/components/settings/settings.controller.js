@@ -1,8 +1,6 @@
 /**
  * Created by mkahn on 1/19/17.
  */
- 
- //TODO Erik, I think this file got badly mangled in the merge!! PLease check.
 
 app.controller( "settingsController", function ( $scope, uibHelper, $log, $state, $interval, toastr, 
     $timeout, sqGameService, grid ) {
