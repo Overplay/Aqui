@@ -14,11 +14,11 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
     updateTeamNames();
     
     //TODO Erik, reason for this, and $intervals must be killed on $scope end
-    $interval( function () {
-        updateTotalTilesPicked();
-        updateTeamNames();
-        updateStatusMarkers();
-    }, 5000 ); // updates every 5 seconds
+    // $interval( function () {
+    //     updateTotalTilesPicked();
+    //     updateTeamNames();
+    //     updateStatusMarkers();
+    // }, 5000 ); // updates every 5 seconds
 
     $scope.viewResultsPage = function () {
         $state.go( 'results' );
@@ -83,7 +83,9 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
                 sqGameService.fillGridSimPlayers();
                 return wait2();
             })
-            .then( sqGameService.startGame );
+            .then( function(){
+                sqGameService.startGame('sim');
+            } );
     };
 
 

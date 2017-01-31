@@ -270,11 +270,13 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         } );
     }
 
-    service.startGame = function () {
+    //dataSource tells TV where to get it's data updates from
+    service.startGame = function (dataSource) {
         // starts the game and locks future square sales, sets `InProgress` flag to true
         return ogAPI.loadModelAndLock()
             .then( function ( data ) {
                 data.gameState = "starting";
+                data.dataSource = dataSource || "local";
                 return ogAPI.save();
             } )
             .then( function ( resp ) {
@@ -434,6 +436,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                 ogAPI.model.grid[ row ][ col ] =  _.sample( names );
             }
             
+        
         ogAPI.save()
             .then(service.getCurrentGrid);
         

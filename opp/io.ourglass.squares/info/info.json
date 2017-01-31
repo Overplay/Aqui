@@ -142,7 +142,8 @@
       "team1": 0,
       "team2": 0
     },
-    "teamNames": { "team1": "Otters", "team2": "Bunnies"}
+    "teamNames": { "team1": "Otters", "team2": "Bunnies"},
+    "dataSource": "local"
   },
   "version": 1.0,
   "installDate": 1475073632093
