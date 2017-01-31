@@ -14,17 +14,25 @@ app.controller("scoreManuallyController", function($scope, uibHelper, $log, $sta
     updateTeamNames();
     updateCurrentScore();
 
-    $interval(function () {
-        updateTeamNames();
-        updateCurrentScore();
-    }, 5000);
-
     $scope.settingsPage = function () {
         $state.go("settings");
     };
 
     $scope.incrementScore = function ( team, by ) {
 
+    };
+
+    $scope.refreshCurrentPage = function () {
+        // this is needed for the admin to refresh the page to get new data
+        location.reload();
+    };
+
+    $scope.finishGame = function () {
+        // finished the game when the quarter is over
+        uibHelper.confirmModal( "Finish Game?", "Do you want to finish the current game?" )
+            .then( function () {
+                sqGameService.finishGame();
+            } );
     };
 
     function updateTeamNames() {

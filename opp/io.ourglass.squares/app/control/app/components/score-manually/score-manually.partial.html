@@ -54,7 +54,10 @@
 </style>
 
 <div>
-    <h1>Manually Set Game Score</h1>
+    <h1>
+        Manually Set Game Score
+        <button class="btn btn-lg btn-warning pull-right" ng-click="refreshCurrentPage()">REFRESH PAGE</button>
+    </h1>
 
     <div class="current-score">
         <div>Current Score</div>
@@ -88,6 +91,7 @@
     <div class="infobox">Set new team scores here. Leave box empty to not change scores.</div>
 
     <button class="btn btn-lg btn-info mybtn" ng-click="setScore()">SET NEW TEAM SCORES</button>
+    <button class="btn btn-lg btn-info mybtn" ng-click="finishGame()">FINISH GAME</button>
     <button class="btn btn-lg btn-warning mybtn" ng-click="settingsPage()">SETTINGS PAGE</button>
 
 </div>

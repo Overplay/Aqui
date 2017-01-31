@@ -242,6 +242,10 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         return false;
     };
 
+    service.getGameState = function () {
+        return _gameState;
+    };
+
     // Return the latest grid
     service.getCurrentGrid = function () {
         //TODO placeholder for testing
