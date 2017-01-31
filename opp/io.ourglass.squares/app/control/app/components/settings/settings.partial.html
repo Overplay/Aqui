@@ -30,45 +30,32 @@
     }
 </style>
 
-<div class="jumbtron"><h1>Settings</h1></div>
+<div class="jumbtron">
+    <h1>
+        Settings
+        <button class="btn btn-lg btn-warning pull-right" ng-click="refreshCurrentPage()">REFRESH PAGE</button>
+    </h1>
+</div>
 
 <div style="margin-top: 5vh">
 
     <div class="tracker" style="font-size: 3vh">Game Status: {{ getGameStatusText() }}</div>
     <div class="tracker">Tiles Picked: {{ tilesPicked }} of 100</div>
 
-    <form>
-        <div class="form-group">
-            <label for="formTeam1">Team 1 Name:</label>
-            <input type="text" class="form-control" id="formTeam1" ng-model="teamNames.team1"
-                   placeholder="Team 1 Name">
-        </div>
-
-        <div class="form-group">
-            <label for="formTeam2">Team 2 Name:</label>
-            <input type="text" class="form-control" id="formTeam2" ng-model="teamNames.team2"
-                   placeholder="Team 2 Name">
-        </div>
-    </form>
-
-    <button class="btn btn-lg btn-info mybtn" ng-click="setTeams()">SET TEAM NAMES</button>
-
     <div class="btn-box">
-        <div class="left-col">
-            <button class="btn btn-lg btn-info mybtn" ng-click="startGame()">LOCK SALES AND START PLAYING</button>
-            <button class="btn btn-lg btn-danger mybtn" ng-click="finishGame()">FINISH GAME</button>
-        </div>
-
-        <div class="right-col">
-            <button class="btn btn-lg btn-warning mybtn" ng-click="finishGame()">FINISH GAME</button>
-            <button class="btn btn-lg btn-danger mybtn" ng-click="simGame()">SIMULATE GAME</button>
-            <button class="btn btn-lg btn-info mybtn" ng-click="newGame()">CREATE NEW GAME</button>
-            <button class="btn btn-lg btn-danger mybtn" ng-click="manuallySetScores()">MANUALLY SET SCORES</button>
-        </div>
+        <button class="btn btn-lg btn-info mybtn" ng-click="startGame()">LOCK SALES AND START PLAYING</button>
+        <button class="btn btn-lg btn-warning mybtn" ng-click="newGame()">CREATE NEW GAME</button>
     </div>
 
     <div class="btn-box">
         <button class="btn btn-lg btn-success mybtn" ng-click="viewResultsPage()">VIEW RESULTS PAGE</button>
-        <button class="btn btn-lg btn-warning mybtn" ng-click="refreshCurrentPage()">MANUALLY REFRESH PAGE</button>
+        <button class="btn btn-lg btn-danger mybtn" ng-click="exitPage()">EXIT PAGE</button>
     </div>
+
+    <div class="btn-box">
+        <button class="btn btn-lg btn-info mybtn" ng-click="editTeamNames()">EDIT TEAM NAMES</button>
+        <button class="btn btn-lg btn-warning mybtn" ng-click="manuallySetScores()">MANUALLY SET SCORES</button>
+        <button class="btn btn-lg btn-danger mybtn" ng-click="simGame()">SIMULATE GAME</button>
+    </div>
+
 </div>

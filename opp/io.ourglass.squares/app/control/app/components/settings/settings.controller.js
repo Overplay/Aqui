@@ -1,33 +1,32 @@
 /**
  * Created by mkahn on 1/19/17.
  */
- 
- //TODO Erik, I think this file got badly mangled in the merge!! PLease check.
 
 app.controller( "settingsController", function ( $scope, uibHelper, $log, $state, $interval, toastr, 
     $timeout, sqGameService, grid ) {
 
     $log.debug( "loading settingsController" );
-    
-    updateStatusMarkers();
+
     updateTotalTilesPicked();
     updateTeamNames();
-    
-    //TODO Erik, reason for this, and $intervals must be killed on $scope end
-    // $interval( function () {
-    //     updateTotalTilesPicked();
-    //     updateTeamNames();
-    //     updateStatusMarkers();
-    // }, 5000 ); // updates every 5 seconds
 
     $scope.viewResultsPage = function () {
         $state.go( 'results' );
     };
 
-    // TODO ERIK this is broken. WHY? MAK: don't think this is my note
+    $scope.manuallySetScores = function () {
+        $state.go( "score-manually" );
+    };
+
+    $scope.exitPage = function () {
+        $state.go("welcome");
+    };
+
     $scope.getGameStatusText = function () {
-        if ( $scope.gameDone ) return 'Game Completed';
-        if ( $scope.gameInProgress ) return 'Game in Progress';
+        var gameState = sqGameService.getGameState();
+        if ( gameState ==  'done') return 'Game Completed';
+        if ( gameState == 'starting' ) return 'Game in Progress';
+        if ( gameState == 'picking' ) return "Picking Squares";
         return 'Game Not Yet Started';
     };
 
@@ -41,33 +40,13 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
         uibHelper.confirmModal( "Start Game?", "Would you like to start the game?" )
             .then( function () {
                 sqGameService.startGame();
-                //TODO Erik: the two bools are replaced with gameState now (string) "picking", "running", "done"
-                //$scope.gameDone = false;
-                //$scope.gameInProgress = true;
             } );
     };
 
     $scope.newGame = function () {
-        // clears the grid
-        // clears the grid and starts a new game
         uibHelper.confirmModal( "Create New Game?", "Do you want to create a new game? All current data will be lost." )
             .then( function () {
                 sqGameService.resetGameModel();
-                //TODO Erik: the two bools are replaced with gameState now (string) "picking", "running", "done"
-                // $scope.gameDone = false;
-                // $scope.gameInProgress = false;
-            } );
-    };
-
-    $scope.finishGame = function () {
-        // finished the game when the quarter is over
-        uibHelper.confirmModal( "Finish Game?", "Do you want to finish the current game?" )
-            .then( function () {
-                sqGameService.finishGame();
-                //TODO Erik: the two bools are replaced with gameState now (string) "picking", "running", "done"
-
-                // $scope.gameDone = true;
-                // $scope.gameInProgress = false;
             } );
     };
 
@@ -88,34 +67,6 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
             } );
     };
 
-
-    $scope.manuallySetScores = function () {
-        $state.go( "score-manually" );
-    };
-
-    $scope.setTeams = function () {
-        // set the teams from the form
-
-        //TODO Erik, there is a uibHelper that you can use to collect the team names modally. Ask me about it.
-        if ( !$scope.teamNames.team1 || !$scope.teamNames.team2 ) {
-            uibHelper.confirmModal( "No Team Names Entered", "Please enter both team names into the form." );
-            return;
-        }
-
-        sqGameService.setTeams( $scope.teamNames )
-            .then( function () {
-                toastr.success( "Teams names updated!" );
-                sqGameService.getTeams()
-                    .then( logTeams )
-            } )
-            .catch( function () {
-                toastr.warning( "Unable to update team names." );
-                $log.error( "Unexpected rejection changing teams" );
-                updateTeamNames();
-            } )
-    };
-
-    //function getTeams() {
     function updateTeamNames() {
         // gets an object with the current teams playing
         sqGameService.getTeams()
@@ -140,20 +91,45 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
         
     }
 
-    function updateStatusMarkers() {
-        sqGameService.isGameDone()
-            .then( function ( done ) {
-                $scope.gameDone = done;
-            } );
-        sqGameService.isGameInProgress()
-            .then( function ( running ) {
-                $scope.gameInProgress = running;
-            } )
-    }
-
     function logTeams( t ) {
         $log.debug( "Team 1: " + t.team1 + ", Team 2: " + t.team2 );
     }
 
+    $scope.editTeamNames = function () {
+        var fields = [
+            {
+                type: 'text',
+                value: $scope.teamNames.team1,
+                field: 'team1field',
+                label: 'Team 1 Name',
+                placeholder: 'Team 1 Name'
+            },
+            {
+                type: 'text',
+                value: $scope.teamNames.team2,
+                field: 'team2field',
+                label: 'Team 2 Name',
+                placeholder: 'Team 2 Name'
+            }
+        ];
 
+        uibHelper.inputBoxesModal('Edit Team Names', '', fields)
+            .then(function ( newvals ) {
+                $scope.teamNames.team1 = newvals.team1field;
+                $scope.teamNames.team2 = newvals.team2field;
+
+                sqGameService.setTeams( $scope.teamNames )
+                    .then( function () {
+                        toastr.success( "Teams names updated!" );
+                        sqGameService.getTeams()
+                            .then( logTeams )
+                    })
+                    .catch( function () {
+                        toastr.warning( "Unable to update team names." );
+                        $log.error( "Unexpected rejection changing teams" );
+                        updateTeamNames();
+                    });
+            })
+            .catch( updateTeamNames )
+    };
 });

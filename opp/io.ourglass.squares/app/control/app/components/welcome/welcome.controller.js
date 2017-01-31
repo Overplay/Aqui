@@ -7,18 +7,21 @@ app.controller("welcomeController", function($scope, uibHelper, $log, $state, sq
     $log.debug("loading welcome controller");
 
     $scope.clicked = function () {
-        //TODO Erik, this blocks be getting to the adm1n panel....
-        
-        // sqGameService.isGameInProgress()
-        //     .then(function ( running ) {
-        //         if (!running) {
-        //             $state.go('register');
-        //         } else {
-        //             $state.go('results');
-        //         }
-        //     });
-
-        $state.go( 'register' );
+        sqGameService.isGamePicking()
+            .then(function ( picking) {
+                if ( picking )
+                    $state.go( 'register' );
+                else
+                    $state.go( 'results' );
+            });
     };
+
+    $scope.logoClicked = function () {
+        sqGameService.isGamePicking()
+            .then(function ( picking ) {
+                if ( !picking )
+                    $state.go( 'register' )
+            });
+    }
 
 });

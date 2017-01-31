@@ -1,93 +1,105 @@
 
 <style>
 
-    .current-score {
+    .myTopRow {
+        margin-top: 4vh;
+    }
+
+    .myBottomRow {
+        margin-bottom: 6vh;
+    }
+
+    .myRow {
+        margin-bottom: 2vh;
+    }
+
+    .team {
         font-size: 4vh;
         text-align: center;
-        margin-top: 4vh;
+        margin-top: 1vh;
         margin-bottom: 4vh;
         overflow: hidden;
     }
 
     .mybtn {
         width: 100%;
+    }
+
+    .btnpad {
         margin-bottom: 2vh;
     }
 
-    .infobox {
-        font-size: 2vh;
-        margin-bottom: 1vh;
-        text-align: center;
-    }
-
-    .box {
-        /*float: left;*/
-        /*width: 70vw;*/
-    }
-
-    .button {
-        float: right;
-        width: 20vw;
-        height: 10vw;
-    }
-
-    .increment {
-        float: right;
-        background-color: lightblue;
-        width: 8vw;
-        height: 8vw;
-        /*border-radius: 5px;*/
-        font-size: 5vw;
-        text-align: center;
-    }
-
-    .decrement {
-        float: left;
-        background-color: lightcoral;
-        width: 8vw;
-        height: 8vw;
-        /*border-radius: 5px;*/
-        font-size: 5vw;
+    .score {
+        font-size: 4vh;
         text-align: center;
     }
 
 </style>
 
 <div>
-    <h1>Manually Set Game Score</h1>
+    <h1>
+        Manually Set Game Score
+        <button class="btn btn-lg btn-warning pull-right" ng-click="refreshCurrentPage()">REFRESH PAGE</button>
+    </h1>
 
-    <div class="current-score">
-        <div>Current Score</div>
-        {{ teamNames.team1 }}: {{ currentScore.team1 }} - {{ teamNames.team2 }}: {{ currentScore.team2 }}
+    <div class="row myRow myTopRow">
+        <div class="col-xs-4 col-md-5 team">{{ teamNames.team1 }}</div>
+        <div class="col-xs-4 col-md-5 team">{{ teamNames.team2 }}</div>
+        <div class="col-xs-4 col-md-2"></div>
     </div>
 
-    <form>
-        <div class="form-group box">
-            <label for="formTeam1">New Score for {{ teamNames.team1 }}:</label>
-            <input type="text" class="form-control" id="formTeam1" ng-model="newScore.team1"
-                   placeholder="New {{ teamNames.team1 }} Score">
+    <div class="row myRow">
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(1).team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(1).team2 }}</div>
+        <div class="col-xs-4 col-md-2">
+            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 1 )">SET Q1 SCORES</button>
         </div>
+    </div>
 
-        <!--<div class="button">-->
-            <!--<button class="decrement"><span class="glyphicon glyphicon-minus"></span></button>-->
-            <!--<button class="increment"><span class="glyphicon glyphicon-plus"></span></button>-->
-        <!--</div>-->
-
-        <div class="form-group box">
-            <label for="formTeam2">New Score for {{ teamNames.team2 }}:</label>
-            <input type="text" class="form-control" id="formTeam2" ng-model="newScore.team2"
-                   placeholder="New {{ teamNames.team2 }} Score">
+    <div class="row myRow">
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(2).team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(2).team2 }}</div>
+        <div class="col-xs-4 col-md-2">
+            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 2 )">SET Q2 SCORES</button>
         </div>
+    </div>
 
-        <!--<div class="button">-->
-            <!--<button class="decrement"><span class="glyphicon glyphicon-minus"></button>-->
-            <!--<button class="increment"><span class="glyphicon glyphicon-plus"></button>-->
-        <!--</div>-->
-    </form>
+    <div class="row myRow">
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(3).team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(3).team2 }}</div>
+        <div class="col-xs-4 col-md-2">
+            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 3 )">SET Q3 SCORES</button>
+        </div>
+    </div>
 
-    <div class="infobox">Set new team scores here. Leave box empty to not change scores.</div>
+    <div class="row myRow">
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(4).team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(4).team2 }}</div>
+        <div class="col-xs-4 col-md-2">
+            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 4 )">SET Q4 SCORES</button>
+        </div>
+    </div>
 
-    <button class="btn btn-lg btn-info mybtn" ng-click="setScore()">SET NEW TEAM SCORES</button>
-    <button class="btn btn-lg btn-warning mybtn" ng-click="settingsPage()">SETTINGS PAGE</button>
+    <div class="row myRow">
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(0).team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(0).team2 }}</div>
+        <div class="col-xs-4 col-md-2">
+            <button class="btn btn-lg btn-success mybtn" ng-click="setScore( 1 )">SET FINAL SCORES</button>
+        </div>
+    </div>
 
+    <div class="row myRow">
+        <div class="col-xs-8 col-md-8 score">Current Score</div>
+    </div>
+
+    <div class="row myBottomRow">
+        <div class="col-xs-4 col-md-5 score">{{ currentScore.team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ currentScore.team2 }}</div>
+        <div class="col-xs-4 col-md-2">
+            <button class="btn btn-lg btn-info mybtn" ng-click="setCurrentScore()">SET CURRENT SCORES</button>
+        </div>
+    </div>
+
+    <button class="btn btn-lg btn-danger mybtn btnpad" ng-click="finishGame()">FINISH GAME</button>
+    <button class="btn btn-lg btn-warning mybtn btnpad" ng-click="settingsPage()">SETTINGS PAGE</button>
 </div>

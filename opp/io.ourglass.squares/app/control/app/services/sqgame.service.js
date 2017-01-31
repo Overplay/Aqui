@@ -242,6 +242,10 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         return false;
     };
 
+    service.getGameState = function () {
+        return _gameState;
+    };
+
     // Return the latest grid
     service.getCurrentGrid = function () {
         //TODO placeholder for testing
@@ -320,6 +324,14 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             } )
     };
 
+    service.isGamePicking = function () {
+        // returns true if the game is picking squares, false otherwise
+        return loadModelAndProcess()
+            .then(function () {
+                return _gameState == "picking";
+            })
+    };
+
     service.isGameDone = function () {
         // returns true if the game is done, false otherwise
         return loadModelAndProcess()
@@ -371,6 +383,15 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             } );
     };
 
+    service.setQuarterScore = function ( quarter, newScores ) {
+        // gets a quarter, and new scores to set for that quarter
+        // {team1: score, team2: score}
+    };
+
+    service.getQuarterScore = function ( quarter ) {
+        // returns the score for the specified quarter
+        // {team1: score, team2: score}
+    };
 
     service.getFinalScore = function ( quarter ) {
         // returns object with final score from the specified `qtr`
