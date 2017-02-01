@@ -2,7 +2,8 @@
  * Created by mkahn on 1/19/17.
  */
 
-app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log, toastr, sqGameService, grid){
+app.controller("pickSquaresController", function($scope, $rootScope, $state, uibHelper, $log, 
+    toastr, sqGameService, grid){
 
     var demoState = true;
     var skipData = true;
@@ -25,7 +26,16 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
         var count = 0;
         for (var row = 0; row < 10; row++)
             for (var col = 0; col < 10; col++)
-                if (!grid[row][col].available && grid[row][col].ownedBy.email == $scope.currentUser.email)
+                if (!$scope.grid[row][col].available && $scope.grid[row][col].ownedBy.email == $scope.currentUser.email)
+                    count += 1;
+        return count;
+    }
+
+    function getTotalPicks() {
+        var count = 0;
+        for ( var row = 0; row < 10; row++ )
+            for ( var col = 0; col < 10; col++ )
+                if ( !$scope.grid[ row ][ col ].available )
                     count += 1;
         return count;
     }
@@ -66,7 +76,10 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
                 if (err.status == 409){
                     uibHelper.confirmModal("Unable To Pick Square", "Someone else is picking, please try again.");
                 }
+                
+                
                 uibHelper.confirmModal("Unable To Pick Square", "This square is already taken or you don't own it.");
+                
             })
     };
 
@@ -111,6 +124,11 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     $scope.$on('NEW_GRID', function(ev, newGrid){
         $log.debug('New grid broadcast received');
         $scope.grid = newGrid;
+        if (getTotalPicks()==100){
+            $log.error("Out of picks!!!");
+            $scope.soldOut = true;
+            uibHelper.confirmModal( "Sold Out!", "Uh-oh, looks like we're sold out!" );
+        }
     });
 
     $scope.clearModel = function(){

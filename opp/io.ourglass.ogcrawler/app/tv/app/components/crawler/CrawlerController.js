@@ -150,6 +150,7 @@ app.controller( "crawlerController",
         ogAPI.loadModel()
             .then( modelUpdate );
 
+        $interval(getTVGrid, 1000*60*5);
         getTVGrid();
 
     });

@@ -10,7 +10,18 @@ app.controller( "playingController", function ( $scope, $log, sqGame, $timeout, 
     $scope.seqIdx = 0;
     $scope.gameState = '';
     
+    var ANIMATE = true;
+    
+    
     var _latestModel;
+    
+    function hideBox(){
+        if (ANIMATE) $rootScope.$broadcast( 'HIDE' );
+    }
+
+    function showBox() {
+        if ( ANIMATE ) $rootScope.$broadcast( 'SHOW' );
+    }
     
     function processModel(data){
 
@@ -43,10 +54,10 @@ app.controller( "playingController", function ( $scope, $log, sqGame, $timeout, 
     
     function showNextPanel(){
         $log.info( ">> showing panel "+$scope.seqIdx );
-        $rootScope.$broadcast('SHOW');
+        showBox();
         $timeout(function(){
             $log.info( ">> hiding panel " + $scope.seqIdx );
-            $rootScope.$broadcast( 'HIDE' );
+            hideBox();
             $timeout(function(){
                 $scope.seqIdx = ($scope.seqIdx + 1) % $scope.sequence.length;
                 $log.info( ">>>  Ending loop with seqIdx " + $scope.seqIdx );
@@ -60,7 +71,7 @@ app.controller( "playingController", function ( $scope, $log, sqGame, $timeout, 
     
     function startLoop(){
         $log.info("Starting loop");
-        $rootScope.$broadcast( 'HIDE' );
+        hideBox();
         $timeout( function () {
             //wait 500ms, then rebuild the sequence
             $log.info( "> processing model" );
@@ -71,6 +82,7 @@ app.controller( "playingController", function ( $scope, $log, sqGame, $timeout, 
     
     startLoop();
     
+    showBox();
     
     // $scope.$on('MODEL_UPDATE', function(ev, data){
     //     $log.debug("playingController received a model bcast");

@@ -79,8 +79,8 @@
 <div class="button-group">
     <button class="btn btn-lg btn-primary mybtn"
             ui-sref="thanks4playing"
-            ng-disabled="numPicked!=picksAllowed">FINISH</button>
-    <button class="btn btn-lg btn-warning mybtn" ng-click="clearModel()">CLEAR MODEL</button>
+            ng-disabled="numPicked!=picksAllowed && !soldOut">FINISH</button>
+    <!--<button class="btn btn-lg btn-warning mybtn" ng-click="clearModel()">CLEAR MODEL</button>-->
     <!--<button class="btn btn-lg btn-danger mybtn" ng-click="registration()">REGISTRATION PAGE</button>-->
 </div>
 
