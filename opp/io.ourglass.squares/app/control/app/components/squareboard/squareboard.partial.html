@@ -18,10 +18,9 @@
         overflow: hidden;
     }
 
-    .free {
+    .square {
         background-color: #10ee70!important;
         border: 5px solid transparent;
-
     }
 
     .header {
@@ -29,18 +28,8 @@
         border: 3px solid white;
     }
 
-    .taken {
-        background-color: #4cabff !important;
-        border: 5px solid transparent;
-    }
-
     .empty {
         background-color: transparent !important;
-    }
-
-    .winner {
-        background-color: #4cabff !important;
-        border: 3px solid white;
     }
 
     .tracker {
@@ -67,9 +56,6 @@
         font-weight: bold;
     }
 
-    .wrapper {
-        /*display: inline-block;*/
-    }
     .vertical-team {
         transform: rotate(270deg);
         /*width: 30px;*/
@@ -96,25 +82,23 @@
 <!--{{ teamNames.team2 }}-->
 <!--</div>-->
 
-<div class="wrapper">
-    <div class="pick-row" ng-repeat="row in emptyArray track by $index">
-        <div class="pick-col" ng-repeat="col in emptyArray track by $index"
-             ng-class="getClassType(row, col)"
-             ng-click="displayInfo(row - 1, col - 1)">
+<div class="pick-row" ng-repeat="row in emptyArray track by $index">
+    <div class="pick-col" ng-repeat="col in emptyArray track by $index"
+         ng-class="getClassType(row, col)"
+         ng-click="displayInfo(row - 1, col - 1)">
 
-            <div ng-if="col != 0 && row == 0"> {{ scoreMap.colScoreMap[col - 1] }} </div>
-            <div ng-if="col == 0 && row != 0"> {{ scoreMap.rowScoreMap[row - 1] }} </div>
+        <div ng-if="col != 0 && row == 0"> {{ scoreMap.colScoreMap[col - 1] }} </div>
+        <div ng-if="col == 0 && row != 0"> {{ scoreMap.rowScoreMap[row - 1] }} </div>
 
-            <div ng-if="col != 0 && row != 0">
-                {{ !grid[row - 1][col - 1].available ? grid[row - 1][col - 1].ownedBy.initials : '' }}
-            </div>
-
+        <div ng-if="col != 0 && row != 0">
+            {{ !grid[row - 1][col - 1].available ? grid[row - 1][col - 1].ownedBy.initials : '' }}
         </div>
+
     </div>
 </div>
 
-<div class="tracker">
-    <div>Current Score</div>
-    {{ teamNames.team1 }}: {{ currentScore.team1 }} - {{ teamNames.team2 }}: {{ currentScore.team2 }}
-    <div>Current Winner: {{ winner }}</div>
-</div>
+<!--<div class="tracker">-->
+    <!--<div>Current Score</div>-->
+    <!--{{ teamNames.team1 }}: {{ currentScore.team1 }} - {{ teamNames.team2 }}: {{ currentScore.team2 }}-->
+    <!--<div>Current Winner: {{ winner }}</div>-->
+<!--</div>-->
