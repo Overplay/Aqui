@@ -132,4 +132,18 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
             })
             .catch( updateTeamNames )
     };
+
+    $scope.fixedPicksGamemode = function () {
+        uibHelper.confirmModal( "Change to Fixed Picks?", "Do you really want to?" )
+            .then( function () {
+
+            } );
+    };
+
+    $scope.maxPicksGamemode = function () {
+        uibHelper.confirmModal( "Change to Max Picks?", "Do you really want to?" )
+            .then( function () {
+
+            } );
+    };
 });
