@@ -41,6 +41,10 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
         location.reload();
     };
 
+    $scope.squareboardPage = function () {
+        $state.go("squareboard");
+    };
+
     $scope.getClassType = function (row, col) {
         if (row - 1 == winnerRowCol.rowIdx && col - 1 == winnerRowCol.colIdx) return 'winner';
         if (row == 0 && col == 0) return 'empty';
