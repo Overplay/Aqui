@@ -9,6 +9,8 @@
   "height": 60,
   "width": 10,
   "initialValue": {
+    "fixedPicks" : true,
+    "maxPicks" : 4,
     "rowScoreMap": [],
     "colScoreMap": [],
     "gameState" : "picking",
