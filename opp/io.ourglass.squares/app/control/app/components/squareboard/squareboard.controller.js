@@ -39,6 +39,10 @@ app.controller("squareboardController", function($scope, uibHelper, $log, $state
         location.reload();
     };
 
+    $scope.resultsPage = function () {
+        $state.go("results");
+    };
+
     $scope.getClassType = function (row, col) {
         if (row == 0 && col == 0) return 'empty';
         if (row == 0 || col == 0) return 'header';

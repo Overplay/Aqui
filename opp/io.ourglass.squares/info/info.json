@@ -139,7 +139,13 @@
     "currentScore": { "team1": 0, "team2": 0},
     "currentQuarter": 0,
     "gameClock": "0:00",
-    "perQuarterScores": [],
+    "perQuarterScores": [
+      { "team1": 0, "team2": 0},
+      { "team1": 0, "team2": 0},
+      { "team1": 0, "team2": 0},
+      { "team1": 0, "team2": 0},
+      { "team1": 0, "team2": 0}
+    ],
     "finalScore": {
       "team1": 0,
       "team2": 0

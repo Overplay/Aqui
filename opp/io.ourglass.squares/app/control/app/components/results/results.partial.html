@@ -18,12 +18,14 @@
         margin-top: 1vh;
         margin-bottom: 2vh;
         overflow: hidden;
+        white-space: nowrap;
     }
 
     .score {
         font-size: 3vh;
         text-align: center;
         overflow: hidden;
+        white-space: nowrap;
     }
 
     .winner {
@@ -31,6 +33,7 @@
         text-align: center;
         margin-top: 1vh;
         overflow: hidden;
+        white-space: nowrap;
     }
 
     .mybtn {
@@ -56,37 +59,37 @@
 
 <div class="row myRow">
     <div class="col-xs-3 col-md-2 score">1</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">winner1_name</div>
+    <div class="col-xs-3 col-md-5 score"> {{ q1Score.team1 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q1Score.team2 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q1Winner }} </div>
 </div>
 
 <div class="row myRow">
     <div class="col-xs-3 col-md-2 score">2</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">winner2_name</div>
+    <div class="col-xs-3 col-md-5 score"> {{ q2Score.team1 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q2Score.team2 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q2Winner }} </div>
 </div>
 
 <div class="row myRow">
     <div class="col-xs-3 col-md-2 score">3</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">winner3_name</div>
+    <div class="col-xs-3 col-md-5 score"> {{ q3Score.team1 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q3Score.team2 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q3Winner }} </div>
 </div>
 
 <div class="row myRow">
     <div class="col-xs-3 col-md-2 score">4</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">winner3_name</div>
+    <div class="col-xs-3 col-md-5 score"> {{ q4Score.team1 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q4Score.team2 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ q4Winner }} </div>
 </div>
 
 <div class="row myRow myBottomRow">
     <div class="col-xs-3 col-md-2 score">Final</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">##</div>
-    <div class="col-xs-3 col-md-5 score">winnerF_name</div>
+    <div class="col-xs-3 col-md-5 score"> {{ finalScore.team1 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ finalScore.team2 }} </div>
+    <div class="col-xs-3 col-md-5 score"> {{ finalWinner }} </div>
 </div>
 
 
@@ -94,7 +97,7 @@
     <div class="col-xs-12 col-md-12 winner">Current Winner</div>
 </div>
 <div class="row myRow">
-    <div class="col-xs-12 col-md-12 winner">winner_name</div>
+    <div class="col-xs-12 col-md-12 winner">{{ currentWinner }}</div>
 </div>
 
 <button class="btn btn-lg btn-info mybtn" ng-click="squareboardPage()">VIEW SQUARES</button>

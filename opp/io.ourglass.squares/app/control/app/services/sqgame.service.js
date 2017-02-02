@@ -407,19 +407,38 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     };
 
     service.setQuarterScore = function ( quarter, newScores ) {
-        // gets a quarter, and new scores to set for that quarter
-        // {team1: score, team2: score}
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                data.perQuarterScores[quarter] = newScores;
+                return ogAPI.save();
+            })
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "score-updated";
+            })
     };
 
     service.getQuarterScore = function ( quarter ) {
-        // returns the score for the specified quarter
-        // {team1: score, team2: score}
+        return fetchModelAndReturnField( 'perQuarterScores' )
+            .then(function ( quarterScores ) {
+                return quarterScores[quarter];
+            });
     };
 
-    service.getFinalScore = function ( quarter ) {
-        // returns object with final score from the specified `qtr`
-        return fetchModelAndReturnField( 'q'+quarter+'FinalScore' );
+    service.setFinalScore = function ( newScores ) {
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                data.finalScore = newScores;
+                return ogAPI.save();
+            })
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "score-updated";
+            })
+    };
 
+    service.getFinalScore = function () {
+        return fetchModelAndReturnField( 'finalScore' );
     };
 
     service.getScoreMap = function () {

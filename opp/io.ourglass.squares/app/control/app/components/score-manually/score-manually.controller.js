@@ -8,12 +8,18 @@ app.controller("scoreManuallyController", function($scope, uibHelper, $log, $sta
     $log.debug("loading scoreManuallyController");
 
     $scope.currentScore = {team1: 0, team2: 0};
+    $scope.q1Score = {team1: 0, team2: 0};
+    $scope.q2Score = {team1: 0, team2: 0};
+    $scope.q3Score = {team1: 0, team2: 0};
+    $scope.q4Score = {team1: 0, team2: 0};
+    $scope.finalScore = {team1: 0, team2: 0};
+
     $scope.teamNames = {team1: "team1", team2: "team2"};
 
     $scope.newScore = {team1: undefined, team2: undefined};
 
     updateTeamNames();
-    updateCurrentScore();
+    getAllScores();
 
     $scope.settingsPage = function () {
         $state.go("settings");
@@ -32,35 +38,61 @@ app.controller("scoreManuallyController", function($scope, uibHelper, $log, $sta
             });
     };
 
-    $scope.setScore = function ( qtr ) {
-        promptForScore(qtr == 0 ? 'Set Final Score' : ('Set Score for Quarter ' + qtr))
-            .then(function (newScore) {
-                $log.debug('got new score: team1=' + newScore.team1 + " team2=" + newScore.team2);
+    $scope.setQuarterScore = function ( qtr ) {
+        promptForScore('Set Score for Quarter ' + qtr)
+            .then(function ( newScore ) {
+                sqGameService.setQuarterScore(qtr, newScore)
+                    .then(getAllScores);
             });
     };
 
-    //TODO this needs to send back an object with the score for specified qtr, qtr == 0 for final score
-    $scope.getQuarterScore = function ( qtr ) {
-        return {team1: 0, team2: 0};
+    $scope.setFinalScore = function () {
+        promptForScore('Set Final Score')
+            .then(function ( newScore ) {
+                sqGameService.setFinalScore(newScore)
+                    .then(getAllScores);
+            });
     };
 
     $scope.setCurrentScore = function () {
-
         promptForScore("Set Current Score")
             .then(function ( newScore ) {
                 sqGameService.setCurrentScore( newScore )
-                    .then(function () {
-                        toastr.success("New score set successfully.");
-                        updateCurrentScore();
-                    })
-                    .catch(function () {
-                        toastr.warning("Unable to set a new score.");
-                        updateCurrentScore();
-                    });
+                    .then(getAllScores);
+            });
+    };
+
+    function getAllScores() {
+        sqGameService.getQuarterScore( 1 )
+            .then(function (score) {
+                $scope.q1Score = score;
             });
 
+        sqGameService.getQuarterScore( 2 )
+            .then(function (score) {
+                $scope.q2Score = score;
+            });
 
-    };
+        sqGameService.getQuarterScore( 3 )
+            .then(function (score) {
+                $scope.q3Score = score;
+            });
+
+        sqGameService.getQuarterScore( 4 )
+            .then(function (score) {
+                $scope.q4Score = score;
+            });
+
+        sqGameService.getFinalScore()
+            .then(function (score) {
+                $scope.finalScore = score;
+            });
+
+        sqGameService.getCurrentScore()
+            .then(function( scores ) {
+                $scope.currentScore = scores;
+            })
+    }
 
     function updateTeamNames() {
         // gets an object with the current teams playing
@@ -71,18 +103,6 @@ app.controller("scoreManuallyController", function($scope, uibHelper, $log, $sta
             .catch(function () {
                 $log.error("Unexpected rejection getting teams - using defaults");
                 $scope.teamNames = {team1: "team1", team2: "team2"};
-            })
-    }
-
-    function updateCurrentScore() {
-        // gets the current score of the game
-        sqGameService.getCurrentScore()
-            .then(function( scores ) {
-                $scope.currentScore = scores;
-            })
-            .catch(function () {
-                $log.error("Unexpected rejection getting current scores - using 0-0");
-                $scope.currentScore = {team1: 0, team2: 0};
             })
     }
 
