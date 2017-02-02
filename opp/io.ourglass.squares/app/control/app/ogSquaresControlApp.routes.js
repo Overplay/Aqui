@@ -75,4 +75,16 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             }
         })
 
+        .state( 'squareboard', {
+            url:         '/squareboard',
+            templateUrl: 'app/components/squareboard/squareboard.partial.html',
+            controller:  'squareboardController',
+            resolve:     {
+                grid: function (sqGameService) {
+                    return sqGameService.getCurrentGrid();
+                }
+                // TODO MITCH catch routing error somewhere
+            }
+        })
+
 });

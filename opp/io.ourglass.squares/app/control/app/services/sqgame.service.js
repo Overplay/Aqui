@@ -229,12 +229,35 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             numPicks: 0,
             initials: undefined
         };
-    }
+    };
 
     service.getCurrentUser = function () { return _currentUser; };
     service.setCurrentUser = function ( user ) {
         _currentUser = user;
         _currentUser.initials = makeInitials( _currentUser.name );
+    };
+
+    service.getWinnerForScore = function ( score ) {
+
+        var team1LastDigit = score.team1 % 10;
+        var team2LastDigit = score.team2 % 10;
+
+        var col = ogAPI.model.colScoreMap.indexOf( team1LastDigit );
+        var row = ogAPI.model.rowScoreMap.indexOf( team2LastDigit );
+        var winner = ogAPI.model.grid[ row ][ col ];
+        if ( !winner ) {
+            $log.error( "MISS in grid on row: " + row + " col: " + col );
+        }
+        if ( !winner || !winner.hasOwnProperty( 'email' ) )
+            return { name: "", email: "", initials: "??" };
+
+        winner[ "initials" ] = makeInitials( winner.name );
+        return winner;
+
+    };
+
+    service.getCurrentWinner = function () {
+        return service.getWinnerForScore( ogAPI.model.currentScore );
     };
 
     service.isGameRunning = function () {
