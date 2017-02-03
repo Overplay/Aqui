@@ -40,6 +40,18 @@ app.run(function($state, $rootScope, $log){
         }
     } );
 
-
-
 });
+
+app.filter('makeInitials', function(){
+    return function(name){
+        var initials;
+        var array = name.split( ' ' );
+        if ( array.length == 1 ) {
+            initials = array[ 0 ].charAt( 0 ).toUpperCase();
+        } else {
+            initials = array[ 0 ].charAt( 0 ).toUpperCase() + array[ array.length - 1 ].charAt( 0 ).toUpperCase();
+        }
+
+        return initials;
+    }
+})

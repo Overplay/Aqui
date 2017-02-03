@@ -92,10 +92,9 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             templateUrl: 'app/components/squareboard/squareboard.partial.html',
             controller:  'squareboardController',
             resolve:     {
-                grid: function (sqGameService) {
-                    return sqGameService.getCurrentGrid();
+                model: function ( sqGameService ) {
+                    return sqGameService.getLatestModel();
                 }
-                // TODO MITCH catch routing error somewhere
             }
         })
 
