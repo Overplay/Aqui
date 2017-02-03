@@ -87,7 +87,7 @@
     <tr ng-if="model.perQuarterScores.length==0">
         <td>NO QUARTERLY WINNERS YET</td>
     </tr>
-    <tr ng-repeat="q in model.perQuarterScores">
+    <tr ng-repeat="q in model.perQuarterScores | limitTo:3">
         <td>Q{{ $index+1 }}</td>
         <td>{{ q.team1 }}</td>
         <td>{{ q.team2 }}</td>
