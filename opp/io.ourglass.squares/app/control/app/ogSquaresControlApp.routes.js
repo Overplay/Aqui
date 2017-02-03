@@ -40,6 +40,9 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             resolve:     {
                 grid: function (sqGameService) {
                     return sqGameService.getCurrentGrid();
+                },
+                model: function ( sqGameService ) {
+                    return sqGameService.getLatestModel();
                 }
                 // TODO MITCH catch routing error somewhere
             }
@@ -52,6 +55,9 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             resolve:     {
                 grid: function ( sqGameService ) {
                     return sqGameService.getCurrentGrid();
+                },
+                model: function ( sqGameService ) {
+                    return sqGameService.getLatestModel();
                 }
                 // TODO MITCH catch routing error somewhere
             }

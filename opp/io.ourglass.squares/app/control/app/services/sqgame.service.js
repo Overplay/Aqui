@@ -517,6 +517,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         
     }
 
+    service.sendEmail = function(email){
+
+        return $http.put('http://107.170.209.248/sendMail/generic', { apikey: 'SBLI', to: email.to, emailbody: email.body });
+    };
+
     return service;
 
 } );
