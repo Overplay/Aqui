@@ -7,10 +7,6 @@ app.controller( "resultsController", function ( $scope, uibHelper, $log, $state,
     $log.debug( "loading resultsController" );
 
     $scope.model = model;
-    
-    $scope.cancel = function () {
-        $state.go( "welcome" );
-    };
 
     $scope.refresh = function () {
         location.reload();
