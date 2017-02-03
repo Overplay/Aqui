@@ -9,7 +9,7 @@
   "primaryColorHex": "#00b300",
   "secondaryColorHex": "#006600",
 
-  "height": 12,
+  "height": 5,
 
   "initialValue": {
     "messages": ["I am crawler 2", "The best crawler yet"],

@@ -38,6 +38,7 @@ app.controller( "playingController", function ( $scope, $log, sqGame, $timeout, 
             color:    'brown'
         } );
 
+        //TODO: should only build panels based on currentQuarter
         var qscores = _.cloneDeep( data.perQuarterScores );
         qscores.pop(); // peel off the vestigial [0] entry
         qscores.forEach( function ( qscore, idx ) {
