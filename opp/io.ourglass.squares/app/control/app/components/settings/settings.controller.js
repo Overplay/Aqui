@@ -37,9 +37,10 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
 
     $scope.startGame = function () {
         // starts current game after picking is done
-        uibHelper.confirmModal( "Start Game?", "Would you like to start the game?" )
+        uibHelper.confirmModal( "Start Game?", "Would you like to start the game? Starting the game will send an email to all users with their square purchase information.")
             .then( function () {
                 sqGameService.startGame();
+                sqGameService.sendEmailToAllUsers();
             } );
     };
 

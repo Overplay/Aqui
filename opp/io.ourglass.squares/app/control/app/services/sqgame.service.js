@@ -515,7 +515,28 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         
         return ogAPI.save();
         
-    }
+    };
+
+    service.sendEmailToAllUsers = function () {
+        var grid = _grid; // save a copy of the grid just in case
+        var teams = ogAPI.model.teamNames; // team 1 is col, team 2 is rows
+        var colScoreMap = ogAPI.model.colScoreMap; // team 1 scores
+        var rowScoreMap = ogAPI.model.rowScoreMap; // team 2 scores
+
+        for (var r = 0; r < grid.length; r++) {
+            for (var c = 0; c < grid[r].length; c++) {
+                var user = grid[r][c].ownedBy;
+                if ( user ) {
+                    var emailString = "Hey " + user.name + ", thanks for playing Squares by Ourglass. " +
+                            "Your square is " + teams.team1 + " " + colScoreMap[c] + ", " + teams.team2 + " " + rowScoreMap[r] + ".";
+
+                    // $log.debug(emailString);
+                    // TODO send email here to email address: user.email
+
+                }
+            }
+        }
+    };
 
     return service;
 
