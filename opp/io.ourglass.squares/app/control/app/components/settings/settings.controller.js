@@ -70,6 +70,19 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
                     } );
             } );
     };
+    
+    $scope.simPicks = function (){
+        uibHelper.curtainModal('Adding Players');
+        sqGameService.fillGridSimPlayers()
+            .then(function(model){
+                $log.debug("ok")
+            })
+            .catch(function(err){
+                $log.error(err.message);
+            })
+            .finally( uibHelper.dismissCurtain );
+            
+    };
 
     function updateTeamNames() {
         // gets an object with the current teams playing

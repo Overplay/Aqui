@@ -14,7 +14,7 @@ app.factory( 'fbGameSim', function ( $timeout, $log ) {
     var done = false;
     var timeoutDelay;
     
-    var FORCE_TIE = false;
+    var FORCE_TIE = true;
 
     var HIGH_SCORE = true;
     var flimit = HIGH_SCORE?0.5:0.8;

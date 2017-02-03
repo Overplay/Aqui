@@ -103,9 +103,9 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, 
                 break;
 
             case 'local':
-                $log.warning('sqCentral: dataSource is local, so no fetch loop!');
+                $log.warn('sqCentral: dataSource is local, so no fetch loop!');
                 break;
-
+            
             default:
                 throw new Error( "Not implemented" );
 

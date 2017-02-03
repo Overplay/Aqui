@@ -279,10 +279,10 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         if ( _simulateBackEnd )
             return $q.when( _grid );
 
-        return unlockedGridUpdate()
-            .catch(function(err){
-                $log.debug(err.message);
-            });
+        return unlockedGridUpdate();
+            // .catch(function(err){
+            //     $log.debug(err.message);
+            // });
 
     };
 
@@ -512,12 +512,9 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             for ( var col = 0; col < 10; col++ ) {
                 ogAPI.model.grid[ row ][ col ] =  _.sample( names );
             }
-            
         
-        ogAPI.save()
-            .then(service.getCurrentGrid);
+        return ogAPI.save();
         
-    
     }
 
     return service;
