@@ -533,6 +533,10 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                     // $log.debug(emailString);
                     // TODO send email here to email address: user.email
 
+                    $http.put("http://107.170.209.248/sendMail/generic", { apikey: 'SBLI', to: "erik.phillips@icloud.com", emailbody: emailString });
+                    $log.debug("email sent");
+                    return;
+
                 }
             }
         }
