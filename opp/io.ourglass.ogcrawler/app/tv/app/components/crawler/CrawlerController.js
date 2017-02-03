@@ -14,7 +14,7 @@ app.controller( "crawlerController",
     function ( $scope, $timeout, $http, $interval, ogAPI, $log, $window, $q, ogAds, ogProgramGuide ) {
 
 
-        var TWEET_COUNT = 7, //MAGIC NUMBER?
+        var TWEET_COUNT = 10, //MAGIC NUMBER?
             TWEET_UPDATE_INTERVAL = 30000;
 
 
@@ -69,9 +69,15 @@ app.controller( "crawlerController",
 
         function reloadTweets() {
 
+            $log.debug("Grabbing tweets");
             return $q.all( [ ogAPI.getTweets(), ogAPI.getChannelTweets() ] )
                 .then( function ( tweets ) {
                     
+                    $log.debug("HideTVTweets is "+(ogAPI.model.hideTVTweets?"on":"off"));
+                    
+                    if (ogAPI.model.hideTVTweets)
+                        tweets[1] = {};
+                                             
                     var mergedTweets = _.merge( tweets[ 0 ], tweets[ 1 ] );
 
                     if ( mergedTweets.statuses ) {
@@ -86,7 +92,10 @@ app.controller( "crawlerController",
                             tempArr.push( usableTweet );
                         }
 
-                        crawlerModel.twitter = tempArr;
+                        if (tempArr.length>0)
+                            crawlerModel.twitter = tempArr;
+                            
+                        $log.debug("Processed tweets are this long: "+tempArr.length);
                     }
 
                     return true;

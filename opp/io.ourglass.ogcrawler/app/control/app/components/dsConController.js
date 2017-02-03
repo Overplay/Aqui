@@ -3,7 +3,7 @@
  */
 
 app.controller("dsConController",
-    function ($scope, ogAPI, uibHelper) {
+    function ($scope, ogAPI, uibHelper, $log) {
 
         $scope.messages = [];
         $scope.comingUpMessages = [];
@@ -29,6 +29,8 @@ app.controller("dsConController",
             if(data.twitterQueries && data.twitterQueries.length != $scope.twitterQueries.length) {
                 $scope.twitterQueries = data.twitterQueries || [];
             }
+            
+            $scope.hideTVTweets = data.hideTVTweets;
         }
 
         function initialize() {
@@ -76,6 +78,7 @@ app.controller("dsConController",
             ogAPI.model.comingUpMessages = $scope.comingUpMessages;
 
             ogAPI.model.twitterQueries = $scope.twitterQueries;
+            ogAPI.model.hideTVTweets = $scope.hideTVTweets;
             
             uibHelper.curtainModal('Saving...');
             ogAPI.save()
@@ -85,6 +88,12 @@ app.controller("dsConController",
                 .finally( uibHelper.dismissCurtain );
             
         };
+        
+        
+        $scope.toggleTVTweets = function(){
+            $log.debug("Toggling tweets");
+            $scope.hideTVTweets =! $scope.hideTVTweets;
+        }
 
         // $scope.$watch('messageForm.dirty', function(nval){
         //

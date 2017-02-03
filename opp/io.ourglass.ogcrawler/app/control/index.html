@@ -84,6 +84,14 @@
             <!--</div>-->
             <!-- TWITTER -->
             <div ng-show="ui.tab=='TWITTER'" style="margin-top: 10px;">
+                <div style="display: flex; font-size: 2rem; margin-bottom: 10px;">
+                    <div style="flex: 1;"></div>
+                    <div style="flex: 2; text-align: center;" ng-click="toggleTVTweets()">
+                        <span class="glyphicon" ng-class="hideTVTweets?'glyphicon-check':'glyphicon-unchecked'"
+                              style=""></span><span>&nbsp;&nbsp;Hide TV Tweets</span>
+                    </div>
+                    <div style="flex: 1;"></div>
+                </div>
                 <button class="btn btn-success btn-full" style="width: 100%;" ng-click="newTwitterQuery()">NEW
                 </button>
                 <p style="margin-top: 5px; text-align: center; font-size: 0.95rem; color: #d0d0d0;">If you want to receive tweets with specific hashtags or to/from specific senders, include the # or @ in the query.</p>

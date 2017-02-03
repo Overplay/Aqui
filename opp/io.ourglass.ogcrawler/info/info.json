@@ -12,8 +12,9 @@
   "height": 5,
 
   "initialValue": {
-    "messages": ["I am crawler 2", "The best crawler yet"],
-    "twitterQueries": [ "@Warriors" ]
+    "messages": ["Ourglass TV", "Check Ourglass out at www.ourglass.tv"],
+    "twitterQueries": [ "@Warriors" ],
+    "hideTVTweets" : false
   },
 
   "version": 1.0,

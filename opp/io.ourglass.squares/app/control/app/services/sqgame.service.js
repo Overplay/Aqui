@@ -8,7 +8,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
     var service = {};
 
-    var _devMode = true;
+    var _devMode = false;
     var _simulateBackEnd = false;
 
     var _currentUser;
@@ -285,16 +285,20 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
     service.getRawGrid = function () { return _grid };
 
+    service.loadFakeUser = function(){
+        service.setCurrentUser( {
+            name:     "Demo McDemogame",
+            email:    "mcdemo@demoface.net",
+            numPicks: 1
+        } );
+    }
+
     service.isDevelopmentMode = function () { return _devMode; };
 
     if ( !_devMode )
         service.resetCurrentUser();
     else {
-        service.setCurrentUser( {
-            name:     "Demo McDemogame",
-            email:    "mcdemo@demoface.net",
-            numPicks: 4
-        } );
+        service.loadFakeUser();
     }
 
     //dataSource tells TV where to get it's data updates from
