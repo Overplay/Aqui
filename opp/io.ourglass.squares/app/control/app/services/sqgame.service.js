@@ -229,12 +229,35 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             numPicks: 0,
             initials: undefined
         };
-    }
+    };
 
     service.getCurrentUser = function () { return _currentUser; };
     service.setCurrentUser = function ( user ) {
         _currentUser = user;
         _currentUser.initials = makeInitials( _currentUser.name );
+    };
+
+    service.getWinnerForScore = function ( score ) {
+
+        var team1LastDigit = score.team1 % 10;
+        var team2LastDigit = score.team2 % 10;
+
+        var col = ogAPI.model.colScoreMap.indexOf( team1LastDigit );
+        var row = ogAPI.model.rowScoreMap.indexOf( team2LastDigit );
+        var winner = ogAPI.model.grid[ row ][ col ];
+        if ( !winner ) {
+            $log.error( "MISS in grid on row: " + row + " col: " + col );
+        }
+        if ( !winner || !winner.hasOwnProperty( 'email' ) )
+            return { name: "", email: "", initials: "??" };
+
+        winner[ "initials" ] = makeInitials( winner.name );
+        return winner;
+
+    };
+
+    service.getCurrentWinner = function () {
+        return service.getWinnerForScore( ogAPI.model.currentScore );
     };
 
     service.isGameRunning = function () {
@@ -384,19 +407,38 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     };
 
     service.setQuarterScore = function ( quarter, newScores ) {
-        // gets a quarter, and new scores to set for that quarter
-        // {team1: score, team2: score}
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                data.perQuarterScores[quarter] = newScores;
+                return ogAPI.save();
+            })
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "score-updated";
+            })
     };
 
     service.getQuarterScore = function ( quarter ) {
-        // returns the score for the specified quarter
-        // {team1: score, team2: score}
+        return fetchModelAndReturnField( 'perQuarterScores' )
+            .then(function ( quarterScores ) {
+                return quarterScores[quarter];
+            });
     };
 
-    service.getFinalScore = function ( quarter ) {
-        // returns object with final score from the specified `qtr`
-        return fetchModelAndReturnField( 'q'+quarter+'FinalScore' );
+    service.setFinalScore = function ( newScores ) {
+        return ogAPI.loadModelAndLock()
+            .then( function ( data ) {
+                data.finalScore = newScores;
+                return ogAPI.save();
+            })
+            .then( function ( resp ) {
+                processInboundModel( resp.data );
+                return "score-updated";
+            })
+    };
 
+    service.getFinalScore = function () {
+        return fetchModelAndReturnField( 'finalScore' );
     };
 
     service.getScoreMap = function () {
@@ -404,11 +446,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         return ogAPI.loadModel()
             .then( function ( data ) {
                 // TODO fix this when the TV model is working
-                return {
-                    rowScoreMap: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
-                    colScoreMap: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-                };
-                // return { rowScoreMap: data.rowScoreMap, colScoreMap: data.colScoreMap };
+                // return {
+                //     rowScoreMap: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+                //     colScoreMap: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                // };
+                return { rowScoreMap: data.rowScoreMap, colScoreMap: data.colScoreMap };
             } )
     };
     

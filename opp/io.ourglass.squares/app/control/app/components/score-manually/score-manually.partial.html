@@ -49,42 +49,42 @@
     </div>
 
     <div class="row myRow">
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(1).team1 }}</div>
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(1).team2 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q1Score.team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q1Score.team2 }}</div>
         <div class="col-xs-4 col-md-2">
-            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 1 )">SET Q1 SCORES</button>
+            <button class="btn btn-lg btn-info mybtn" ng-click="setQuarterScore( 1 )">SET Q1 SCORES</button>
         </div>
     </div>
 
     <div class="row myRow">
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(2).team1 }}</div>
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(2).team2 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q2Score.team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q2Score.team2 }}</div>
         <div class="col-xs-4 col-md-2">
-            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 2 )">SET Q2 SCORES</button>
+            <button class="btn btn-lg btn-info mybtn" ng-click="setQuarterScore( 2 )">SET Q2 SCORES</button>
         </div>
     </div>
 
     <div class="row myRow">
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(3).team1 }}</div>
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(3).team2 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q3Score.team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q3Score.team2 }}</div>
         <div class="col-xs-4 col-md-2">
-            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 3 )">SET Q3 SCORES</button>
+            <button class="btn btn-lg btn-info mybtn" ng-click="setQuarterScore( 3 )">SET Q3 SCORES</button>
         </div>
     </div>
 
     <div class="row myRow">
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(4).team1 }}</div>
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(4).team2 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q4Score.team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ q4Score.team2 }}</div>
         <div class="col-xs-4 col-md-2">
-            <button class="btn btn-lg btn-info mybtn" ng-click="setScore( 4 )">SET Q4 SCORES</button>
+            <button class="btn btn-lg btn-info mybtn" ng-click="setQuarterScore( 4 )">SET Q4 SCORES</button>
         </div>
     </div>
 
     <div class="row myRow">
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(0).team1 }}</div>
-        <div class="col-xs-4 col-md-5 score">{{ getQuarterScore(0).team2 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ finalScore.team1 }}</div>
+        <div class="col-xs-4 col-md-5 score">{{ finalScore.team2 }}</div>
         <div class="col-xs-4 col-md-2">
-            <button class="btn btn-lg btn-success mybtn" ng-click="setScore( 1 )">SET FINAL SCORES</button>
+            <button class="btn btn-lg btn-success mybtn" ng-click="setFinalScore()">SET FINAL SCORES</button>
         </div>
     </div>
 

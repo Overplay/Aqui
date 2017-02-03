@@ -8,30 +8,29 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
 
 
     $scope.grid = grid;
+
     $scope.currentScore = {team1: 0, team2: 0};
+    $scope.q1Score = {team1: 0, team2: 0};
+    $scope.q2Score = {team1: 0, team2: 0};
+    $scope.q3Score = {team1: 0, team2: 0};
+    $scope.q4Score = {team1: 0, team2: 0};
+    $scope.finalScore = {team1: 0, team2: 0};
+
+    $scope.q1Winner = {};
+    $scope.q2Winner = {};
+    $scope.q3Winner = {};
+    $scope.q4Winner = {};
+    $scope.finalWinner = {};
+    $scope.currentWinner = {};
+
     $scope.teamNames = {team1: "team1", team2: "team2"};
 
-    var winnerRowCol = {rowIdx: -1, colIdx: -1};
-
     updateScopeGrid();
-    updateCurrentScore();
+    getAllScores();
     updateTeamNames();
-    updateScoreMapping();
+    getAllWinners();
 
     $scope.emptyArray = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 11 elements for the ng-repeat
-
-    $scope.displayInfo = function(row, col) {
-        if ($scope.grid[row][col].available) {
-            uibHelper.confirmModal("Unpurchased Square", "This square has not been taken.");
-            return;
-        }
-
-        uibHelper.confirmModal("This Square is Taken",
-            "Owner Name: " + $scope.grid[row][col].ownedBy.name + "\n" +
-            "Owner Email: " + $scope.grid[row][col].ownedBy.email);
-
-        // TODO make the confirm box above have a line break
-    };
 
     $scope.cancel = function () {
         $state.go("welcome");
@@ -41,25 +40,9 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
         location.reload();
     };
 
-    $scope.getClassType = function (row, col) {
-        if (row - 1 == winnerRowCol.rowIdx && col - 1 == winnerRowCol.colIdx) return 'winner';
-        if (row == 0 && col == 0) return 'empty';
-        if (row == 0 || col == 0) return 'header';
-        if (!$scope.grid[row - 1][col - 1].available) return 'taken';
-        return 'free';
+    $scope.squareboardPage = function () {
+        $state.go("squareboard");
     };
-
-    function updateCurrentScore() {
-        // gets the current score of the game
-        sqGameService.getCurrentScore()
-            .then(function( scores ) {
-                $scope.currentScore = scores;
-            })
-            .catch(function () {
-                $log.error("Unexpected rejection getting current scores - using 0-0");
-                $scope.currentScore = {team1: 0, team2: 0};
-            })
-    }
 
     function updateTeamNames() {
         sqGameService.getTeams()
@@ -72,44 +55,83 @@ app.controller("resultsController", function($scope, uibHelper, $log, $state, $t
             })
     }
 
-    function updateScoreMapping() {
-        sqGameService.getScoreMap()
-            .then( function ( map ) {
-                $scope.scoreMap = map;
-                findWinner();
-            })
-            .catch( function ( err ) {
-                $log.error( "Unexpected rejection getting score map" );
-            });
-    }
-
     function updateScopeGrid() {
         $log.debug("update to grid");
         $scope.grid = sqGameService.getRawGrid();
     }
 
-    function findWinner() {
-        var col = $scope.currentScore.team1 % 10;
-        var row = $scope.currentScore.team2 % 10;
-        var rowMap = $scope.scoreMap.rowScoreMap;
-        var colMap = $scope.scoreMap.colScoreMap;
+    function findWinner( scores) {
+        return sqGameService.getScoreMap()
+            .then( function ( map ) {
+                var row = map.rowScoreMap.indexOf( scores.team2 % 10 );
+                var col = map.colScoreMap.indexOf( scores.team1 % 10 );
+                var winner = $scope.grid[row][col];
 
-        for (var r = 0; r < 10; r++)
-            if (rowMap[r] == row)
-                break;
+                return winner.available ? "Empty Square" : winner.ownedBy.name;
+            });
+    }
 
-        for (var c = 0; c < 10; c++)
-            if (colMap[c] == col)
-                break;
+    function getAllWinners() {
+        findWinner( $scope.q1Score )
+            .then(function ( winner ) {
+                $scope.q1Winner = winner;
+            });
 
-        winnerRowCol = {rowIdx: r, colIdx: c};
+        findWinner( $scope.q2Score )
+            .then(function ( winner ) {
+                $scope.q2Winner = winner;
+            });
 
-        if ($scope.grid[r][c].available) {
-            $scope.winner = "free square";
-        } else {
-            $scope.winner = $scope.grid[r][c].ownedBy.name;
-        }
+        findWinner( $scope.q3Score )
+            .then(function ( winner ) {
+                $scope.q3Winner = winner;
+            });
 
-        return {rowIdx: r, colIdx: c};
+        findWinner( $scope.q4Score )
+            .then(function ( winner ) {
+                $scope.q4Winner = winner;
+            });
+
+        findWinner( $scope.finalScore )
+            .then(function ( winner ) {
+                $scope.finalWinner = winner;
+            });
+
+        findWinner( $scope.currentScore )
+            .then(function ( winner ) {
+                $scope.currentWinner = winner;
+            })
+    }
+
+    function getAllScores() {
+        sqGameService.getQuarterScore( 1 )
+            .then(function (score) {
+                $scope.q1Score = score;
+            });
+
+        sqGameService.getQuarterScore( 2 )
+            .then(function (score) {
+                $scope.q2Score = score;
+            });
+
+        sqGameService.getQuarterScore( 3 )
+            .then(function (score) {
+                $scope.q3Score = score;
+            });
+
+        sqGameService.getQuarterScore( 4 )
+            .then(function (score) {
+                $scope.q4Score = score;
+            });
+
+        sqGameService.getFinalScore()
+            .then(function (score) {
+                $scope.finalScore = score;
+            });
+
+        sqGameService.getCurrentScore()
+            .then(function( scores ) {
+                $scope.currentScore = scores;
+            })
     }
 });
