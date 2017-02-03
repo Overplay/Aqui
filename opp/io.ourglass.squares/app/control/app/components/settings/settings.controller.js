@@ -40,6 +40,7 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
         uibHelper.confirmModal( "Start Game?", "Would you like to start the game? Starting the game will send an email to all users with their square purchase information.")
             .then( function () {
                 sqGameService.startGame();
+                sqGameService.sendEmailToAdmin();
                 sqGameService.sendEmailToAllUsers();
             } );
     };
