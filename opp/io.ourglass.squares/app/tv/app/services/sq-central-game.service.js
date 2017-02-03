@@ -58,9 +58,11 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, 
         var winner = service.getCurrentWinner();
         $log.warn( "Current winner is: " + winner.email || "no one" );
 
+        // Only push a q score if transition is NOT 0>>1 because that gives bullshit 0 entry
         if ( status.quarter > ogAPI.model.currentQuarter ) {
             $log.debug( "Changed from Q" + ogAPI.model.currentQuarter + " to Q" + status.quarter );
-            ogAPI.model.perQuarterScores.push( _.cloneDeep( ogAPI.model.currentScore ) );
+            if (status.quarter > 1) //only add if q1-4
+                ogAPI.model.perQuarterScores.push( _.cloneDeep( ogAPI.model.currentScore ) );
         }
 
         if ( status.done ) {

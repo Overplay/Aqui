@@ -14,6 +14,8 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     var _currentUser;
     var _grid;
     var _gameState;
+    
+    service.picksPerSession = 1; //hard wired for alpha test
 
     function Square( row, col, inboundJson ) {
 
@@ -124,6 +126,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
         _gameState = newModelJson.gameState;
         initGrid( newModelJson.grid );
+        return ogAPI.model;
 
     }
 
@@ -226,7 +229,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         _currentUser = {
             name:     undefined,
             email:    undefined,
-            numPicks: 0,
+            numPicks: 1, //Hard wired for Brit
             initials: undefined
         };
     };
@@ -379,6 +382,13 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                 return "team-named";
             } );
     };
+    
+    service.getLatestModel = function(){
+        return loadModelAndProcess()
+            .then(function(m){
+                return _.cloneDeep(m);
+            });
+    }
 
     function fetchModelAndReturnField(fieldname){
         return ogAPI.loadModel()

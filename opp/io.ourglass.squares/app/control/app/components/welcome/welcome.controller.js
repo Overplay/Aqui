@@ -5,6 +5,8 @@
 app.controller("welcomeController", function($scope, uibHelper, $log, $state, sqGameService) {
 
     $log.debug("loading welcome controller");
+    
+    sqGameService.resetCurrentUser();
 
     $scope.clicked = function () {
         sqGameService.isGamePicking()

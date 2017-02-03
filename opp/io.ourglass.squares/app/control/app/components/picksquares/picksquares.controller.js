@@ -15,6 +15,8 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
     
     $scope.grid = grid;
     $scope.currentUser = sqGameService.getCurrentUser();
+    
+    $scope.picksPerSession = sqGameService.picksPerSession;
 
     // Check if there is a current user, if not - go to register page
     if ( !$scope.currentUser || !$scope.currentUser.name ) {
@@ -83,33 +85,6 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
             })
     };
 
-    // $scope.clearSelections = function () {
-    //     $log.debug("clearing all selections");
-    //
-    //     uibHelper.confirmModal("Clear All Selections?", "Would you like to clear all your current selections?", true)
-    //         .then(function(){
-    //             $scope.grid = [];
-    //             $scope.numPicked = 0;
-    //             updateScopeGrid(); // call this to reset the grid and pull any new moves
-    //         });
-    //
-    //     if (confirm("Clear all selections?")) {
-    //         $scope.numPicked = 0;
-    //         $scope.picks = [];
-    //         updateScopeGrid();
-    //     }
-    // };
-
-    // $scope.submitSelection = function () {
-    //     if ($scope.numPicked != $scope.currentUser.numPicks) {
-    //         toastr.warning("Please select " + $scope.currentUser.numPicks + " squares.");
-    //         return;
-    //     }
-    //
-    //     sqGameService.submitPicksForCurrentUser( picks );
-    //
-    //     $state.go("thanks4playing");
-    // };
 
     $scope.registration = function () {
         $state.go("register");
@@ -133,6 +108,15 @@ app.controller("pickSquaresController", function($scope, $rootScope, $state, uib
 
     $scope.clearModel = function(){
         sqGameService.resetGameModel();
+    }
+    
+    $scope.backToReg = function(){
+    
+        uibHelper.confirmModal( "Abandon Pick?", "Are you sure you want to go back to the registration page?" )
+            .then(function(){
+                $state.go("register");
+            });
+
     }
 
 });

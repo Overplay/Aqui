@@ -1,8 +1,6 @@
 <style>
 
-    h1 {
-        text-align: center;
-    }
+
     .pick-row {
         display: flex;
         /*border: 1px solid white;*/
@@ -60,7 +58,8 @@
 
 </style>
 
-<h1>Pick Your Squares!</h1>
+<h1>{{ picksPerSession==1?"Pick Your Square!":"Pick Your Squares!" }}
+    <button class="btn btn-lg btn-danger pull-right" ng-click="backToReg()">BACK</button></h1>
 
 <div class="pick-row" ng-repeat="row in rows">
     <div class="pick-col" ng-repeat="col in cols" ng-click="clicked(row, col)"

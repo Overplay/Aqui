@@ -45,60 +45,67 @@
 </style>
 
 <h1>
-    Squares Results!
+    Results
     <button class="btn btn-lg btn-danger pull-right" ng-click="cancel()">EXIT</button>
     <button class="btn btn-lg btn-warning pull-right" style="margin-right: 1vw" ng-click="refresh()">REFRESH</button>
 </h1>
 
-<div class="row myRow myTopRow">
-    <div class="col-xs-3 col-md-2 team">Quarter</div>
-    <div class="col-xs-3 col-md-5 team">{{ teamNames.team1 }}</div>
-    <div class="col-xs-3 col-md-5 team">{{ teamNames.team2 }}</div>
-    <div class="col-xs-3 col-md-5 team">Winner</div>
+<h3>Game State is: {{ model.gameState || uppercase }}</h3>
+
+<h3>Current Score</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>QUARTER</th>
+        <th>{{model.teamNames.team1}}</th>
+        <th>{{model.teamNames.team2}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-if="model.gameState!='picking'">
+        <td>{{ model.currentQuarter }}</td>
+        <td>{{ model.currentScore.team1 }}</td>
+        <td>{{ model.currentScore.team2 }}</td>
+    </tr>
+    <tr ng-if="model.gameState=='picking'">
+        <td>GAME NOT STARTED</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Per Quarter Winners</h3>
+<table class="table" style="margin-top: 20px;">
+    <thead>
+    <tr>
+        <th>QUARTER</th>
+        <th>{{ model.teamNames.team1 }}</th>
+        <th>{{ model.teamNames.team2 }}</th>
+        <th>WINNER</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-if="model.perQuarterScores.length==0">
+        <td>NO QUARTERLY WINNERS YET</td>
+    </tr>
+    <tr ng-repeat="q in model.perQuarterScores">
+        <td>Q{{ $index+1 }}</td>
+        <td>{{ q.team1 }}</td>
+        <td>{{ q.team2 }}</td>
+        <td>{{winnerForScore(q).name}} ( {{ winnerForScore(q).email }} )</td>
+    </tr>
+    </tbody>
+</table>
+
+<div ng-if="model.gameState=='running'">
+    <h3>Current Leader: &nbsp;{{ winnerForScore(model.currentScore).name }}&nbsp;( {{
+        winnerForScore(model.currentScore).email }} )</h3>
 </div>
 
-<div class="row myRow">
-    <div class="col-xs-3 col-md-2 score">1</div>
-    <div class="col-xs-3 col-md-5 score"> {{ q1Score.team1 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q1Score.team2 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q1Winner }} </div>
-</div>
 
-<div class="row myRow">
-    <div class="col-xs-3 col-md-2 score">2</div>
-    <div class="col-xs-3 col-md-5 score"> {{ q2Score.team1 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q2Score.team2 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q2Winner }} </div>
-</div>
-
-<div class="row myRow">
-    <div class="col-xs-3 col-md-2 score">3</div>
-    <div class="col-xs-3 col-md-5 score"> {{ q3Score.team1 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q3Score.team2 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q3Winner }} </div>
-</div>
-
-<div class="row myRow">
-    <div class="col-xs-3 col-md-2 score">4</div>
-    <div class="col-xs-3 col-md-5 score"> {{ q4Score.team1 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q4Score.team2 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ q4Winner }} </div>
-</div>
-
-<div class="row myRow myBottomRow">
-    <div class="col-xs-3 col-md-2 score">Final</div>
-    <div class="col-xs-3 col-md-5 score"> {{ finalScore.team1 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ finalScore.team2 }} </div>
-    <div class="col-xs-3 col-md-5 score"> {{ finalWinner }} </div>
+<div ng-if="model.gameState=='done'" style="background-color: #0d3349; padding: 10px; border-radius: 5px;">
+    <h3>Final Winner:&nbsp;{{ winnerForScore(model.finalScore).name }}&nbsp;( {{ winnerForScore(model.finalScore).email }} )</h3>
 </div>
 
 
-<div class="row myRow myTopRow">
-    <div class="col-xs-12 col-md-12 winner">Current Winner</div>
-</div>
-<div class="row myRow">
-    <div class="col-xs-12 col-md-12 winner">{{ currentWinner }}</div>
-</div>
-
-<button class="btn btn-lg btn-info mybtn" ng-click="squareboardPage()">VIEW SQUARES</button>
+<button class="btn btn-lg btn-info mybtn" ui-sref="squareboard">VIEW SQUARES</button>
 

@@ -45,6 +45,18 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             }
         })
 
+        .state( 'advsettings', {
+            url:         '/advsettings',
+            templateUrl: 'app/components/settings/advancedsettings.partial.html',
+            controller:  'settingsController',
+            resolve:     {
+                grid: function ( sqGameService ) {
+                    return sqGameService.getCurrentGrid();
+                }
+                // TODO MITCH catch routing error somewhere
+            }
+        } )
+
         .state( 'thanks4playing', {
             url:         '/thanks',
             templateUrl: 'app/components/thanks4playing/thanks4playing.partial.html',
@@ -56,8 +68,8 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             templateUrl: 'app/components/results/results.partial.html',
             controller:  'resultsController',
             resolve:     {
-                grid: function (sqGameService) {
-                    return sqGameService.getCurrentGrid();
+                model: function( sqGameService ){
+                    return sqGameService.getLatestModel();
                 }
                 // TODO MITCH catch routing error somewhere
             }
