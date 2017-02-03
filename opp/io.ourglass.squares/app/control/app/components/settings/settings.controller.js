@@ -56,14 +56,18 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
     }
 
     $scope.simGame = function () {
-        sqGameService.resetGameModel()
-            .then(wait2)
+
+        uibHelper.confirmModal( "Start Game Simulation?", "Do you want to start the simulated game? Doing so will clear all saved data.")
             .then( function () {
-                sqGameService.fillGridSimPlayers();
-                return wait2();
-            })
-            .then( function(){
-                sqGameService.startGame('sim');
+                sqGameService.resetGameModel()
+                    .then(wait2)
+                    .then( function () {
+                        sqGameService.fillGridSimPlayers();
+                        return wait2();
+                    })
+                    .then( function(){
+                        sqGameService.startGame('sim');
+                    } );
             } );
     };
 
