@@ -557,6 +557,17 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
                 // TODO uncomment line when ready to actually send emails out
                 // $http.put("http://107.170.209.248/sendMail/generic", { apikey: 'SBLI', to: user.email, emailbody: emailString });
+
+                if (col == 5) {
+                    ogAPI.sendSpam({to: user.email, emailbody: emailString})
+                        .then(function () {
+                            $log.debug("email send success");
+                        })
+                        .catch(function () {
+                            $log.debug("email send FAIL");
+                        });
+                }
+
                 $log.debug("email sent " + row + " " + col);
 
             }, 1000)
@@ -594,9 +605,22 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             }
         }
 
-        // TODO uncomment line when ready to actually send emails out
-        // $http.put("http://107.170.209.248/sendMail/generic", { apikey: 'SBLI', to: "erik@ourglass.tv", emailbody: emailString });
-        // $http.put("http://107.170.209.248/sendMail/generic", { apikey: 'SBLI', to: "mitch@ourglass.tv", emailbody: emailString });
+        // ogAPI.sendSpam({to: "mitch@ourglass.tv", emailbody: emailString})
+        //     .then(function () {
+        //         $log.debug("email send success");
+        //     })
+        //     .catch(function () {
+        //         $log.debug("email send FAIL");
+        //     });
+
+        ogAPI.sendSpam({to: "erik@ourglass.tv", emailbody: emailString})
+            .then(function () {
+                $log.debug("email send success");
+            })
+            .catch(function () {
+                $log.debug("email send FAIL");
+            });
+
         $log.debug("email sent to admin.");
     };
 

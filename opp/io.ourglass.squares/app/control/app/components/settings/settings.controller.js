@@ -3,9 +3,11 @@
  */
 
 app.controller( "settingsController", function ( $scope, uibHelper, $log, $state, $interval, toastr, 
-    $timeout, sqGameService, grid ) {
+    $timeout, sqGameService, grid, model ) {
 
     $log.debug( "loading settingsController" );
+    
+    $scope.model = model;
 
     updateTotalTilesPicked();
     updateTeamNames();
@@ -22,13 +24,6 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
         $state.go("welcome");
     };
 
-    $scope.getGameStatusText = function () {
-        var gameState = sqGameService.getGameState();
-        if ( gameState ==  'done') return 'Game Completed';
-        if ( gameState == 'starting' ) return 'Game in Progress';
-        if ( gameState == 'picking' ) return "Picking Squares";
-        return 'Game Not Yet Started';
-    };
 
     $scope.refreshCurrentPage = function () {
         // this is needed for the admin to refresh the page to get new data

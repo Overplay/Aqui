@@ -15,6 +15,16 @@
         font-weight: 900;
     }
 
+    .sold-out {
+        color: #fffefd;
+        font-size: 8vh;
+        text-align: center;
+        background-color: brown;
+        padding: 5px;
+        margin: 5px 5px 0 5px;
+        font-weight: 900;
+    }
+
     .available {
         color: #772b2d;
         font-size: 3vh;
@@ -34,7 +44,10 @@
 </style>
 
 <div ng-if="stillSelling">
-    <div class="count" >{{ 100-  totalSquaresSold }}</div>
+
+    <div class="count" ng-if="totalSquaresSold<100">{{ 100- totalSquaresSold }}</div>
+    <div class="sold-out" ng-if="totalSquaresSold==100">SOLD OUT</div>
+
     <div class="available">AVAILABLE</div>
 
     <h2 ng-if="!stillSelling" class="og-loud animated infinite jello">SOLD OUT!!</h2>
