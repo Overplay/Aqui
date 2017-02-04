@@ -1,0 +1,69 @@
+<style>
+    h1 {
+        color: #deff0d;
+        font-size: 10vh;
+        text-align: center;
+    }
+
+    .brown {
+        background-color: brown;
+    }
+
+    .blue {
+        background-color: #186ca5;
+    }
+
+    .results {
+        color: #fffefd;
+        text-align: center;
+        padding: 5px;
+        margin: 5px 5px 0 5px;
+    }
+
+    .initials {
+        font-size: 10vh;
+        font-weight: 900;
+    }
+
+    .name {
+        font-size: 5vh;
+        font-weight: 900;
+    }
+
+    .available {
+        color: #772b2d;
+        font-size: 3vh;
+        font-weight: 900;
+        text-align: center;
+        background-color: #fffefd;
+        padding: 5px;
+        margin: 0 5px 0 5px;
+    }
+
+    .game-state {
+        font-weight: 900;
+        color: white;
+        padding-bottom: 5px;
+    }
+
+    .running {
+        margin-top: 12px;
+        font-size: 3.5vh;
+    }
+
+    .done {
+        margin-top: 16px;
+        font-size: 6vh;
+    }
+
+</style>
+
+<div>
+    <div class="results" ng-class="sequence[seqIdx].color">
+        <div class="initials">{{sequence[seqIdx].initials}}</div>
+        <div class="name">{{ sequence[seqIdx].name.split(" ")[0] }}</div>
+    </div>
+    <div class="available">{{ sequence[seqIdx].label }}</div>
+    <div class="game-state" ng-class="gameState=='FINAL'?'done':'running'">{{ gameState }}</div>
+
+</div>

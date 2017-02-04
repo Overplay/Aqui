@@ -1,0 +1,16 @@
+{
+  "appId": "io.ourglass.squaressb",
+  "appType": "widget",
+  "appName": "SquaresSB",
+  "icon": "squares.png",
+  "iconLabel": "SquaresSB",
+  "primaryColorHex": "#A9A9A9",
+  "secondaryColorHex": "#000000",
+  "height": 50,
+  "width": 10,
+  "initialValue": {
+    "dataSource": "localhost"
+  },
+  "version": 1.0,
+  "installDate": 1475073632093
+}

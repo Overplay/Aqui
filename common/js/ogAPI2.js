@@ -347,6 +347,14 @@ var GLOBAL_UPDATE_TARGET;
                 return $http.post( API_PATH + 'spam', email );
             }
 
+
+            service.proxyGet = function( targetHost, appId ){
+                return $http.get( API_PATH + 'appdataproxy/'+appId+"?remote="+targetHost)
+                    .then(function(resp){
+                        return resp.data;
+                    });
+            }
+
             /**
              * function which controls the polling for the associated model
              * records the intervalReference so that it can be cancelled later in kill()

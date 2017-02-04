@@ -77,7 +77,6 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
                 model: function( sqGameService ){
                     return sqGameService.getLatestModel();
                 }
-                // TODO MITCH catch routing error somewhere
             }
         })
 
@@ -86,10 +85,9 @@ app.config( function ( $stateProvider, $urlRouterProvider ) {
             templateUrl: 'app/components/score-manually/score-manually.partial.html',
             controller:  'scoreManuallyController',
             resolve:     {
-                grid: function (sqGameService) {
-                    return sqGameService.getCurrentGrid();
+                model: function ( sqGameService ) {
+                    return sqGameService.getLatestModel();
                 }
-                // TODO MITCH catch routing error somewhere
             }
         })
 
