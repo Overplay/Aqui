@@ -1,0 +1,61 @@
+.wrapper {
+    /*margin-left: 1vw;*/
+    /*margin-right: 1vw;*/
+    text-align: center;
+    position: relative;
+    transition: all 500ms;
+    left: -200px;
+    background-color: rgba(0,0,0, 0.25);
+    padding: 0 0 10px 0;
+    /*padding: 1vw;*/
+    /*transform: rotate(-90deg);*/
+    /*-webkit-transform: rotate(-90deg);*/
+}
+
+.slide-in{
+    left:0;
+}
+
+.app-header {
+    font-size: 12vw;
+    height: 8vh;
+    line-height: 7vh;
+    text-align: center;
+    color: #fffefd;
+    background-color: #772b2d;
+    padding: 5px;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.titler {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 1vh;
+}
+
+.current-game {
+    margin-top: 1vh;
+    overflow: hidden;
+}
+
+.game-stats {
+    margin-top: 3vh;
+    overflow: hidden;
+}
+
+.current-winner {
+    margin-top: 3vh;
+    overflow: hidden;
+}
+
+.logo-holder {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+html, body {
+    background-color: transparent;
+}

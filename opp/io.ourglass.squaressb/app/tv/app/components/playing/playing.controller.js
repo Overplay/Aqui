@@ -5,6 +5,9 @@
 app.controller( "playingController", function ( $scope, $log, sqGame, $timeout, $rootScope ) {
 
     $log.debug( "playingController has loaded" );
+    
+    var looping = false;
+    var localModel;
 
     $scope.sequence = [ { label: "GET READY", initials: "!!", color: 'brown' }];
     $scope.seqIdx = 0;
@@ -73,14 +76,19 @@ app.controller( "playingController", function ( $scope, $log, sqGame, $timeout, 
     
     function startLoop(){
         $log.info("Starting loop");
-        sqGame.getModel()
-            .then(processModel)
-            .then(showNextPanel);
+        processModel(localModel);
+        showNextPanel();
+       
     }
-    
-    startLoop();
     
     showBox();
 
+    $scope.$on('MODEL_UPDATE', function(evt, data){
+        localModel = data;
+        if (!looping){
+            looping = true;
+            startLoop();
+        }
+    });
 
 });

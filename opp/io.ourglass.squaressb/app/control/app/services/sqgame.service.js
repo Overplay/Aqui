@@ -461,6 +461,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         // returns an object with arrays of the mapped scores {rowMap: [], colMap: []}
         return ogAPI.loadModel()
             .then( function ( data ) {
+                // TODO fix this when the TV model is working
+                // return {
+                //     rowScoreMap: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+                //     colScoreMap: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                // };
                 return { rowScoreMap: data.rowScoreMap, colScoreMap: data.colScoreMap };
             } )
     };
@@ -512,94 +517,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         
         return ogAPI.save();
         
-    };
-
-    service.sendEmailToAllUsers = function () {
-        var grid = _grid; // save a copy of the grid just in case
-        var teams = ogAPI.model.teamNames; // team 1 is col, team 2 is rows
-        var colScoreMap = ogAPI.model.colScoreMap; // team 1 scores
-        var rowScoreMap = ogAPI.model.rowScoreMap; // team 2 scores
-
-        sendEmailToAllUser_aux(grid, 0, 0, teams, colScoreMap, rowScoreMap);
-    };
-
-    function sendEmailToAllUser_aux(grid, row, col, teams, colScoreMap, rowScoreMap) {
-        if (row >= grid.length || col >= grid[row].length) {
-            return;
-        }
-
-        var user = grid[row][col].ownedBy;
-
-        if ( user ) {
-            var emailString = "Hey " + user.name + ", thanks for playing Squares by Ourglass. " +
-                "Your square is " + teams.team1 + " " + colScoreMap[col] + ", " + teams.team2 + " " + rowScoreMap[row] + ".";
-
-            $timeout(function () {
-
-                // TODO MITCH uncomment this line to send to the user's emails and comment out my email
-                // ogAPI.sendSpam({to: "user.email", emailbody: emailString})
-                ogAPI.sendSpam({to: "erik@ourglass.tv", emailbody: emailString})
-                    .then(function () {
-                        $log.debug("email send success");
-                    })
-                    .catch(function () {
-                        $log.debug("email send FAIL");
-                    });
-
-                // $log.debug("email sent " + row + " " + col);
-
-            }, 1000)
-                .then(function () {
-
-                    if (col + 1 == grid[row].length) { // if at the last col, increment the row
-                        sendEmailToAllUser_aux(grid, row + 1, 0, teams, colScoreMap, rowScoreMap);
-                    } else {
-                        sendEmailToAllUser_aux(grid, row, col + 1, teams, colScoreMap, rowScoreMap);
-                    }
-
-                })
-        }
     }
 
-    service.sendEmailToAdmin = function () {
-        var grid = _grid; // save a copy of the grid just in case
-        var teams = ogAPI.model.teamNames; // team 1 is col, team 2 is rows
-        var colScoreMap = ogAPI.model.colScoreMap; // team 1 scores
-        var rowScoreMap = ogAPI.model.rowScoreMap; // team 2 scores
-        var emailString = "";
+    service.sendEmail = function(email){
 
-        for (var r = 0; r < grid.length; r++) {
-            for (var c = 0; c < grid[r].length; c++) {
-                var user = grid[r][c].ownedBy;
-                if ( user ) {
-                    emailString += "grid[" + r + "][" + c + "] - " +
-                        teams.team1 + " " + colScoreMap[c] + ", " + teams.team2 + " " + rowScoreMap[r] +
-                        " - owned by: " + user.name + " ( " + user.email + " )\n";
-                } else {
-                    emailString += "grid[" + r + "][" + c + "] - " +
-                        teams.team1 + " " + colScoreMap[c] + ", " + teams.team2 + " " + rowScoreMap[r] +
-                        " - free square\n";
-                }
-            }
-        }
-
-        ogAPI.sendSpam({to: "mitch@ourglass.tv", emailbody: emailString})
-            .then(function () {
-                $log.debug("email send success");
-            })
-            .catch(function () {
-                $log.debug("email send FAIL");
-            });
-
-        ogAPI.sendSpam({to: "erik@ourglass.tv", emailbody: emailString})
-            .then(function () {
-                $log.debug("email send success");
-            })
-            .catch(function () {
-                $log.debug("email send FAIL");
-            });
-
-        $log.debug("email sent to admin.");
+        return $http.put('http://107.170.209.248/sendMail/generic', { apikey: 'SBLI', to: email.to, emailbody: email.body });
     };
 
     return service;

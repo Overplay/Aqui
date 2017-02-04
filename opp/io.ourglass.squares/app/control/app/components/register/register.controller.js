@@ -60,17 +60,16 @@ app.controller("registerController", function($scope, $rootScope, uibHelper, $lo
             return;
         }
 
-        sqGameService.setCurrentUser({
-            numPicks:   $scope.currentUser.numPicks,
-            name:       $scope.currentUser.name,
-            email:      $scope.currentUser.email
-        });
+        uibHelper.confirmModal( "Confirm Your Information", "Is this your correct information? " + $scope.currentUser.name + " ( " + $scope.currentUser.email + " )" )
+            .then( function () {
+                sqGameService.setCurrentUser({
+                    numPicks:   $scope.currentUser.numPicks,
+                    name:       $scope.currentUser.name,
+                    email:      $scope.currentUser.email
+                });
 
-        $state.go("picksquares");
-    };
-
-    $scope.cancel = function () {
-        $state.go("welcome");
+                $state.go("picksquares");
+            });
     };
 
     function validateEmail( email ) {

@@ -1,0 +1,38 @@
+<style>
+    .og-logo {
+        width: 70%;
+        margin: 20vh auto;
+        display: block;
+    }
+
+    .reg-button-holder {
+        display: flex;
+        top: 50vh;
+        width: 100%;
+        /*border: 1px solid white;*/
+    }
+
+    .reg-button-holder > a {
+        background-color: #00dbee;
+        font-size: 50px;
+        margin: 0 10vw 0 10vw;
+        width: 100%;
+        text-align: center;
+        color: white;
+        padding: 10px 10px 10px 10px;
+    }
+
+</style>
+
+<img class="og-logo" ng-click="logoClicked()" src="assets/img/Ourglass_LOGO_RGB_WHT.png"/>
+<h2>Squares Remote Scoreboard</h2>
+<form>
+    <div class="form-group">
+        <label for="remotehost">Remote Host</label>
+        <input type="text" class="form-control" id="remotehost"
+               placeholder="Remote Host" ng-model="host">
+    </div>
+    <button class="btn btn-primary" ng-click="setHost()">SET HOST</button>
+    <button class="btn btn-primary" ng-click="testRemote()">TEST</button>
+
+</form>

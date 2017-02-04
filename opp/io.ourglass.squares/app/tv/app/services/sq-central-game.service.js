@@ -2,7 +2,7 @@
  * Created by mkahn on 1/25/17.
  */
 
-app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, $state ) {
+app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, $q ) {
 
     $log.debug( "sqGame service loaded" );
 
@@ -13,6 +13,8 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, 
     service.localGameState = "picking";
     service.squaresSold = 0;
     service.currentQ = 0;
+    
+    var _initialized = false;
 
 
     function makeInitials( name ) {
@@ -110,19 +112,33 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, 
                 throw new Error( "Not implemented" );
 
         }
-
-
         ogAPI.save();
+    }
+    
+    function localModelUpdate(){
+        $log.debug( "sqCentral: Game state is: " + ogAPI.model.gameState );
+        if (ogAPI.model.gameState=='picking')
+            totalSquaresSold();
+        $rootScope.$broadcast( 'MODEL_UPDATE', ogAPI.model );
     }
 
     function modelUpdate( newModel ) {
 
         $log.debug( "sqCentral: Got a model update!" );
+        _initialized = true;
 
         if ( newModel.colScoreMap.length == 0 )
             initRowColMap();
 
         service.dataSource = newModel.dataSource;
+        
+        // Peel off the local updates because they are simpler than the simulator
+        // TODO: this can all stand a rewrite
+        if (service.dataSource=='local'){
+            $log.debug("Local model update.");
+            localModelUpdate();
+            return;
+        }
 
         // See if game is starting
         if ( ogAPI.model.gameState == 'starting' ) {
@@ -141,7 +157,6 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, 
 
         $log.debug( "sqCentral: Game state is: " + newModel.gameState );
         $rootScope.$broadcast( 'MODEL_UPDATE', newModel );
-
 
     }
 
@@ -163,6 +178,7 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, 
 
     service.getWinnerForScore = function ( score ) {
 
+        if (!score) return;
         var team1LastDigit = score.team1 % 10;
         var team2LastDigit = score.team2 % 10;
         
@@ -185,7 +201,10 @@ app.factory( 'sqGame', function ( $log, $rootScope, ogAPI, fbGameSim, $timeout, 
     };
     
     service.getModel = function(){
-        return ogAPI.model;
+        if (_initialized)
+            return $q.when( ogAPI.model );
+            
+        return ogAPI.loadModel();
     };
 
     return service;

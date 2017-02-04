@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="ogSquaresApp">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+
+    <script src="../../../../common/bower_components/angular/angular.min.js"></script>
+    <script src="../../../../common/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="../../../../common/bower_components/lodash/dist/lodash.min.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+    <script src="app/ogSquaresApp.module.js"></script>
+    <script src="app/ogSquaresApp.routes.js"></script>
+
+    <!-- App Main and AngularJS Routes -->
+
+    <!--<script src="../../../../common/js/uiOGMobile/uiOGMobile.js"></script>-->
+    <script src="../../../../common/js/ogAPI2.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/components/mainscreen/mainscreen.controller.js"></script>
+    <script src="app/services/sq-central-game.service.js"></script>
+    <script src="app/services/gamesim.service.js"></script>
+
+    <script src="app/components/attract/attract.controller.js"></script>
+    <script src="app/components/playing/playing.controller.js"></script>
+
+    <!-- App Specific and Overridden CSS -->
+    <link href="assets/css/squares-og-style.css" rel="stylesheet">
+    <link href="../../../../common/bower_components/animate.css/animate.min.css" rel="stylesheet">
+
+    <title>Ourglass Squares</title>
+
+</head>
+
+<body ng-controller="mainScreenController">
+<div class="wrapper" ng-class="{ 'slide-in': slideIn }">
+    <img style="width: 90%; margin-top: 5px;" src="assets/img/sqlogo.png"/>
+    <ui-view></ui-view>
+    <!--<og-advert type="widget" interval="30000"></og-advert>-->
+</div>
+
+        <!--<h1>SQUARES SOLD: 27/100</h1>-->
+    <!--</div>-->
+
+
+</body>
+</html>

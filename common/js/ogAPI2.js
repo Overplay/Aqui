@@ -336,7 +336,23 @@ var GLOBAL_UPDATE_TARGET;
                     phoneNumber: phoneNumber,
                     message:     message
                 } );
+            }
 
+            /**
+             * 
+             * @param email should be { to: emailAddr, emailbody: text }
+             * @returns {HttpPromise}
+             */
+            service.sendSpam = function(email){
+                return $http.post( API_PATH + 'spam', email );
+            }
+
+
+            service.proxyGet = function( targetHost, appId ){
+                return $http.get( API_PATH + 'appdataproxy/'+appId+"?remote="+targetHost)
+                    .then(function(resp){
+                        return resp.data;
+                    });
             }
 
             /**

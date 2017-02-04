@@ -6,9 +6,12 @@ app.controller("thanks4playingController", function($scope, $log, $state, $timeo
 
     $log.debug("loading thanks4playingController");
 
-    $timeout(function(){
+    var promise = $timeout(function(){
         $state.go("welcome");
     }, 5000);
 
+    $scope.$on('$destroy', function(){
+        $timeout.cancel(promise);
+    });
 
 });

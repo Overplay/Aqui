@@ -3,9 +3,11 @@
  */
 
 app.controller( "settingsController", function ( $scope, uibHelper, $log, $state, $interval, toastr, 
-    $timeout, sqGameService, grid ) {
+    $timeout, sqGameService, grid, model ) {
 
     $log.debug( "loading settingsController" );
+    
+    $scope.model = model;
 
     updateTotalTilesPicked();
     updateTeamNames();
@@ -22,13 +24,6 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
         $state.go("welcome");
     };
 
-    $scope.getGameStatusText = function () {
-        var gameState = sqGameService.getGameState();
-        if ( gameState ==  'done') return 'Game Completed';
-        if ( gameState == 'starting' ) return 'Game in Progress';
-        if ( gameState == 'picking' ) return "Picking Squares";
-        return 'Game Not Yet Started';
-    };
 
     $scope.refreshCurrentPage = function () {
         // this is needed for the admin to refresh the page to get new data
@@ -37,9 +32,11 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
 
     $scope.startGame = function () {
         // starts current game after picking is done
-        uibHelper.confirmModal( "Start Game?", "Would you like to start the game?" )
+        uibHelper.confirmModal( "Start Game?", "Would you like to start the game? Starting the game will send an email to all users with their square purchase information.")
             .then( function () {
                 sqGameService.startGame();
+                sqGameService.sendEmailToAdmin();
+                sqGameService.sendEmailToAllUsers();
             } );
     };
 
@@ -56,14 +53,18 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
     }
 
     $scope.simGame = function () {
-        sqGameService.resetGameModel()
-            .then(wait2)
+
+        uibHelper.confirmModal( "Start Game Simulation?", "Do you want to start the simulated game? Doing so will clear all saved data.")
             .then( function () {
-                sqGameService.fillGridSimPlayers();
-                return wait2();
-            })
-            .then( function(){
-                sqGameService.startGame('sim');
+                sqGameService.resetGameModel()
+                    .then(wait2)
+                    .then( function () {
+                        sqGameService.fillGridSimPlayers();
+                        return wait2();
+                    })
+                    .then( function(){
+                        sqGameService.startGame('sim');
+                    } );
             } );
     };
     
