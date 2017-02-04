@@ -512,27 +512,6 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
         
     };
 
-    // service.sendEmailToAllUsers = function () {
-    //     var grid = _grid; // save a copy of the grid just in case
-    //     var teams = ogAPI.model.teamNames; // team 1 is col, team 2 is rows
-    //     var colScoreMap = ogAPI.model.colScoreMap; // team 1 scores
-    //     var rowScoreMap = ogAPI.model.rowScoreMap; // team 2 scores
-    //
-    //     for (var r = 0; r < grid.length; r++) {
-    //         for (var c = 0; c < grid[r].length; c++) {
-    //             var user = grid[r][c].ownedBy;
-    //             if ( user ) {
-    //                 var emailString = "Hey " + user.name + ", thanks for playing Squares by Ourglass. " +
-    //                         "Your square is " + teams.team1 + " " + colScoreMap[c] + ", " + teams.team2 + " " + rowScoreMap[r] + ".";
-    //
-    //                 // TODO uncomment line when ready to actually send emails out
-    //                 // $http.put("http://107.170.209.248/sendMail/generic", { apikey: 'SBLI', to: user.email, emailbody: emailString });
-    //                 $log.debug("email sent");
-    //             }
-    //         }
-    //     }
-    // };
-
     service.sendEmailToAllUsers = function () {
         var grid = _grid; // save a copy of the grid just in case
         var teams = ogAPI.model.teamNames; // team 1 is col, team 2 is rows
@@ -555,18 +534,15 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
 
             $timeout(function () {
 
-                // TODO uncomment line when ready to actually send emails out
-                // $http.put("http://107.170.209.248/sendMail/generic", { apikey: 'SBLI', to: user.email, emailbody: emailString });
-
-                if (col == 5) {
-                    ogAPI.sendSpam({to: user.email, emailbody: emailString})
-                        .then(function () {
-                            $log.debug("email send success");
-                        })
-                        .catch(function () {
-                            $log.debug("email send FAIL");
-                        });
-                }
+                // TODO MITCH uncomment this line to send to the user's emails and comment out my email
+                // ogAPI.sendSpam({to: "user.email", emailbody: emailString})
+                ogAPI.sendSpam({to: "erik@ourglass.tv", emailbody: emailString})
+                    .then(function () {
+                        $log.debug("email send success");
+                    })
+                    .catch(function () {
+                        $log.debug("email send FAIL");
+                    });
 
                 $log.debug("email sent " + row + " " + col);
 
@@ -584,11 +560,11 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
     }
 
     service.sendEmailToAdmin = function () {
-        var emailString = "";
         var grid = _grid; // save a copy of the grid just in case
         var teams = ogAPI.model.teamNames; // team 1 is col, team 2 is rows
         var colScoreMap = ogAPI.model.colScoreMap; // team 1 scores
         var rowScoreMap = ogAPI.model.rowScoreMap; // team 2 scores
+        var emailString = "";
 
         for (var r = 0; r < grid.length; r++) {
             for (var c = 0; c < grid[r].length; c++) {
@@ -605,13 +581,13 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             }
         }
 
-        // ogAPI.sendSpam({to: "mitch@ourglass.tv", emailbody: emailString})
-        //     .then(function () {
-        //         $log.debug("email send success");
-        //     })
-        //     .catch(function () {
-        //         $log.debug("email send FAIL");
-        //     });
+        ogAPI.sendSpam({to: "mitch@ourglass.tv", emailbody: emailString})
+            .then(function () {
+                $log.debug("email send success");
+            })
+            .catch(function () {
+                $log.debug("email send FAIL");
+            });
 
         ogAPI.sendSpam({to: "erik@ourglass.tv", emailbody: emailString})
             .then(function () {
