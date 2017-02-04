@@ -6,13 +6,13 @@ app.controller( "rootController", function ( $scope, $log, sqGameService, footba
 
     $log.debug( "loaded rootController" );
 
-    ogAPI.sendSpam({ emailbody: "This is coming from Aqui/ogAPI", to: "mitch@ourglass.tv"})
-        .then(function(resp){
-            $log.debug(resp);
-        })
-        .catch(function(err){
-            $log.error(err);
-        })
+    // ogAPI.sendSpam({ emailbody: "This is coming from Aqui/ogAPI", to: "mitch@ourglass.tv"})
+    //     .then(function(resp){
+    //         $log.debug(resp);
+    //     })
+    //     .catch(function(err){
+    //         $log.error(err);
+    //     })
 
     var RUN_TESTS = false;
 
