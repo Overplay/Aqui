@@ -544,7 +544,7 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
                         $log.debug("email send FAIL");
                     });
 
-                $log.debug("email sent " + row + " " + col);
+                // $log.debug("email sent " + row + " " + col);
 
             }, 1000)
                 .then(function () {
