@@ -2,17 +2,17 @@
  * Created by Erik Phillips on 1/18/17.
  */
 
-app.controller( "rootController", function ( $scope, $log, sqGameService, footballAPI ) {
+app.controller( "rootController", function ( $scope, $log, sqGameService, footballAPI, ogAPI ) {
 
     $log.debug( "loaded rootController" );
 
-    sqGameService.sendEmail({ body: "This is coming from Aqui", to: "mitch@ourglass.tv"})
-        .then(function(resp){
-            $log.debug(resp);
-        })
-        .catch(function(err){
-            $log.error(err);
-        })
+    // ogAPI.sendSpam({ emailbody: "This is coming from Aqui/ogAPI", to: "mitch@ourglass.tv"})
+    //     .then(function(resp){
+    //         $log.debug(resp);
+    //     })
+    //     .catch(function(err){
+    //         $log.error(err);
+    //     })
 
     var RUN_TESTS = false;
 

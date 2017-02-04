@@ -344,7 +344,7 @@ var GLOBAL_UPDATE_TARGET;
              * @returns {HttpPromise}
              */
             service.sendSpam = function(email){
-                return $http.post( API_PATH + spam, email );
+                return $http.post( API_PATH + 'spam', email );
             }
 
             /**
