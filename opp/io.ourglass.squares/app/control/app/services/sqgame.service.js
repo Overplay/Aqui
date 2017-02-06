@@ -537,14 +537,15 @@ app.factory( "sqGameService", function ( $http, ogAPI, $log, $timeout, $q, $root
             $timeout(function () {
 
                 // TODO MITCH uncomment this line to send to the user's emails and comment out my email
-                // ogAPI.sendSpam({to: "user.email", emailbody: emailString})
-                ogAPI.sendSpam({to: "erik@ourglass.tv", emailbody: emailString})
-                    .then(function () {
-                        $log.debug("email send success");
-                    })
-                    .catch(function () {
-                        $log.debug("email send FAIL");
-                    });
+                ogAPI.sendSpam({to: user.email, emailbody: emailString})
+                $log.debug("Sent to: "+user.email);
+                // ogAPI.sendSpam({to: "erik@ourglass.tv", emailbody: emailString})
+                //     .then(function () {
+                //         $log.debug("email send success");
+                //     })
+                //     .catch(function () {
+                //         $log.debug("email send FAIL");
+                //     });
 
                 // $log.debug("email sent " + row + " " + col);
 

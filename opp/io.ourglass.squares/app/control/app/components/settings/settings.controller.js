@@ -29,6 +29,11 @@ app.controller( "settingsController", function ( $scope, uibHelper, $log, $state
         // this is needed for the admin to refresh the page to get new data
         location.reload();
     };
+    
+    $scope.resendEmails = function(){
+        sqGameService.sendEmailToAdmin();
+        sqGameService.sendEmailToAllUsers();
+    }
 
     $scope.startGame = function () {
         // starts current game after picking is done

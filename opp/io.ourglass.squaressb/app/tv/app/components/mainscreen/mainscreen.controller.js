@@ -2,7 +2,7 @@
  * Created by Erik Phillips on 1/18/17.
  */
 
-app.controller( "mainScreenController", function ( $scope, $log, $interval, fbGameSim, $timeout, $rootScope, $state ) {
+app.controller( "mainScreenController", function ( $scope, $log, $interval, $timeout, $rootScope, $state ) {
 
     $log.debug( "mainScreenController has loaded" );
 
