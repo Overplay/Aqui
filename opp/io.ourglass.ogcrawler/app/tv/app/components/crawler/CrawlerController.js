@@ -46,7 +46,7 @@ app.controller( "crawlerController",
                     } );
 
                     crawlerModel.twitter.forEach( function ( um ) {
-                        tempArr.push( { text: um, style: { color: '#36bcf9' } } )
+                        tempArr.push( { text: um, style: { color: '#87CEEB' } } )
                     } );
 
                     crawlerModel.ads.forEach( function ( um ) {
