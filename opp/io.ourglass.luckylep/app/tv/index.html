@@ -11,7 +11,7 @@
 
     <!-- App Main and AngularJS Routes -->
     <script src="app/optvLuckyLepApp.module.js"></script>
-    <script src="../../../../common/js/ogTVAPI.js"></script>
+    <script src="../../../../common/js/ogAPI2.js"></script>
 
     <!-- Controllers -->
     <script src="app/components/luckylep/LuckyLepController.js"></script>
@@ -25,6 +25,19 @@
 </head>
 
 <body>
+
+<div class="applet" ng-controller="shuffleController">
+    <div class="title">Lucky Lep</div>
+    <div class="name-box">
+        <p>Hey <span class="name">{{lep.winner}}</span> who's gonna drink?</p>
+    </div>
+    <div class="lep-holder">
+        <img src="assets/img/lep.gif" class="lep"/>
+    </div>
+    <div class="logo-holder">
+        <og-advert type="widget" interval="30000"></og-advert>
+    </div>
+</div>
 
 <!-- semis skeuomorph look -->
 <div class="hot-pocket">
