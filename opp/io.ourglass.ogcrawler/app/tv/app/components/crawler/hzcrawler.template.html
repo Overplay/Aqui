@@ -27,6 +27,7 @@
         top: 0;
         text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
         /*border: 2px solid red;*/
+        height: 100%;
     }
 
     li {
@@ -39,16 +40,36 @@
         font-size: 150%;
         color: white;
         font-weight: 900;
+        line-height: 40vh;
+        /*border: 1px solid hotpink;*/
     }
 
     .hide {
         opacity: 0;
     }
+
+    .msg-img {
+        height: 60vh;
+        width: 60vh;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .msg-text {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+    }
 </style>
 
 <div class="scroll-window" id="scroll-window">
     <ul id="scroller-ul" ng-style="leftPos" class="hwlayer">
-        <li ng-repeat="msg in displayMessages track by $index" ng-style="msg.style" style="border: 1px solid hotpink"> {{ msg.text }} </li>
+        <li ng-repeat="msg in displayMessages track by $index" ng-style="msg.style">
+            <img ng-if="msg.type == 'tweet' && msg.text" class="msg-img" src="assets/img/crawler-twitter.png">
+            <img ng-if="msg.type == 'ad' && msg.text" class="msg-img" src="assets/img/crawler-ad.png">
+            <img ng-if="msg.type == 'user' && msg.text" class="msg-img" src="assets/img/crawler-user.png">
+            <div class="msg-text"> {{ msg.text }} </div>
+        </li>
     </ul>
 
     <!--<ul id="scroller-ul2" ng-style="leftPos2" class="hwlayer">-->
