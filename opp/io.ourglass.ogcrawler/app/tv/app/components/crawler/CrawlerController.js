@@ -42,15 +42,15 @@ app.controller( "crawlerController",
                     $log.debug( "Rebuilding hz scroller feed" );
                     var tempArr = [];
                     crawlerModel.user.forEach( function ( um ) {
-                        tempArr.push( { text: um, style: { color: '#ffffff' } } )
+                        tempArr.push( { text: um, style: { color: '#ffffff' }, type: "user" } )
                     } );
 
                     crawlerModel.twitter.forEach( function ( um ) {
-                        tempArr.push( { text: um, style: { color: '#87CEEB' } } )
+                        tempArr.push( { text: um, style: { color: '#87CEEB' }, type: "tweet" } )
                     } );
 
                     crawlerModel.ads.forEach( function ( um ) {
-                        tempArr.push( { text: um, style: { color: '#ccf936' } } )
+                        tempArr.push( { text: um, style: { color: '#ccf936' }, type: "ad" } )
                     } );
 
                     tempArr = tempArr.filter( function ( x ) {

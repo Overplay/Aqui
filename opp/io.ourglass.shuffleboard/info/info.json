@@ -3,7 +3,7 @@
   "appType": "widget",
   "appName": "Shuffleboard",
 
-  "icon": "shuffle.png",
+  "icon": "shuffleboard@3x.png",
   "iconLabel": "ShuffleBoard",
 
   "primaryColorHex": "#A9A9A9",

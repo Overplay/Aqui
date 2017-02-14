@@ -14,6 +14,15 @@
         left: 0;
     }
 
+    .app-img {
+        display: block;
+        margin: auto;
+        max-height: 15vw;
+        max-width: 15vw;
+        height: auto;
+        width: auto;
+    }
+
     .app-cell-left {
         position: absolute;
         top: 0;
@@ -44,7 +53,7 @@
 
 <div class="app-cell">
     <div  style="float: left;">
-        <img class="app-icon" ng-src="/{{app.iconPath}}"/>
+        <div class="app-icon"><img class="app-img" ng-src="/{{app.iconPath}}"/></div>
     </div>
     <div class="app-cell-left" ng-if="running">
         <div class="app-name">

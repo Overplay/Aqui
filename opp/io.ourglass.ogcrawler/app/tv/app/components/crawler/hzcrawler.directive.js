@@ -44,6 +44,8 @@ app.directive( 'hzCrawler',
                 var isResetTransition = true;
                 var useTransitionListener = attrs.xlisten;
 
+                var scrollWindowWidth = document.getElementById("scroll-window").clientWidth;
+
                 var transitions = {
                     "transition":       "transitionend",
                     "OTransition":      "oTransitionEnd",
@@ -82,8 +84,8 @@ app.directive( 'hzCrawler',
 
                     isResetTransition = true;
                     scope.leftPos = {
-                        '-webkit-transform': "translate(" + $window.innerWidth + 'px, 0px)',
-                        'transform':         "translate(" + $window.innerWidth + 'px, 0px)',
+                        '-webkit-transform': "translate(" + scrollWindowWidth + 'px, 0px)',
+                        'transform':         "translate(" + scrollWindowWidth + 'px, 0px)',
                         'transition':        'all 0s'
                     };
 
