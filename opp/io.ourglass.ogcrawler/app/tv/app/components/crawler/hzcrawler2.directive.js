@@ -39,18 +39,56 @@ app.directive( 'hzCrawler',
                  none of these are implemented yet
                  */
 
+                var demoVerbose = true;
+
                 var crawlerVelocity = attrs.speed || 50;
                 var scroller;
                 var scroller2;
-                var isResetTransition = true;
-                var useTransitionListener = attrs.xlisten;
 
                 var scrollWindowWidth = document.getElementById("scroll-window").clientWidth;
 
+                var transitions = {
+                    "transition":       "transitionend",
+                    "OTransition":      "oTransitionEnd",
+                    "MozTransition":    "transitionend",
+                    "WebkitTransition": "webkitTransitionEnd"
+                };
+
+                var whichTransitionEventScroller = function () {
+                    for ( var t in transitions ) {
+                        if ( scroller.style[ t ] !== undefined ) {
+                            return transitions[ t ];
+                        }
+                    }
+                };
+
+                var whichTransitionEventScroller2 = function () {
+                    for ( var t in transitions ) {
+                        if ( scroller2.style[ t ] !== undefined ) {
+                            return transitions[ t ];
+                        }
+                    }
+                };
+
+
+                function printAllPositionInformation() {
+                    if (demoVerbose) {
+                        $log.debug("scrollWindowWidth: " + scrollWindowWidth);
+
+                        $log.debug("crawler 1 offsetleft:   " + scroller.offsetLeft);
+                        $log.debug("crawler 1 width:        " + scroller.offsetWidth);
+
+                        $log.debug("crawler 2 offsetleft:   " + scroller2.offsetLeft);
+                        $log.debug("crawler 2 width:        " + scroller2.offsetWidth);
+                    }
+                }
 
                 function initCrawlerPositions() {
 
                     $log.debug("crawler position init");
+                    $log.debug("scrollWindowWidth: " + scrollWindowWidth);
+                    $log.debug("crawler 1 width: " + scroller.offsetWidth);
+                    $log.debug("crawler 2 width: " + scroller2.offsetWidth);
 
                     scope.leftPos = {
                         '-webkit-transform': "translate(" + scrollWindowWidth + 'px, 0px)',
@@ -59,59 +97,89 @@ app.directive( 'hzCrawler',
                     };
 
                     scope.leftPos2 = {
-                        '-webkit-transform': "translate(" + (scroller.offsetLeft + scroller.offsetWidth) + 'px, 0px)',
-                        'transform':         "translate(" + (scroller.offsetLeft + scroller.offsetWidth) + 'px, 0px)',
+                        '-webkit-transform': "translate(" + (scrollWindowWidth + 500) + 'px, 0px)',
+                        'transform':         "translate(" + (scrollWindowWidth + 500) + 'px, 0px)',
                         'transition':        'all 0s'
                     };
                 }
 
-                function startCrawlerTransition() {
+                function startScrollerTransition() {
 
-                    $log.debug("crawler trans started");
+                    $log.debug("scroller trans started");
 
-                    var distanceToTravel = scroller.offsetLeft + scroller.offsetWidth;
+                    var distanceToTravel = scrollWindowWidth + scroller.offsetWidth;
                     var tranTime = distanceToTravel / crawlerVelocity;
 
                     scope.leftPos = {
                         '-webkit-transform': "translate(-" + scroller.offsetWidth + "px, 0px)",
                         'transform': "translate(-" + scroller.offsetWidth + "px, 0px)",
                         'transition': "all " + tranTime + "s linear"
-                    }
+                    };
+
+                    var transition1Event = whichTransitionEventScroller();
+                    scroller.addEventListener( transition1Event, function ( evt ) {
+                        $log.debug( "scroller transition event finished");
+
+                        resetScrollerTransition();
+
+                        updateModel( 1 );
+
+                        loadScroller()
+                            .then( function ( obj ) {
+                                scroller = obj;
+                                startScrollerTransition();
+                            })
+                    } );
                 }
 
-                function startCrawler2Transition() {
+                function startScroller2Transition() {
 
-                    $log.debug("crawler 2 trans started");
+                    $log.debug("scroller 2 trans started");
 
-                    var distanceToTravel = scroller2.offsetLeft + scroller2.offsetWidth;
+                    var distanceToTravel = scrollWindowWidth + scroller2.offsetWidth;
                     var tranTime = distanceToTravel / crawlerVelocity;
 
                     scope.leftPos2 = {
                         '-webkit-transform': "translate(-" + scroller2.offsetWidth + "px, 0px)",
                         'transform':         "translate(-" + scroller2.offsetWidth + "px, 0px)",
                         'transition':        "all " + tranTime + "s linear"
-                    }
+                    };
+
+                    var transition2Event = whichTransitionEventScroller2();
+                    scroller.addEventListener( transition2Event, function ( evt ) {
+                        $log.debug( "scroller 2 transition event finished");
+
+                        resetScroller2Transition();
+
+                        updateModel( 2 );
+
+                        loadScroller2()
+                            .then( function ( obj ) {
+                                scroller = obj;
+                                startScroller2Transition();
+                            })
+                    } );
                 }
 
-                function resetCrawlerTransition() {
+                function resetScrollerTransition() {
 
-                    $log.debug("resetCrawler: " + (scroller2.offsetLeft + scroller2.offsetWidth));
+                    $log.debug("resetScroller: " + scrollWindowWidth);
 
                     scope.leftPos = {
-                        '-webkit-transform': "translate(" + (scroller2.offsetLeft + scroller2.offsetWidth) + 'px, 0px)',
-                        'transform':         "translate(" + (scroller2.offsetLeft + scroller2.offsetWidth) + 'px, 0px)',
+                        '-webkit-transform': "translate(" + scrollWindowWidth + 'px, 0px)',
+                        'transform':         "translate(" + scrollWindowWidth + 'px, 0px)',
                         'transition':        'all 0s'
                     };
 
                 }
 
-                function resetCrawler2Transition() {
+                function resetScroller2Transition() {
 
-                    $log.debug("resetCrawler2: " + (scroller.offsetLeft + scroller.offsetWidth));
+                    $log.debug("resetScroller2: " + scrollWindowWidth);
 
                     scope.leftPos2 = {
-                        '-webkit-transform': "translate(" + (scroller.offsetLeft + scroller.offsetWidth) + 'px, 0px)',
-                        'transform':         "translate(" + (scroller.offsetLeft + scroller.offsetWidth) + 'px, 0px)',
+                        '-webkit-transform': "translate(" + scrollWindowWidth + 500 + 'px, 0px)',
+                        'transform':         "translate(" + scrollWindowWidth + 500 + 'px, 0px)',
                         'transition':        'all 0s'
                     };
 
@@ -129,21 +197,34 @@ app.directive( 'hzCrawler',
                     })
                 }
 
+                function updateModel( scroller ) {
+                    $log.debug("model update called");
 
-                $rootScope.$broadcast( 'HZ_CRAWLER_START' );
-                scope.displayMessages = _.cloneDeep( scope.messages );
-                scope.displayMessages2 = _.cloneDeep( scope.messages );
+                    if (scroller == 1) {
+                        scope.displayMessages = _.cloneDeep( scope.messages );
+                    } else if (scroller == 2) {
+                        scope.displayMessages2 = _.cloneDeep( scope.messages );
+                    } else {
+                        scope.displayMessages = _.cloneDeep( scope.messages );
+                        scope.displayMessages2 = _.cloneDeep( scope.messages );
+                    }
+
+                    $rootScope.$broadcast( 'HZ_CRAWLER_START' );
+                }
+
+                updateModel();
 
                 loadScroller()
                     .then(function ( obj ) {
                         scroller = obj;
+
                         loadScroller2()
                             .then(function ( obj2 ) {
                                 scroller2 = obj2;
+
                                 initCrawlerPositions();
-                                $rootScope.$broadcast( 'HZ_CRAWLER_START' );
-                                scope.displayMessages = _.cloneDeep( scope.messages );
-                                scope.displayMessages2 = _.cloneDeep( scope.messages );
+
+                                updateModel();
                             })
                     });
 
@@ -154,15 +235,13 @@ app.directive( 'hzCrawler',
                             .then(function ( obj2 ) {
                                 scroller2 = obj2;
 
-                                startCrawlerTransition();
-                                startCrawler2Transition();
+                                startScrollerTransition();
+                                startScroller2Transition();
 
-                                $rootScope.$broadcast( 'HZ_CRAWLER_START' );
-                                scope.displayMessages = _.cloneDeep( scope.messages );
-                                scope.displayMessages2 = _.cloneDeep( scope.messages );
+                                updateModel();
 
                             })
-                    })
+                    });
 
 
             }
