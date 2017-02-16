@@ -17,6 +17,8 @@
  *
  */
 
+// this is erik's unfinished work - testing out git
+
 app.directive( 'hzCrawler',
     function ( $log, $timeout, $window, $interval, $rootScope ) {
 
