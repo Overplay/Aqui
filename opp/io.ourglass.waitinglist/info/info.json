@@ -3,7 +3,7 @@
   "appType": "widget",
   "appName": "Waiting List",
 
-  "icon": "clip.png",
+  "icon": "waitlist@3x.png",
   "iconLabel": "Waiting List",
 
   "primaryColorHex": "#8080ff",
