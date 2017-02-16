@@ -11,11 +11,11 @@ app.controller( "registerController",
         
         $scope.showRegistrationPanel = function(){
             return reregister || !ogDevice.venue;
-        }
+        };
         
         $scope.device = ogDevice;
         
-        $scope.system = { regcode: ""}
+        $scope.system = { regcode: ""};
         
         if (ogDevice.venue){
             $log.debug("Already regged");
@@ -42,15 +42,23 @@ app.controller( "registerController",
                         })
                 } )
                 .catch( function ( error ) {
-                    var msg = error.data && error.data.error;
-                    
-                    uibHelper.headsupModal( "Something Bad Happened!", 
-                        msg ? msg: 'Lost connection to system. Check WiFi.' );
+
+                    $log.debug("Got Error with status: " + error.status);
+
+                    switch ( error.status ) {
+                        case 406:
+                            uibHelper.headsupModal( "Invalid Registration Code", error.data.error);
+                            break;
+                        case 500:
+                            uibHelper.headsupModal( "Internal Server Error", "The server encountered an unexpected condition which prevented it from fulfilling the registration request.");
+                            break;
+                        default:
+                            uibHelper.headsupModal( "Error: Unable to connect", "Unable to connect to the system. Please check wifi connection and try again.");
+                            break;
+                    }
 
                 } )
                 .finally(uibHelper.dismissCurtain);
 
-        }
-        
-    
-    } );
+        };
+    });
