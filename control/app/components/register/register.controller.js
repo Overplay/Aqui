@@ -47,7 +47,7 @@ app.controller( "registerController",
 
                     switch ( error.status ) {
                         case 406:
-                            uibHelper.headsupModal( "Invalid Registration Code", error.data.error);
+                            uibHelper.headsupModal( "Problem Registering", error.data.error);
                             break;
                         case 500:
                             uibHelper.headsupModal( "Internal Server Error", "The server encountered an unexpected condition which prevented it from fulfilling the registration request.");
