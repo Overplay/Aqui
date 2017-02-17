@@ -3,7 +3,7 @@
  */
 
 app.controller( "shuffleController",
-    function ($scope, $timeout, $http, $interval, ogTVModel, $log ) {
+    function ($scope, $timeout, $http, $interval, ogAPI, $log ) {
 
         console.log( "Loading shuffleController(TV)" );
 
@@ -11,7 +11,6 @@ app.controller( "shuffleController",
 
         var _remoteScore = {};
 
-        
         function updateLocalScore() {
 
             var animRed = $scope.score.red != _remoteScore.red;
@@ -39,23 +38,17 @@ app.controller( "shuffleController",
             
             updateLocalScore();
 
-            
         }
 
 
         function updateFromRemote() {
-
-            ogTVModel.init( {
-                appName:         "io.ourglass.shuffleboard",
-                dataCallback:    modelUpdate
-            } );
-
+            ogAPI.init( {
+                appType:        "tv",
+                appName:        "io.ourglass.shuffleboard",
+                modelCallback:  modelUpdate
+            });
         }
 
-        // Honk Hionk beep!
-
         updateFromRemote();
-        
-        
 
-    } );
+    });
