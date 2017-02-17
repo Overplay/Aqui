@@ -40,7 +40,6 @@ app.controller( "shuffleController",
 
         }
 
-
         function updateFromRemote() {
             ogAPI.init( {
                 appType:        "tv",
