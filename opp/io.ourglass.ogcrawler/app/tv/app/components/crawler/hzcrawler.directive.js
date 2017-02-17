@@ -27,7 +27,6 @@ app.directive( 'hzCrawler',
             templateUrl: 'app/components/crawler/hzcrawler.template.html',
             link:        function ( scope, elem, attrs ) {
 
-
                 /*
                  Speed needs to be implemented
                  scope.speed should be passed as { crawlerVelocity: 50, nextUpVelocity: 20 } as an example
@@ -37,12 +36,20 @@ app.directive( 'hzCrawler',
 
                  none of these are implemented yet
                  */
+
+
+                // toggle this variable to switch between using the old look and the new look
+                // the new look includes: all white text and crawler icons
+                scope.useOldLook = false;
+
                 
                 var crawlerVelocity = attrs.speed || 50;
                 var scrollerWidth;
                 var scrollerUl = document.getElementById( 'scroller-ul' );
                 var isResetTransition = true;
                 var useTransitionListener = attrs.xlisten;
+
+                var scrollWindowWidth = document.getElementById("scroll-window").clientWidth;
 
                 var transitions = {
                     "transition":       "transitionend",
@@ -70,20 +77,14 @@ app.directive( 'hzCrawler',
                     } );
                 
                 }
-                
-                
-                function updateModel() {
-
-
-                }
 
                 // Dump crawler off screen
                 function resetCrawlerTransition() {
 
                     isResetTransition = true;
                     scope.leftPos = {
-                        '-webkit-transform': "translate(" + $window.innerWidth + 'px, 0px)',
-                        'transform':         "translate(" + $window.innerWidth + 'px, 0px)',
+                        '-webkit-transform': "translate(" + scrollWindowWidth + 'px, 0px)',
+                        'transform':         "translate(" + scrollWindowWidth + 'px, 0px)',
                         'transition':        'all 0s'
                     };
 
@@ -91,9 +92,9 @@ app.directive( 'hzCrawler',
 
                 function startCrawlerTransition() {
 
-                    
-                    var distanceToTravel = $window.innerWidth + scrollerWidth;
-                    var tranTime = distanceToTravel / crawlerVelocity;
+                    var distanceToTravel = scrollWindowWidth + scrollerWidth;
+                    var tranTime = scrollerWidth ? (distanceToTravel / crawlerVelocity) : 0; // if there is no data, there is no tranTime
+
                     $log.debug( "Transition time: " + tranTime );
                     
                     $timeout( function () {
@@ -109,7 +110,7 @@ app.directive( 'hzCrawler',
 
                     // And when tran is done, start again.
                     if (!useTransitionListener)
-                        $timeout( doScroll, (tranTime-0.5) * 1000 );
+                        $timeout( doScroll, tranTime * 1000 );
 
                 }
                 
@@ -135,7 +136,7 @@ app.directive( 'hzCrawler',
 
                 }
                 
-               doScroll();
+               $timeout(doScroll, 1000); // wait one second for page to render before starting the scroll
 
             }
         }
