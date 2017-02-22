@@ -22,7 +22,18 @@ app.controller( "settingsController",
                         } )
                         .catch( function ( err ) {
                             hud.dismiss();
-                            uibHelper.headsupModal('System Not Registered', 'This system is not registered with Ourglass. Please register this device and try again.');
+                            switch ( err.status ) {
+                                case 406:
+                                    uibHelper.headsupModal('System Not Registered', 'This system is not registered with Ourglass. Please register this device and try again.');
+                                    break;
+                                case 500:
+                                    uibHelper.headsupModal('Internal Server Error', 'The server encountered an unexpected condition which prevented it from fulfilling the update request.');
+                                    break;
+                                default:
+                                    uibHelper.headsupModal('Error: Unable to connect', 'Unable to connect to the system. Please check wifi connection and try again.');
+                                    break;
+                            }
+
                         } )
                 } )
         };
