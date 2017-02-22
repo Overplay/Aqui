@@ -28,8 +28,25 @@ app.directive( 'stationCell',
                     var hud = uibHelper.curtainModal( 'Changing...' );
                     $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
                     ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
-                    $rootScope.currentChannel = scope.grid;
-                    $timeout(function(){ hud.dismiss() }, 5000);
+                    $rootScope.tempCurrentChannel = scope.grid;
+                    $timeout(function() {
+                        ogProgramGuide.getCurrentChannel()
+                            .then(function ( channel ) {
+                                if ($rootScope.tempCurrentChannel.channel.channelNumber != channel.data.channelNumber) {
+                                    $log.debug("channel numbers do NOT match!");
+                                    hud.dismiss();
+                                    uibHelper.headsupModal('Unable to Change Channel', 'The channel change was unsuccessful. You are not subscribed to the channel.');
+                                } else {
+                                    $log.debug("channel change successful");
+                                    $rootScope.currentChannel = $rootScope.tempCurrentChannel;
+                                    hud.dismiss();
+                                }
+                            })
+                            .catch(function ( err ) {
+                                hud.dismiss();
+                                uibHelper.headsupModal('Error', 'An error has occurred while getting the current channel.');
+                            })
+                    }, 5000);
 
                 }
 
