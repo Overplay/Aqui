@@ -20,8 +20,12 @@ app.controller( "settingsController",
                             hud.dismiss();
                             uibHelper.headsupModal('Settings Changed', 'Name and or location successfully updated.');
                         } )
+                        .catch( function ( err ) {
+                            hud.dismiss();
+                            uibHelper.headsupModal('System Not Registered', 'This system is not registered with Ourglass. Please register this device and try again.');
+                        } )
                 } )
-        }
+        };
 
         $scope.register = function () {
             $log.debug( "Registering using code." );
@@ -32,10 +36,7 @@ app.controller( "settingsController",
                 } )
                 .catch( function ( err ) {
                     uibHelper.headsupModal( "Something Bad Happened!", "Could not register Ourglass system. Please try again!" );
-
                 } )
+        };
 
-        }
-        
-    
     } );
