@@ -89,15 +89,16 @@ app.controller('waitingListController', ['$scope', 'ogAPI', '$log', '$timeout', 
 		}
 	}
 
-	function updateFromRemote() {
+	function initalize() {
 		ogAPI.init({
 			appType: "tv",
 			appName: "io.ourglass.waitinglist",
 			modelCallback: handleDataCallback
 		});
+        ogAPI.loadModel();
 	}
 
-	updateFromRemote();
+    initalize();
 
 }]);
 
