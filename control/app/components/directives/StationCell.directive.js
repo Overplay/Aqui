@@ -41,7 +41,7 @@ app.directive( 'stationCell',
                                 uibHelper.headsupModal('Unable to Change Channel', 'The channel change was unsuccessful. You are not subscribed to the channel.');
                             } else {
                                 $log.debug("channel change successful");
-                                $rootScope.currentChannel = scope.grid; // ERIK: is this allowed? will scope.grid be preserved in the async call?
+                                $rootScope.currentChannel = scope.grid; // TODO ERIK: is this allowed? will scope.grid be preserved in the async call?
                                 hud.dismiss();
                             }
                         })
