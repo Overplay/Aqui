@@ -29,7 +29,7 @@ app.directive( 'stationCell',
                     $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
                     ogProgramGuide.changeChannel( scope.grid.channel.channelNumber )
                         .then( function () {
-                            return $timeout(5000);
+                            return $timeout(5000); // TODO ERIK: this is untested. Will this work correctly as a $timeout?
                         })
                         .then( function () {
                             return ogProgramGuide.getCurrentChannel();
