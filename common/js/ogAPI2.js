@@ -595,7 +595,8 @@ var GLOBAL_UPDATE_TARGET;
             };
 
             service.getCurrentChannel = function () {
-                return $http.get( API_PATH + 'tv/currentchannel');
+                return $http.get( API_PATH + 'tv/currentchannel')
+                    .then(stripData);
             };
 
             return service;

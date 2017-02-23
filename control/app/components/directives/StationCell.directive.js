@@ -27,28 +27,60 @@ app.directive( 'stationCell',
 
                     var hud = uibHelper.curtainModal( 'Changing...' );
                     $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
-                    ogProgramGuide.changeChannel( scope.grid.channel.channelNumber );
-                    $rootScope.tempCurrentChannel = scope.grid;
-                    $timeout(function() {
-                        ogProgramGuide.getCurrentChannel()
-                            .then(function ( channel ) {
-                                if ($rootScope.tempCurrentChannel.channel.channelNumber != channel.data.channelNumber) {
-                                    $log.debug("channel numbers do NOT match!");
-                                    hud.dismiss();
-                                    uibHelper.headsupModal('Unable to Change Channel', 'The channel change was unsuccessful. You are not subscribed to the channel.');
-                                } else {
-                                    $log.debug("channel change successful");
-                                    $rootScope.currentChannel = $rootScope.tempCurrentChannel;
-                                    hud.dismiss();
-                                }
-                            })
-                            .catch(function ( err ) {
+                    ogProgramGuide.changeChannel( scope.grid.channel.channelNumber )
+                        .then( function () {
+                            return $timeout(5000);
+                        })
+                        .then( function () {
+                            return ogProgramGuide.getCurrentChannel();
+                        })
+                        .then( function( channel ) {
+                            if ( scope.grid.channel.channelNumber != channel.channelNumber ) {
+                                $log.debug("channel numbers do NOT match!");
                                 hud.dismiss();
-                                uibHelper.headsupModal('Error', 'An error has occurred while getting the current channel.');
-                            })
-                    }, 5000);
+                                uibHelper.headsupModal('Unable to Change Channel', 'The channel change was unsuccessful. You are not subscribed to the channel.');
+                            } else {
+                                $log.debug("channel change successful");
+                                $rootScope.currentChannel = scope.grid; // ERIK: is this allowed? will scope.grid be preserved in the async call?
+                                hud.dismiss();
+                            }
+                        })
+                        .catch( function ( err ) {
+                            hud.dismiss();
+                            switch ( err.status ) {
+                                case 406:
+                                    uibHelper.headsupModal( "Problem Changing Channel", "There was an issue with changing the channel and your request could not be completed.");
+                                    break;
+                                case 500:
+                                    uibHelper.headsupModal( "Internal Server Error", "The device was not able to change the channel.");
+                                    break;
+                                default:
+                                    uibHelper.headsupModal( "Error: Unable to connect", "Unable to connect to the system. Please check wifi connection and try again.");
+                                    break;
+                            }
+                        });
 
-                }
+                    // $rootScope.tempCurrentChannel = scope.grid;
+                    // $timeout(function() {
+                    //     ogProgramGuide.getCurrentChannel()
+                    //         .then(function ( channel ) {
+                    //             if ($rootScope.tempCurrentChannel.channel.channelNumber != channel.data.channelNumber) {
+                    //                 $log.debug("channel numbers do NOT match!");
+                    //                 hud.dismiss();
+                    //                 uibHelper.headsupModal('Unable to Change Channel', 'The channel change was unsuccessful. You are not subscribed to the channel.');
+                    //             } else {
+                    //                 $log.debug("channel change successful");
+                    //                 $rootScope.currentChannel = $rootScope.tempCurrentChannel;
+                    //                 hud.dismiss();
+                    //             }
+                    //         })
+                    //         .catch(function ( err ) {
+                    //             hud.dismiss();
+                    //             uibHelper.headsupModal('Error', 'An error has occurred while getting the current channel.');
+                    //         })
+                    // }, 5000);
+
+                };
 
                 scope.displayTime = function ( timeStr) {
 
