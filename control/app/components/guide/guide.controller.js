@@ -17,7 +17,7 @@ app.controller( "guideController",
 
         $rootScope.currentChannel = {};
 
-        function getCurrentChannel() {
+        function getCurrentProgramming() {
             return ogProgramGuide.getNowAndNext()
                 .then(function (grid) {
                     $log.debug("Got the grid and current channel.");
@@ -25,7 +25,7 @@ app.controller( "guideController",
                 });
         }
 
-        getCurrentChannel();
+        getCurrentProgramming();
 
         function loadListings(){
             ogNet.getGrid(false)

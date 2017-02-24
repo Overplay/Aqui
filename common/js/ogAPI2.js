@@ -588,11 +588,16 @@ var GLOBAL_UPDATE_TARGET;
             service.getNowAndNext = function () {
                 return $http.get( API_PATH + 'tv/currentgrid' )
                     .then(stripData);
-            }
+            };
 
             service.changeChannel = function ( channelNum ) {
                 return $http.post( API_PATH + 'tv/change/' + channelNum );
-            }
+            };
+
+            service.getCurrentChannel = function () {
+                return $http.get( API_PATH + 'tv/currentchannel')
+                    .then(stripData);
+            };
 
             return service;
         } )
