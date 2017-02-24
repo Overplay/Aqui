@@ -29,7 +29,7 @@ app.directive( 'stationCell',
                     $log.debug( "Changing channel to: " + scope.grid.channel.channelNumber );
                     ogProgramGuide.changeChannel( scope.grid.channel.channelNumber )
                         .then( function () {
-                            return $timeout(5000); // TODO ERIK: this is untested. Will this work correctly as a $timeout?
+                            return $timeout(5000);
                         })
                         .then( function () {
                             return ogProgramGuide.getCurrentChannel();
@@ -41,7 +41,7 @@ app.directive( 'stationCell',
                                 uibHelper.headsupModal('Unable to Change Channel', 'The channel change was unsuccessful. You are not subscribed to the channel.');
                             } else {
                                 $log.debug("channel change successful");
-                                $rootScope.currentChannel = scope.grid; // TODO ERIK: is this allowed? will scope.grid be preserved in the async call?
+                                $rootScope.currentChannel = scope.grid;
                                 hud.dismiss();
                             }
                         })
